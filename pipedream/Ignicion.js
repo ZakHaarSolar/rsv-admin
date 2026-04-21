@@ -57,14 +57,21 @@ export default defineComponent({
 
     // =============================================
     // 4. OBTENER EXPLORADORES DEL DÍA
-    //    (Pases de exploración — incluidos para ambos
-    //     grupos por ahora. Cuando exploration_passes
-    //     tenga group_name, filtrar aquí también.)
+    //    v2 — filtro por group_name. Antes traíamos TODOS los pases
+    //    con event_date = hoy y caían en ambos crons (Púlsar y Cuásar),
+    //    recibiendo el email dos veces. Ahora cada explorador tiene su
+    //    group_name ('pulsar' | 'cuasar') y solo se dispara en el cron
+    //    correspondiente.
+    //    Para filas legacy sin group_name hay un fallback: si no hay
+    //    ninguna fila con group_name del grupo objetivo y existen
+    //    legacy (group_name = null) con event_date de hoy, las tomamos
+    //    como Púlsar por default (o ajustar manual con UPDATE).
     // =============================================
     const { data: explorers, error: expError } = await supabase
       .from("exploration_passes")
-      .select("email, name")
-      .eq("event_date", todayStr);
+      .select("email, name, group_name")
+      .eq("event_date", todayStr)
+      .eq("group_name", targetGroup);
 
     if (expError) console.error("❌ Error consultando exploradores:", expError);
 

@@ -180,7 +180,21 @@ export default defineComponent({
         console.log(`🚪 Apertura: ${horaApertura}`)
 
         // =============================================
-        // 3. GUARDAR EN SUPABASE (sólo si viene de Calendly)
+        // 3. DERIVAR group_name desde la hora (Cancún UTC-5)
+        //    Púlsar = 12:30 PM Cancún (< 14h) | Cuásar = 4:30 PM (≥ 14h)
+        //    Se computa aquí una vez y se usa en el upsert (Calendly) y
+        //    en el log (manual, donde el UI ya setteó la columna).
+        // =============================================
+        const eventHourCancunStr = new Intl.DateTimeFormat("en-US", {
+            timeZone: "America/Cancun",
+            hour: "numeric",
+            hour12: false,
+        }).format(eventDateObj)
+        const eventHourCancun = parseInt(eventHourCancunStr, 10)
+        const groupName = eventHourCancun < 14 ? "pulsar" : "cuasar"
+
+        // =============================================
+        // 4. GUARDAR EN SUPABASE (sólo si viene de Calendly)
         //    El flujo manual hace el insert desde el UI del Motor para
         //    tener UX inmediato (la Gravedad de Ignición se actualiza
         //    antes de que el email salga). Acá saltamos el upsert.
@@ -199,17 +213,20 @@ export default defineComponent({
                         event_date: eventDateStr,
                         event_start_time: eventStartTime,
                         calendly_event_uri: calendlyEventUri,
+                        group_name: groupName, // v2 — filtro para Ignicion.js
                     },
                     { onConflict: "calendly_event_uri" }
                 )
             if (dbError) {
                 console.error("❌ Error guardando en Supabase:", dbError)
             } else {
-                console.log("✅ Explorador guardado en exploration_passes")
+                console.log(
+                    `✅ Explorador guardado en exploration_passes (${groupName})`
+                )
             }
         } else {
             console.log(
-                "⏭️  Insert saltado — trigger manual, el UI ya grabó el registro"
+                `⏭️  Insert saltado — trigger manual, el UI ya grabó el registro (${groupName})`
             )
         }
 
