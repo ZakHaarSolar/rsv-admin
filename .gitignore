@@ -1,0 +1,33 @@
+# ══════════════════════════════════════════════════════════
+# Red Solar Viva — admin/.gitignore
+# ══════════════════════════════════════════════════════════
+
+# Dependencias (se reinstalan con npm install)
+node_modules/
+
+# macOS metadata
+.DS_Store
+**/.DS_Store
+
+# Secretos (NO subir nunca)
+.env
+.env.local
+.env.*.local
+
+# Runtime markers del watcher (estado transitorio, no versionable)
+.last-sync-status.json
+.skip-iphone-reload
+.hold-iphone-reload
+
+# Supabase CLI cache
+supabase/.temp/
+**/.temp/
+
+# Editor
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*

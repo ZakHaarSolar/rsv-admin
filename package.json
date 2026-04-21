@@ -1,0 +1,25 @@
+{
+    "name": "rsv-framer-pipeline",
+    "version": "1.0.0",
+    "description": "Pipeline de auto-sync Code/.tsx → Framer + live reload para iPhone",
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "sync": "node --env-file=.env framer-sync.mjs",
+        "sync:all": "node --env-file=.env framer-sync.mjs --all",
+        "watch": "node --env-file=.env framer-watcher.mjs",
+        "watch:preview": "node --env-file=.env framer-watcher.mjs --no-deploy",
+        "live": "node --env-file=.env live-reload.mjs",
+        "dev": "concurrently -n watch,live -c cyan,magenta \"npm run watch\" \"npm run live\""
+    },
+    "dependencies": {
+        "browser-sync": "^3.0.3",
+        "framer-api": "^0.1.1"
+    },
+    "devDependencies": {
+        "concurrently": "^9.0.0"
+    },
+    "engines": {
+        "node": ">=22"
+    }
+}
