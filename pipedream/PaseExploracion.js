@@ -1,5 +1,23 @@
 /**
- * Red Solar Viva — Calendly Exploration Pass v2 (UNIFICADO)
+ * Red Solar Viva — Exploration Pass + Ignición 1:1 v4
+ *
+ * v4 (2026-04-23) — Zoom único por reserva 1:1:
+ *   · El Stripe webhook ahora llama la Zoom API al confirmar el pago y
+ *     crea una sala específica (fecha + hora + duración). El join_url
+ *     viaja en body.zoom_join_url y se guarda en reservas.zoom_join_url.
+ *   · Preferimos ese link sobre la env var ZOOM_1_1_LINK — así cada
+ *     tripulante recibe SU propia sala y dejan de compartir el mismo link.
+ *   · Si el Stripe webhook falló al crear la sala (raro), body.zoom_join_url
+ *     ya viene resuelto a ZOOM_FALLBACK_JOIN_URL allá, así que acá no
+ *     hay que preocuparse del fallback en este workflow.
+ *
+ * v3 (2026-04-22) — branch para sesiones 1:1 Cámara de Resonancia:
+ *   · source: "individual" dispara subject "[ IGNICIÓN 1:1 ]" + template
+ *     con Zoom link personal, duración explícita, sin apertura de compuertas.
+ *   · slot_type: individual_30 | individual_45 | individual_60 → duración.
+ *   · Zoom link viene de env ZOOM_1_1_LINK (o fallback al grupal).
+ *
+ * v2 — Calendly Exploration Pass (UNIFICADO)
  *
  * Workflow Pipedream con DOS triggers simultáneos:
  *
@@ -52,8 +70,14 @@ export default defineComponent({
         const body = steps.trigger.event.body || {}
         const isCalendly = body.event === "invitee.created"
         const isManual = body.source === "manual"
+        /* v3 2026-04-22 — branch nuevo para sesiones 1:1. El Stripe webhook
+           del motor de reservas manda `source: "individual"` + slot_type
+           (individual_30/45/60) cuando un tripulante reserva Cámara de
+           Resonancia. Email distinto al grupal: "IGNICIÓN 1:1", Zoom link
+           personal, sin referencia a apertura de compuertas/grupo. */
+        const isIndividual = body.source === "individual"
 
-        if (!isCalendly && !isManual) {
+        if (!isCalendly && !isManual && !isIndividual) {
             $.flow.exit(
                 "Evento ignorado: " + (body.event || body.source || "desconocido")
             )
@@ -89,7 +113,8 @@ export default defineComponent({
             eventStartTime = scheduledEvent.start_time
             calendlyEventUri = payload.event
         } else {
-            // Manual: UI ya insertó en DB; acá sólo enviamos email.
+            // Manual (grupal mirror) o Individual (1:1): UI ya insertó en DB;
+            // acá sólo enviamos email.
             inviteeEmail = (body.email || "").trim()
             inviteeName = body.name || "Explorador"
             inviteeTimezone = body.timezone || "America/Cancun"
@@ -98,9 +123,18 @@ export default defineComponent({
 
             if (!inviteeEmail || !eventStartTime) {
                 $.flow.exit(
-                    "Manual trigger con payload incompleto (falta email o event_start_time)"
+                    "Trigger con payload incompleto (falta email o event_start_time)"
                 )
             }
+        }
+
+        /* v3 — duración derivada del slot_type para 1:1 email body. */
+        let sessionDurationMin = 60
+        if (isIndividual) {
+            const st = body.slot_type || ""
+            if (st === "individual_30") sessionDurationMin = 30
+            else if (st === "individual_45") sessionDurationMin = 45
+            else if (st === "individual_60") sessionDurationMin = 60
         }
 
         const firstName = (inviteeName || "").split(" ")[0] || "Explorador"
@@ -245,13 +279,29 @@ export default defineComponent({
         })
 
         // =============================================
-        // 5. EMAIL DE BIENVENIDA (idéntico a v1)
+        // 5. EMAIL DE BIENVENIDA
         // =============================================
         const logoUrl =
             "https://drive.google.com/uc?export=view&id=1t4glJMPN7JmkDKl9v0hDmhH1gavbMycD"
         const spaceBgUrl =
             "https://www.transparenttextures.com/patterns/stardust.png"
-        const zoomLink = "https://us06web.zoom.us/j/87033621223"
+        /* v4 (2026-04-23) — Tres fuentes para el link de Zoom:
+           1. body.zoom_join_url — link ÚNICO que el Stripe webhook creó
+              vía Zoom API para esta reserva 1:1 específica (preferido).
+              Si Zoom API falló al momento de la reserva, el webhook ya
+              resolvió el fallback a ZOOM_FALLBACK_JOIN_URL allá, así que
+              acá simplemente usamos lo que venga.
+           2. env ZOOM_GRUPAL_LINK / ZOOM_1_1_LINK — solo se usa si el
+              payload no trae zoom_join_url (ej. grupales vía Calendly,
+              o flujos legacy).
+           3. Hardcoded al link de Cámara Solar — último respaldo. */
+        const zoomLink =
+            process.env.ZOOM_GRUPAL_LINK ||
+            "https://us06web.zoom.us/j/87033621223"
+        const zoomLinkIndividual =
+            (isIndividual && body.zoom_join_url) ||
+            process.env.ZOOM_1_1_LINK ||
+            "https://us06web.zoom.us/j/87033621223"
         const nucleoLink = "https://www.redsolarviva.com/nucleo"
 
         const htmlBody = `
@@ -438,31 +488,156 @@ export default defineComponent({
 </html>`
 
         // =============================================
-        // 6. ENVIAR EMAIL
+        // 5.2. TEMPLATE 1:1 (v3 — Cámara de Resonancia)
         // =============================================
+        // Email distinto al grupal: sin "Apertura de Compuertas" (no hay
+        // grupo), Zoom link personal, menciona la duración de la sesión,
+        // tono de canal directo/soberano. Copy literal del prompt de Diego
+        // con variables inyectadas.
+        const htmlBody1to1 = `
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <u></u>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark only">
+    <meta name="supported-color-schemes" content="dark only">
+    <title>Ignición 1:1</title>
+    <style>
+        body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { margin: 0; padding: 0; width: 100% !important; background-color: #050505; }
+    </style>
+</head>
+<body bgcolor="#050505" style="margin: 0; padding: 0; background-color: #050505;">
+    <div style="background-color: #050505; width: 100%;">
+    <table width="100%" bgcolor="#050505" cellpadding="0" cellspacing="0" border="0" role="presentation" style="background-color: #050505;">
+        <tr>
+            <td bgcolor="#050505" align="center" style="background-color: #050505; background-image: url('${spaceBgUrl}'); background-repeat: repeat; padding: 40px 20px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #E0E0E0;">
+                <table width="600" cellpadding="0" cellspacing="0" border="0" role="presentation" style="max-width: 600px; width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td align="center" style="padding: 0 0 20px 0;">
+                                <p style="margin: 0 0 14px 0; font-size: 11px; letter-spacing: 6px; color: #94A3B8; text-transform: uppercase;">RED SOLAR VIVA</p>
+                                <img src="${logoUrl}" alt="Red Solar Viva" style="width: 100px; max-width: 100%; height: auto;">
+                                <div style="margin-top: 22px;">
+                                    <span style="display: inline-block; font-size: 11px; letter-spacing: 2px; color: #D4A843; text-shadow: 0 0 12px rgba(212, 168, 67, 0.35); white-space: nowrap;">◈ IGNICIÓN 1:1 ◈</span>
+                                </div>
+                                <p style="margin: 8px 0 0 0; font-size: 11px; letter-spacing: 2px; color: #94A3B8; text-transform: uppercase;">Canal directo encriptado</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding: 0 10px 25px 10px; font-size: 16px; line-height: 1.8; color: #CCCCCC;" align="left">
+                                <p style="margin: 0 0 18px 0; font-size: 18px; color: #F8FAFC;">Explorador <strong style="color: #D4A843;">${firstName}</strong>,</p>
+                                <p style="margin: 0 0 18px 0;">Tu señal ha sido recibida y el puente de comunicación <strong style="color: #00E5FF;">1:1</strong> ha quedado establecido en el núcleo de nuestra red. Has decidido colapsar la distancia para una sintonización específica; este es el inicio de una transmisión dedicada a la geometría de tu propio Avatar.</p>
+                                <p style="margin: 0 0 18px 0;">Este mensaje confirma que tu coordenada temporal ha sido anclada en el radar de la nave.</p>
+                            </td>
+                        </tr>
+
+                        <tr><td align="center" style="padding: 0 0 20px 0;"><div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(212, 168, 67, 0.35), transparent); width: 80%;"></div></td></tr>
+
+                        <tr>
+                            <td style="padding: 0 10px 10px 10px;" align="left">
+                                <p style="margin: 0 0 10px 0; font-size: 13px; letter-spacing: 2px; color: #D4A843; text-transform: uppercase;">◈ Tus Coordenadas de Ignición ◈</p>
+                                <p style="margin: 16px 0 4px 0; font-size: 13px; letter-spacing: 1.5px; color: #94A3B8; text-transform: uppercase;">El Reactor (Enlace de Sincronización):</p>
+                                <p style="margin: 0 0 18px 0;"><a href="${zoomLinkIndividual}" target="_blank" style="color: #00E5FF; word-break: break-all;">${zoomLinkIndividual}</a></p>
+                                <p style="margin: 10px 0 4px 0; font-size: 13px; letter-spacing: 1.5px; color: #94A3B8; text-transform: uppercase;">Punto de Encuentro:</p>
+                                <p style="margin: 0 0 6px 0; font-size: 16px; color: #F8FAFC;"><strong>${fechaBonita}</strong> a las <strong style="color: #00E5FF;">${horaBonita}</strong> (tu hora local).</p>
+                                <p style="margin: 0 0 18px 0; font-size: 14px; color: #94A3B8;">Duración: <strong style="color: #D4A843;">${sessionDurationMin} minutos</strong>.</p>
+                                <p style="margin: 0 0 20px 0;">Te sugerimos conectar 5 minutos antes para verificar la conductividad de tu equipo y asegurar que tu sistema nervioso entre en fase de reposo antes de iniciar el pulso.</p>
+                            </td>
+                        </tr>
+
+                        <tr><td align="center" style="padding: 0 0 20px 0;"><div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(212, 168, 67, 0.35), transparent); width: 80%;"></div></td></tr>
+
+                        <tr>
+                            <td style="padding: 0 10px 10px 10px;" align="left">
+                                <p style="margin: 0 0 14px 0; font-size: 13px; letter-spacing: 2px; color: #D4A843; text-transform: uppercase;">◈ Protocolo de Sintonía Individual ◈</p>
+                                <p style="margin: 0 0 16px 0;">Para que el hardware de tu cuerpo asimile la carga de información y la frecuencia de esta sesión sin resistencia:</p>
+                                <p style="margin: 0 0 14px 0;"><strong style="color: #D4A843;">Explora 'Mi Núcleo':</strong> Tu perfil ya está activo. Te invitamos a navegar por <a href="${nucleoLink}" target="_blank" style="color: #00E5FF;">redsolarviva.com/nucleo</a> antes de nuestro encuentro. Familiarizarte con la arquitectura del ecosistema permitirá que durante el 1:1 podamos profundizar directamente en la raíz de tu consulta.</p>
+                                <p style="margin: 0 0 14px 0;"><strong style="color: #D4A843;">Hidratación y Silicio:</strong> Moveremos energía de alta frecuencia. Asegúrate de haber mantenido una hidratación óptima con agua estructurada antes de la sesión para facilitar la conductividad eléctrica de tus células.</p>
+                                <p style="margin: 0 0 24px 0;"><strong style="color: #D4A843;">Espacio Soberano:</strong> Esta es una transmisión de alta densidad. Asegúrate de estar en un espacio libre de estática externa e interrupciones. Tu presencia absoluta es el combustible de esta ignición.</p>
+                                <p style="margin: 0 0 26px 0; color: #F8FAFC;">Estamos listos para decodificar tu pulso y expandir tu trayectoria.</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align="center" style="padding: 0 0 35px 0;">
+                                <table border="0" cellpadding="0" cellspacing="0"><tbody><tr>
+                                    <td align="center" style="border-radius: 8px; background: linear-gradient(90deg, #D4A843, #F3E5AB);">
+                                        <a href="${nucleoLink}" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 1px; color: #000000; text-decoration: none; text-transform: uppercase; border-radius: 8px;">ENTRAR A MI NÚCLEO</a>
+                                    </td>
+                                </tr></tbody></table>
+                            </td>
+                        </tr>
+
+                        <tr><td align="center" style="padding: 0 0 20px 0;"><div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.3), transparent); width: 80%;"></div></td></tr>
+
+                        <tr>
+                            <td align="center" style="padding: 0 0 8px 0; font-size: 14px; color: #E0E0E0;">
+                                Nos vemos en el reactor,
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" style="padding: 0 0 16px 0; font-size: 13px; color: #D4A843; letter-spacing: 1px;">
+                                Zak'Haar · Red Solar Viva
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" style="padding: 0 0 10px 0; font-size: 11px; color: #37474f;">
+                                redsolarviva.com
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </table>
+    </div>
+</body>
+</html>`
+
+        // =============================================
+        // 6. ENVIAR EMAIL (branch por tipo de sesión)
+        // =============================================
+        const isIndividualEmail = isIndividual === true
+        const subjectToSend = isIndividualEmail
+            ? "[ IGNICIÓN 1:1 ] Tu canal directo ha sido encriptado"
+            : "[ SEÑAL RECIBIDA ] Has cruzado el umbral. Bienvenido a la Cámara Solar."
+        const bodyToSend = isIndividualEmail ? htmlBody1to1 : htmlBody
+
         try {
             await transporter.sendMail({
                 from: process.env.PROTON_SMTP_USER,
                 to: inviteeEmail,
-                subject:
-                    "[ SEÑAL RECIBIDA ] Has cruzado el umbral. Bienvenido a la Cámara Solar.",
-                html: htmlBody,
+                subject: subjectToSend,
+                html: bodyToSend,
             })
-            console.log(`✅ Email de bienvenida enviado a ${inviteeEmail}`)
+            console.log(
+                `✅ Email ${isIndividualEmail ? "1:1" : "grupal"} enviado a ${inviteeEmail}`
+            )
         } catch (err) {
             console.error(`❌ Error enviando email: ${err.message}`)
             throw err // re-throw para que el HTTP trigger retorne 5xx y el UI muestre "Email falló"
         }
 
         return {
-            status: "✅ Explorador procesado",
-            source: isCalendly ? "calendly" : "manual",
+            status: "✅ Tripulante procesado",
+            source: isCalendly
+                ? "calendly"
+                : isIndividual
+                  ? "individual"
+                  : "manual",
             name: inviteeName,
             email: inviteeEmail,
             eventDate: eventDateStr,
             eventTime: `${horaBonita} (${tzShort})`,
             aperturaTime: horaApertura,
             timezone: inviteeTimezone,
+            durationMin: isIndividualEmail ? sessionDurationMin : null,
         }
     },
 })

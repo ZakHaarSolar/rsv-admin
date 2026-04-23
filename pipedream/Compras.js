@@ -163,7 +163,20 @@ export default defineComponent({
     }
 
     const session = event.data.object;
-    
+
+    /* v2 — ignorar checkouts del Motor de Reservas Atómico. Esos eventos
+       los procesa PaseExploracion.js (via Stripe webhook de Supabase).
+       Compras.js sólo maneja códices (libros) + membresías. Sin este
+       guard, Compras.js intentaba resolver el auto-generated Product ID
+       de los Checkouts con price_data inline y crasheaba con
+       "Producto ID desconocido: prod_UNieSU2l9vDRKz". */
+    if (session.metadata?.payment_type === "booking") {
+      return {
+        status: "Evento ignorado — reserva nativa procesada por PaseExploracion.js",
+        reserva_id: session.metadata?.reserva_id || null,
+      };
+    }
+
     const customerEmail = session.customer_details?.email || session.customer_email || "test@example.com";
     const customerName = session.customer_details?.name || "Explorador Solar";
     const firstName = customerName.split(" ")[0];
