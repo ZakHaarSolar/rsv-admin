@@ -48,8 +48,8 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey)
 // Cuando crees nuevos productos, agrega su ID aquí.
 const PRODUCT_GROUP_MAP: Record<string, string> = {
     'prod_UJPj3SUcvleCdS': 'cuasar',     // Inmersión Solar - Cuásar (4:30pm)
+    'prod_UOf1RrEypuWFTg': 'sintonia',   // Sintonía Solar ($777 MXN/mes)
     // 'prod_XXXXXXXXX': 'pulsar',         // ← Agrega aquí tu Product ID de Púlsar cuando lo tengas
-    // 'prod_YYYYYYYYY': 'sintonia',        // ← Futuro: Sintonía Solar
 }
 
 // Si el producto NO está en el mapa, default → 'pulsar' (grupo original)
