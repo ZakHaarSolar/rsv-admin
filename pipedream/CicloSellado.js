@@ -10,8 +10,17 @@ import nodemailer from "nodemailer";
  * resume los 6 puntajes, destaca el pilar más bajo y abre la puerta a
  * Sintonía Solar con CTA al checkout de Stripe.
  *
+ * v2 (2026-04-27)
+ *  · Skip si el tripulante ya tiene Sintonía Solar activa: el correo es
+ *    una invitación al checkout, no tiene sentido mandarlo a quienes ya
+ *    pagaron. Verificamos via subscriptions?email=eq.X&status=eq.active.
+ *  · Log a Supabase (RPC log_email_dispatch) en CADA terminación: sent,
+ *    failed o skipped. Eso le permite al Motor de Intervención mostrar
+ *    si el correo llegó, si falló por SMTP, o si fue omitido.
+ *
  * Payload esperado (body JSON del POST):
  * {
+ *   clerk_user_id: string (recomendado para tracking),
  *   email: string (obligatorio),
  *   full_name: string | null,
  *   indice: number (0-100),
@@ -22,6 +31,7 @@ import nodemailer from "nodemailer";
  *
  * Env vars (Pipedream):
  *   PROTON_SMTP_USER, PROTON_SMTP_PASS, PROTON_SMTP_HOST, PROTON_SMTP_PORT
+ *   SUPABASE_URL, SUPABASE_ANON_KEY
  */
 export default defineComponent({
   props: {
@@ -34,6 +44,7 @@ export default defineComponent({
   async run({ steps, $ }) {
     const body = this.http?.body || steps?.trigger?.event?.body || {};
 
+    const clerkUserId = (body.clerk_user_id || "").trim();
     const email = (body.email || "").trim().toLowerCase();
     if (!email) {
       await this.http.respond({
@@ -48,8 +59,80 @@ export default defineComponent({
     const scores = body.scores || {};
     const fechaIso = body.fecha || new Date().toISOString();
 
+    const supabaseUrl = (process.env.SUPABASE_URL || "").replace(/\/+$/, "");
+    const supabaseKey = process.env.SUPABASE_ANON_KEY || "";
+    const supabaseReady = supabaseUrl && supabaseKey;
+
+    /**
+     * logDispatch — fire-and-forget al RPC log_email_dispatch para guardar
+     * la evidencia del envío (sent / failed / skipped) en email_dispatches.
+     * Si Supabase no está configurado, NO bloqueamos — sólo seguimos.
+     */
+    const logDispatch = async (status, errorMessage = null, extraMeta = {}) => {
+      if (!supabaseReady) return;
+      try {
+        await fetch(`${supabaseUrl}/rest/v1/rpc/log_email_dispatch`, {
+          method: "POST",
+          headers: {
+            apikey: supabaseKey,
+            Authorization: `Bearer ${supabaseKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            p_clerk_user_id: clerkUserId || `email:${email}`,
+            p_email: email,
+            p_email_type: "ciclo_sellado",
+            p_status: status,
+            p_error_message: errorMessage,
+            p_metadata: { indice, fecha: fechaIso, ...extraMeta },
+          }),
+        });
+      } catch (logErr) {
+        console.warn(`[CicloSellado] log_email_dispatch fail: ${logErr.message}`);
+      }
+    };
+
     // ==========================================================
-    // 1. Resolver pilar más bajo (si no viene, calcularlo)
+    // 1. SKIP si ya tiene Sintonía Solar (o cualquier sub) activa
+    // ==========================================================
+    if (supabaseReady) {
+      try {
+        const subRes = await fetch(
+          `${supabaseUrl}/rest/v1/subscriptions?email=eq.${encodeURIComponent(
+            email
+          )}&status=eq.active&select=email&limit=1`,
+          {
+            headers: {
+              apikey: supabaseKey,
+              Authorization: `Bearer ${supabaseKey}`,
+            },
+          }
+        );
+        if (subRes.ok) {
+          const subs = await subRes.json();
+          if (Array.isArray(subs) && subs.length > 0) {
+            console.log(
+              `↷ CicloSellado SKIP — ${email} ya tiene Sintonía Solar activa`
+            );
+            await logDispatch("skipped", null, {
+              reason: "active_subscription",
+            });
+            await this.http.respond({
+              status: 200,
+              body: { ok: true, skipped: true, reason: "active_subscription" },
+            });
+            return { ok: true, skipped: true };
+          }
+        }
+      } catch (subErr) {
+        console.warn(`[CicloSellado] subs check fail: ${subErr.message}`);
+        /* No bloqueamos por fallar el check — preferimos enviar el correo
+           que perderlo. Si el check falla, seguimos al envío normal. */
+      }
+    }
+
+    // ==========================================================
+    // 2. Resolver pilar más bajo (si no viene, calcularlo)
     // ==========================================================
     const PILAR_LABELS = {
       fisico: "HARDWARE · Físico",
@@ -58,14 +141,6 @@ export default defineComponent({
       financiero: "GRAVEDAD · Financiera",
       vector: "VECTOR · De Expansión",
       orbita: "ÓRBITA · Relacional",
-    };
-    const PILAR_SHORT = {
-      fisico: "Hardware",
-      mental: "Procesador",
-      emocional: "Motor",
-      financiero: "Gravedad",
-      vector: "Vector",
-      orbita: "Órbita",
     };
 
     let pilarMasBajo = body.pilar_mas_bajo || null;
@@ -89,7 +164,7 @@ export default defineComponent({
     }
 
     // ==========================================================
-    // 2. Visuales del email
+    // 3. Visuales del email
     // ==========================================================
     const logoUrl =
       "https://drive.google.com/uc?export=view&id=1t4glJMPN7JmkDKl9v0hDmhH1gavbMycD";
@@ -145,7 +220,7 @@ export default defineComponent({
                 ${pilarMasBajo.label} — ${pilarMasBajo.score}%
               </div>
               <div style="font-size: 13px; color: #CCCCCC; line-height: 1.6;">
-                Este es el punto del campo con mayor entropía hoy. Ahí es donde los Protocolos Quirúrgicos tienen el mayor efecto transmutativo — cada semana que avanzas con tu Sintonía Solar activa se te asignan nuevas rutas para aflojar ese pilar.
+                Este es el punto del campo con mayor entropía hoy. Ahí es donde las Calibraciones tienen el mayor efecto transmutativo — cada semana que avanzas con tu Sintonía Solar activa se te asignan nuevas rutas para afinar ese pilar.
               </div>
             </div>
           </td>
@@ -153,7 +228,7 @@ export default defineComponent({
       : "";
 
     // ==========================================================
-    // 3. Template del email
+    // 4. Template del email
     // ==========================================================
     const htmlBody = `<!DOCTYPE html>
 <html lang="es">
@@ -223,7 +298,7 @@ export default defineComponent({
               <tr>
                 <td align="center" style="padding:35px 10px 10px 10px;">
                   <div style="font-size:13px;line-height:1.7;color:#CCCCCC;margin-bottom:22px;">
-                    Para recalibrar semana a semana y ver cómo se mueve tu campo, activa tu <strong style="color:#FFD700;">Sintonía Solar</strong>. Obtienes escaneos ilimitados (escaneos semanales), biblioteca completa de Protocolos Quirúrgicos, Decodificador de Materia sin tope y las siguientes capas que se integren.
+                    Para recalibrar semana a semana y ver cómo se mueve tu campo, activa tu <strong style="color:#FFD700;">Sintonía Solar</strong>. Obtienes escaneos ilimitados (escaneos semanales), biblioteca completa de Calibraciones, Decodificador de Materia sin tope y las siguientes capas que se integren.
                   </div>
                 </td>
               </tr>
@@ -270,7 +345,7 @@ export default defineComponent({
 </html>`;
 
     // ==========================================================
-    // 4. Enviar vía ProtonMail SMTP
+    // 5. Enviar vía ProtonMail SMTP
     // ==========================================================
     const transporter = nodemailer.createTransport({
       host: process.env.PROTON_SMTP_HOST || "smtp.protonmail.ch",
@@ -291,6 +366,7 @@ export default defineComponent({
         html: htmlBody,
       });
       console.log(`✅ CicloSellado enviado a ${email} (indice ${indice}%)`);
+      await logDispatch("sent");
       await this.http.respond({
         status: 200,
         body: { ok: true, email, indice, fecha: fechaIso },
@@ -298,6 +374,7 @@ export default defineComponent({
       return { ok: true, email, indice };
     } catch (err) {
       console.error(`❌ Error enviando CicloSellado a ${email}: ${err.message}`);
+      await logDispatch("failed", err.message);
       await this.http.respond({
         status: 500,
         body: { ok: false, error: err.message },
