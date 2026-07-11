@@ -14,6 +14,11 @@ node_modules/
 .env.local
 .env.*.local
 
+# Service accounts de Firebase (clave privada FCM — el secreto vive en
+# Supabase; el .json local es solo para el `secrets set` de una vez).
+*firebase-adminsdk*.json
+*-service-account*.json
+
 # Runtime markers del watcher (estado transitorio, no versionable)
 .last-sync-status.json
 .skip-iphone-reload
