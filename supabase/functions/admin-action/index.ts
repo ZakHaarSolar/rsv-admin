@@ -1,3 +1,8 @@
+// Red Solar Viva · admin-action v1.53 — 🜂 EL AFINAMIENTO DE LA MATRIZ: rutea
+// admin_espejo_afinamiento + admin_espejo_afinamiento_estado (Motor → "Voz" →
+// pestaña Matriz). Es el bucle de mejora del Espejo, hermano del de la voz,
+// pero un nivel más arriba: de estas marcas salen las LEYES del prompt.
+// Requiere migración 20260813b_espejo_afinamiento.
 // Red Solar Viva · admin-action v1.52 — 🜂 EL PANEL DE VOZ APRENDE A SOLTAR:
 // rutea admin_voz_frases_borrar (Motor → "Voz"), el borrado por texto de las
 // frases sin resolver — pruebas propias, ruido, o carencias ya convertidas en
@@ -405,6 +410,13 @@ const ADMIN_RPCS: Record<string, string | null> = {
     // ruido, o frases ya convertidas en ejemplos del prompt). Barre todas las
     // filas cuyo texto normalizado coincida. Requiere 20260813_voz_frases_borrar.
     admin_voz_frases_borrar: "p_admin_clerk_id",
+    // 🜂 AFINAMIENTO DEL ESPEJO (Motor → "Voz" → pestaña Matriz): los reflejos
+    // que alguien marcó como fuera de visión, con el ángulo correcto en sus
+    // palabras. Mismo bucle que las frases de voz, un nivel más arriba: de acá
+    // salen las LEYES del prompt, no los sinónimos de un comando. Sin
+    // identidad (hash corto). Requiere 20260813b_espejo_afinamiento.
+    admin_espejo_afinamiento: "p_admin_clerk_id",
+    admin_espejo_afinamiento_estado: "p_admin_clerk_id",
     // Aviso de nueva versión (Motor → "App"): fija última versión + mensaje + link.
     admin_set_app_release: "p_admin_clerk_id",
     // BLOQUEO DE EMERGENCIA (Motor → "App"): pantalla sin salida para versiones

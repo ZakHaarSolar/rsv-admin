@@ -1,3 +1,8 @@
+// Red Solar Viva · user-action v1.48 — 🜂 AFINAMIENTO DEL ESPEJO: rutea
+// registrar_afinamiento_espejo, la marca de "esto no me representa" sobre un
+// reflejo con el ángulo correcto en las palabras de quien corrige. Cierra el
+// bucle de mejora del Espejo igual que el panel de Voz cerró el de los
+// comandos. Requiere migración 20260813b_espejo_afinamiento.
 // Red Solar Viva · user-action v1.47 — SOPORTE ES CONVERSACIÓN: suma
 // get_my_support_tickets / add_support_message / mark_support_read. El caso deja de
 // ser un formulario que se manda y se olvida: el Tripulante ve su hilo dentro de
@@ -303,6 +308,12 @@ const USER_RPCS: Record<string, string> = {
     get_my_support_tickets: "p_clerk_user_id",
     add_support_message: "p_clerk_user_id",
     mark_support_read: "p_clerk_user_id",
+    // 🜂 AFINAMIENTO DEL ESPEJO: la marca de "esto no me representa" sobre un
+    // reflejo, con el ángulo correcto si lo escribieron. Es el bucle de mejora
+    // del Espejo, hermano del panel de Voz: la corrección se captura EN
+    // CALIENTE, con el reflejo delante, y de ahí salen las leyes del prompt.
+    // Requiere migración 20260813b_espejo_afinamiento.
+    registrar_afinamiento_espejo: "p_clerk_user_id",
     // Telemetría: la app reporta su versión (profiles.app_version del propio nodo).
     set_app_version: "p_clerk_user_id",
     // Regalo de Sintonía: el Tripulante consulta si tiene un regalo pendiente y lo
