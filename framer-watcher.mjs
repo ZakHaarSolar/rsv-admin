@@ -1,5 +1,14 @@
 #!/usr/bin/env node
-// Red Solar Viva — Framer Watcher v2.11
+// Red Solar Viva — Framer Watcher v2.12
+// v2.12 — Falso negativo `waitForComponentLoader timeout` clasificado
+//   correctamente. Este timeout viene del SDK `framer-api` DESPUÉS de
+//   subir el contenido al servidor — ocurre porque Framer no confirma
+//   que el componentLoader cargó el archivo antes de los ~21s. El
+//   contenido SÍ queda subido (se ve el header nuevo en Framer). Antes
+//   reportábamos `failed`, lo que disparaba paste manual innecesario.
+//   Ahora: detectamos ese mensaje específico y lo pasamos a uploaded[]
+//   con `verified=false` + warning, status "uploaded_unverified". Los
+//   demás errores siguen como failed[] real.
 // Vigila Code/*.tsx — al detectar cambio (debounce 5s), abre conexión
 // FRESCA al Server API, sincroniza, publica, deploya, cierra.
 // Conexiones efímeras = sin zombies, sin timeouts misteriosos.
@@ -345,13 +354,35 @@ const syncFiles = async (files) => {
                 updated++
             } catch (e) {
                 const dt = ((Date.now() - t1) / 1000).toFixed(1)
-                console.warn(
-                    `   \u274c ${fname} fall\u00f3 en ${dt}s: ${e?.message || e} \u2014 siguiendo con el resto del batch.`
-                )
-                failed.push({
-                    name: fname,
-                    reason: e?.message || String(e),
-                })
+                const msg = e?.message || String(e)
+                /* v2.12 \u2014 Falso negativo conocido: el upload s\u00ed completa
+                   (Framer queda con la versi\u00f3n nueva, header visible),
+                   pero el SDK lanza error porque su check del
+                   `componentLoader` no recibi\u00f3 ack a tiempo. Lo pasamos
+                   a uploaded[] con verified=false + warning. NO va a
+                   failed[]: no requiere paste manual. */
+                if (/waitForComponentLoader timeout/i.test(msg)) {
+                    console.warn(
+                        `   \u26a0\ufe0f  ${fname}: subido en ${dt}s, pero Framer no confirm\u00f3 componentLoader. Contenido OK; reload del componente puede tardar unos segundos extra.`
+                    )
+                    uploaded.push({
+                        name: fname,
+                        size_kb: Number(kb),
+                        seconds: Number(dt),
+                        verified: false,
+                        warning:
+                            "componentLoader timeout \u2014 content uploaded; loader ack falt\u00f3",
+                    })
+                    updated++
+                } else {
+                    console.warn(
+                        `   \u274c ${fname} fall\u00f3 en ${dt}s: ${msg} \u2014 siguiendo con el resto del batch.`
+                    )
+                    failed.push({
+                        name: fname,
+                        reason: msg,
+                    })
+                }
             }
         }
 
@@ -519,17 +550,38 @@ const flush = async () => {
     } catch (e) {
         const errMsg = e?.message || String(e)
         console.error(`   ❌ ${errMsg}`)
+        /* v2.12 \u2014 Si el SDK adjunta detalle del publish (e.errors,
+           e.publishingErrors, e.cause), lo serializamos al receipt y
+           al stderr para diagn\u00f3stico. Antes el "Publishing blocked
+           by N errors" era una caja negra. */
+        const publishDetail =
+            e?.errors ||
+            e?.publishingErrors ||
+            e?.cause?.errors ||
+            e?.data?.errors ||
+            null
+        if (publishDetail) {
+            console.error(
+                "   Detalle de errores de publish:",
+                JSON.stringify(publishDetail, null, 2).slice(0, 2000)
+            )
+        } else if (e?.cause) {
+            console.error("   cause:", e.cause)
+        }
         /* v2.7 \u2014 receipt: registrar el fallo para que Claude lo vea */
         writeReceipt("failed", {
             files,
             error: errMsg,
+            errors_detail: publishDetail || null,
             recommendation: errMsg.includes("Timeout") && files.some(
                 (f) => readFileSync(join(CODE_DIR, f), "utf-8").length > 300_000
             )
                 ? "El archivo supera ~300KB. Framer API timeouta procesando archivos grandes. Copiar/pegar manualmente a Framer."
                 : errMsg.includes("Timeout") || errMsg.includes("Internal")
                   ? "Framer API intermitente. Reintentar en 1-2 min o copiar/pegar manualmente."
-                  : "Error desconocido. Revisar logs del watcher.",
+                  : errMsg.includes("Publishing blocked")
+                    ? "Framer encontr\u00f3 errores de compilaci\u00f3n al publicar. Ver errors_detail en este receipt y consola del watcher para los c\u00f3digos exactos."
+                    : "Error desconocido. Revisar logs del watcher.",
         })
     } finally {
         syncing = false

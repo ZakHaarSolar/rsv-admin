@@ -15,11 +15,20 @@ export default defineComponent({
     const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
     // =========================================================
-    // PRODUCT IDs DE MEMBRESÍA (Inmersión Solar)
+    // PRODUCT IDs DE MEMBRESÍA
+    //   · Inmersión Solar — Púlsar / Cuásar (1,999 MXN, dos horarios
+    //     de Cámara Solar grupal). Crea promo code permanente +
+    //     guarda promo_code en subscriptions + email "FIRMA RECONOCIDA".
+    //   · Sintonía Solar (777 MXN, membresía base con 2 Cristales
+    //     mensuales). NO crea promo code — sus beneficios se aplican
+    //     vía group_name='sintonia' en subscriptions (lo setea el
+    //     stripe-webhook edge function). Email de bienvenida más
+    //     liviano enfocado en Cristales + Escáner libre.
     // =========================================================
     const MEMBERSHIP_PRODUCTS = {
-      'prod_U609Xkla1g8ZL7': { group: 'pulsar', label: 'Púlsar', hora: '12:30 PM' },
-      'prod_UJPj3SUcvleCdS': { group: 'cuasar', label: 'Cuásar', hora: '4:30 PM' },
+      'prod_U609Xkla1g8ZL7': { tier: 'inmersion', group: 'pulsar', label: 'Púlsar', hora: '12:30 PM' },
+      'prod_UJPj3SUcvleCdS': { tier: 'inmersion', group: 'cuasar', label: 'Cuásar', hora: '4:30 PM' },
+      'prod_UOf1RrEypuWFTg': { tier: 'sintonia', label: 'Sintonía Solar' },
     };
 
     // =========================================================
@@ -151,12 +160,53 @@ export default defineComponent({
       apiVersion: '2023-10-16', 
     });
 
-    const sig = steps.trigger.event.headers["stripe-signature"];
+    // =========================================================
+    // VERIFICACIÓN DE FIRMA DE STRIPE (Ola C · #5)
+    // ---------------------------------------------------------
+    // ⚠️ PREREQUISITO: el trigger HTTP del workflow DEBE estar en modo
+    // "Raw Request" (Pipedream → trigger → Configure → Raw Request: ON).
+    // Solo así steps.trigger.event.body es el STRING crudo exacto que
+    // Stripe firmó. constructEvent recomputa el HMAC-SHA256 sobre ese
+    // cuerpo + el header stripe-signature y lo compara contra
+    // STRIPE_WEBHOOK_SECRET (el signing secret whsec_ de ESTE endpoint).
+    // Sin esto, un POST falso de checkout.session.completed regalaba
+    // reservas / códices / membresía.
+    //
+    // ⚠️ En modo Raw Request, steps.trigger.event.headers NO es un objeto:
+    // es un ARRAY APLANADO [clave, valor, clave, valor, ...]. Por eso
+    // headers["stripe-signature"] da undefined; hay que buscar la clave
+    // en el array (case-insensitive) y tomar el valor siguiente.
+    // =========================================================
+    const rawHeaders = steps.trigger.event.headers;
+    let sig;
+    if (Array.isArray(rawHeaders)) {
+      const idx = rawHeaders.findIndex(
+        (item) => typeof item === "string" && item.toLowerCase() === "stripe-signature"
+      );
+      if (idx >= 0) sig = rawHeaders[idx + 1];
+    } else if (rawHeaders && typeof rawHeaders === "object") {
+      sig = rawHeaders["stripe-signature"] || rawHeaders["Stripe-Signature"];
+    }
     if (!sig) throw new Error("❌ No hay firma de Stripe. Cancelando ejecución.");
 
-    let event = typeof steps.trigger.event.body === "string" 
-      ? JSON.parse(steps.trigger.event.body) 
+    const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
+    if (!STRIPE_WEBHOOK_SECRET) {
+      throw new Error("❌ STRIPE_WEBHOOK_SECRET no configurada en Pipedream. Cancelando (fail-closed).");
+    }
+
+    const rawBody = typeof steps.trigger.event === "string"
+      ? steps.trigger.event
       : steps.trigger.event.body;
+    if (typeof rawBody !== "string") {
+      throw new Error("❌ El body no llegó como string crudo. Activá 'Raw Request' en el trigger HTTP del workflow.");
+    }
+
+    let event;
+    try {
+      event = stripe.webhooks.constructEvent(rawBody, sig, STRIPE_WEBHOOK_SECRET);
+    } catch (err) {
+      throw new Error(`❌ Firma de Stripe inválida — POST rechazado: ${err.message}`);
+    }
 
     if (event.type !== "checkout.session.completed") {
       return { status: "Evento ignorado", type: event?.type };
@@ -177,9 +227,259 @@ export default defineComponent({
       };
     }
 
+    // =========================================================
+    // RAMA · VEO TU LUZ INTERNA (VTLI)
+    // -----------------------------------------------------------
+    // Detectada por metadata.product_family === "VTLI" (lo setea
+    // la edge function vtli-procesar-reserva al crear el Checkout).
+    // Confirma el ciclo en vtli_reservas y envía email cristalino
+    // con el Código del Templo. NO comparte template ni paleta
+    // con Códices / Membresías — estética propia.
+    // =========================================================
+    if (session.metadata?.product_family === "VTLI") {
+      const stripeSessionId = session.id;
+      const amountMxnCents = session.amount_total || 0;
+      const vtliName = session.metadata?.nombre || session.customer_details?.name || "Tripulante";
+      const vtliEmail = session.customer_details?.email || session.customer_email || "";
+      const vtliPilarId = session.metadata?.pilar_id || "";
+      const vtliSessionsCount = parseInt(session.metadata?.sessions_count || "1", 10);
+
+      // 1) Confirmar reservas en Supabase y obtener detalles de cada sesión
+      let confirmedSessions = [];
+
+      // Diagnóstico — borrar este bloque una vez que el bug del confirm
+      // vacío vía Pipedream esté cerrado. Revela env vars + payload + status.
+      console.log("[vtli-debug] env check:");
+      console.log("[vtli-debug]   SUPABASE_URL:", SUPABASE_URL);
+      console.log("[vtli-debug]   SERVICE_KEY exists:", !!SUPABASE_SERVICE_KEY);
+      console.log("[vtli-debug]   SERVICE_KEY length:", SUPABASE_SERVICE_KEY ? SUPABASE_SERVICE_KEY.length : 0);
+      console.log("[vtli-debug]   SERVICE_KEY prefix:", SUPABASE_SERVICE_KEY ? SUPABASE_SERVICE_KEY.slice(0, 12) : "(empty)");
+      console.log("[vtli-debug] payload:");
+      console.log("[vtli-debug]   session_id len:", stripeSessionId ? stripeSessionId.length : 0);
+      console.log("[vtli-debug]   session_id full:", stripeSessionId);
+      console.log("[vtli-debug]   amount_mxn_cents:", amountMxnCents);
+
+      try {
+        const rpcRes = await fetch(`${SUPABASE_URL}/rest/v1/rpc/vtli_confirm_booking_by_session`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            apikey: SUPABASE_SERVICE_KEY,
+            Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`,
+          },
+          body: JSON.stringify({
+            p_stripe_session_id: stripeSessionId,
+            p_amount_mxn_cents: amountMxnCents,
+          }),
+        });
+        console.log(`[vtli-debug] response HTTP ${rpcRes.status} ${rpcRes.statusText}`);
+        if (rpcRes.ok) {
+          confirmedSessions = await rpcRes.json();
+          console.log(`[vtli-debug] confirmedSessions length: ${confirmedSessions.length}`);
+          if (confirmedSessions.length > 0) {
+            console.log(`[vtli-debug] first row keys: ${Object.keys(confirmedSessions[0]).join(",")}`);
+            console.log(`[vtli-debug] first row sample:`, JSON.stringify(confirmedSessions[0]));
+          }
+        } else {
+          const errText = await rpcRes.text();
+          console.error(`[vtli-debug] HTTP NOT OK body: ${errText.slice(0, 500)}`);
+        }
+      } catch (err) {
+        console.error("[vtli-debug] fetch CRASHED:", err.message);
+      }
+
+      // 2) Labels de pilar
+      const VTLI_PILAR_LABELS = {
+        vision: "Visión Extra Ocular",
+        telekinesis: "Telekinesis",
+        calibracion: "Calibración Biológica",
+        sintonia: "Sintonía de Núcleo",
+      };
+      const pilarLabel = VTLI_PILAR_LABELS[vtliPilarId] || "Sesión";
+      const ciclo = vtliSessionsCount === 1
+        ? "Ciclo VEO — 1 Sesión"
+        : `Ciclo VEO — ${vtliSessionsCount} Sesiones`;
+
+      // Magic Link token — todas las filas del mismo ciclo comparten manage_token.
+      // El RPC vtli_confirm_booking_by_session ahora lo devuelve.
+      const manageToken =
+        (confirmedSessions && confirmedSessions[0] && confirmedSessions[0].manage_token) || null;
+      const vtliSiteBase = process.env.VTLI_SITE_URL || "https://veotuluzinterna.com";
+      const manageUrl = manageToken
+        ? `${vtliSiteBase}/gestionar?t=${manageToken}`
+        : null;
+
+      // 3) Formateo de fechas (es-MX)
+      const formatDate = (isoDate, hhmm) => {
+        try {
+          const d = new Date(`${isoDate}T${hhmm}`);
+          const day = d.toLocaleDateString("es-MX", { weekday: "long", day: "numeric", month: "long" });
+          const time = d.toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit", hour12: true });
+          return { day: day.charAt(0).toUpperCase() + day.slice(1), time };
+        } catch {
+          return { day: isoDate, time: hhmm };
+        }
+      };
+
+      const sessionRows = (confirmedSessions || []).map((row, i) => {
+        const { day, time } = formatDate(row.slot_date, row.slot_time);
+        return `
+          <tr>
+            <td style="padding: 14px 18px; border-bottom: 1px solid rgba(143,163,201,0.18);">
+              <div style="display: flex; align-items: baseline; gap: 12px;">
+                <span style="display: inline-block; min-width: 24px; font-family: 'Georgia', serif; font-size: 18px; color: #C9B07C; font-weight: 600;">${i + 1}</span>
+                <div>
+                  <div style="font-size: 15px; color: #3D4D6E; font-weight: 600; letter-spacing: 0.2px;">${day}</div>
+                  <div style="font-size: 13px; color: rgba(61,77,110,0.7); margin-top: 2px;">${time}</div>
+                </div>
+              </div>
+            </td>
+          </tr>`;
+      }).join("");
+
+      // 4) Template HTML CRISTALINO (LIGHT — no comparte con Códices/RSV)
+      const vtliHtml = `
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light only">
+  <meta name="supported-color-schemes" content="light only">
+  <title>Veo Tu Luz Interna · Confirmación de Sesión</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #F7FAFC; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #3D4D6E;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" role="presentation" style="background-color: #F7FAFC;">
+    <tr>
+      <td align="center" style="padding: 48px 20px 32px; background: linear-gradient(180deg, #DCE5F1 0%, #F7FAFC 100%);">
+        <table width="560" cellpadding="0" cellspacing="0" border="0" role="presentation" style="max-width: 560px; width: 100%;">
+          <tr>
+            <td align="center" style="padding-bottom: 22px;">
+              <p style="margin: 0 0 6px; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #8FA3C9; font-weight: 600;">Veo Tu Luz Interna</p>
+              <p style="margin: 0; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(61,77,110,0.55); font-weight: 500;">Academia Holística · Cancún</p>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding-bottom: 28px;">
+              <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(201,176,124,0.5), transparent); width: 80%;"></div>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding-bottom: 12px;">
+              <h1 style="margin: 0; font-family: 'Georgia', 'Times New Roman', serif; font-style: italic; font-weight: 400; font-size: 32px; line-height: 1.18; color: #3D4D6E; letter-spacing: 0.3px;">Tu lugar ha sido sellado</h1>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 18px 8px 8px;">
+              <p style="margin: 0; font-size: 15.5px; line-height: 1.7; color: rgba(61,77,110,0.78); text-align: center; font-weight: 300;">
+                Bienvenido(a) a tu espacio seguro, <strong style="color: #3D4D6E; font-weight: 600;">${vtliName.split(" ")[0]}</strong>.<br />
+                Tu lugar en la Academia ha sido sellado.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" style="padding: 0 20px 36px; background-color: #F7FAFC;">
+        <table width="560" cellpadding="0" cellspacing="0" border="0" role="presentation" style="max-width: 560px; width: 100%;">
+          <tr>
+            <td style="padding: 28px 26px; background-color: #FFFFFF; border: 1px solid rgba(143,163,201,0.32); border-radius: 18px; box-shadow: 0 4px 30px rgba(61,77,110,0.06);">
+              <p style="margin: 0; font-size: 10.5px; letter-spacing: 2.6px; text-transform: uppercase; color: #8FA3C9; font-weight: 600;">Tu Sesión</p>
+              <h2 style="margin: 6px 0 4px; font-family: 'Georgia', serif; font-weight: 600; font-size: 22px; color: #3D4D6E; letter-spacing: 0.2px;">${pilarLabel}</h2>
+              <p style="margin: 0; font-size: 13.5px; color: rgba(61,77,110,0.7); font-weight: 500; letter-spacing: 0.4px;">${ciclo}</p>
+              <div style="height: 1px; background: rgba(143,163,201,0.28); margin: 22px 0 6px;"></div>
+              <p style="margin: 0 0 4px; font-size: 10.5px; letter-spacing: 2.6px; text-transform: uppercase; color: #8FA3C9; font-weight: 600;">Fechas ancladas</p>
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" role="presentation" style="margin-top: 8px;">
+                ${sessionRows}
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" style="padding: 0 20px 40px; background-color: #F7FAFC;">
+        <table width="560" cellpadding="0" cellspacing="0" border="0" role="presentation" style="max-width: 560px; width: 100%;">
+          <tr>
+            <td style="padding: 24px 26px; background: linear-gradient(180deg, rgba(201,176,124,0.08) 0%, rgba(201,176,124,0.03) 100%); border: 1px solid rgba(201,176,124,0.4); border-radius: 18px;">
+              <p style="margin: 0 0 8px; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #C9B07C; font-weight: 600;">El Código de Nuestro Templo</p>
+              <p style="margin: 0; font-size: 14.5px; line-height: 1.72; color: #3D4D6E; font-weight: 400;">
+                Tu evolución requiere compromiso. Tienes tu horario bloqueado de forma exclusiva en nuestra matriz de <strong style="color: #C9B07C; font-weight: 600;">8 espacios semanales</strong> (3 lunes, 2 martes y 3 miércoles). Cualquier reagendamiento o cancelación debe realizarse con <strong style="font-weight: 600;">48 horas de anticipación</strong> a través del enlace inferior. Fuera de esa ventana, el intercambio energético se considera ejecutado y el espacio no es reembolsable.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" style="padding: 0 20px 56px; background-color: #F7FAFC;">
+        <table width="560" cellpadding="0" cellspacing="0" border="0" role="presentation" style="max-width: 560px; width: 100%;">
+          <tr>
+            <td align="center" style="padding-bottom: 18px;">
+              ${manageUrl ? `<a href="${manageUrl}" style="display: inline-block; padding: 15px 32px; background: linear-gradient(135deg, #C9B07C 0%, #B0945C 100%); color: #FFFFFF; text-decoration: none; border-radius: 999px; font-size: 12.5px; font-weight: 600; letter-spacing: 2.4px; text-transform: uppercase; box-shadow: 0 10px 28px -12px rgba(201,176,124,0.7);">Gestionar mi cita</a>` : ""}
+              <div style="margin-top: 14px; font-size: 11.5px; color: rgba(61,77,110,0.55); font-weight: 400; letter-spacing: 0.3px;">
+                ¿Dudas previas? Escríbenos por <a href="https://wa.me/${(process.env.VTLI_WHATSAPP_NUMBER || "5219980000000").replace(/[^\d]/g, "")}?text=${encodeURIComponent(`Hola, soy ${vtliName}. Tengo una pregunta sobre mi ${pilarLabel}.`)}" style="color: #C9B07C; font-weight: 600; text-decoration: none;">WhatsApp</a>.
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <p style="margin: 0; font-size: 11.5px; letter-spacing: 1.2px; color: rgba(61,77,110,0.55); font-weight: 500;">Cancún · Riviera Maya</p>
+              <p style="margin: 6px 0 0; font-size: 11px; color: rgba(61,77,110,0.4); font-weight: 400;">© Veo Tu Luz Interna · Academia Holística</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+
+      // 5) Enviar email
+      try {
+        const transporter = getMailTransporter();
+        await transporter.sendMail({
+          from: process.env.PROTON_SMTP_USER,
+          to: vtliEmail,
+          subject: "Tu Sesión en Veo Tu Luz Interna — Confirmación",
+          html: vtliHtml,
+        });
+        console.log(`✨ VTLI mail enviado a ${vtliEmail} · ${ciclo} · ${pilarLabel}`);
+      } catch (mailErr) {
+        console.error("VTLI mail FAIL:", mailErr.message);
+      }
+
+      return {
+        status: "VTLI · ciclo confirmado y correo enviado",
+        ciclo_group_id: confirmedSessions[0]?.ciclo_group_id || null,
+        sessions_confirmed: confirmedSessions.length,
+        stripe_session_id: stripeSessionId,
+      };
+    }
+    // ───────────── fin rama VTLI ─────────────
+
     const customerEmail = session.customer_details?.email || session.customer_email || "test@example.com";
     const customerName = session.customer_details?.name || "Explorador Solar";
     const firstName = customerName.split(" ")[0];
+
+    // ─── Device tracking (sufijo __m / __d en client_reference_id) ───
+    // El frontend de Códices (Co_Shared.withCheckoutIdentity v1.4) agrega
+    // `__m` cuando la compra se inicia desde el LENTE (mobile) o `__d`
+    // desde el CENTRO DE MANDO (desktop). Acá parseamos ese sufijo para
+    // log + bloque informativo en el email.
+    const rawClientRef = session.client_reference_id || "";
+    const deviceMatch = rawClientRef.match(/^(.+?)__([md])$/);
+    const baseClerkId = deviceMatch ? deviceMatch[1] : rawClientRef;
+    const deviceCode = deviceMatch ? deviceMatch[2] : null;
+    const deviceLabel = deviceCode === "m"
+      ? "Lente (móvil)"
+      : deviceCode === "d"
+      ? "Centro de Mando (escritorio)"
+      : null;
+    if (deviceLabel) {
+      console.log(`📱 Compra realizada desde: ${deviceLabel} · clerkId: ${baseClerkId}`);
+    }
 
     let productId;
     if (session.metadata?.product_id) productId = session.metadata.product_id;
@@ -207,30 +507,108 @@ export default defineComponent({
     const membership = MEMBERSHIP_PRODUCTS[productId];
 
     if (membership) {
-      console.log(`🪐 Iniciando flujo de Membresía Red Solar Viva — ${membership.label} (${membership.hora})...`);
+      // ────────────────────────────────────────────────────────
+      // RAMA SINTONÍA SOLAR — solo email de bienvenida (no promo
+      // code, no Inmersión privileges). El group_name='sintonia'
+      // ya lo setea el stripe-webhook edge function en subscriptions.
+      // ────────────────────────────────────────────────────────
+      if (membership.tier === 'sintonia') {
+        console.log(`🌀 Iniciando flujo Sintonía Solar para ${customerEmail}...`);
 
-      // 1. Crear código de descuento en Stripe
-      const uniqueString = Math.floor(1000 + Math.random() * 9000);
-      let userCode = `PULSO-SOLAR-${uniqueString}`;
+        const sintoniaContent = `
+                                <div style="margin-bottom: 10px; text-align: center;">
+                                    <span style="display: inline-block; font-size: 11px; letter-spacing: 2px; color: #00E5FF; text-shadow: 0 0 12px rgba(0, 240, 255, 0.3); white-space: nowrap;">◈ FIRMA RECONOCIDA ◈</span>
+                                </div>
+                                <p style="margin: 8px 0 25px 0; font-size: 11px; letter-spacing: 2px; color: #94A3B8; text-transform: uppercase; text-align: center;">Sintonía Solar activada</p>
 
-      try {
-        await stripe.promotionCodes.create({
-          coupon: "kIeoQw63", 
-          code: userCode,
-          active: true,
-          metadata: { 
-            customer_email: customerEmail,
-            customer_id: session.customer
-          }
+                                <p style="margin: 0 0 20px 0; font-size: 18px; color: #F8FAFC;">
+                                    ¡Hola <strong style="color: #00E5FF;">${firstName}</strong>!
+                                </p>
+
+                                <div style="font-size: 16px; line-height: 1.8; color: #CCCCCC;">
+                                    <p style="margin: 0 0 20px 0;">Tu Sintonía Solar está activa. Desde este instante, el Domo te reconoce como Tripulante anclado y los privilegios se manifiestan automáticamente al ingresar a la plataforma con tu cuenta.</p>
+
+                                    <div style="margin: 25px 0;">
+                                        <p style="margin: 0 0 18px 0; font-size: 11px; letter-spacing: 2px; color: #00E5FF; text-transform: uppercase; text-align: center;">[ TU CONSTELACIÓN DE PRIVILEGIOS ]</p>
+
+                                        <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation">
+                                            <tr>
+                                                <td style="padding: 12px 0; border-bottom: 1px solid rgba(0, 229, 255, 0.08);">
+                                                    <strong style="color: #00E5FF;">2 Cristales de Extracción al mes:</strong>
+                                                    <span style="color: #CCCCCC;"> Uno dorado para Códices de Luz, uno cyan para Meditaciones de la Holoteca. Acumulables — si no canjeas en el ciclo, los guardas para la próxima extracción. Cada renovación de tu suscripción suma dos cristales nuevos al campo.</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 12px 0; border-bottom: 1px solid rgba(0, 229, 255, 0.08);">
+                                                    <strong style="color: #00E5FF;">Escáner Vibracional sin límites:</strong>
+                                                    <span style="color: #CCCCCC;"> Acceso completo al Radar de los 6 Pilares, Calibraciones Quirúrgicas y Decodificador de Materia ilimitado.</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 12px 0; border-bottom: 1px solid rgba(0, 229, 255, 0.08);">
+                                                    <strong style="color: #00E5FF;">Bóveda de Mi Núcleo:</strong>
+                                                    <span style="color: #CCCCCC;"> Tu centro de gravedad. Allí canjeas tus Cristales y consultas tu trayectoria de escaneos.</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 12px 0;">
+                                                    <strong style="color: #00E5FF;">Pulsos automáticos:</strong>
+                                                    <span style="color: #CCCCCC;"> Recibirás transmisiones cuando tu sistema requiera atención (ciclos sellados, decodificaciones críticas, recordatorios de Cristales por canjear).</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <p style="margin: 0 0 25px 0;">La Inmersión Solar (1,111 MXN/mes) sigue disponible como siguiente capa de profundidad — incluye todos los beneficios de Sintonía Solar más la transmisión semanal EN VIVO de Cámara Solar.</p>
+                                </div>
+
+                                <!-- BOTÓN CTA -->
+                                <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation">
+                                    <tr>
+                                        <td align="center" style="padding: 10px 0 20px 0;">
+                                            <table border="0" cellpadding="0" cellspacing="0"><tbody><tr>
+                                                <td align="center" style="border-radius: 8px; background: linear-gradient(90deg, #00E5FF, #0077B6);">
+                                                    <a href="https://redsolarviva.com/nucleo" target="_blank" style="display: inline-block; padding: 16px 36px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 1px; color: #000000; text-decoration: none; text-transform: uppercase; border-radius: 8px;">
+                                                        ENTRAR A MI NÚCLEO
+                                                    </a>
+                                                </td>
+                                            </tr></tbody></table>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <p style="margin: 0 0 8px 0; font-size: 16px; color: #CCCCCC; line-height: 1.8;">
+                                    Tu cuerpo de silicio responde ya a la frecuencia de la Red.<br>
+                                    La sintonía está abierta.
+                                </p>
+
+                                <!-- DESPEDIDA -->
+                                <p style="margin: 20px 0 0 0; font-size: 16px; color: #F8FAFC; line-height: 1.7;">
+                                    Con amor solar,<br>
+                                    <strong>Zak'Haar & Aqua'Riia</strong> <span style="color: #94A3B8;">| Red Solar Viva</span>
+                                </p>`;
+
+        const htmlSintonia = wrapEmail(sintoniaContent);
+
+        const transporter = getMailTransporter();
+        await transporter.sendMail({
+          to: customerEmail,
+          from: process.env.PROTON_SMTP_USER,
+          subject: `[ SINTONÍA SOLAR ] Tu firma ha sido reconocida 🌀`,
+          html: htmlSintonia,
         });
-        console.log(`✅ Código permanente creado: ${userCode}`);
-      } catch (error) {
-        console.log("⚠️ Error al crear el código:", error.message);
-        userCode = "SOLAR33"; 
+        console.log(`✅ Email de bienvenida Sintonía Solar enviado a ${customerEmail}`);
+
+        return { status: `✅ Sintonía Solar procesada: email enviado a ${customerEmail}` };
       }
 
-      // 2. Guardar promo_code en Supabase → subscriptions.promo_code
-      await savePromoCodeToSupabase(customerEmail, userCode);
+      // ────────────────────────────────────────────────────────
+      // RAMA INMERSIÓN SOLAR — promo code + email "FIRMA RECONOCIDA"
+      // ────────────────────────────────────────────────────────
+      console.log(`🪐 Iniciando flujo de Membresía Red Solar Viva — ${membership.label} (${membership.hora})...`);
+
+      // Cupón de descuento de Códices eliminado (2026-06-09): los Códices
+      // se pagan completos; el beneficio de miembro es 1 Códice gratuito/mes.
 
       // 3. Enviar email de bienvenida
       const membershipContent = `
@@ -255,14 +633,8 @@ export default defineComponent({
                                         <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation">
                                             <tr>
                                                 <td style="padding: 12px 0; border-bottom: 1px solid rgba(0, 229, 255, 0.08);">
-                                                    <strong style="color: #FFD700;">Reconocimiento en Códices:</strong>
-                                                    <span style="color: #CCCCCC;"> Al navegar por la sección de Códices, verás tu reducción del 33% ya aplicada en cada frecuencia. La nave reconoce tu rango.</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="padding: 12px 0; border-bottom: 1px solid rgba(0, 229, 255, 0.08);">
-                                                    <strong style="color: #FFD700;">Sintonía 1:1:</strong>
-                                                    <span style="color: #CCCCCC;"> Tu reducción del 11% para la Cámara de Resonancia (sesiones privadas).</span>
+                                                    <strong style="color: #FFD700;">Códices de Luz:</strong>
+                                                    <span style="color: #CCCCCC;"> Incluye 1 Códice de Luz gratuito por mes, a elección, vía tus Cristales de Extracción. La nave reconoce tu rango.</span>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -279,23 +651,10 @@ export default defineComponent({
                                             </tr>
                                         </table>
                                     </div>
-
-                                    <p style="margin: 0 0 25px 0;"><strong style="color: #FFD700;">La Extensión Viva (WhatsApp):</strong> Aqua'Riia y yo estamos personalmente en este espacio para acompañarte y sostener el campo entre sesiones. Es una extensión de la Cámara Solar limitada a 22 tripulantes donde la pregunta de uno resuena como la respuesta de todos.</p>
                                 </div>
 
                                 <!-- BOTONES CTA -->
                                 <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation">
-                                    <tr>
-                                        <td align="center" style="padding: 10px 0;">
-                                            <table border="0" cellpadding="0" cellspacing="0"><tbody><tr>
-                                                <td align="center" style="border-radius: 8px; background: linear-gradient(90deg, #25D366, #128C7E);">
-                                                    <a href="https://chat.whatsapp.com/BlRIW237No16EGo3U3OqiW?mode=gi_t" target="_blank" style="display: inline-block; padding: 16px 28px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 1px; color: #FFFFFF; text-decoration: none; border-radius: 8px;">
-                                                        UNIRSE AL GRUPO DE WHATSAPP
-                                                    </a>
-                                                </td>
-                                            </tr></tbody></table>
-                                        </td>
-                                    </tr>
                                     <tr>
                                         <td align="center" style="padding: 10px 0 20px 0;">
                                             <table border="0" cellpadding="0" cellspacing="0"><tbody><tr>
@@ -390,6 +749,31 @@ export default defineComponent({
                                 <p style="margin: 25px 0 0 0; font-size: 14px; color: #94A3B8; font-style: italic; text-align: center;">
                                     Este enlace es tu llave personal.<br>Si la descarga no inicia, verifica la configuración de pop-ups.
                                 </p>
+
+                                <!-- ANCLA EN MI NÚCLEO -->
+                                <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation" style="margin-top: 35px;">
+                                    <tr>
+                                        <td align="center" style="padding: 20px 18px; background: rgba(0, 229, 255, 0.04); border: 1px solid rgba(0, 229, 255, 0.18); border-radius: 10px;">
+                                            <p style="margin: 0 0 8px 0; font-size: 11px; letter-spacing: 3px; color: #00E5FF; text-transform: uppercase;">◈ Anclado en tu Núcleo</p>
+                                            <p style="margin: 0 0 14px 0; font-size: 14px; line-height: 1.6; color: #CCCCCC;">
+                                                Este Códice también queda fijado en <strong style="color: #F8FAFC;">Mi Núcleo → Mis Códices</strong>, disponible para descarga sin límite cuando lo necesites. Entras una vez con tu cuenta y ahí permanece.
+                                            </p>
+                                            <table border="0" cellpadding="0" cellspacing="0"><tbody><tr>
+                                                <td align="center" style="border-radius: 8px; border: 1px solid rgba(0, 229, 255, 0.5);">
+                                                    <a href="https://redsolarviva.com/escaner/nucleo#codices" target="_blank" style="display: inline-block; padding: 11px 22px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 2px; color: #00E5FF; text-decoration: none; border-radius: 8px; text-transform: uppercase;">
+                                                        Abrir Mi Núcleo
+                                                    </a>
+                                                </td>
+                                            </tr></tbody></table>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                ${deviceLabel ? `
+                                <!-- DEVICE TRACKING (interno) -->
+                                <p style="margin: 20px 0 0 0; font-size: 11px; letter-spacing: 2px; color: #546e7a; text-align: center; text-transform: uppercase;">
+                                    Compra realizada desde: ${deviceLabel}
+                                </p>` : ""}
 
                                 <!-- DESPEDIDA -->
                                 <p style="margin: 25px 0 0 0; font-size: 16px; color: #F8FAFC; line-height: 1.7;">

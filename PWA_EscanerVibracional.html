@@ -1,0 +1,201 @@
+<!--
+  ════════════════════════════════════════════════════════════════════
+  PWA Setup · Escáner Vibracional · Red Solar Viva
+  v1.0 — 2026-05-04
+  ════════════════════════════════════════════════════════════════════
+
+  Ruta A (decisión de Zak): meta tags + manifest inline. Sin service
+  worker → sin offline real, sin push, sin install prompt nativo en
+  Android. Suficiente para que se sienta app cuando el Tripulante la
+  ancla con "Añadir a Pantalla de inicio".
+
+  Scope: /escaner/*
+  Start URL: /escaner/radar
+  Display: standalone (sin barra de URL)
+
+  → El resto de Red Solar Viva (/codices, /sesiones, /, /home, etc.)
+    sigue siendo web normal. El navegador SOLO trata como PWA las
+    rutas dentro de /escaner/.
+
+  Comportamiento por plataforma:
+
+  · iOS Safari → "Compartir" → "Añadir a Pantalla de inicio"
+    Funciona perfecto. Aparece icono custom + título "Escáner" + abre
+    standalone (sin URL bar, sin tabs). Apple NO usa el manifest para
+    los iconos: requiere los <link rel="apple-touch-icon"> separados.
+
+  · Android Chrome → menú "⋮" → "Instalar app" / "Añadir a pantalla
+    principal". Funciona. SIN install prompt nativo automático
+    (eso requiere un Service Worker con fetch handler — Ruta B,
+    pendiente porque Framer no permite servir SW en /).
+
+  · Android Firefox / Samsung Browser → idem Chrome.
+
+  ════════════════════════════════════════════════════════════════════
+  CÓMO OBTENER LAS URLs PÚBLICAS DE LOS ICONOS
+  ════════════════════════════════════════════════════════════════════
+
+  Importante: el manifest necesita una URL pública directa para cada
+  icono — NO un link al editor de Framer (esos no son accesibles desde
+  el navegador del Tripulante). El "Copy Link" dentro del editor de
+  Framer devuelve un link al estudio (`framer.com/projects/...`), no
+  al asset. Hay tres rutas para obtener las URLs reales:
+
+  ── Ruta A · Cloudflare R2 (recomendada) ──────────────────
+  Cloudflare R2 ya hospeda los assets de Red Solar Viva (códices,
+  audios, PDFs). Subir los iconos ahí da URLs estables que sobreviven
+  cambios de Framer.
+    1. Ir a Cloudflare Dashboard → R2 → bucket de assets de RSV.
+    2. Drag&drop de los dos PNG. Si se quiere, dentro de un prefijo
+       /pwa/ para mantenerlos agrupados.
+    3. Copiar la URL pública de cada uno (depende del subdominio
+       configurado para el bucket).
+    4. Pegar las URLs aquí en el JSON crudo (más abajo) y correr
+       `node admin/build-pwa-manifest.mjs`.
+
+  ── Ruta B · Extraer del sitio publicado de Framer ────────
+  Si los iconos viven "fuera del canvas" en Framer, el sitio NO los
+  sirve y por eso no aparecen en `framerusercontent.com`. Hay que
+  meterlos DENTRO de un canvas publicado, aunque sea oculto.
+    1. En Framer, mover los dos iconos al canvas Home (o cualquiera
+       publicado). Achicarlos a 1×1px y darles opacity 0 — quedan en
+       el HTML pero invisibles para el Tripulante.
+    2. Publish.
+    3. Abrir https://redsolarviva.com en Chrome.
+    4. F12 → pestaña Network → en el filtro escribir
+       `framerusercontent` → recargar la página (Cmd+R).
+    5. Aparecen los requests a las imágenes. Click derecho sobre cada
+       fila → "Copy" → "Copy URL".
+    6. Las URLs se ven como
+       `https://framerusercontent.com/images/[hash].png`.
+    7. Pegar en el JSON crudo y correr build-pwa-manifest.mjs.
+
+  ── Ruta C · Inline base64 en el manifest ─────────────────
+  Si las dos rutas anteriores no funcionan, los PNG se pueden encodear
+  en base64 y meterlos inline en el manifest como `data:image/png;
+  base64,...`. Funciona en Chrome/Android sin drama; en iOS Safari es
+  menos confiable (los `<link rel="apple-touch-icon">` con data: URLs
+  pueden ignorarse en algunas versiones).
+    1. Pasarme los dos PNG (subirlos a algún drive/dropbox accesible).
+    2. Yo escribo un script paralelo que los lee, los encodea y los
+       inyecta en el JSON crudo + en los `apple-touch-icon`.
+    3. Bloque resultante listo para pegar.
+
+  Recomendación: Ruta A. Robusta, sobrevive cambios de Framer, los
+  iconos se pueden actualizar sin tocar código. Si no hay acceso a R2
+  ahora mismo, Ruta B en 5 minutos. Ruta C como último recurso.
+
+  ════════════════════════════════════════════════════════════════════
+  CÓMO PEGAR EL BLOQUE EN FRAMER (después de tener URLs)
+  ════════════════════════════════════════════════════════════════════
+
+  1. Tener listas las URLs públicas de los dos iconos:
+       · escaner-icon-192.png   192×192 px
+       · escaner-icon-512.png   512×512 px
+
+     Recomendación de diseño: ícono del Escáner sobre fondo #0A0F1F
+     (matchea theme_color), con padding interno generoso (~20%) para
+     que el "maskable" de Android no recorte el dibujo.
+
+  2. Reemplazar las 4 ocurrencias de
+     "https://framerusercontent.com/REEMPLAZAR-ICONO-XXX.png"
+     más abajo (2 en los apple-touch-icon + 2 en el JSON crudo).
+
+  3. Regenerar el data:URL del manifest con el script:
+
+       cd "/Users/diego/Documents/Red Solar Viva/admin"
+       node build-pwa-manifest.mjs
+
+     El script lee este archivo, encuentra el JSON crudo, lo encodea
+     en base64 y reemplaza el atributo href del <link rel="manifest">
+     en este mismo archivo.
+
+  4. Abrir Framer → Site Settings → General → Custom Code →
+     "Start of <head> tag" → pegar TODO el bloque marcado entre
+     <!-- BEGIN PWA BLOCK --> y <!-- END PWA BLOCK -->.
+
+  5. Publish del sitio.
+
+  6. Probar:
+     · iPhone: abrir https://redsolarviva.com/escaner/radar en Safari,
+       botón "Compartir" → "Añadir a Pantalla de inicio". El icono del
+       home debe ser el escáner, no el favicon de Framer.
+     · Android: abrir misma URL en Chrome, menú "⋮" → "Instalar app".
+
+  ════════════════════════════════════════════════════════════════════
+  JSON CRUDO DEL MANIFEST (editable)
+  ════════════════════════════════════════════════════════════════════
+
+  Si querés cambiar nombre, descripción, colores o iconos, editá este
+  JSON y volvé a correr build-pwa-manifest.mjs:
+
+  ```json
+  {
+    "name": "Escáner Vibracional · Red Solar Viva",
+    "short_name": "Escáner",
+    "description": "Telemetría biológica y espiritual del Avatar. Mide los 6 pilares en tiempo real.",
+    "start_url": "/escaner/radar",
+    "scope": "/escaner/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "theme_color": "#0A0F1F",
+    "background_color": "#0A0F1F",
+    "lang": "es",
+    "icons": [
+      {
+        "src": "https://pub-94bd1d71bb304c91ad7b8e146063f337.r2.dev/Escaner%20Vibracional/PWA/Logo%20192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any"
+      },
+      {
+        "src": "https://pub-94bd1d71bb304c91ad7b8e146063f337.r2.dev/Escaner%20Vibracional/PWA/Logo%20512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any maskable"
+      }
+    ]
+  }
+  ```
+
+  ════════════════════════════════════════════════════════════════════
+  BLOQUE LISTO PARA COPIAR A FRAMER (Custom Code · Start of <head>)
+  ════════════════════════════════════════════════════════════════════
+-->
+
+<!-- BEGIN PWA BLOCK -->
+<!-- PWA · Escáner Vibracional v1.1 · scope /escaner/ · start /escaner/radar -->
+
+<!-- v1.1 (2026-05-07) — Viewport con viewport-fit=cover declarado al
+     primer paint para que iOS PWA standalone extienda el lienzo detrás
+     del notch + status bar. Sin esto, mutar el meta viewport via JS
+     (estrategia v4.87 de Domo.tsx) llega DESPUÉS de que iOS calculó las
+     safe-area-insets, así que la franja superior queda en negro sólido
+     y las estrellas no la cruzan. Custom Code "Start of <head>" se
+     inyecta antes que el meta viewport auto-generado de Framer; iOS
+     Safari respeta el primer meta viewport, así que el nuestro gana. -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+
+<!-- Theme color y color-scheme: matchea fondo del Domo (estrellado) -->
+<meta name="theme-color" content="#0A0F1F" />
+<meta name="color-scheme" content="dark" />
+
+<!-- iOS Safari PWA -->
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Escáner" />
+
+<!-- Apple touch icons (iOS NO usa el manifest para esto) -->
+<link rel="apple-touch-icon" href="https://pub-94bd1d71bb304c91ad7b8e146063f337.r2.dev/Escaner%20Vibracional/PWA/Logo%20192%20Full.png" />
+<link rel="apple-touch-icon" sizes="192x192" href="https://pub-94bd1d71bb304c91ad7b8e146063f337.r2.dev/Escaner%20Vibracional/PWA/Logo%20192%20Full.png" />
+<link rel="apple-touch-icon" sizes="512x512" href="https://pub-94bd1d71bb304c91ad7b8e146063f337.r2.dev/Escaner%20Vibracional/PWA/Logo%20Android%20512.png" />
+
+<!-- Manifest inline (data:URL base64). Scope /escaner/, start_url /escaner/radar.
+     Para regenerar: editar el JSON crudo arriba y correr
+     `node admin/build-pwa-manifest.mjs`. -->
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiRXNjw6FuZXIgVmlicmFjaW9uYWwgwrcgUmVkIFNvbGFyIFZpdmEiLCJzaG9ydF9uYW1lIjoiRXNjw6FuZXIiLCJkZXNjcmlwdGlvbiI6IlRlbGVtZXRyw61hIGJpb2zDs2dpY2EgeSBlc3Bpcml0dWFsIGRlbCBBdmF0YXIuIE1pZGUgbG9zIDYgcGlsYXJlcyBlbiB0aWVtcG8gcmVhbC4iLCJzdGFydF91cmwiOiIvZXNjYW5lci9yYWRhciIsInNjb3BlIjoiL2VzY2FuZXIvIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJvcmllbnRhdGlvbiI6InBvcnRyYWl0IiwidGhlbWVfY29sb3IiOiIjMEEwRjFGIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwQTBGMUYiLCJsYW5nIjoiZXMiLCJpY29ucyI6W3sic3JjIjoiaHR0cHM6Ly9wdWItOTRiZDFkNzFiYjMwNGM5MWFkN2I4ZTE0NjA2M2YzMzcucjIuZGV2L0VzY2FuZXIlMjBWaWJyYWNpb25hbC9QV0EvTG9nbyUyMDE5Mi5wbmciLCJzaXplcyI6IjE5MngxOTIiLCJ0eXBlIjoiaW1hZ2UvcG5nIiwicHVycG9zZSI6ImFueSJ9LHsic3JjIjoiaHR0cHM6Ly9wdWItOTRiZDFkNzFiYjMwNGM5MWFkN2I4ZTE0NjA2M2YzMzcucjIuZGV2L0VzY2FuZXIlMjBWaWJyYWNpb25hbC9QV0EvTG9nbyUyMDUxMi5wbmciLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2UvcG5nIiwicHVycG9zZSI6ImFueSBtYXNrYWJsZSJ9XX0=" />
+
+<!-- Tip de standalone para JS futuro: detectar con
+     window.matchMedia('(display-mode: standalone)').matches
+     o navigator.standalone en iOS. -->
+<!-- END PWA BLOCK -->

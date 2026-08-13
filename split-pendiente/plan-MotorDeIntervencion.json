@@ -1,0 +1,96 @@
+{
+ "source": "/Users/diego/Documents/Red Solar Viva/Code/MotorDeIntervencion.tsx",
+ "shellImportAnchor": "import SoporteMod from \"./MI_Soporte.tsx\"",
+ "providedLocally": [
+  "useAdminAuth",
+  "useIsMobile",
+  "useScrollHideHeader",
+  "rpc",
+  "adminAction",
+  "adminActionCached",
+  "rpcCached",
+  "motorCacheClear",
+  "PILARES",
+  "CSS"
+ ],
+ "targets": [
+  {
+   "file": "MI_Navegacion.tsx",
+   "kind": "sibling",
+   "shellFn": "MINavegacionShell",
+   "exportName": "MINavegacion",
+   "header": "// MI_Navegacion.tsx v1.0 — la pestaña Navegación del Motor: por dónde se mueven los Tripulantes, con su filtro de cuentas internas y el gesto de recarga. Salió de MotorDeIntervencion.tsx al partirlo (2026-08-10); el código viaja idéntico, solo cambió de archivo.\n//\n// Consumidor: MotorDeIntervencion (shell).\n// Patrón de import:\n//   import MINavegacion from \"./MI_Navegacion.tsx\"\n//   const { NavTelemetryView } = MINavegacion\n",
+   "imports": "import React, { useState, useEffect, useCallback, useRef } from \"react\"\nimport { createPortal } from \"react-dom\"\nimport Shared from \"./MI_Shared.tsx\"\n\nconst {\n    useAdminAuth,\n    useIsMobile,\n    useScrollHideHeader,\n    rpc,\n    adminAction,\n    adminActionCached,\n    rpcCached,\n    motorCacheClear,\n    PILARES,\n    CSS,\n} = Shared\n",
+   "blocks": [15],
+   "exports": ["NavTelemetryView"]
+  },
+  {
+   "file": "MI_App.tsx",
+   "kind": "sibling",
+   "shellFn": "MIAppShell",
+   "exportName": "MIApp",
+   "header": "// MI_App.tsx v1.0 — lo que gobierna la app publicada: el distintivo de versión en circulación, la bitácora de avisos de actualización y el bloqueo de emergencia por versión mínima. Salió de MotorDeIntervencion.tsx al partirlo (2026-08-10); el código viaja idéntico, solo cambió de archivo.\n//\n// Consumidor: MotorDeIntervencion (shell).\n// Patrón de import:\n//   import MIApp from \"./MI_App.tsx\"\n//   const { AppVersionBadge, BloqueoEmergenciaPanel } = MIApp\n",
+   "imports": "import React, { useState, useEffect, useCallback, useRef } from \"react\"\nimport { createPortal } from \"react-dom\"\nimport Shared from \"./MI_Shared.tsx\"\n\nconst {\n    useAdminAuth,\n    useIsMobile,\n    useScrollHideHeader,\n    rpc,\n    adminAction,\n    adminActionCached,\n    rpcCached,\n    motorCacheClear,\n    PILARES,\n    CSS,\n} = Shared\n",
+   "blocks": [16, 17, 18, 19, 20, 21, 22],
+   "exports": [
+    "AppVersionBadge",
+    "BitacoraAvisosPanel",
+    "BloqueoEmergenciaPanel"
+   ]
+  },
+  {
+   "file": "MI_Growth.tsx",
+   "kind": "sibling",
+   "shellFn": "MIGrowthShell",
+   "exportName": "MIGrowth",
+   "header": "// MI_Growth.tsx v1.0 — crecimiento y puerta de entrada: rachas de cuentas sin registrar, interruptores de Cámara Solar y Sesiones, sesiones del Portal de Origen, embudo de llegada y el panel de experimentos A/B. Salió de MotorDeIntervencion.tsx al partirlo (2026-08-10); el código viaja idéntico, solo cambió de archivo.\n//\n// Consumidor: MotorDeIntervencion (shell).\n// Patrón de import:\n//   import MIGrowth from \"./MI_Growth.tsx\"\n//   const { OnbFunnelPanel, GrowthABPanel } = MIGrowth\n",
+   "imports": "import React, { useState, useEffect, useCallback, useRef } from \"react\"\nimport { createPortal } from \"react-dom\"\nimport Shared from \"./MI_Shared.tsx\"\n\nconst {\n    useAdminAuth,\n    useIsMobile,\n    useScrollHideHeader,\n    rpc,\n    adminAction,\n    adminActionCached,\n    rpcCached,\n    motorCacheClear,\n    PILARES,\n    CSS,\n} = Shared\n",
+   "blocks": [23, 24, 25, 26, 27, 28, 29, 30, 31, 32],
+   "exports": [
+    "RachasAnonPanel",
+    "CamaraSolarToggle",
+    "SesionesToggle",
+    "OnbSessionsPanel",
+    "OnbFunnelPanel",
+    "GrowthABPanel"
+   ]
+  },
+  {
+   "file": "MI_Correos.tsx",
+   "kind": "sibling",
+   "shellFn": "MICorreosShell",
+   "exportName": "MICorreos",
+   "header": "// MI_Correos.tsx v1.0 — el padrón de correos del Motor: las tres listas (Android, Escáner, RSV), quién es contactable y de dónde llegó cada quien. Salió de MotorDeIntervencion.tsx al partirlo (2026-08-10); el código viaja idéntico, solo cambió de archivo.\n//\n// Consumidor: MotorDeIntervencion (shell).\n// Patrón de import:\n//   import MICorreos from \"./MI_Correos.tsx\"\n//   const { CorreosPanel } = MICorreos\n",
+   "imports": "import React, { useState, useEffect, useCallback, useRef } from \"react\"\nimport { createPortal } from \"react-dom\"\nimport Shared from \"./MI_Shared.tsx\"\n\nconst {\n    useAdminAuth,\n    useIsMobile,\n    useScrollHideHeader,\n    rpc,\n    adminAction,\n    adminActionCached,\n    rpcCached,\n    motorCacheClear,\n    PILARES,\n    CSS,\n} = Shared\n",
+   "blocks": [33, 34, 35, 36, 37, 38],
+   "exports": ["CorreosPanel", "chipsDeCorreo", "esCorreoContactable"]
+  },
+  {
+   "file": "MI_CropCircles.tsx",
+   "kind": "sibling",
+   "shellFn": "MICropCirclesShell",
+   "exportName": "MICropCircles",
+   "header": "// MI_CropCircles.tsx v1.0 — la terminal de Crop Circles: alta de formaciones con su arte, visor a pantalla completa, encuadre y el planeta con zoom. Salió de MotorDeIntervencion.tsx al partirlo (2026-08-10); el código viaja idéntico, solo cambió de archivo.\n//\n// Consumidor: MotorDeIntervencion (shell).\n// Patrón de import:\n//   import MICropCircles from \"./MI_CropCircles.tsx\"\n//   const { CropCirclesPanel } = MICropCircles\n",
+   "imports": "import React, { useState, useEffect, useCallback, useRef } from \"react\"\nimport { createPortal } from \"react-dom\"\nimport Shared from \"./MI_Shared.tsx\"\n\nconst {\n    useAdminAuth,\n    useIsMobile,\n    useScrollHideHeader,\n    rpc,\n    adminAction,\n    adminActionCached,\n    rpcCached,\n    motorCacheClear,\n    PILARES,\n    CSS,\n} = Shared\n",
+   "blocks": [39, 40, 41, 42, 43, 44, 45, 46, 47],
+   "exports": ["CropCirclesPanel"]
+  },
+  {
+   "file": "MI_IAs.tsx",
+   "kind": "sibling",
+   "shellFn": "MIIAsShell",
+   "exportName": "MIIAs",
+   "header": "// MI_IAs.tsx v1.0 — el mapa de inteligencias del ecosistema: qué modelo atiende cada superficie y con qué criterio se eligió, la matriz comparativa, los topes de uso y el pase de imágenes. Salió de MotorDeIntervencion.tsx al partirlo (2026-08-10); el código viaja idéntico, solo cambió de archivo.\n//\n// Consumidor: MotorDeIntervencion (shell).\n// Patrón de import:\n//   import MIIAs from \"./MI_IAs.tsx\"\n//   const { IAsPanel } = MIIAs\n",
+   "imports": "import React, { useState, useEffect, useCallback, useRef } from \"react\"\nimport { createPortal } from \"react-dom\"\nimport Shared from \"./MI_Shared.tsx\"\n\nconst {\n    useAdminAuth,\n    useIsMobile,\n    useScrollHideHeader,\n    rpc,\n    adminAction,\n    adminActionCached,\n    rpcCached,\n    motorCacheClear,\n    PILARES,\n    CSS,\n} = Shared\n",
+   "blocks": [
+    48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65
+   ],
+   "exports": ["IAsPanel", "LimitesPanel", "PaseImagenPanel"]
+  },
+  {
+   "file": "MotorDeIntervencion.tsx",
+   "kind": "shell",
+   "blocks": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 66, 67, 68, 69]
+  }
+ ]
+}

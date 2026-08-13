@@ -1,4 +1,14 @@
-// Red Solar Viva — Edge Function: extract-text v1.1
+// Red Solar Viva — Edge Function: extract-text v1.4
+// v1.4 — AUDITORÍA PARTE 4 — techo DIARIO por persona + FRENO GLOBAL de gasto (una cota por hora dejaba pasar 24 veces esa cifra al día, y no existía techo de ecosistema).
+// v1.3 — Auditoría: budget governor (reserve_edge_spend) por usuario+IP antes de Vision (cierra M3).
+// v1.2 — Blindaje anti-abuso (Ola A de seguridad). Exige un token de
+// sesión de Clerk verificado (firma contra el JWKS de la instancia) y
+// aplica el límite freemium del Decodificador en el servidor. Sin esto,
+// cualquiera con la llave pública podía disparar Cloud Vision en bucle y
+// quemar créditos. Secrets nuevos: CLERK_SECRET_KEY + SUPABASE_SERVICE_
+// ROLE_KEY (ya existían en el proyecto). El cliente debe mandar
+// `{ image_base64, token }`.
+//
 // OCR profesional usando Google Cloud Vision API DOCUMENT_TEXT_DETECTION.
 // Es la primera etapa del pipeline a prueba de balas del Decodificador
 // de Materia. Devuelve el texto crudo de la imagen para que decode-matter
@@ -15,6 +25,8 @@
 // deno-lint-ignore-file no-explicit-any
 // @ts-ignore — Deno runtime
 import "jsr:@supabase/functions-js/edge-runtime.d.ts"
+import { jwtVerify, createLocalJWKSet } from "https://esm.sh/jose@5.9.6"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0"
 
 const VISION_ENDPOINT =
     "https://vision.googleapis.com/v1/images:annotate"
@@ -24,6 +36,97 @@ const CORS_HEADERS = {
     "Access-Control-Allow-Headers":
         "authorization, x-client-info, apikey, content-type",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Gate del Decodificador (Ola A). Verifica el token de sesión de
+   Clerk contra el JWKS de NUESTRA instancia (traído con
+   CLERK_SECRET_KEY → un token forjado por otra instancia no valida)
+   y aplica el límite freemium (3 escaneos de por vida para no-miembros)
+   en el servidor. Compartido conceptualmente con decode-matter.
+   ════════════════════════════════════════════════════════════════ */
+const CLERK_SECRET = Deno.env.get("CLERK_SECRET_KEY") || ""
+const FREE_DECODER_LIMIT = 3
+const sb = createClient(
+    Deno.env.get("SUPABASE_URL") || "",
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || ""
+)
+
+let _jwks: any = null
+async function instanceJwks(): Promise<any> {
+    if (_jwks) return _jwks
+    const r = await fetch("https://api.clerk.com/v1/jwks", {
+        headers: { Authorization: `Bearer ${CLERK_SECRET}` },
+    })
+    if (!r.ok) throw new Error(`jwks_${r.status}`)
+    _jwks = await r.json()
+    return _jwks
+}
+
+async function gateDecoder(
+    token: string | undefined | null
+): Promise<{
+    ok: boolean
+    status?: number
+    error?: string
+    clerkUserId?: string
+    isMember?: boolean
+}> {
+    if (!CLERK_SECRET) return { ok: false, status: 500, error: "auth_not_configured" }
+    if (!token || typeof token !== "string")
+        return { ok: false, status: 401, error: "auth_required" }
+    let clerkUserId = ""
+    try {
+        const JWKS = createLocalJWKSet(await instanceJwks())
+        const { payload } = await jwtVerify(token, JWKS, { clockTolerance: 10 })
+        clerkUserId = (payload.sub || "").toString().trim()
+    } catch (_e) {
+        return { ok: false, status: 401, error: "invalid_token" }
+    }
+    if (!clerkUserId) return { ok: false, status: 401, error: "invalid_token" }
+
+    let isMember = false
+    try {
+        const { data: prof } = await sb
+            .from("profiles")
+            .select("email")
+            .eq("clerk_user_id", clerkUserId)
+            .maybeSingle()
+        const email = (prof?.email || "").toLowerCase().trim()
+        if (email) {
+            const { data: subs } = await sb
+                .from("subscriptions")
+                .select("id")
+                .eq("email", email)
+                .eq("status", "active")
+                .limit(1)
+            isMember = (subs?.length ?? 0) > 0
+        }
+    } catch (_e) {
+        isMember = false
+    }
+
+    if (!isMember) {
+        let count = 0
+        try {
+            const { data: c } = await sb.rpc("get_my_decoder_scan_count", {
+                target_clerk_id: clerkUserId,
+            })
+            count = typeof c === "number" ? c : 0
+        } catch (_e) {
+            count = 0
+        }
+        if (count >= FREE_DECODER_LIMIT) {
+            return {
+                ok: false,
+                status: 403,
+                error: "free_limit_reached",
+                clerkUserId,
+                isMember,
+            }
+        }
+    }
+    return { ok: true, clerkUserId, isMember }
 }
 
 Deno.serve(async (req: Request) => {
@@ -120,6 +223,59 @@ Deno.serve(async (req: Request) => {
                     },
                 }
             )
+        }
+
+        /* Gate de seguridad: token de sesión verificado + límite freemium
+           server-side. Sin esto, Cloud Vision quedaba abierto a cualquiera. */
+        const gate = await gateDecoder(body?.token)
+        if (!gate.ok) {
+            return new Response(JSON.stringify({ error: gate.error }), {
+                status: gate.status || 401,
+                headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+            })
+        }
+
+        /* Budget governor (Auditoría 2026-06-12): tope por usuario + por IP
+           ANTES de Cloud Vision. Cierra M3 (extract-text gateaba el freemium
+           pero nunca lo consumía → Vision gratis ilimitado para no-miembros).
+           Fail-open si la RPC aún no existe. */
+        {
+            const _ip =
+                req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || null
+            const _rl = await sb.rpc("reserve_edge_spend", {
+                p_edge: "extract-text",
+                p_user_key: gate.clerkUserId || null,
+                p_ip: _ip,
+                p_cost: 1,
+                p_user_limit: 120,
+                p_user_window_seconds: 86400,
+                p_ip_limit: 250,
+                p_ip_window_seconds: 86400,
+                /* AUDITORÍA PARTE 4 · la ventana pasa de HORARIA a DIARIA y
+                   suma FRENO GLOBAL. Una cota por hora deja pasar 24 veces esa
+                   cifra al día, así que no acotaba el gasto real; y sin techo
+                   global, N cuentas abusivas sumaban sin que nada frenara la
+                   factura. 120/día por persona es enorme para alguien real.
+                   6000/día es el techo de TODO el ecosistema junto: la perilla
+                   a subir cuando crezca la base (editar + volver a desplegar). */
+                p_global_limit: 6000,
+                p_global_window_seconds: 86400,
+            })
+            if (_rl?.data && _rl.data.ok === false) {
+                return new Response(
+                    JSON.stringify({
+                        error: "rate_limited",
+                        reason: _rl.data.reason,
+                    }),
+                    {
+                        status: 429,
+                        headers: {
+                            ...CORS_HEADERS,
+                            "Content-Type": "application/json",
+                        },
+                    }
+                )
+            }
         }
 
         /* Cloud Vision payload — DOCUMENT_TEXT_DETECTION es la mejor

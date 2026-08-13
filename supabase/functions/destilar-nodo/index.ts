@@ -1,5 +1,9 @@
 // ════════════════════════════════════════════════════════════════════
-// Red Solar Viva — Edge Function `destilar-nodo` (v1.3)
+// Red Solar Viva — Edge Function `destilar-nodo` (v1.5)
+// v1.5 — AUDITORÍA PARTE 4 — gobernador de gasto reserve_edge_spend (Gemini
+// 3.1 Pro preview / 2.5 Pro). Cota por-usuario 25/día + global 60/día, justo
+// después de armar el contexto y antes de llamar a Gemini.
+// v1.4 — Ola C #3 Fase 3: token de Clerk requerido; sin fallback clerk_user_id.
 //
 // v1.3 (2026-04-24) — Vuelve a Gemini 3.1 Pro preview (más profundo
 // que flash para el análisis de 3 pilares). Para absorber los 503
@@ -46,6 +50,54 @@
 
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0"
+import { gateAdmin } from "../_shared/clerkAuth.ts"
+
+/* AUDITORÍA PARTE 4 · gobernador de gasto. Gemini 3.1 Pro preview / 2.5 Pro
+   son API de pago y esta edge no tenía ninguna cota más allá de la sesión
+   de admin. Reusa la RPC reserve_edge_spend (mismo gobernador de la ola E /
+   Parte 3, ver upload-matter-photo). Fail-open a propósito: si la RPC no
+   responde, la operación sigue (nunca rompe una destilación legítima). Sin
+   ventana por IP (no se fijó límite para esta edge — el gobernador la salta
+   con p_ip_limit:0). */
+async function reserveSpend(
+    edge: string,
+    userKey: string,
+    userLimit: number,
+    userWindowSeconds: number,
+    globalLimit: number,
+    globalWindowSeconds: number
+): Promise<boolean> {
+    const supaUrl = Deno.env.get("SUPABASE_URL")
+    const supaKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")
+    if (!supaUrl || !supaKey) return true
+    try {
+        const res = await fetch(`${supaUrl}/rest/v1/rpc/reserve_edge_spend`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                apikey: supaKey,
+                Authorization: `Bearer ${supaKey}`,
+            },
+            body: JSON.stringify({
+                p_edge: edge,
+                p_user_key: userKey,
+                p_ip: "",
+                p_cost: 1,
+                p_user_limit: userLimit,
+                p_user_window_seconds: userWindowSeconds,
+                p_ip_limit: 0,
+                p_ip_window_seconds: userWindowSeconds,
+                p_global_limit: globalLimit,
+                p_global_window_seconds: globalWindowSeconds,
+            }),
+        })
+        if (!res.ok) return true
+        const j = await res.json().catch(() => null)
+        return j?.ok !== false
+    } catch {
+        return true
+    }
+}
 
 const supabase = createClient(
     Deno.env.get("SUPABASE_URL")!,
@@ -357,24 +409,12 @@ serve(async (req) => {
 
     try {
         const payload = await req.json()
-        const clerkUserId: string = payload?.clerk_user_id || ""
+        let clerkUserId = ""
         const perfilNodoId: string = payload?.perfil_nodo_id || ""
         let n: number = parseInt(payload?.n || DEFAULT_N, 10) || DEFAULT_N
         if (n < 1) n = 1
         if (n > MAX_N) n = MAX_N
 
-        if (!clerkUserId) {
-            return new Response(
-                JSON.stringify({ error: "missing_clerk_user_id" }),
-                {
-                    status: 400,
-                    headers: {
-                        ...CORS_HEADERS,
-                        "Content-Type": "application/json",
-                    },
-                }
-            )
-        }
         if (!perfilNodoId) {
             return new Response(
                 JSON.stringify({ error: "missing_perfil_nodo_id" }),
@@ -388,16 +428,18 @@ serve(async (req) => {
             )
         }
 
-        const isAdmin = await verifyAdmin(clerkUserId)
-        if (!isAdmin) {
-            return new Response(JSON.stringify({ error: "not_admin" }), {
-                status: 403,
+        // Ola C · #3 Fase 3: token de Clerk verificado server-side, sin fallback.
+        const _g = await gateAdmin(payload?.token)
+        if (!_g.ok) {
+            return new Response(JSON.stringify({ error: _g.error }), {
+                status: _g.status ?? 401,
                 headers: {
                     ...CORS_HEADERS,
                     "Content-Type": "application/json",
                 },
             })
         }
+        clerkUserId = _g.userId!
 
         const perfil = await fetchPerfil(perfilNodoId)
         if (!perfil) {
@@ -447,6 +489,27 @@ serve(async (req) => {
 
         const displayName = perfil.nombre_ancla?.trim() || "Nodo"
         const contexto = buildContexto(displayName, turnosPorSesion)
+
+        // AUDITORÍA PARTE 4 — gobernador de gasto (Gemini 3.1 Pro preview / 2.5 Pro).
+        if (
+            !(await reserveSpend(
+                "destilar-nodo",
+                clerkUserId,
+                25,
+                86400,
+                60,
+                86400
+            ))
+        ) {
+            return new Response(JSON.stringify({ error: "rate_limited" }), {
+                status: 429,
+                headers: {
+                    ...CORS_HEADERS,
+                    "Content-Type": "application/json",
+                },
+            })
+        }
+
         const { destilacion, usage, modelo } = await llamarGemini(contexto)
 
         const fechasArr = turnosPorSesion.map((t) => t.fecha)

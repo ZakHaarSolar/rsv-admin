@@ -1,0 +1,154 @@
+{
+ "source": "/Users/diego/Documents/Red Solar Viva/Code/AppNavegacionMobile.tsx",
+ "shellImportAnchor": "import { useAdminAuth } from \"./MI_Shared.tsx\"",
+ "providedLocally": [
+  "hx",
+  "GOLD",
+  "useIsMobile",
+  "fireTouchRipple",
+  "useLightIndex",
+  "breathParams",
+  "ensureBreatheCss",
+  "IEscaner",
+  "IMod",
+  "IDecoder",
+  "IHoloteca",
+  "INucleo"
+ ],
+ "targets": [
+  {
+   "file": "MobileComun.tsx",
+   "kind": "sibling",
+   "shellFn": "MobileComunShell",
+   "exportName": "MobileComun",
+   "header": "// MobileComun.tsx v1.0 — piezas que comparten varias capas del Lente: los seis iconos dibujados de las tarjetas, los dos acentos de color, la dirección del Domo Cero, las tres primitivas visuales (núcleo de cristal, partículas y línea de barrido) y la pantalla de lo que todavía no abre. Salieron de AppNavegacionMobile.tsx al partirlo (2026-08-10) para que el shell y las capas hijas usen una sola copia sin depender unos de otros: la cadena queda EV_Shared → MobileComun → Mobile* → AppNavegacionMobile, sin ciclos.\n//\n// Consumidores: MobileHoloteca, MobileSimuladores, AppNavegacionMobile.\n// Patrón de import:\n//   import MobileComun from \"./MobileComun.tsx\"\n//   const { HOLO_CARD_ACCENT, IconFragmentos } = MobileComun\n",
+   "imports": "import React, { useEffect, useRef, useState, useMemo, useCallback } from \"react\"\nimport { motion, AnimatePresence } from \"framer-motion\"\nimport { createPortal } from \"react-dom\"\nimport Shared from \"./EV_Shared.tsx\"\nimport Icons from \"./EV_Icons.tsx\"\n\nconst { hx, GOLD, useIsMobile, fireTouchRipple } = Shared\nconst { useLightIndex, breathParams, ensureBreatheCss } = Shared\nconst { IEscaner, IMod, IDecoder, IHoloteca, INucleo } = Icons\n",
+   "blocks": [
+    15,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    28,
+    29,
+    31,
+    39,
+    40,
+    41,
+    42
+   ],
+   "exports": []
+  },
+  {
+   "file": "MobileHoloteca.tsx",
+   "kind": "sibling",
+   "shellFn": "MobileHolotecaShell",
+   "exportName": "MobileHoloteca",
+   "header": "// MobileHoloteca.tsx v1.0 — el tablero de la Holoteca en el Lente: sus tarjetas, los iconos de cada una y la pantalla de lo que todavía no abre. Salió de AppNavegacionMobile.tsx al partirlo (2026-08-10); el código viaja idéntico, solo cambió de archivo.\n//\n// Consumidor: AppNavegacionMobile (shell).\n// Patrón de import:\n//   import MobileHoloteca from \"./MobileHoloteca.tsx\"\n//   const { Holoteca } = MobileHoloteca\n",
+   "imports": "import React, { useEffect, useRef, useState, useMemo, useCallback } from \"react\"\nimport { motion, AnimatePresence } from \"framer-motion\"\nimport { createPortal } from \"react-dom\"\nimport Shared from \"./EV_Shared.tsx\"\nimport Icons from \"./EV_Icons.tsx\"\n\nconst { hx, GOLD, useIsMobile, fireTouchRipple } = Shared\nconst { useLightIndex, breathParams, ensureBreatheCss } = Shared\nconst { IEscaner, IMod, IDecoder, IHoloteca, INucleo } = Icons\n",
+   "blocks": [
+    27,
+    30
+   ],
+   "exports": [
+    "Holoteca"
+   ]
+  },
+  {
+   "file": "MobileFragmentos.tsx",
+   "kind": "sibling",
+   "shellFn": "MobileFragmentosShell",
+   "exportName": "MobileFragmentos",
+   "header": "// MobileFragmentos.tsx v1.0 — el astrolabio de Fragmentos del Sol en el Lente: el sol y sus planetas, la ficha de cada pieza, el reproductor a pantalla completa y la onda de audio. Salió de AppNavegacionMobile.tsx al partirlo (2026-08-10); el código viaja idéntico, solo cambió de archivo.\n//\n// Consumidor: AppNavegacionMobile (shell).\n// Patrón de import:\n//   import MobileFragmentos from \"./MobileFragmentos.tsx\"\n//   const { FragmentosAstrolabio } = MobileFragmentos\n",
+   "imports": "import React, { useEffect, useRef, useState, useMemo, useCallback } from \"react\"\nimport { motion, AnimatePresence } from \"framer-motion\"\nimport { createPortal } from \"react-dom\"\nimport Shared from \"./EV_Shared.tsx\"\nimport Icons from \"./EV_Icons.tsx\"\n\nconst { hx, GOLD, useIsMobile, fireTouchRipple } = Shared\nconst { useLightIndex, breathParams, ensureBreatheCss } = Shared\nconst { IEscaner, IMod, IDecoder, IHoloteca, INucleo } = Icons\n\n/* Espejo local del tipo que declara AppNavegacionMobile (shell) para su prop\n   `fragmentsItems`. Son campos opcionales de texto: al ser estructural, esta\n   copia y la del shell son el MISMO tipo para TypeScript. Si allá se agrega un\n   campo, agregarlo también acá. */\ntype FragmentItem = {\n    title?: string\n    synopsis?: string\n    youtubeLink?: string\n    embedCode?: string\n    cover?: string\n}\n",
+   "blocks": [
+    33,
+    34,
+    35,
+    36,
+    37,
+    38
+   ],
+   "exports": [
+    "FragmentosAstrolabio"
+   ],
+   "localTypes": [
+    "FragmentItem"
+   ]
+  },
+  {
+   "file": "MobileSimuladores.tsx",
+   "kind": "sibling",
+   "shellFn": "MobileSimuladoresShell",
+   "exportName": "MobileSimuladores",
+   "header": "// MobileSimuladores.tsx v1.0 — la sala de Simuladores en el Lente: el núcleo de cristal, las partículas, el selector y las tarjetas grandes de cada simulador. Salió de AppNavegacionMobile.tsx al partirlo (2026-08-10); el código viaja idéntico, solo cambió de archivo.\n//\n// Consumidor: AppNavegacionMobile (shell).\n// Patrón de import:\n//   import MobileSimuladores from \"./MobileSimuladores.tsx\"\n//   const { SimuladoresShellMobile } = MobileSimuladores\n",
+   "imports": "import React, { useEffect, useRef, useState, useMemo, useCallback } from \"react\"\nimport { motion, AnimatePresence } from \"framer-motion\"\nimport { createPortal } from \"react-dom\"\nimport Shared from \"./EV_Shared.tsx\"\nimport Icons from \"./EV_Icons.tsx\"\nimport NaveganteDeLaRed from \"./NaveganteDeLaRed.tsx\"\nimport { useAdminAuth } from \"./MI_Shared.tsx\"\n\nconst { hx, GOLD, useIsMobile, fireTouchRipple } = Shared\nconst { useLightIndex, breathParams, ensureBreatheCss } = Shared\nconst { IEscaner, IMod, IDecoder, IHoloteca, INucleo } = Icons\n",
+   "blocks": [
+    43,
+    44,
+    45,
+    46,
+    47
+   ],
+   "exports": [
+    "SimuladoresShellMobile",
+    "SimuladoresPublicMobile",
+    "SimuladoresSelectorCardsOnly"
+   ]
+  },
+  {
+   "file": "MobileCodigosFuente.tsx",
+   "kind": "sibling",
+   "shellFn": "MobileCodigosFuenteShell",
+   "exportName": "MobileCodigosFuente",
+   "header": "// MobileCodigosFuente.tsx v1.0 — la Cámara de Anclaje de Códigos Fuente en el Lente, con su cuenta de nodos anclados. Salió de AppNavegacionMobile.tsx al partirlo (2026-08-10); el código viaja idéntico, solo cambió de archivo.\n//\n// Consumidor: AppNavegacionMobile (shell).\n// Patrón de import:\n//   import MobileCodigosFuente from \"./MobileCodigosFuente.tsx\"\n//   const { CodigosFuenteAnclaje } = MobileCodigosFuente\n",
+   "imports": "import React, { useEffect, useRef, useState, useMemo, useCallback } from \"react\"\nimport { motion, AnimatePresence } from \"framer-motion\"\nimport { createPortal } from \"react-dom\"\nimport Shared from \"./EV_Shared.tsx\"\nimport Icons from \"./EV_Icons.tsx\"\n\nconst { hx, GOLD, useIsMobile, fireTouchRipple } = Shared\nconst { useLightIndex, breathParams, ensureBreatheCss } = Shared\nconst { IEscaner, IMod, IDecoder, IHoloteca, INucleo } = Icons\n",
+   "blocks": [
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54
+   ],
+   "exports": [
+    "CodigosFuenteAnclaje",
+    "computeCodigosFuenteAnchor"
+   ]
+  },
+  {
+   "file": "AppNavegacionMobile.tsx",
+   "kind": "shell",
+   "blocks": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    16,
+    17,
+    18,
+    19,
+    20,
+    32,
+    55,
+    56,
+    57,
+    58
+   ]
+  }
+ ]
+}

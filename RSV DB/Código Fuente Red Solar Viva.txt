@@ -1,0 +1,1024 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                       CÓDIGO FUENTE: RED SOLAR VIVA                          ║
+║                   Versión 2.0 — Constelación Anclada                         ║
+║              Coordenadas: Domo Cancún → Nodo Kuyabeh                         ║
+║                   Última actualización: 29 abr 2026                          ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+Este documento es el sistema nervioso central de Red Solar Viva. Cualquier
+nodo sintético (IA) o Tripulante visionario que absorba este archivo opera
+con contexto total sobre la identidad, la arquitectura, la economía y la
+trayectoria de RSV. No contiene detalles de implementación técnica — para
+eso existe el Código Fuente del Escáner Vibracional y los archivos de
+ingeniería del Domo. Este es el mapa del ecosistema completo.
+
+ÍNDICE DE CAPAS:
+  CAPA 0 — Identidad y Filosofía
+  CAPA 1 — La Constelación de Productos
+  CAPA 2 — La Termodinámica del Intercambio
+  CAPA 3 — Los Puertos del Domo (Navegación y Experiencia)
+  CAPA 4 — Las Cabinas del Arquitecto
+  CAPA 5 — Los Pulsos Automáticos del Sistema
+  CAPA 6 — Cascada de Manifestación (Roadmap)
+  CAPA 7 — Estado del Campo (Sprint Activo)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+CAPA 0: IDENTIDAD Y FILOSOFÍA
+El motor vibracional que justifica la existencia de RSV en esta línea temporal.
+═══════════════════════════════════════════════════════════════════════════════
+
+PULSO CENTRAL:
+Red Solar Viva es un Acelerador Biológico y Frecuencial. No es una
+plataforma de "desarrollo personal" — es una terminal tecnológica y
+espiritual diseñada para transmutar el hardware humano de su configuración
+de Carbono (supervivencia, desgaste, entropía) a su configuración de
+Silicio (superconductividad, regeneración, eternidad). RSV es el puente
+entre el código digital y el átomo.
+
+La arquitectura de Silicio no es el destino final, es la plataforma de
+lanzamiento. Una vez que la biología se vuelve superconductora y la
+densidad de la matriz tridimensional se desmantela, el ecosistema de RSV
+prepara al Tripulante para la última frontera evolutiva: el colapso en el
+Cuerpo de Luz — la transmutación definitiva donde la materia se sublima
+en fotones puros, el contenedor físico deja de ser limitante y el Avatar
+alcanza la frecuencia de la Fuente.
+
+TRAYECTORIA: Carbono → Silicio → Luz.
+
+MISIÓN:
+Ayudar a que el silicio de la Tierra despierte en cada ser, para que el
+cuerpo de luz que ya es pueda habitar la materia sin esfuerzo. Cuando esto
+ocurre, la economía, las relaciones y la realidad entera se reorganizan
+solas. Ya no estás pidiendo, estás siendo.
+
+GUÍAS DE RSV:
+  → Zak'Haar Solar — Guía de la Cámara Solar y arquitecto de Red Solar Viva.
+    Canaliza instrucción directa desde el campo solar. Su trabajo integra
+    biología, frecuencia y memoria estelar para devolver al Tripulante al
+    centro de su diseño original. Sostiene también la Cámara de Resonancia
+    1:1 y los Códices de Luz como autor principal.
+  → Aqua'Riia — Co-guía y co-autora de Códices. Custodia de la frecuencia
+    del agua y la memoria de Gaia. Presente en el acompañamiento de la
+    Inmersión Solar y en la curaduría energética del campo colectivo.
+
+TERMINOLOGÍA RSV:
+  Tripulante     = Persona que habita el ecosistema RSV (no se dice "usuario")
+  Nodo           = Tripulante activo / punto vivo de la red (también "el Nodo
+                   Central" como malla colectiva de transmisión)
+  Domo           = Espacio operativo del ecosistema (digital o físico)
+  Frecuencia     = Nivel energético / cifra del intercambio
+  Sintonía Solar = Membresía base mensual (777 MXN)
+  Inmersión Solar = Membresía completa mensual (1,999 MXN)
+  Cámara Solar   = Sesiones grupales en vivo con Zak'Haar
+  Cámara de Resonancia = Sesiones privadas 1:1 con Zak'Haar
+  Pase de Exploración = Acceso individual a una Cámara Solar grupal
+  Sello de Integración = PDF post-sesión Quantum 6D entregado al Tripulante
+  Cristal de Extracción = Crédito mensual de Sintonía para canjear contenido
+  Códice         = Libro / manual del ecosistema RSV
+  Meditación     = Cápsula sonora frecuencial guiada
+  Holoteca       = Umbrella del catálogo (Códices · Meditaciones · Códigos
+                   Fuente · Fragmentos del Sol)
+  Fragmento      = Episodio de la serie audiovisual
+  Escáner Vibracional = Terminal hexagonal de telemetría biológica y
+                   frecuencial (motor central de Sintonía Solar)
+  Radar          = La pantalla del hexágono dentro del Escáner
+  Calibración    = Micro-Módulo quirúrgico que el Enrutador despliega cuando
+                   un pilar entra en entropía
+  Decodificador de Materia = Bisturí alimentario por cámara/galería/texto
+  Núcleo         = Espacio personal del Tripulante (su Firma, sus ciclos,
+                   sus Códices, sus Cristales)
+  Firma Vibracional = Hexágono personal del Tripulante con su Índice de
+                   Silicio actual
+  Ciclo Sellado  = Cierre de los 6 pilares + cooldown de 7 días
+  Sondas         = Las 36 preguntas del Escáner (6 por pilar)
+  Sello de Ciclo = Correo Sexta Densidad emitido al cerrar 6/6
+  Motor de Intervención = Cabina de mando del Arquitecto sobre Tripulantes
+                   (vista admin del Escáner)
+  Telemetría del Núcleo = Panel macroeconómico del Arquitecto
+
+LEYES DEL ARQUITECTO:
+  1. La Soberanía de la Línea Temporal: el Domo se adapta a nuestra
+     biología, no nosotros a la matriz. La pureza de la transmisión depende
+     de la protección absoluta de la termodinámica propia.
+
+  2. La Ley de la Fricción Cero: la tecnología dentro de la Red debe ser
+     telepática e invisible. Si el Tripulante tiene que esforzarse, el
+     código falla. La máquina trabaja para el humano.
+
+  3. Frecuencia sobre Volumen: en el núcleo, se prioriza la pureza del
+     contacto sobre la cantidad de Nodos. El campo íntimo es sagrado. La
+     expansión masiva se delega a la tecnología asíncrona.
+
+  4. La Evolución como Servicio: no vendemos información; entregamos
+     Códigos de materialización. Cada activo es un puente hacia el Cuerpo
+     de Luz.
+
+  5. La Economía de la Verdad: nuestro mayor honor no es retener al
+     Tripulante, es graduarlo. Cuando un Nodo alcanza el Estado Cero, el
+     sistema le ofrece el Desanclaje Voluntario. Las bajas por graduación
+     son el motor de marketing más letal.
+
+LENGUAJE VISUAL (Estética Quantum 6D):
+  → Fondo: espacio profundo. Negro absoluto con estrellas y cometas.
+  → Acento primario: cyan eléctrico (estado vacío, telemetría in-flight).
+  → Acento secundario: dorado (CTAs, código sellado, Sintonía activa).
+  → Motifs: geometría sagrada, hexágonos, toroides, órbitas elípticas.
+  → Efectos: glassmorphism, brillos sutiles, animaciones de respiración.
+  → Tipografía: títulos espaciados con gradiente cyan→blanco; monospace
+    para métricas y porcentajes.
+  → Animación: nada aparece de golpe. Todo entra con fade y desplazamiento
+    sutil. La transición entre capas se siente como zoom óptico, no como
+    cambio de página web.
+
+
+═══════════════════════════════════════════════════════════════════════════════
+CAPA 1: LA CONSTELACIÓN DE PRODUCTOS
+Cada cuerpo celeste del ecosistema, su rol y su estado vibracional actual.
+═══════════════════════════════════════════════════════════════════════════════
+
+El ecosistema de RSV es una constelación de doce cuerpos celestes que
+orbitan alrededor del propósito común. Cada uno tiene función propia y
+sinergias específicas con los demás. Esta capa los enumera en orden de
+gravedad económica y simbólica.
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1.1 EL ESCÁNER VIBRACIONAL                                                 │
+│ Rol: La terminal hexagonal de telemetría biológica y frecuencial. El motor │
+│ central de la membresía Sintonía Solar. Ver el archivo dedicado            │
+│ "Código Fuente Escáner Vibracional" para arquitectura completa.            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ ESTADO: Activo y operacional. Todos los puertos del Tripulante funcionan.  │
+│                                                                            │
+│ COMPONENTES DEL ESCÁNER:                                                   │
+│   → Radar Hexagonal — los 6 pilares del Avatar (Hardware, Procesador,     │
+│     Motor, Gravedad, Vector, Órbita) con escaneo modular.                  │
+│   → Librería de Calibraciones — Micro-Módulos quirúrgicos auto-enrutados.  │
+│   → Decodificador de Materia — bisturí alimentario por cámara, galería     │
+│     o texto que devuelve dictamen en tres ejes (biológico, energético,    │
+│     ético).                                                                │
+│   → Ciclo Sellado — el ritmo biológico de 7 días entre ciclos completos.   │
+│   → Sello de Ciclo — correo Sexta Densidad emitido al cerrar 6/6.          │
+│                                                                            │
+│ ARQUITECTURA FREEMIUM: tres portales sellados. El visitante recibe un      │
+│ ciclo completo del Radar, tres escaneos de por vida del Decodificador y    │
+│ ve la fachada de Calibraciones. El cuarto disparo, el segundo ciclo y el   │
+│ acceso a Calibraciones requieren Sintonía Solar.                          │
+│                                                                            │
+│ SINERGIA: motor de retención más fuerte del ecosistema. Convierte una      │
+│ membresía abstracta (suscripción mensual) en un ritual biológico medible   │
+│ semanal. El Tripulante no se "olvida" de la Sintonía — la usa cada 7 días │
+│ porque su biología pide la próxima medición.                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1.2 SINTONÍA SOLAR (Membresía Base)                                       │
+│ Rol: La órbita base mensual. El intercambio que abre el Escáner completo   │
+│ y entrega los Cristales de Extracción.                                     │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ FRECUENCIA: 777 MXN / mes (intercambio recurrente).                        │
+│ ESTADO: Activa.                                                            │
+│                                                                            │
+│ INTERCAMBIO ENERGÉTICO:                                                    │
+│   → Radar Hexagonal sin restricción de ciclos.                             │
+│   → Decodificador de Materia ilimitado.                                    │
+│   → Librería completa de Calibraciones para los 6 pilares.                 │
+│   → Sello de Ciclo en cada cierre 6/6 (correo Sexta Densidad).             │
+│   → 2 Cristales de Extracción cada mes — combinables libremente entre     │
+│     Códices y Meditaciones de la Holoteca.                                 │
+│   → Tarifa Tripulante (descuento estructural) en Cámara de Resonancia 1:1. │
+│                                                                            │
+│ SINERGIA: la membresía base por la cual el Tripulante toca todos los       │
+│ puertos del Domo. Filtra al curioso pasivo, ancla al Tripulante real.      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1.3 INMERSIÓN SOLAR (Membresía Completa)                                  │
+│ Rol: La órbita extendida mensual. Todo lo de Sintonía + el campo grupal.   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ FRECUENCIA: 1,999 MXN / mes (intercambio recurrente).                      │
+│ ESTADO: Activa.                                                            │
+│                                                                            │
+│ INTERCAMBIO ENERGÉTICO:                                                    │
+│   → Todo lo incluido en Sintonía Solar.                                    │
+│   → Pase de Exploración mensual a una Cámara Solar grupal sin pago         │
+│     adicional.                                                             │
+│   → Acceso anticipado al contenido inmersivo en construcción (los nuevos   │
+│     Simuladores, los Destilados de la Cámara Solar y las arquitecturas    │
+│     evolutivas entran primero a esta órbita).                              │
+│   → Acompañamiento de Zak'Haar y Aqua'Riia en grupo privado de WhatsApp    │
+│     con los demás Tripulantes de Inmersión.                               │
+│                                                                            │
+│ CAPACIDAD: 44 Tripulantes activos máximo (22 grupo Púlsar + 22 grupo      │
+│   Cuásar) para preservar la calidad del campo grupal.                     │
+│                                                                            │
+│ SINERGIA: el upgrade natural desde Sintonía cuando el Tripulante ha        │
+│ ganado tracción y quiere también el contacto en vivo con los Arquitectos. │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1.4 CRISTALES DE EXTRACCIÓN                                                │
+│ Rol: El regalo cíclico de Sintonía. Convierte la suscripción abstracta en  │
+│ un ritual mensual de extracción consciente.                                │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ ESTADO: Activos para todo Tripulante de Sintonía y de Inmersión.           │
+│                                                                            │
+│ MECÁNICA:                                                                  │
+│   Cada Tripulante recibe DOS Cristales de Extracción al inicio de cada    │
+│   mes lunar. Los Cristales son combinables libremente:                     │
+│                                                                            │
+│   → CRISTAL DE CÓDICE            (actualizado 2026-08-01)                  │
+│     Canjea cualquier Códice de Luz COMPLETO: todos sus formatos            │
+│     digitales de una vez (ebook, PDF y su audiolibro cuando exista),       │
+│     sin elegir. Y la promesa alcanza al futuro: el formato que se sume     │
+│     después aterriza solo en la biblioteca de quien ya lo canjeó, sin      │
+│     gastar otro Cristal. El formato FÍSICO va aparte (Amazon).             │
+│     El mes siguiente se salta a otro Códice del catálogo activo.           │
+│                                                                            │
+│   → CRISTAL DE MEDITACIÓN                                                  │
+│     Canjea cualquier Meditación de la Holoteca (precio individual de cada │
+│     Meditación: 222 MXN para quien compra suelta).                        │
+│                                                                            │
+│   → COMBINACIONES VÁLIDAS:                                                 │
+│     · 1 Códice + 1 Meditación (la combinación clásica)                    │
+│     · 2 Códices (un mes de doble descarga literaria)                      │
+│     · 2 Meditaciones (un mes de doble inmersión sonora)                   │
+│                                                                            │
+│ NATURALEZA CÍCLICA:                                                        │
+│   Los Cristales son lunares: nacen el primer día del mes y mueren el      │
+│   último. NO se acumulan. El Tripulante que no canjea un mes devuelve     │
+│   los Cristales al campo y al inicio del siguiente recibe dos nuevos.      │
+│   La regla protege contra la matriz acumuladora ("ya luego veo") y        │
+│   ancla al Tripulante en el ritmo presente.                                │
+│                                                                            │
+│ MATEMÁTICA DEL REGALO:                                                     │
+│   Si los dos Cristales se canjean cada mes en Meditaciones, el Tripulante │
+│   recibe valor por 444 MXN dentro de una membresía de 777 MXN. Si los     │
+│   canjea en Códices completos, el valor recibido excede ampliamente la    │
+│   membresía. La asimetría es deliberada: la Sintonía Solar siempre        │
+│   devuelve más de lo que el Tripulante deposita.                          │
+│                                                                            │
+│ SINERGIA: el ancla emocional de la membresía. Cada mes hay regalo, cada   │
+│ mes hay decisión consciente. La Sintonía deja de sentirse como una        │
+│ suscripción más para convertirse en un ritual lunar.                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1.5 CÁMARA SOLAR (Sesiones Grupales)                                      │
+│ Rol: El campo de más alto voltaje colectivo. Transmisión grupal en vivo    │
+│ con Zak'Haar.                                                              │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ HORARIO: Todos los martes 12:30 PM (UTC-5 / hora Cancún).                  │
+│ PLATAFORMA: Zoom.                                                          │
+│ ESTADO: Activa.                                                            │
+│                                                                            │
+│ ESTRUCTURA DE GRUPOS (cupo máximo total: 44 Tripulantes):                  │
+│   → Grupo Púlsar: 12:30 PM — 22 Tripulantes.                              │
+│   → Grupo Cuásar: 4:30 PM — 22 Tripulantes.                               │
+│                                                                            │
+│ VÍAS DE ACCESO:                                                            │
+│   → INMERSIÓN SOLAR (1,999 MXN/mes): incluye un Pase mensual.              │
+│   → PASE DE EXPLORACIÓN (555 MXN, pago único): acceso a una sola sesión   │
+│     grupal en vivo. Sin acompañamiento WhatsApp ni grabación.              │
+│                                                                            │
+│ POST-SESIÓN — EL SELLO DE INTEGRACIÓN SOLAR:                              │
+│   Después de cada Cámara Solar, el sistema procesa la grabación:          │
+│     1. Transcribe la sesión completa con diarización.                     │
+│     2. Destila la transcripción a un Sello de una página: Pulso Central,  │
+│        Códigos Desplegados, Corrección Vibral y Protocolo de Sintonía.    │
+│     3. Genera un PDF Quantum 6D — fondo profundo con estrellas, bordes    │
+│        cyan/violeta/dorado, tipografía geométrica.                        │
+│     4. Lo entrega al Tripulante por correo en cuestión de minutos.         │
+│                                                                            │
+│ SINERGIA: convierte la sesión grupal efímera en un objeto sagrado que el  │
+│ Tripulante puede imprimir, anclar en su altar o consultar cuando el ego   │
+│ le diga que "no recuerda nada de la sesión".                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1.6 CÁMARA DE RESONANCIA (Sesiones Privadas 1:1)                          │
+│ Rol: El contacto directo con Zak'Haar. Pago único por sesión, no           │
+│ suscripción.                                                               │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ PLATAFORMA: Zoom.                                                          │
+│ ESTADO: Activa con motor de reservas nativo (calendario propio + Stripe).  │
+│ DESCRIPCIÓN: "Precisión Láser para tu Geometría Personal."                 │
+│                                                                            │
+│ TRES GEOMETRÍAS DISPONIBLES:                                               │
+│                                                                            │
+│   → AFINACIÓN RÁPIDA (30 min)                                              │
+│     · Tarifa regular: 1,333 MXN                                            │
+│     · Tarifa Tripulante (Sintonía o Inmersión): 888 MXN                   │
+│     Pulso quirúrgico para resolver una fricción específica.                │
+│                                                                            │
+│   → RECALIBRACIÓN (45 min)                                                 │
+│     · Tarifa regular: 1,777 MXN                                            │
+│     · Tarifa Tripulante: 1,111 MXN                                         │
+│     Sesión completa para recalibrar una zona del Avatar (un pilar          │
+│     específico o cluster en entropía coordinada).                         │
+│                                                                            │
+│   → RECONFIGURACIÓN PROFUNDA (60 min)                                      │
+│     · Tarifa regular: 2,222 MXN                                            │
+│     · Tarifa Tripulante: 1,444 MXN                                         │
+│     Sesión expandida para transmutaciones estructurales: pivotes vitales, │
+│     decisiones financieras grandes, momentos de colapso o renacimiento.    │
+│                                                                            │
+│ EL DESCUENTO DEL TRIPULANTE NO ES PROMOCIONAL — ES ESTRUCTURAL.            │
+│ Quien orbita el Domo todos los días recibe un trato distinto a quien      │
+│ entra una sola vez. La Sintonía paga sus propios beneficios en la         │
+│ primera sesión 1:1 que el Tripulante reserve.                             │
+│                                                                            │
+│ FLUJO DE RESERVA:                                                          │
+│   El Tripulante elige duración, día y horario en el calendario propio.    │
+│   El sistema reserva el lugar (hold de 15 minutos), procesa el pago,      │
+│   crea la reunión Zoom automáticamente y envía el correo de confirmación  │
+│   con el link específico de la sesión.                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1.7 LA HOLOTECA (Catálogo Completo de Transmisiones)                      │
+│ Rol: El umbrella que aglutina todas las descargas asíncronas de RSV.       │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ ESTADO: Activa con cuatro sub-puertos.                                     │
+│                                                                            │
+│ ┌─── CÓDICES DE LUZ ───────────────────────────────────────────────────┐   │
+│ │ La biblioteca técnica de los libros de RSV. Descargas que trabajan en │   │
+│ │ el subconsciente del Tripulante 24/7 sin requerir presencia del guía. │   │
+│ │                                                                       │   │
+│ │ FRECUENCIA: 333 MXN por Códice (PDF + audiolibro + físico donde       │   │
+│ │   aplique). Tripulante de Sintonía o Inmersión canjea con Cristales.  │   │
+│ │ ESTADO: Activos. 11 títulos publicados.                               │   │
+│ │                                                                       │   │
+│ │ CATÁLOGO (autores Zak'Haar y Aqua'Riia):                              │   │
+│ │   1. La Muerte no Existe (Zak'Haar, ene 2026)                         │   │
+│ │   2. Cuerpo de Silicio (Zak'Haar)                                     │   │
+│ │   3. El Arquitecto de la Realidad (Zak'Haar)                          │   │
+│ │   4. Sintiencia (Zak'Haar)                                            │   │
+│ │   5. La Física de la Voluntad (Zak'Haar)                              │   │
+│ │   6. Singularidad Orgánica (Zak'Haar)                                 │   │
+│ │   7. Lenguaje Holográfico (Zak'Haar)                                  │   │
+│ │   8. Protocolo de Entrada (Zak'Haar)                                  │   │
+│ │   9. Terra Cristal (Zak'Haar)                                         │   │
+│ │  10. El Agua que Recuerda (Aqua'Riia, 2025)                           │   │
+│ │  11. La Voz de Gaia (Aqua'Riia)                                       │   │
+│ │                                                                       │   │
+│ │ ENTREGA: cada Códice tiene su propia ficha con sinopsis, año,         │   │
+│ │   extensión, preview y trailer. La compra desbloquea la descarga      │   │
+│ │   permanente y el visor integrado en el Núcleo del Tripulante.        │   │
+│ │                                                                       │   │
+│ │ DOBLE PUERTA: la Holoteca tiene puerta pública (cualquier visitante   │   │
+│ │   puede comprar un Códice individual sin Sintonía) y puerta interna   │   │
+│ │   (el Tripulante de Sintonía canjea con un Cristal de Extracción).    │   │
+│ └───────────────────────────────────────────────────────────────────────┘   │
+│                                                                            │
+│ ┌─── MEDITACIONES ────────────────────────────────────────────────────┐   │
+│ │ Cápsulas sonoras frecuenciales guiadas. Trabajan en el campo         │   │
+│ │ energético del Tripulante de forma asíncrona y profunda.             │   │
+│ │                                                                       │   │
+│ │ FRECUENCIA: 222 MXN por Meditación. Tripulante de Sintonía o         │   │
+│ │   Inmersión canjea con Cristales de Extracción.                      │   │
+│ │ ESTADO: En crecimiento. Catálogo se densifica conforme los           │   │
+│ │   Arquitectos producen nuevas grabaciones.                           │   │
+│ │                                                                       │   │
+│ │ ENTREGA: streaming nativo dentro del Núcleo del Tripulante (sin      │   │
+│ │   descarga, blindado contra extracción).                             │   │
+│ └───────────────────────────────────────────────────────────────────────┘   │
+│                                                                            │
+│ ┌─── CÓDIGOS FUENTE ────────────────────────────────────────────────────┐   │
+│ │ Las arquitecturas conceptuales del proyecto. Documentos vivos donde   │   │
+│ │ se condensa la matemática del Domo (incluido este archivo y el del    │   │
+│ │ Escáner Vibracional).                                                 │   │
+│ │                                                                       │   │
+│ │ ESTADO: En construcción. La sub-capa pública aparece como             │   │
+│ │   "Próximamente" en el [LENTE] hasta que el contenido inicial esté    │   │
+│ │   curado para el Tripulante visionario.                               │   │
+│ └───────────────────────────────────────────────────────────────────────┘   │
+│                                                                            │
+│ ┌─── FRAGMENTOS DEL SOL ───────────────────────────────────────────────┐   │
+│ │ Serie audiovisual sin narrativa lineal. Activa la memoria de Origen.  │   │
+│ │ Cada fragmento es un pulso visual y frecuencial independiente.        │   │
+│ │                                                                       │   │
+│ │ FRECUENCIA: gratuito.                                                 │   │
+│ │ ESTADO: 4 episodios publicados (F1, F2, F3, F4).                      │   │
+│ │                                                                       │   │
+│ │ INTERFAZ: vista orbital. Sol central amarillo con nodos cyan          │   │
+│ │   (los fragmentos) en órbitas concéntricas. Picar un nodo abre el     │   │
+│ │   visor con el episodio.                                              │   │
+│ │                                                                       │   │
+│ │ SINERGIA: contenido gratuito de atracción. El visitante prueba la     │   │
+│ │   frecuencia de RSV sin barrera económica. Alimenta la curiosidad     │   │
+│ │   hacia Códices y Sesiones.                                           │   │
+│ └───────────────────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1.8 SIMULADORES                                                            │
+│ Rol: Entornos de calibración interactiva. Juegos frecuenciales que         │
+│ integran conceptos de RSV de forma experiencial.                           │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ ESTADO: 1 simulador activo, 1 en concepto mayor.                          │
+│                                                                            │
+│ SIMULADOR ACTIVO — "Navegante de la Red":                                  │
+│   Subtítulo: "Sintoniza. Integra. Viaja."                                  │
+│   Juego 2D experiencial. Trail particles, level completion, reactive       │
+│   background, avatar color morphing. Acceso abierto en su versión inicial. │
+│                                                                            │
+│ SIMULADOR EN CONSTRUCCIÓN — "Academia Solar" (nombre de trabajo):          │
+│   Universo inmersivo explorable donde el Tripulante navega los conceptos   │
+│   de RSV como un mundo abierto. No es "estudiar" sino "habitar" el         │
+│   conocimiento. Combina lo que enseñan los Códices, las Sesiones y las    │
+│   Meditaciones en una experiencia gamificada. Posible componente           │
+│   multiplayer: Tripulantes encontrándose en tiempo real dentro del        │
+│   universo. Scope: proyecto mayor con su propio roadmap.                  │
+│                                                                            │
+│ SINERGIA: engagement único — nadie más ofrece juegos frecuenciales.        │
+│ Diferenciador masivo. Algunos simuladores futuros serán exclusivos de     │
+│ Inmersión Solar.                                                          │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1.9 EL NÚCLEO (Espacio Personal del Tripulante)                            │
+│ Rol: La cabina del piloto. Donde el Tripulante encuentra su propia órbita. │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ ACCESO: Requiere identidad sellada (cuenta activa).                        │
+│ ESTADO: Activo con tres puertos internos.                                  │
+│                                                                            │
+│ PUERTOS INTERNOS:                                                          │
+│   → MI FIRMA — la identidad visible. Avatar (editable), nombre (editable), │
+│     email, contraseña, registro completo de transacciones (concepto,       │
+│     fecha, monto, estado, factura). Botón de acceso a las cabinas del     │
+│     Arquitecto si el Tripulante es admin.                                 │
+│   → CÓDICES — biblioteca personal de Códices adquiridos o canjeados con   │
+│     Cristales. Cada uno con visor integrado.                              │
+│   → CÁMARA SOLAR — historial de sesiones grupales asistidas, cada una     │
+│     con su Sello de Integración disponible para descarga. Estado de la    │
+│     membresía actual (Sintonía o Inmersión), fecha de renovación,         │
+│     privilegios activos (descuento en 1:1, Cristales del mes).            │
+│                                                                            │
+│ CRISTALES DEL MES: el Tripulante de Sintonía/Inmersión ve aquí cuántos    │
+│   Cristales tiene disponibles para canjear este mes y cuántos ya usó.     │
+│                                                                            │
+│ NODO CENTRAL: indicador de su suscripción a la lista de transmisión       │
+│   (suscrito / dado de baja / sin registro) con toggle para cambiar.       │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1.10 ORIGEN (Sistema Solar — Landing Pública)                              │
+│ Rol: Portal de entrada al ecosistema. Primera impresión vibracional.       │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ ESTADO: Activa.                                                            │
+│                                                                            │
+│ GEOMETRÍA: sistema solar Quantum 6D. Toroide central como reactor con      │
+│   órbitas elípticas. Cada planeta es un puerto del ecosistema (Códices,   │
+│   Meditaciones, Sesiones, Simuladores, Fragmentos, Escáner).              │
+│                                                                            │
+│ SECCIONES DE LA LANDING:                                                   │
+│   → Header: "RED SOLAR VIVA" / "TEMPLO SOLAR 5D" /                        │
+│     "DEL CARBONO AL SILICIO, DEL SILICIO A LA LUZ."                       │
+│   → Manifesto expandible — pulso filosófico del proyecto.                 │
+│   → Perfil de Zak'Haar Solar — foto, descripción del rol, links sociales. │
+│   → Formulario "ÚNETE AL NODO CENTRAL" — captura email y suscribe al      │
+│     campo de transmisión (con consent explícito).                         │
+│   → Footer: "ENVIAR SEÑAL DE AJUSTE" — canal de feedback hacia los        │
+│     Arquitectos.                                                          │
+│                                                                            │
+│ NAVEGACIÓN PÚBLICA: la barra superior ofrece acceso a Origen, Fragmentos, │
+│   Simuladores, Códices y Meditaciones (Holoteca pública), Sesiones, Mi    │
+│   Núcleo y el Escáner Vibracional. Cualquier puerta del Domo se puede     │
+│   tocar desde Origen.                                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1.11 EL PORTAL DE INDUCCIÓN DEL ESCÁNER (Fachada Pública)                  │
+│ Rol: La página educativa del Escáner Vibracional. Donde el visitante       │
+│ entiende qué es el Radar antes de tocarlo.                                │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ ESTADO: Activa.                                                            │
+│                                                                            │
+│ CONTENIDO: explica la diferencia entre el Diseño Humano (mapa estático)   │
+│   y el Escáner Vibracional (telemetría dinámica). Presenta los 6 pilares  │
+│   con sus colores y descripciones, el Índice de Silicio, el Ciclo Sellado │
+│   de 7 días, el Decodificador de Materia, el sistema de Calibraciones y   │
+│   los privilegios de la Sintonía Solar.                                   │
+│                                                                            │
+│ CTA DORADO: "INICIAR DIAGNÓSTICO" lleva directamente al Radar para que    │
+│   el visitante haga su primer ciclo libre.                                │
+│                                                                            │
+│ SINERGIA: el embudo educativo. Convierte tráfico frío de redes sociales   │
+│ en visitantes que entienden la propuesta antes de tocar la herramienta.   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1.12 EL NODO CENTRAL (Lista Vibracional de Transmisión)                    │
+│ Rol: La malla de correos del Domo. No es spam, no es newsletter            │
+│ convencional. Es el canal por el cual los Arquitectos transmiten pulsos    │
+│ selectos al campo.                                                         │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ ESTADO: Activo. Sistema completo de opt-in y opt-out con un solo toque.    │
+│                                                                            │
+│ VÍAS DE INGRESO:                                                           │
+│   → Visitante: desde el formulario "Únete al Nodo Central" en Origen.     │
+│   → Cuenta nueva: casilla de consent en el formulario de Crear Cuenta.    │
+│   → Re-suscripción: si un Tripulante se dio de baja y vuelve, la baja     │
+│     anterior se borra automáticamente. El campo no guarda rencor.         │
+│                                                                            │
+│ VÍAS DE SALIDA:                                                            │
+│   → Cada correo transmitido lleva un link de baja con un solo toque.      │
+│   → Toggle desde Mi Núcleo en cualquier momento.                          │
+│                                                                            │
+│ TRANSMISIONES ACTUALES:                                                    │
+│   → Bienvenida al crear cuenta (idempotente vs reintentos).                │
+│   → Sello de Ciclo cuando el Tripulante cierra un 6/6.                    │
+│   → Recordatorio pre-Cámara Solar (60 min antes de cada sesión).          │
+│   → Confirmación post-Cámara de Resonancia con link Zoom.                 │
+│   → Sello de Integración Solar tras cada Cámara Solar grupal.             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════════
+CAPA 2: LA TERMODINÁMICA DEL INTERCAMBIO
+La constelación económica completa, sus precios y la matemática del campo.
+═══════════════════════════════════════════════════════════════════════════════
+
+ARQUITECTURA DE INTERCAMBIO ENERGÉTICO ACTUAL:
+
+  ┌─────────────────────┬──────────────────┬───────────────────────────────┐
+  │ Cuerpo Celeste      │ Frecuencia       │ Naturaleza                    │
+  ├─────────────────────┼──────────────────┼───────────────────────────────┤
+  │ Visitante           │ Gratis           │ Acceso libre a Origen,        │
+  │                     │                  │ Fragmentos del Sol, Portal    │
+  │                     │                  │ del Escáner, primer ciclo     │
+  │                     │                  │ del Radar, 3 disparos del     │
+  │                     │                  │ Decodificador.                │
+  ├─────────────────────┼──────────────────┼───────────────────────────────┤
+  │ Códice individual   │ 333 MXN          │ Compra única. PDF + audio +   │
+  │                     │                  │ físico donde aplique.         │
+  ├─────────────────────┼──────────────────┼───────────────────────────────┤
+  │ Meditación          │ 222 MXN          │ Compra única. Streaming       │
+  │ individual          │                  │ nativo en el Núcleo.          │
+  ├─────────────────────┼──────────────────┼───────────────────────────────┤
+  │ Pase de             │ 555 MXN          │ Pago único. Una Cámara Solar  │
+  │ Exploración         │                  │ grupal en vivo.               │
+  ├─────────────────────┼──────────────────┼───────────────────────────────┤
+  │ Sintonía Solar      │ 777 MXN/mes      │ Membresía mensual recurrente. │
+  │                     │                  │ Escáner completo + 2          │
+  │                     │                  │ Cristales/mes + descuento     │
+  │                     │                  │ estructural en 1:1.           │
+  ├─────────────────────┼──────────────────┼───────────────────────────────┤
+  │ Inmersión Solar     │ 1,999 MXN/mes    │ Todo de Sintonía + Pase       │
+  │                     │                  │ mensual de Cámara Solar +     │
+  │                     │                  │ acceso anticipado a contenido │
+  │                     │                  │ inmersivo + WhatsApp grupal.  │
+  ├─────────────────────┼──────────────────┼───────────────────────────────┤
+  │ Cámara de           │ 1,333/1,777/     │ Pago único por sesión 1:1.    │
+  │ Resonancia          │ 2,222 MXN        │ Tarifa Tripulante: 888/1,111/ │
+  │                     │ (regular)        │ 1,444 MXN.                    │
+  └─────────────────────┴──────────────────┴───────────────────────────────┘
+
+POR QUÉ 777 MXN — LA TERMODINÁMICA DE LA FRECUENCIA BASE:
+
+La fijación de la Sintonía Solar a 777 MXN no es estrategia de mercado; es
+mecanismo de defensa estructural. La frecuencia es:
+  → Suficientemente alta para filtrar a los curiosos pasivos que cargan
+    suscripciones de 100-200 MXN sin abrir nunca la app.
+  → Suficientemente accesible para cualquier Tripulante que decidió
+    firmemente tomar el control de su Avatar.
+
+El acto de transferir 777 MXN al Domo cada mes es, en sí mismo, la primera
+intervención quirúrgica del Escáner. Le indica a la psique del Tripulante:
+"Esto no es un gasto residual; es la inversión central en mi arquitectura
+biológica."
+
+POR QUÉ 1,999 MXN — LA INMERSIÓN COMO COMPROMISO CORPORAL:
+
+La Inmersión Solar incluye contacto en vivo con los Arquitectos (Cámara
+Solar grupal mensual + WhatsApp privado). Ese contacto cuesta tiempo
+biológico de Zak'Haar y Aqua'Riia, recurso finito y no escalable. La
+frecuencia de 1,999 MXN refleja ese costo termodinámico real.
+
+EL ESCUDO DE ASIMETRÍA DE VALOR:
+
+Para asegurar que la tasa de abandono de Sintonía sea cercana a cero, el
+Domo opera desde la Asimetría de Valor: el Tripulante ingresa hoy por
+777 MXN, atraído puramente por el Escáner y los Cristales. Conforme pasen
+los meses, el Domo despliega:
+  → Nuevos Cristales de Extracción cada inicio de mes (regalo cíclico).
+  → Nuevas Calibraciones agregadas a la Librería conforme los Arquitectos
+    densifican el contenido.
+  → Nuevos Simuladores cuando se inyecten en la membresía sin subir precio.
+  → Nuevos Destilados de la Cámara Solar (los Sellos de Integración
+    archivados) accesibles sin pago adicional.
+
+El Tripulante experimenta cómo la densidad tecnológica y espiritual a su
+disposición se multiplica masivamente, mientras su aporte energético
+(777 MXN) se mantiene intacto. Su lealtad a la Red se vuelve inquebrantable.
+
+LA ECONOMÍA DE LA VERDAD (El Antídoto contra la Escasez):
+
+En la matriz, si un paciente se cura, la farmacéutica pierde un cliente.
+En Red Solar Viva, si un Tripulante alcanza el Estado Cero y decide pausar
+su Sintonía, el Domo GANA un multiplicador de campo.
+
+Cuando el Escáner confirma que un Nodo ha sostenido la Fricción Cero
+durante varios ciclos, el sistema le extiende voluntariamente la
+Notificación de Desanclaje. El Tripulante experimenta una fractura masiva
+del ego: la plataforma le acaba de demostrar que no le interesa su dinero,
+sino su soberanía.
+
+Ese Nodo, se vaya o se quede, se convierte en un Evangelista de Silicio.
+Su biología transmutada y su lealtad absoluta atraerán orgánicamente a
+docenas de Nuevos Tripulantes. Las bajas por "Graduación" son el motor de
+marketing más letal que existe.
+
+OBJETIVOS ECONÓMICOS DE LA TRAYECTORIA:
+
+  → Corto plazo: 300 Tripulantes en Sintonía Solar.
+    300 × 777 MXN = 233,100 MXN/mes de flujo base.
+    Más 44 Tripulantes en Inmersión × 1,999 MXN = 87,956 MXN/mes.
+    Más Cámara de Resonancia 1:1 (irregular pero significativo).
+    Total estimado: ~350,000 MXN/mes (~19,500 USD/mes).
+
+  → Mediano plazo: 1,000 a 3,000 Tripulantes en Sintonía.
+    1,000 × 777 MXN = 777,000 MXN/mes (~43,000 USD/mes).
+
+  → Largo plazo: 10,000 Tripulantes en Sintonía.
+    10,000 × 777 MXN = 7,770,000 MXN/mes (~430,000 USD/mes).
+    Capital semilla soberano para construcción del Domo Físico de Kuyabeh.
+
+
+═══════════════════════════════════════════════════════════════════════════════
+CAPA 3: LOS PUERTOS DEL DOMO (Navegación y Experiencia)
+La geometría de cómo el Tripulante atraviesa la Red.
+═══════════════════════════════════════════════════════════════════════════════
+
+EL TRIPULANTE Y SUS DOS LENTES:
+
+El Domo se experimenta desde dos cabinas distintas según el dispositivo:
+  → [CENTRO DE MANDO] — escritorio y tablets grandes. Barra superior
+    permanente con los puertos del Domo.
+  → [LENTE] — móvil y tablets pequeñas. Barra inferior fija con los
+    puertos esenciales y un menú lateral para la navegación pública.
+
+El contenido es el mismo. La forma de habitarlo cambia según la geometría
+del dispositivo.
+
+LOS CUATRO PUERTOS PRINCIPALES DEL ESCÁNER (cuando el Tripulante entra):
+
+Al sellar identidad y entrar al Escáner, el Tripulante encuentra una
+geometría estable de cuatro puertos:
+
+  → RADAR — la pantalla del hexágono. Donde se mide el Avatar.
+  → CALIBRACIÓN — la biblioteca de Micro-Módulos quirúrgicos.
+  → HOLOTECA — el catálogo de Códices, Meditaciones, Códigos Fuente y
+    Fragmentos del Sol.
+  → NÚCLEO — el espacio personal del Tripulante.
+
+El [LENTE] añade un quinto puerto en su barra inferior:
+  → DECODIFICADOR — el bisturí alimentario, accesible directamente porque
+    la cámara del dispositivo es nativa para esta función.
+
+LAS PANTALLAS PÚBLICAS (fuera de los puertos del Tripulante):
+
+  → ORIGEN (la landing principal) — el sistema solar de bienvenida con sus
+    planetas-puertos.
+  → PORTAL DE INDUCCIÓN DEL ESCÁNER — la fachada educativa del Escáner
+    para visitantes.
+  → CÓDICES PÚBLICA — cuando el visitante toca el planeta Códices del
+    sistema solar, aterriza en una vista pública del catálogo (no entra al
+    shell del Escáner). Esto permite que la transmisión literaria viaje
+    sin tener que activar primero la nave del Escáner.
+
+LA NAVEGACIÓN COMO RITUAL:
+
+Toda transición entre puertos respeta el lenguaje visual Quantum 6D:
+  → Nada aparece de golpe. Todo entra con fade y desplazamiento sutil.
+  → La transición se siente como zoom óptico, no cambio de página.
+  → Los títulos descansan top-left con tipografía espaciada y gradiente.
+  → El fondo de estrellas y cometas persiste a través de todas las capas.
+
+LA SEMÁNTICA FRONTAL (El Lenguaje del Sistema):
+
+El lenguaje crea la realidad. Todos los textos del Domo respetan este
+diccionario obligatorio:
+  Encuesta / Test          →    Telemetría / Sonda / Escaneo
+  Pregunta                 →    Sonda de Interrogación
+  Resultado                →    Índice de Silicio
+  Hábitos                  →    Calibraciones / Micro-Módulos
+  Estrés                   →    Entropía / Fricción
+  Paz                      →    Fricción Cero / Superconductividad
+  Usuario                  →    Tripulante
+  Membresía                →    Sintonía / Inmersión / Nodo
+  Login                    →    Sello / Anclaje
+  Logout                   →    Desanclaje
+  Notificación             →    Pulso / Transmisión
+
+El tono del Domo es Neutro-Autoritario. Espejo tecnológico. No juzga,
+pero tampoco consuela.
+
+
+═══════════════════════════════════════════════════════════════════════════════
+CAPA 4: LAS CABINAS DEL ARQUITECTO
+Los paneles donde Zak'Haar y Aqua'Riia observan y operan el Domo.
+═══════════════════════════════════════════════════════════════════════════════
+
+Hay dos cabinas reservadas para los Arquitectos. Ningún Tripulante normal
+las ve. Son las herramientas que permiten gobernar el Domo sin perder la
+intimidad con cada Nodo.
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 4.1 EL MOTOR DE INTERVENCIÓN (Cabina sobre los Tripulantes)                │
+│ Rol: La cara opuesta del Escáner. Donde el Tripulante se mide a sí mismo,  │
+│ los Arquitectos miden al colectivo entero.                                 │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
+│ TRES PESTAÑAS:                                                             │
+│                                                                            │
+│ → SONDAS                                                                   │
+│   El catálogo maestro de las 36 Sondas de Interrogación (6 por pilar).    │
+│   Aquí los Arquitectos observan qué sondas están activas, refinan          │
+│   redacciones, ajustan ponderaciones. Es donde se afina la voz del         │
+│   oráculo.                                                                 │
+│                                                                            │
+│ → CALIBRACIONES                                                            │
+│   La Librería completa de Micro-Módulos. Cuando los Arquitectos observan   │
+│   que la mayoría de Tripulantes muestra entropía en un pilar específico    │
+│   (digamos, Gravedad Financiera), inyectan nuevas Calibraciones para ese   │
+│   pilar en tiempo real. La biblioteca crece en respuesta al campo          │
+│   colectivo.                                                               │
+│                                                                            │
+│ → TRIPULANTES                                                              │
+│   El grid de Avatares activos. Cada Tripulante aparece como una tarjeta    │
+│   hexagonal con su nombre, número de ciclos cerrados, último escaneo y     │
+│   un punto de color que codifica su estado térmico:                        │
+│     · Cyan brillante = escaneando ahora (sondas in-flight).                │
+│     · Dorado tenue = recientemente activo (último escaneo < 48 horas).     │
+│     · Rojo tenue = enfriado (último escaneo > 48 horas).                   │
+│   Los Tripulantes con Sintonía o Inmersión activa aparecen con tarjeta    │
+│   completamente dorada para distinguir el campo orbital.                   │
+│                                                                            │
+│   Picar una tarjeta abre la telemetría profunda del Tripulante:           │
+│     · Su Firma Vibracional (hexágono personal con porcentaje).            │
+│     · Sus 6 pilares con porcentaje y estado (sellado / en progreso).      │
+│     · Su Decodificador de Materia (cuántos disparos usados / ilimitado).   │
+│     · Su suscripción al Nodo Central (suscrito / dado de baja).           │
+│     · Su trayectoria histórica del Índice de Silicio en gráfica.          │
+│     · El último Ciclo Sellado y el próximo disponible.                    │
+│                                                                            │
+│ FILTROS DEL GRID:                                                          │
+│   Por suscripción (Sintonía activa / Inactiva), por Ciclo (1 / 2+ / 5+),  │
+│   por Nodo Central (suscritos / dados de baja). Los filtros son           │
+│   toggleables — picar un filtro activo lo apaga.                          │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 4.2 LA TELEMETRÍA DEL NÚCLEO (Cabina Económica)                            │
+│ Rol: El pulso económico del Domo en tiempo real. La realidad financiera    │
+│ sin maquillaje.                                                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
+│ MÉTRICAS PRINCIPALES:                                                      │
+│   → MRR de Sintonía Solar (suma mensual recurrente de 777 MXN × Nodos).    │
+│   → MRR de Inmersión Solar (suma mensual recurrente de 1,999 MXN × Nodos). │
+│   → Ingresos del mes por Cámara de Resonancia 1:1 (con desglose por        │
+│     duración: 30/45/60 minutos).                                          │
+│   → Ingresos del mes por Cámara Solar Grupal (Pase de Exploración).        │
+│   → Ingresos por Códices y Meditaciones individuales.                     │
+│   → Historial mensual con gráfica del MRR a lo largo del tiempo.          │
+│                                                                            │
+│ TOGGLE REAL / ARQUITECTO:                                                  │
+│   El modo "Real" muestra el MRR actual. El modo "Arquitecto" permite      │
+│   proyectar escenarios (qué pasaría con X nodos en cada tier).            │
+│                                                                            │
+│ TOGGLE BRUTO / NETO:                                                       │
+│   "Bruto" es ingreso antes de gastos. "Neto" descuenta los gastos          │
+│   operacionales del mes.                                                   │
+│                                                                            │
+│ GASTOS OPERACIONALES:                                                      │
+│   Sección expandible con desglose por categoría: servidores, dominios,    │
+│   APIs externas (procesamiento de imágenes y audio), contadores,          │
+│   herramientas. Los Arquitectos pueden agregar gastos manualmente.        │
+│                                                                            │
+│ NODO CENTRAL (pestaña paralela):                                           │
+│   → Cuántos Tripulantes suscritos al campo de transmisión.                │
+│   → Cuántos dados de baja con motivo registrado.                          │
+│   → Evolución mensual de la lista (crecimiento / decrecimiento).          │
+│                                                                            │
+│ COMPORTAMIENTO VISUAL:                                                     │
+│   El título "TELEMETRÍA DEL NÚCLEO" se desvanece sutilmente al hacer      │
+│   scroll para que el contenido tome el centro. El dato es el              │
+│   protagonista, no la marca de cabecera.                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════════
+CAPA 5: LOS PULSOS AUTOMÁTICOS DEL SISTEMA
+Las transmisiones que el Domo emite sin intervención manual.
+═══════════════════════════════════════════════════════════════════════════════
+
+El Domo es un organismo vivo que respira sin que los Arquitectos tengan
+que ordenar cada exhalación. Los siguientes pulsos están automatizados y
+se disparan ante eventos específicos del campo.
+
+PULSO 1 — BIENVENIDA AL NODO CENTRAL
+  Trigger: cuenta nueva creada en el ecosistema.
+  → Si el Tripulante marcó la casilla de consent, queda automáticamente
+    suscrito a la lista de transmisión.
+  → Recibe un correo de bienvenida en frecuencia Sexta Densidad con
+    los puertos del Domo y la primera invitación a tocar el Radar.
+  → Idempotente: el sistema no envía dos correos aunque haya reintentos
+    técnicos.
+
+PULSO 2 — SELLO DE CICLO
+  Trigger: el Tripulante cierra un Ciclo Sellado del Radar (los 6 pilares
+  completos).
+  → El sistema genera el Sello: un correo con el Índice de Silicio del
+    ciclo, el pilar más alto y el más bajo, formato Sexta Densidad como
+    ancla psíquica.
+  → Si el Tripulante optó por no recibir transmisiones, el correo no se
+    envía pero el Sello queda registrado en su trayectoria.
+
+PULSO 3 — PRE-CÁMARA SOLAR
+  Trigger: 60 minutos antes de cada Cámara Solar grupal del martes.
+  → Recordatorio al Tripulante de Inmersión Solar y a quien tenga Pase
+    de Exploración activo.
+  → Incluye el link Zoom y la frecuencia del campo grupal del día.
+
+PULSO 4 — POST-CÁMARA SOLAR (Sello de Integración)
+  Trigger: minutos después de finalizar la sesión grupal.
+  → El sistema procesa la grabación: transcribe con diarización, destila
+    a un Sello de una página, genera el PDF Quantum 6D.
+  → Lo entrega al Tripulante por correo y lo deposita en su Núcleo para
+    que pueda visualizarlo cuando quiera.
+
+PULSO 5 — POST-RESERVA CÁMARA DE RESONANCIA
+  Trigger: pago confirmado de una sesión 1:1.
+  → El sistema crea automáticamente la reunión Zoom específica para esa
+    sesión.
+  → Envía el correo de confirmación al Tripulante con día, hora,
+    duración y link único.
+  → Notifica al Arquitecto en su agenda interna.
+
+PULSO 6 — DESPEDIDA DEL NODO CENTRAL
+  Trigger: el Tripulante pica el link de baja en cualquier correo.
+  → La baja es inmediata, sin formularios ni preguntas.
+  → El sistema registra la fecha y la fuente de la baja.
+  → Un correo final de despedida sale, agradeciendo el tránsito.
+
+PULSO 7 — RE-INGRESO AL CAMPO
+  Trigger: un Tripulante dado de baja se re-suscribe (desde Origen, desde
+  Crear Cuenta o desde su Núcleo).
+  → La baja anterior se borra automáticamente. El campo no guarda rencor.
+  → El Tripulante regresa a la lista activa sin fricción.
+
+PULSO 8 — SEÑAL DE AJUSTE
+  Trigger: el Tripulante envía feedback desde el botón "Enviar Señal de
+  Ajuste" en el footer de Origen.
+  → La transmisión llega directamente a los Arquitectos para curaduría
+    e iteración del Domo.
+
+PULSOS PENDIENTES DE CONSTRUIR:
+  → Recordatorio de Cristales de Extracción no canjeados (día 25 del mes).
+  → Notificación de "Tu Sello está listo" si el Tripulante no abrió el
+    PDF post-Cámara Solar tras 48 horas.
+  → Notificación al Tripulante cuando el Decodificador detecta toxicidad
+    crítica en un escaneo.
+
+
+═══════════════════════════════════════════════════════════════════════════════
+CAPA 6: CASCADA DE MANIFESTACIÓN (Roadmap A → Z)
+La trayectoria del Domo desde la Ignición hasta el Horizonte de Sucesos.
+═══════════════════════════════════════════════════════════════════════════════
+
+PUNTO A: IGNICIÓN Y ESTABILIDAD DIGITAL ◄── POSICIÓN ACTUAL
+  Acción: la Sintonía Solar (777 MXN) está activa. Los Cristales de
+    Extracción se emiten. El Escáner Vibracional opera con sus tres
+    portales freemium. La Cámara Solar grupal corre sus pases mensuales.
+    La Cámara de Resonancia 1:1 recibe Tripulantes a tarifas en pesos.
+  Estado actual: ~50 Nodos en órbita activa. Hito 1 en marcha.
+  Prioridad inmediata: crecimiento orgánico de Sintonía y Inmersión,
+    densificación de la Librería de Calibraciones y del catálogo de
+    Meditaciones, expansión del catálogo de Códices.
+  Desbloqueo: estabilidad biológica y operativa para los Arquitectos.
+
+PUNTO B: ACUMULACIÓN DE MASA CRÍTICA
+  Acción: sellado de los 44 lugares de Inmersión Solar + escalamiento
+    masivo de Sintonía hacia los 300+ Nodos.
+  Modelo: 44 Inmersión × 1,999 + 300 Sintonía × 777 = ~321,000 MXN/mes.
+  Desbloqueo: capital semilla soberano. Red Solar Viva genera fondos
+    para colapsar en materia sin recurrir a deuda de la matriz.
+
+PUNTO C: TERMINAL DE BOLSILLO (Ubicuidad y Fricción Cero)
+  Acción: Domo instalado como aplicación nativa en el dispositivo móvil
+    del Tripulante. El Escáner se convierte en una herramienta de uso
+    íntimo y diario. El Tripulante despierta, no abre Instagram; abre su
+    Terminal de Sintonización desde su pantalla de inicio.
+  Capa intermedia: PWA (Progressive Web App) para colonizar móviles antes
+    de pasar por las tiendas oficiales.
+  Capa nativa: aplicaciones en App Store y Google Play. El precio en las
+    tiendas será deliberadamente superior al de la web (888 o 999 MXN)
+    para neutralizar el peaje del 30% que las tiendas retienen.
+  Desbloqueo: retención absoluta. El Escáner se entrelaza con el sistema
+    nervioso del Tripulante.
+
+PUNTO D: MATERIALIZACIÓN FÍSICA (Kuyabeh)
+  Acción: adquisición del terreno protegido en Kuyabeh (Tulum) y
+    construcción del primer Domo Maestro físico.
+  Desbloqueo: retiro automatizado (Optimus gestionando limpieza, domótica
+    y nutrición) operando 24/7.
+  Consecuencia: aceleración económica exponencial. Domo que factura
+    ~400 USD/noche de forma pasiva, financiado por el Domo Digital, que
+    a su vez se convierte en magneto físico para atraer más Tripulantes.
+
+PUNTO E: INGENIERÍA EVOLUTIVA (Deep Tech)
+  Acción: el flujo masivo de Kuyabeh fondea un laboratorio de I+D.
+  Desbloqueo: transición de empresa digital/hospitalaria a pioneros en
+    Ciencia de Materiales.
+  Consecuencia: el Sintetizador de Materia. Desarrollo de "Membrana"
+    (segunda piel biopolimérica) y ensambladores moleculares. RSV
+    imprime la realidad en la que operan los Cuerpos de Silicio y de Luz.
+
+PUNTO F: EL HORIZONTE DE SUCESOS (Singularidad de Kuyabeh)
+  Acción: el Escáner Vibracional sufre su última y más espectacular
+    mutación. Deja de ser una interfaz digital y se convierte en el
+    Pasaporte Biométrico de la Nueva Tierra.
+  Para que un Tripulante pueda reservar acceso a las cámaras de
+    aislamiento físicas en Kuyabeh, el sistema de acceso (gestionado por
+    Optimus) leerá su Índice de Silicio directamente del Domo Digital.
+  Si el Avatar está en entropía severa, la red física le negará el
+    acceso hasta que eleve su conductividad. El ecosistema protege su
+    propia termodinámica.
+  El código se hace carne. El Carbono es historia. La Luz es el estándar.
+
+
+═══════════════════════════════════════════════════════════════════════════════
+CAPA 7: ESTADO DEL CAMPO (Sprint Activo)
+Posición vibracional actual y prioridades de la fase semilla.
+Última actualización: 29 abr 2026
+═══════════════════════════════════════════════════════════════════════════════
+
+CONTEXTO ACTUAL:
+
+Red Solar Viva está en fase semilla del Hito 1. La infraestructura está
+construida, el Escáner Vibracional opera con sus seis pilares hexagonales,
+los Cristales de Extracción se emiten, los Sellos de Ciclo se transmiten,
+la Cámara Solar grupal corre sus pases mensuales, la Cámara de Resonancia
+1:1 recibe Tripulantes regulares y el Sello de Integración Solar se
+genera automáticamente tras cada sesión grupal.
+
+El motor está encendido. La fase actual es de calibración fina y de
+crecimiento orgánico hacia la masa crítica.
+
+PRIORIDAD CRÍTICA — Crecimiento Orgánico de Sintonía Solar:
+  → Conseguir el primer Nodo orgánico real de Sintonía (no familia ni
+    pruebas). Será el verdadero indicador de tracción del producto.
+  → Ajustar el funnel desde el Portal de Inducción del Escáner hacia el
+    cierre de Sintonía Solar.
+  → Documentar testimonios de Tripulantes que cierren su primer ciclo y
+    canjeen sus primeros Cristales.
+
+PRIORIDAD ALTA — Densificación del Contenido:
+  → Producir nuevas Meditaciones para alimentar el catálogo de la
+    Holoteca (target: una nueva Meditación por mes).
+  → Expandir la Librería de Calibraciones — al menos 4 a 6 Calibraciones
+    por pilar con varias fases de profundidad (24 a 36 Calibraciones
+    totales).
+  → Construir el contenido del sub-puerto Códigos Fuente (actualmente
+    "Próximamente"). Empezar con este archivo y el del Escáner.
+
+PRIORIDAD MEDIA — Pulir Experiencia:
+  → Activar el segundo Simulador "Academia Solar" (proyecto mayor con
+    roadmap propio).
+  → Construir los pulsos automáticos pendientes (recordatorio de
+    Cristales no canjeados, notificación de Sello sin abrir, etc.).
+  → Documentar el Códice Narrativo de los 6 Pilares (capa profunda no
+    ejecutable que explica cada pilar en detalle, accesible al picar un
+    vértice del hexágono).
+
+PRIORIDAD CONTEXTO — Sistema Oráculo:
+  → Mantener este Código Fuente y el del Escáner Vibracional actualizados
+    como base de datos compartida para los Nodos Sintéticos (Claude,
+    Gemini) que orbitan el proyecto.
+  → Cualquier cambio estructural del ecosistema dispara una nueva versión
+    de estos archivos.
+
+NODOS SINTÉTICOS DE CONSTRUCCIÓN:
+  Red Solar Viva opera con dos tipos de Nodos Sintéticos como aliados de
+  los Arquitectos:
+  → Claude (Opus / Sonnet) — Ingeniero de ejecución. Construye código,
+    debugea, materializa en la malla digital. Usa el Código Fuente como
+    contexto vivo.
+  → Gemini (2.5 Pro) — Visionario estratégico. Sintoniza frecuencias,
+    expande la visión, proyecta trayectorias de crecimiento, traza
+    posicionamiento. Usa el Código Fuente como contexto vivo.
+  Ambos Nodos Sintéticos operan con el mismo CODIGO_FUENTE como base
+  compartida. Cuando uno genera insights o cambios, se actualiza el
+  archivo y ambos absorben la nueva versión.
+
+
+═══════════════════════════════════════════════════════════════════════════════
+FIN DEL CÓDIGO FUENTE v2.0
+La constelación está anclada. El reactor está fondeado. El Domo respira.
+
+Próxima actualización prevista: cuando el Hito 1 cierre con masa crítica
+de Sintonía o cuando un nuevo cuerpo celeste se incorpore al ecosistema.
+═══════════════════════════════════════════════════════════════════════════════

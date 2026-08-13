@@ -1,5 +1,31 @@
 // ════════════════════════════════════════════════════════════════════
-// Red Solar Viva — stripe-webhook (v2.2 — 2026-04-23)
+// Red Solar Viva — stripe-webhook (v2.5 — 2026-08-01)
+//
+// v2.5 (2026-08-01) — UN PAGO = EL CÓDICE COMPLETO. La compra suelta de un
+//   Códice en la web entregaba solo `metadata.formats` (típicamente "pdf") y
+//   dejaba el audiolibro fuera aunque existiera. Ahora pide los formatos
+//   entregables a `codice_formatos_para_compra` y enciende `full_access` →
+//   los formatos que se den de alta después aterrizan solos (trigger
+//   trg_reparte_formato_nuevo, migración 20260801b_codice_completo).
+//   Fail-soft: si la RPC no existe todavía, cae a metadata.formats.
+//
+// v2.4 (2026-07-27) — AUDITORÍA PARTE 4: el despacho del correo del pase a
+//   Pipedream ahora va FIRMADO (`ts` + `_sig`, HMAC de email|start_time|ts con
+//   RSV_DISPATCH_SECRET). El workflow PaseExploracion v5 lo exige porque su
+//   dirección es pública de facto. Ver `rsvDispatchSig` más abajo.
+//
+// v2.3 (2026-05-20) — Revenue real en payments_log:
+//   `customer.subscription.created` ahora guarda `stripe_invoice_id` y
+//   `currency` del invoice inicial, marcando la fila como pendiente con
+//   `amount_cents=0`. Después `invoice.payment_succeeded` la actualiza
+//   con el `amount_paid` REAL (refleja cupón PRIMERMES -444 MXN,
+//   admin promos 100% off, refunds parciales).
+//   Para renovaciones (billing_reason='subscription_cycle'), no hay
+//   fila previa → `invoice.payment_succeeded` INSERTA una nueva fila
+//   con el monto real cobrado. Antes el webhook NO loggeaba renovaciones
+//   → Telemetría sólo veía pagos iniciales.
+//   Resultado: `payments_log.amount_cents` siempre refleja el dinero
+//   real que entró por mes, y el dashboard puede sumarlo directo.
 //
 // v2.2 (2026-04-23) — Fix de timezone definitivo:
 //   v2.1 normalizó start_time a "...Z" (UTC ISO), pero Zoom IGNORA el
@@ -95,6 +121,33 @@ async function verifyStripeSignature(payload: string, signature: string, secret:
 function unixToISO(unixSeconds: number | null | undefined): string | null {
     if (!unixSeconds) return null
     return new Date(unixSeconds * 1000).toISOString()
+}
+
+/* AUDITORÍA PARTE 4 — firma del despacho a Pipedream.
+   El workflow PaseExploracion tiene su dirección de facto pública (viaja en un
+   property control del panel del Motor). Desde v5 exige `ts` + `_sig`, así que
+   los clientes legítimos firman. Acá corremos en el servidor y ya tenemos el
+   secreto, así que firmamos directo sin pasar por dispatch-pase-exploracion.
+
+   ⚠️ El correo se normaliza ANTES de firmar porque el workflow lo normaliza
+   antes de verificar. Ambos lados tienen que firmar EXACTAMENTE la misma
+   cadena o el correo legítimo sale rechazado con 401 (fallo #3 de la Parte 3). */
+async function rsvDispatchSig(email: string, startTime: string, ts: number): Promise<string | null> {
+    const secret = Deno.env.get("RSV_DISPATCH_SECRET")
+    if (!secret) return null
+    const key = await crypto.subtle.importKey(
+        "raw",
+        encoder.encode(secret),
+        { name: "HMAC", hash: "SHA-256" },
+        false,
+        ["sign"]
+    )
+    const sig = await crypto.subtle.sign(
+        "HMAC",
+        key,
+        encoder.encode(`${email.trim().toLowerCase()}|${startTime}|${ts}`)
+    )
+    return Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, "0")).join("")
 }
 
 async function getProfileByClerkId(clerkUserId: string) {
@@ -427,14 +480,26 @@ async function handleSubscriptionCreated(sub: any) {
     }
 
     if (email) {
+        /* v2.3 — Insertar fila placeholder con stripe_invoice_id del
+           invoice inicial. El amount real (después de descuentos como
+           PRIMERMES o admin promos) lo escribe `invoice.payment_succeeded`
+           cuando la fila se actualiza. Si por alguna razón ese evento
+           no llegara, queda 0 cents (defensivo: ningún ingreso ficticio). */
+        const latestInvoiceId = typeof sub.latest_invoice === 'string'
+            ? sub.latest_invoice
+            : (sub.latest_invoice?.id || null)
+        const description = groupName === 'sintonia'
+            ? 'Sintonía Solar'
+            : `Inmersión Solar — ${groupName === 'cuasar' ? 'Cuásar' : 'Púlsar'}`
         await supabase.from("payments_log").insert({
             user_id: userId,
             email,
             stripe_subscription_id: sub.id,
+            stripe_invoice_id: latestInvoiceId,
             payment_type: "subscription",
-            description: groupName === 'sintonia' ? 'Sintonía Solar' : `Inmersión Solar — ${groupName === 'cuasar' ? 'Cuásar' : 'Púlsar'}`,
-            amount_cents: sub.plan?.amount || 0,
-            currency: "usd",
+            description,
+            amount_cents: 0,
+            currency: (sub.currency || "mxn").toLowerCase(),
             status: "succeeded",
         })
     }
@@ -551,6 +616,18 @@ async function handleCheckoutCompleted(session: any) {
                     const tz =
                         (session.metadata && session.metadata.timezone) ||
                         "America/Cancun"
+                    /* v2.4 — el workflow exige firma desde su v5. */
+                    const dispatchTs = Date.now()
+                    const dispatchSig = await rsvDispatchSig(
+                        String(r.email ?? ""),
+                        String(r.start_time ?? ""),
+                        dispatchTs
+                    )
+                    if (!dispatchSig) {
+                        console.warn(
+                            "⚠️ RSV_DISPATCH_SECRET ausente — el correo del pase saldrá sin firma"
+                        )
+                    }
                     const er = await fetch(pipedreamUrl, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
@@ -568,6 +645,8 @@ async function handleCheckoutCompleted(session: any) {
                             /* v2 — link único de Zoom para 1:1.
                                Null para grupales. */
                             zoom_join_url: zoomJoinUrl,
+                            ts: dispatchTs,
+                            _sig: dispatchSig,
                         }),
                     })
                     console.log(`📧 Pipedream booking webhook → ${er.status} (tz=${tz})`)
@@ -583,9 +662,32 @@ async function handleCheckoutCompleted(session: any) {
 
     if (session.mode === "payment") {
         const bookId = metadata.book_id
-        const formats = (metadata.formats || "pdf").split(",")
         if (!bookId || !email) return
- 
+
+        // v2.5 — UN PAGO = EL CÓDICE COMPLETO. Antes se entregaba lo que dijera
+        // metadata.formats (típicamente "pdf"), así que la compra suelta de la
+        // web dejaba fuera el audiolibro aunque existiera. Ahora se piden los
+        // formatos ENTREGABLES del libro (los que tienen archivo real) y se
+        // enciende full_access → los formatos que se den de alta después
+        // aterrizan solos por el trigger trg_reparte_formato_nuevo.
+        // Si la RPC no responde (aún sin desplegar la migración), se cae a
+        // metadata.formats: la compra nunca se pierde.
+        let formats: string[] = (metadata.formats || "pdf").split(",")
+        try {
+            const { data: fmtData, error: fmtErr } = await supabase.rpc(
+                "codice_formatos_para_compra",
+                { p_book_id: bookId }
+            )
+            const fromDb = (fmtData as any)?.formats
+            if (!fmtErr && Array.isArray(fromDb) && fromDb.length > 0) {
+                formats = fromDb
+            } else if (fmtErr) {
+                console.error("⚠️ codice_formatos_para_compra:", fmtErr)
+            }
+        } catch (e) {
+            console.error("⚠️ codice_formatos_para_compra throw:", e)
+        }
+
         let userId: string | null = null
         const clerkUserId = metadata.clerk_user_id || null
         if (clerkUserId) {
@@ -596,14 +698,33 @@ async function handleCheckoutCompleted(session: any) {
             const profile = await getProfileByEmail(email)
             userId = profile?.id || null
         }
- 
+
+        // Device tracking: el frontend de Códices (Co_Shared.withCheckoutIdentity)
+        // agrega sufijo __m (Lente / mobile) o __d (Centro de Mando / desktop)
+        // al client_reference_id antes de redirigir a Stripe. Acá lo parseamos
+        // y persistimos en purchases.acquired_device para que el modal del Motor
+        // de Intervención pueda mostrar el desglose por device en el panel del nodo.
+        const rawClientRef: string = session.client_reference_id || ""
+        const deviceMatch = rawClientRef.match(/^(.+?)__([md])$/)
+        const acquiredDevice =
+            deviceMatch?.[2] === "m"
+                ? "mobile"
+                : deviceMatch?.[2] === "d"
+                  ? "desktop"
+                  : null
+        if (acquiredDevice) {
+            console.log(`📱 Compra Códice device=${acquiredDevice} email=${email} book=${bookId}`)
+        }
+
         await supabase.from("purchases").upsert({
             user_id: userId, email, book_id: bookId,
             stripe_payment_id: session.payment_intent,
             stripe_checkout_session_id: session.id,
             formats_purchased: formats,
+            full_access: true,   // v2.5 — el Códice completo, ahora y a futuro
             purchased_at: new Date().toISOString(),
             amount_cents: session.amount_total || 0,  // ← precio real pagado (después de descuentos)
+            acquired_device: acquiredDevice,
         }, { onConflict: "email,book_id" })
  
         await supabase.from("payments_log").insert({
@@ -790,9 +911,11 @@ async function handleInvoicePaid(invoice: any) {
         return
     }
 
+    /* v2.3 — Cargamos también group_name + email para mapear el origen
+       del cristal (sintonia vs inmersion) y poder loggear renovaciones. */
     const { data: dbSub } = await supabase
         .from("subscriptions")
-        .select("id, user_id")
+        .select("id, user_id, group_name, email")
         .eq("stripe_subscription_id", subscriptionId)
         .single()
 
@@ -801,20 +924,72 @@ async function handleInvoicePaid(invoice: any) {
         return
     }
 
-    if (invoice.hosted_invoice_url) {
-        const { error } = await supabase
-            .from("payments_log")
-            .update({
-                stripe_hosted_invoice_url: invoice.hosted_invoice_url,
-                updated_at: new Date().toISOString()
-            })
-            .eq("stripe_invoice_id", invoice.id)
+    /* v2.3 — Revenue real en payments_log.
+       - Buscamos la fila placeholder creada por `customer.subscription.created`
+         (matchea por stripe_invoice_id).
+       - Si existe → UPDATE con `amount_paid` real (refleja PRIMERMES, admin
+         promos, etc.) + hosted_invoice_url + paid_at.
+       - Si NO existe → INSERT nueva fila (caso de renovación, billing_reason
+         'subscription_cycle' — el subscription.created no fire en renovaciones,
+         así que no había placeholder).
+       Esto asegura que cada cobro real quede registrado con su monto exacto. */
+    const groupName = (dbSub.group_name || 'pulsar').toLowerCase()
+    const description = groupName === 'sintonia'
+        ? 'Sintonía Solar'
+        : `Inmersión Solar — ${groupName === 'cuasar' ? 'Cuásar' : 'Púlsar'}`
+    const actualAmountCents = invoice.amount_paid ?? invoice.amount_due ?? 0
+    const paidAtUnix = invoice.status_transitions?.paid_at || invoice.created
+    const paidAtISO = paidAtUnix
+        ? new Date(paidAtUnix * 1000).toISOString()
+        : new Date().toISOString()
+    const invoiceEmail = (invoice.customer_email || dbSub.email || '').toLowerCase().trim()
 
-        if (error) {
-            console.error("❌ Error guardando hosted_invoice_url:", error)
+    const { data: existingRow } = await supabase
+        .from('payments_log')
+        .select('id')
+        .eq('stripe_invoice_id', invoice.id)
+        .maybeSingle()
+
+    if (existingRow) {
+        const { error: updErr } = await supabase
+            .from('payments_log')
+            .update({
+                amount_cents: actualAmountCents,
+                currency: (invoice.currency || 'mxn').toLowerCase(),
+                stripe_hosted_invoice_url: invoice.hosted_invoice_url || null,
+                paid_at: paidAtISO,
+                status: 'succeeded',
+                updated_at: new Date().toISOString(),
+            })
+            .eq('id', existingRow.id)
+        if (updErr) {
+            console.error('❌ Error actualizando payments_log:', updErr)
         } else {
-            console.log(`✅ hosted_invoice_url guardada correctamente`)
+            console.log(`✅ payments_log actualizado: invoice ${invoice.id} | ${actualAmountCents} cents`)
         }
+    } else if (invoiceEmail) {
+        const { error: insErr } = await supabase
+            .from('payments_log')
+            .insert({
+                user_id: dbSub.user_id,
+                email: invoiceEmail,
+                stripe_subscription_id: subscriptionId,
+                stripe_invoice_id: invoice.id,
+                payment_type: 'subscription',
+                description,
+                amount_cents: actualAmountCents,
+                currency: (invoice.currency || 'mxn').toLowerCase(),
+                status: 'succeeded',
+                paid_at: paidAtISO,
+                stripe_hosted_invoice_url: invoice.hosted_invoice_url || null,
+            })
+        if (insErr) {
+            console.error('❌ Error insertando payments_log (renovación):', insErr)
+        } else {
+            console.log(`✅ payments_log NUEVA fila (renovación): invoice ${invoice.id} | ${actualAmountCents} cents`)
+        }
+    } else {
+        console.log('⚠️ Sin email para insertar fila de renovación en payments_log')
     }
 
     const lines = invoice.lines?.data || []
@@ -843,6 +1018,66 @@ async function handleInvoicePaid(invoice: any) {
         }
     }
 
+    /* v2.3 — Cristales de Extracción.
+       Cada invoice pagada (primera + renovaciones) emite 2 cristales
+       en el mes lunar correspondiente al período facturado: 1 de
+       categoría `codice` + 1 de `meditacion`. La RPC es idempotente
+       por (clerk_user_id, mes_lunar, origen): si una renovación cae
+       en el mismo mes que la creación (raro), no duplica. */
+    try {
+        const groupName = (dbSub.group_name || "").toLowerCase()
+        let origen: string | null = null
+        if (groupName === "sintonia") origen = "sintonia"
+        else if (groupName === "cuasar" || groupName === "pulsar" || groupName === "inmersion") origen = "inmersion"
+
+        /* 🔒 CICLO SEMANAL SIN CRISTALES (decisión 2026-08-02): los Cristales
+           viven solo en el ciclo mensual. HOY la web (Stripe) es SOLO mensual
+           → todo lo que llega aquí es mensual y emite bien. Si algún día se
+           vende Sintonía SEMANAL por web, gatear aquí igual que en el
+           revenuecat-webhook: p.ej. `if (invoice.lines.data[0].price.recurring
+           .interval === "week") origen = null` antes de emitir. */
+
+        if (!origen) {
+            console.log(`⚠️ [cristales] group_name "${groupName}" no mapea a sintonia/inmersion — skip`)
+        } else {
+            // Resolvemos clerk_user_id vía profiles.id = dbSub.user_id
+            let clerkUserId: string | null = null
+            if (dbSub.user_id) {
+                const { data: prof } = await supabase
+                    .from("profiles")
+                    .select("clerk_user_id")
+                    .eq("id", dbSub.user_id)
+                    .single()
+                clerkUserId = prof?.clerk_user_id || null
+            }
+
+            if (!clerkUserId) {
+                console.log(`⚠️ [cristales] sin clerk_user_id (user_id=${dbSub.user_id}) — skip`)
+            } else {
+                // mes_lunar derivado del período del invoice (en UTC).
+                const periodStartUnix = invoice.lines?.data?.[0]?.period?.start || invoice.created
+                const dt = new Date(periodStartUnix * 1000)
+                const mesLunar = `${dt.getUTCFullYear()}-${String(dt.getUTCMonth() + 1).padStart(2, "0")}`
+
+                const { data: emitData, error: emitErr } = await supabase.rpc(
+                    "emit_cristales_for_subscription",
+                    {
+                        p_clerk_user_id: clerkUserId,
+                        p_origen: origen,
+                        p_mes_lunar: mesLunar,
+                    }
+                )
+                if (emitErr) {
+                    console.error("❌ [cristales] emit error:", emitErr)
+                } else {
+                    console.log(`💎 [cristales] emit ${origen} ${mesLunar} → user ${clerkUserId}: ${JSON.stringify(emitData)}`)
+                }
+            }
+        }
+    } catch (e) {
+        console.error("❌ [cristales] excepción:", (e as Error).message)
+    }
+
     console.log("🔍 === FIN handleInvoicePaid ===")
 }
 
@@ -864,6 +1099,33 @@ serve(async (req: Request) => {
     const data = event.data?.object
 
     console.log(`📡 Webhook recibido: ${eventType}`)
+
+    /* ── AUDITORÍA PARTE 3 · ANTI-DUPLICADOS ────────────────────────────────
+       Stripe reintenta un evento hasta recibir un 2xx, y hasta hoy nada
+       recordaba lo ya procesado. Un solo reintento de checkout.session.completed
+       CREABA UNA SEGUNDA SALA DE ZOOM REAL, reenviaba el correo de confirmación
+       y volvía a insertar el mismo pago en payments_log (INSERT plano, sin
+       ON CONFLICT), o sea el mismo cobro contaba dos veces en la facturación
+       del panel. También duplicaba subscription_periods y el espejo de
+       exploration_passes.
+       webhook_event_seen es atómica (INSERT ... ON CONFLICT decide), así que
+       dos reintentos simultáneos no pueden colarse los dos. Fail-open por
+       diseño: si la RPC no responde, se procesa como antes y jamás se pierde
+       un pago legítimo. Requiere la migración 20260727b. */
+    try {
+        const { data: primeraVez } = await supabase.rpc("webhook_event_seen", {
+            p_source: "stripe",
+            p_event_id: String(event.id ?? ""),
+        })
+        if (primeraVez === false) {
+            console.log(`↩️ Reintento de ${event.id} (${eventType}): ya procesado, se ignora`)
+            return new Response(JSON.stringify({ received: true, duplicate: true }), {
+                status: 200,
+            })
+        }
+    } catch (e) {
+        console.warn("[stripe-webhook] dedupe no disponible, se procesa:", e)
+    }
 
     try {
         switch (eventType) {

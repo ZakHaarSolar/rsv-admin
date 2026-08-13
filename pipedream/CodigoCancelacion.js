@@ -8,13 +8,57 @@ export default defineComponent({
       apiVersion: '2023-10-16', 
     });
 
-    // Como usamos el Trigger nativo de Stripe en Pipedream, 
-    // el evento ya viene validado y listo en steps.trigger.event
-    const event = typeof steps.trigger.event.body === "string"
-  ? JSON.parse(steps.trigger.event.body)
-  : steps.trigger.event.body;
+    // =========================================================
+    // VERIFICACIÓN DE FIRMA DE STRIPE (Auditoría 2026-06-12)
+    // ---------------------------------------------------------
+    // Antes este workflow confiaba en el body crudo sin verificar firma:
+    // un POST falso de customer.subscription.deleted con el customer_id de
+    // una víctima le DESACTIVABA su cupón. Mismo hueco que Compras.js ya
+    // cerró; acá se replica el patrón.
+    //
+    // ⚠️ PREREQUISITO: el trigger HTTP de ESTE workflow debe estar en modo
+    // "Raw Request" (Pipedream → trigger → Configure → Raw Request: ON), así
+    // steps.trigger.event.body es el STRING crudo que Stripe firmó.
+    // ⚠️ SECRETO PROPIO: STRIPE_WEBHOOK_SECRET_CANCELACION = el whsec_ del
+    // endpoint de Stripe "Cancelación de Códigos" (≠ el de Compras.js ni el
+    // de Supabase). Los env vars de Pipedream son compartidos por workspace,
+    // por eso este usa un nombre distinto.
+    // ⚠️ En Raw Request, steps.trigger.event.headers es un ARRAY APLANADO
+    // [clave, valor, ...]; la firma se busca recorriendo el array.
+    // =========================================================
+    const rawHeaders = steps.trigger.event.headers;
+    let sig;
+    if (Array.isArray(rawHeaders)) {
+      const idx = rawHeaders.findIndex(
+        (item) => typeof item === "string" && item.toLowerCase() === "stripe-signature"
+      );
+      if (idx >= 0) sig = rawHeaders[idx + 1];
+    } else if (rawHeaders && typeof rawHeaders === "object") {
+      sig = rawHeaders["stripe-signature"] || rawHeaders["Stripe-Signature"];
+    }
+    if (!sig) throw new Error("❌ No hay firma de Stripe. POST rechazado (fail-closed).");
 
-    // Solo por seguridad extra, confirmamos que sea cancelación
+    const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET_CANCELACION;
+    if (!STRIPE_WEBHOOK_SECRET) {
+      throw new Error("❌ STRIPE_WEBHOOK_SECRET_CANCELACION no configurada en Pipedream. Cancelando (fail-closed).");
+    }
+
+    const rawBody = typeof steps.trigger.event === "string"
+      ? steps.trigger.event
+      : steps.trigger.event.body;
+    if (typeof rawBody !== "string") {
+      throw new Error("❌ El body no llegó como string crudo. Activá 'Raw Request' en el trigger HTTP del workflow.");
+    }
+
+    let event;
+    try {
+      event = stripe.webhooks.constructEvent(rawBody, sig, STRIPE_WEBHOOK_SECRET);
+    } catch (err) {
+      throw new Error(`❌ Firma de Stripe inválida — POST rechazado: ${err.message}`);
+    }
+
+    // Confirmamos que sea cancelación (la desactivación de un cupón ya
+    // apagado es un no-op terminal → el reproceso de un evento es idempotente).
     if (event.type !== "customer.subscription.deleted") {
       return { status: "Evento ignorado", type: event.type };
     }

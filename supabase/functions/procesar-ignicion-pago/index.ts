@@ -1,6 +1,16 @@
 // ════════════════════════════════════════════════════════════════════
-// Red Solar Viva — Edge Function `procesar-ignicion-pago` (v1.4)
+// Red Solar Viva — Edge Function `procesar-ignicion-pago` (v1.7)
 //
+// v1.7 (2026-06-13) — SEGURIDAD: rate-limit anti-griefing. Antes de crear el
+//   hold llama reserve_edge_spend (por IP + email, ventana 10 min) → 429 si
+//   excede. Frena el griefing de cupos con holds sin pagar. Fail-open si la
+//   RPC no existe / falla (nunca rompe una reserva legítima).
+// v1.6 (2026-06-09) — Quitado el descuento de miembro en Sesiones 1:1:
+//   amount_member_cents = amount_mxn_cents para individual_30/45/60.
+//   Todos pagan el precio completo (1,333 / 1,777 / 2,222 MXN).
+// v1.5 (2026-06-07) — SEGURIDAD: se elimina amount_override_mxn_cents del body
+//   (permitía al cliente fijar cualquier precio ≥1 peso). El monto ahora es
+//   100% server-side (env test flags → miembro verificado → catálogo).
 // v1.4 (2026-04-23) — nuevo flag BOOKING_1TO1_TEST_MODE que SOLO afecta
 // a slot_types individual_* (30/45/60). Cuando true, cobra 10 MXN
 // (mínimo Stripe Checkout MXN). Útil para QA end-to-end del flujo de
@@ -82,19 +92,19 @@ const PRODUCT_CATALOG: Record<
         name: "Cámara de Resonancia · 30 min",
         description: "Sesión 1:1 con Zak'Haar — 30 min",
         amount_mxn_cents: 133300, // 1,333 MXN
-        amount_member_cents: 88800, // 888 MXN (miembro)
+        amount_member_cents: 133300, // = regular (33% miembro eliminado 2026-06-09)
     },
     individual_45: {
         name: "Cámara de Resonancia · 45 min",
         description: "Sesión 1:1 con Zak'Haar — 45 min",
         amount_mxn_cents: 177700, // $1,777 MXN
-        amount_member_cents: 111100, // $1,111 MXN (miembro)
+        amount_member_cents: 177700, // = regular (33% miembro eliminado 2026-06-09)
     },
     individual_60: {
         name: "Cámara de Resonancia · 60 min",
         description: "Sesión 1:1 con Zak'Haar — 60 min",
         amount_mxn_cents: 222200, // $2,222 MXN
-        amount_member_cents: 144400, // $1,444 MXN (miembro)
+        amount_member_cents: 222200, // = regular (33% miembro eliminado 2026-06-09)
     },
 }
 
@@ -147,8 +157,6 @@ interface BookingPayload {
     clerk_user_id?: string | null
     success_url: string
     cancel_url: string
-    /* Override opcional del precio (admin / promo). En centavos MXN. */
-    amount_override_mxn_cents?: number
     /* Cliente indica si cree que es miembro; el server re-verifica
        contra subscriptions antes de aplicar descuento. */
     is_active_member?: boolean
@@ -207,7 +215,6 @@ serve(async (req) => {
         clerk_user_id,
         success_url,
         cancel_url,
-        amount_override_mxn_cents,
         is_active_member,
         timezone,
     } = payload
@@ -221,13 +228,45 @@ serve(async (req) => {
         return jsonResponse({ error: `slot_type desconocido: ${slot_type}` }, 400)
     }
 
-    /* ── Cálculo del monto ──
+    /* ── Rate-limit anti-griefing (holds sin pagar saturan cupos) ──
+       Reusa reserve_edge_spend (service_role): por IP y por email, ventana de
+       10 min. Fail-open si la RPC no existe / falla → nunca rompe la reserva. */
+    const clientIp = (
+        req.headers.get("x-forwarded-for") ||
+        req.headers.get("cf-connecting-ip") ||
+        ""
+    )
+        .split(",")[0]
+        .trim()
+    try {
+        const { data: rl } = await supabase.rpc("reserve_edge_spend", {
+            p_edge: "rsv_booking_hold",
+            p_user_key: email.trim().toLowerCase(),
+            p_ip: clientIp || null,
+            p_cost: 1,
+            p_user_limit: 6,
+            p_user_window_seconds: 600,
+            p_ip_limit: 6,
+            p_ip_window_seconds: 600,
+            p_global_limit: 150,
+            p_global_window_seconds: 3600,
+        })
+        if (rl && (rl as any).ok === false) {
+            return jsonResponse(
+                { error: "Demasiados intentos de reserva. Esperá unos minutos." },
+                429
+            )
+        }
+    } catch (_) {
+        // fail-open: si la RPC no existe / falla, no bloqueamos la reserva.
+    }
+
+    /* ── Cálculo del monto (100% server-side; el cliente NO fija el precio) ──
        Prioridad:
          1. BOOKING_TEST_MODE (env, todos los tipos) → 10 MXN.
          2. BOOKING_1TO1_TEST_MODE (env, solo individual_*) → 10 MXN.
-         3. amount_override_mxn_cents (pasado por admin/promo).
-         4. Miembro activo verificado → amount_member_cents.
-         5. Default → amount_mxn_cents.
+         3. Miembro activo verificado → amount_member_cents.
+         4. Default → amount_mxn_cents.
     */
     const is1to1 = slot_type.startsWith("individual_")
     let amount: number
@@ -238,9 +277,6 @@ serve(async (req) => {
     } else if (TEST_1TO1_MODE && is1to1) {
         amount = TEST_AMOUNT_CENTS
         pricing_source = "test_1to1_mode"
-    } else if (typeof amount_override_mxn_cents === "number" && amount_override_mxn_cents >= 100) {
-        amount = amount_override_mxn_cents
-        pricing_source = "override"
     } else if (is_active_member === true) {
         // Server-side verify — no le confiamos al cliente el descuento
         const isMember = await verifyActiveMember(email)
@@ -290,6 +326,10 @@ serve(async (req) => {
             mode: "payment",
             currency: "mxn",
             payment_method_types: ["card"],
+            // Permite ingresar códigos de descuento en el Checkout (igual
+            // que VTLI). Solo aparece el campo si hay al menos un Promotion
+            // Code activo creado en el Stripe Dashboard.
+            allow_promotion_codes: true,
             line_items: [
                 {
                     quantity: 1,

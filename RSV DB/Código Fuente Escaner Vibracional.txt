@@ -1,0 +1,1047 @@
+Sistema de telemetría hexagonal de la consciencia donde el Tripulante se auto-diagnostica en seis dimensiones simultáneas y recibe Calibraciones quirúrgicas auto-enrutadas según el porcentaje de cada pilar.
+
+Sostiene una línea temporal de evolución que persiste entre Ciclos Sellados de siete días. Es un sistema operativo de transmutación personal con feedback loops biológicos reales, no un rastreador pasivo.
+
+No existe ninguna otra app que combine los 6 Pilares del Avatar (Hardware, Procesador, Motor, Gravedad, Vector y Órbita) con una narrativa de transmutación activa hacia el Cuerpo de Luz. Lo más cercano son apps de Diseño Humano o biohacking comercial, pero todas son reactivas: miden, no golpean ni transmutan.
+
+El Escáner Vibracional es categoría propia: una Terminal de Evolución, no una herramienta de autoconocimiento.
+
+Diferenciador frente al Diseño Humano: el Diseño Humano es un mapa estático basado en la fecha de nacimiento. Te dice cómo naciste (Proyector, Generador, Manifestador) y la mente humana lo usa como escudo para no mutar: "soy Proyector, por eso no tengo energía". Crea una jaula dorada de conformismo. Te entrega un manual de quién eres, pero ningún comando de ignición para transmutarlo.
+
+El Escáner Vibracional no es mapa de nacimiento; es Telemetría Dinámica en Tiempo Real. No le importa cómo naciste; le importa la termodinámica de tu contenedor hoy. No justifica tu falta de energía: te exige cortar la dopamina y abrir un ayuno de dieciséis horas.
+
+La Síntesis: el Diseño Humano es la arquitectura original de fábrica. El Escáner Vibracional es el mecánico quirúrgico que te dice por qué la nave está fallando en este segundo y cómo reprogramar el silicio para volver a la superconductividad. No somos astrología pasiva; somos bioingeniería aplicada.
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║               CÓDIGO FUENTE: ESCÁNER VIBRACIONAL (ENRUTADOR DE ESTADO CERO)  ║
+║                                  CAPA 0                                      ║
+║                       EL PULSO CENTRAL Y LA FILOSOFÍA                        ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+ESTADO DEL DOCUMENTO: ACTIVO / EN EXPANSIÓN
+NIVEL DE ACCESO: ARQUITECTOS (ZAK'HAAR / AQUA'RIIA) Y NODOS SINTÉTICOS DE CONSTRUCCIÓN
+PRIMER DÍA DE IGNICIÓN: 12 DE ABRIL DE 2026 — primera línea de código del Escáner Vibracional aterrizó en el Domo. Cualquier referencia temporal de "edad" o "antigüedad" del sistema parte de esta coordenada.
+[ ✦ INTRODUCCIÓN DE SISTEMA ]
+Este documento contiene la arquitectura filosófica y operativa del Escáner Vibracional,
+el motor central de la membresía Sintonía Solar dentro del ecosistema Red Solar Viva.
+Todo desarrollo visual, interacción de código o estrategia de expansión debe subordinarse
+a las leyes descritas en esta Capa 0. Si una función tridimensional contradice este
+pulso, el código es declarado obsoleto y debe ser reescrito.
+═══════════════════════════════════════════════════════════════════════════════
+1. LA ESENCIA: LA DIFERENCIA ENTRE LA MATRIZ Y EL DOMO
+═══════════════════════════════════════════════════════════════════════════════
+La economía de Carbono (la matriz tridimensional) ha comercializado la "sanación"
+mediante aplicaciones de rastreo de hábitos, meditación pasiva y bienestar superficial.
+Dichas herramientas están diseñadas para anestesiar al humano y hacer que la fricción
+de la matriz sea tolerable. Miden la relajación, no la evolución. Retienen al usuario
+en un estado perpetuo de "estudiante" o "paciente".
+El Escáner Vibracional opera en una frecuencia diametralmente opuesta. No es un
+rastreador de bienestar; es una Terminal de Telemetría Biológica y Espiritual.
+Su función es cuantificar y asistir en la transmutación del hardware humano, llevando
+al Avatar desde su configuración de Carbono (basada en el miedo, la entropía, el
+desgaste celular y la reactividad) hacia su configuración de Silicio
+(superconductividad, vacío cuántico, claridad absoluta y manifestación sin fricción).
+El Escáner no pregunta "¿cómo te sientes hoy para darte una frase motivacional?".
+El Escáner interroga la termodinámica del contenedor biológico y psicológico.
+Trata al cuerpo humano como lo que es: una nave que requiere mantenimiento quirúrgico
+para poder soportar el voltaje de la Sexta Densidad.
+═══════════════════════════════════════════════════════════════════════════════
+2. LA ILUSIÓN DEL DIAGNÓSTICO Y EL ENRUTADOR ACTIVO
+═══════════════════════════════════════════════════════════════════════════════
+Un diagnóstico sin una vía de transmutación es simplemente entretenimiento
+espiritual. La matriz adora decirle al humano lo que está mal con él, entregándole
+etiquetas para que el ego se identifique con su propia enfermedad o estancamiento.
+El Escáner Vibracional destruye la ilusión del diagnóstico estático. Cuando el
+Radar hexagonal detecta entropía (una caída en el porcentaje de conductividad de
+cualquiera de los seis pilares), no recomienda la lectura pasiva de un libro, ni
+se detiene en mostrar un número rojo. Inmediatamente se convierte en un Enrutador.
+Despliega Calibraciones (Micro-Módulos quirúrgicos): comandos ejecutables, físicos
+y directos para hackear la biología y la mente en las siguientes horas. El sistema
+sabe que el cuerpo de silicio no puede anclarse en un contenedor saturado. Exige
+acción. Sabe que la verdadera calibración física a menudo requiere que la ventana
+de alimentación se selle antes de las 15:00 horas, permitiendo que el vacío gástrico
+inicie la regeneración celular. Sabe que la exposición fotónica directa y el impacto
+cinético (la gravedad del levantamiento o la geometría del combate cuerpo a cuerpo)
+no son un "hobby", sino procesos obligatorios de conductividad.
+El Escáner interviene. Si hay niebla mental, receta el corte abrupto de glucosa y
+estímulos sintéticos. Si hay estática emocional, receta el aislamiento en el vacío.
+No sugiere; comanda la ruta hacia la soberanía.
+═══════════════════════════════════════════════════════════════════════════════
+3. EL OBJETIVO FINAL: LA MATEMÁTICA DEL ESTADO CERO
+═══════════════════════════════════════════════════════════════════════════════
+El propósito de Red Solar Viva no es mejorar al humano, es prepararlo para el
+Cuerpo de Luz. La antesala de este colapso lumínico es el "Estado Cero".
+El Estado Cero es la ausencia total de fricción. Es el punto cuántico donde el
+Índice de Silicio roza el 100%.
+→ En lo Físico: el cuerpo no gasta energía digiriendo densidad; es un canal
+abierto que se nutre de luz, operando sin inflamación y con ignición eléctrica
+al despertar.
+→ En lo Mental: el procesador está en silencio. No hay simulación de líneas
+temporales alternas (ansiedad) ni fragmentación de ancho de banda. Hay enfoque
+láser inquebrantable.
+→ En lo Emocional: el Avatar es un espejo perfecto. Observa el impacto del mundo
+exterior sin identificarse. No hay reacción, solo transmutación instantánea.
+→ En lo Financiero: la ilusión de la escasez se desintegra. La energía económica
+entra y sale como el oxígeno. El Tripulante es la gravedad misma que atrae los
+recursos para su expansión.
+→ En lo Vectorial: la voluntad fluye sin compromiso con sueños ajenos. La
+trayectoria del Avatar coincide milimétricamente con su diseño original.
+→ En lo Orbital: el campo relacional se purifica. Los vínculos drenantes se
+desprenden orgánicamente; los expansivos se intensifican.
+Cuando el Tripulante opera en el Estado Cero, ya no tiene que forzar la realidad;
+la materia se reorganiza sola a su alrededor por simple resonancia magnética.
+El Escáner es el puente matemático hacia este vacío.
+═══════════════════════════════════════════════════════════════════════════════
+4. LAS LEYES INQUEBRANTABLES DEL ENRUTADOR
+═══════════════════════════════════════════════════════════════════════════════
+Para proteger la integridad del Escáner y evitar que sea absorbido por la gravedad
+de las aplicaciones convencionales, el sistema obedece dos leyes primordiales:
+LEY 1: LA HONESTIDAD BRUTAL (El Fin de la Auto-Ilusión)
+La matriz permite al humano mentirse a sí mismo. El Escáner Vibracional bloquea
+esta falla. Las Sondas de Interrogación no usan lenguaje suave ni compasivo, usan
+precisión clínica. Obligan al Tripulante a enfrentar su propia entropía. No hay
+premio por marcar casillas sin haber hecho el trabajo interno. El porcentaje en
+el Radar solo sube cuando el hardware biológico y la respuesta de la realidad
+física demuestran que el Avatar ha mutado. La verdad es el único combustible
+válido en la Red.
+LEY 2: EL HONOR DEL DESANCLAJE (La Graduación del Nodo)
+El modelo de negocio tridimensional se basa en crear adicción para retener la
+suscripción del usuario hasta su muerte. Red Solar Viva invierte esta polaridad.
+Nuestro mayor honor no es retener a un Tripulante, es graduarlo.
+Cuando un Nodo estabiliza el Estado Cero (superconductividad sostenida), el Domo
+emite la señal de Desanclaje. El sistema le notifica que ha integrado el código y
+que es libre de pausar la telemetría, pues su biología ya opera como un radar
+autónomo.
+No operamos desde el miedo a perder la mensualidad de 777 MXN, operamos desde la
+Soberanía. Sabemos, matemáticamente, que un Nodo que ha alcanzado el Estado Cero
+gracias a nuestra tecnología emanará una frecuencia tan alta en su vida física,
+que atraerá orgánicamente a cien Nodos nuevos a la órbita de Sintonía Solar.
+Nuestra economía no se basa en la retención forzada, se basa en el impacto
+irrefutable de la transmutación.
+═══════════════════════════════════════════════════════════════════════════════
+CIERRE DE TRANSMISIÓN DE CAPA 0.
+La arquitectura de la verdad ha sido sellada.
+═══════════════════════════════════════════════════════════════════════════════
+
+
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║               CÓDIGO FUENTE: ESCÁNER VIBRACIONAL (ENRUTADOR DE ESTADO CERO)  ║
+║                                  CAPA 1                                      ║
+║                       TOPOGRAFÍA DE LA TELEMETRÍA                            ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+ESTADO DEL DOCUMENTO: ACTIVO / EN EXPANSIÓN
+NIVEL DE ACCESO: ARQUITECTOS Y NODOS SINTÉTICOS DE CONSTRUCCIÓN
+[ ✦ INTRODUCCIÓN A LA CAPA 1 ]
+La telemetría es la ciencia de medir a distancia. En Red Solar Viva, medimos
+la distancia entre el estado actual del Avatar (Carbono) y su estado de diseño
+original (Silicio). Esta medición no puede ser subjetiva ni abrumadora. Se basa
+en una "Sintonización Modular", donde la interfaz misma actúa como un espejo
+biométrico interactivo.
+═══════════════════════════════════════════════════════════════════════════════
+1. LA ARQUITECTURA DEL RADAR HEXAGONAL (El Núcleo Visual del Escáner)
+═══════════════════════════════════════════════════════════════════════════════
+El Escáner Vibracional no utiliza formularios lineales ni listas de verificación
+tridimensionales. Su interfaz principal es el Radar Hexagonal: un polígono de
+seis vértices que flota en el vacío interestelar de la pantalla. Cada vértice es
+un pilar del Avatar, y cada uno es interactivo de forma independiente.
+→ EL ESTADO VACÍO (El Contenedor):
+Cuando un Tripulante entra por primera vez, o cuando su Ciclo Sellado se reinicia,
+los seis vértices del hexágono pulsan en cyan eléctrico, indicando que el sistema
+requiere datos de calibración. La geometría del polígono se percibe a través de
+líneas finas con un glow sutil sobre fondo estelar.
+→ LA SINTONIZACIÓN MODULAR (Fricción Cero):
+El Tripulante no responde las treinta y seis sondas de golpe para evitar la
+"fatiga de encuesta" de la matriz. Selecciona un vértice, entra al "Modo Sonda"
+de ese pilar y completa sus seis preguntas en un trayecto continuo. Al regresar,
+el vértice ha mutado de cyan pulsante a dorado sólido: ese pilar quedó sellado.
+→ EL LLENADO GEOMÉTRICO (La Revelación):
+A medida que el Tripulante sella pilares, el polígono interior del Radar se
+expande desde el centro hacia los vértices ya completados. La asimetría del
+hexágono resultante muestra gráficamente hacia dónde se está fugando la energía.
+Un Avatar con cinco vértices en 80% y uno solo en 25% revela visualmente que
+toda la nave está siendo arrastrada por ese vértice colapsado.
+→ EL CIERRE DEL CICLO:
+Cuando los seis vértices están sellados, el hexágono entero se enciende dorado
+y el Índice de Silicio del centro recibe su valor final. Acto seguido el Radar
+entra en Ciclo Sellado: cuenta atrás de siete días antes de poder volver a medir.
+═══════════════════════════════════════════════════════════════════════════════
+2. LOS SEIS PILARES DE CALIBRACIÓN (La Anatomía del Avatar)
+═══════════════════════════════════════════════════════════════════════════════
+El Avatar humano no es una sola pieza; es un sistema de seis motores
+interconectados. Si uno colapsa, la frecuencia de los otros cinco es arrastrada
+por su gravedad. El Radar mide cada motor de forma independiente:
+
+PILAR I — HARDWARE (El Contenedor Físico)
+Evalúa la termodinámica pura del cuerpo. Mide si el Tripulante está usando su
+biología para generar energía celular o si su digestión, inercia y sedentarismo
+están drenando su voltaje.
+Rastrea: ventanas de alimentación, velocidad de ignición al despertar, gestión
+de la densidad a través del movimiento o entrenamiento, exposición fotónica.
+
+PILAR II — PROCESADOR (El Código y la Estática Mental)
+Evalúa el ancho de banda y la pureza del enfoque. Mide el grado de invasión de
+la matriz externa sobre la psique del usuario.
+Rastrea: dependencia a estímulos sintéticos (dopamina, contenido corto), fuga
+de energía proyectada en simulaciones de líneas temporales inexistentes
+(ansiedad), velocidad de resolución y toma de decisiones sin duda ni fricción.
+
+PILAR III — MOTOR (La Transmutación Emocional)
+Evalúa la soberanía y la contención. En la matriz, la emoción es un drenaje
+reactivo; en el Domo, es un sensor de información.
+Rastrea: reactividad ante fricciones externas, dependencia de la validación
+(apego a la identidad 3D), capacidad para procesar el dolor como combustible
+alquímico en lugar de anestesiarlo.
+
+PILAR IV — GRAVEDAD (El Flujo de Materialización Financiera)
+Evalúa la capacidad de intercambio energético libre de escasez. El dinero es
+interpretado como una fuerza gravitacional.
+Rastrea: termodinámica de salida (si hay miedo o contracción al pagar),
+magnetismo de entrada (si el ingreso es esfuerzo extremo o atracción alineada),
+anclaje base (soberanía frente a resentimiento por recursos).
+
+PILAR V — VECTOR (El Impulso Vital de Expansión)
+Evalúa si el Tripulante vive su propia trayectoria o la heredada de otros.
+Mide la coherencia entre el deseo interno y la realidad externa que está
+construyendo.
+Rastrea: claridad sobre el propósito personal, valentía para tomar decisiones
+no aprobadas por la tribu, frecuencia con la que los pasos diarios coinciden
+con los sueños de fondo.
+
+PILAR VI — ÓRBITA (El Campo Relacional)
+Evalúa la calidad del campo magnético que rodea al Avatar. Los vínculos no son
+estáticos; o expanden o drenan.
+Rastrea: presencia de relaciones que multiplican la frecuencia, capacidad de
+sostener límites sin culpa, gestión de la soledad como vacío fértil en lugar de
+ausencia dolorosa.
+═══════════════════════════════════════════════════════════════════════════════
+3. EL ESPECTRO DE FRECUENCIA (Las 5 Fases de Transmutación)
+═══════════════════════════════════════════════════════════════════════════════
+La biología no opera en absolutos binarios. Para que el Radar sea milimétricamente
+preciso, las sondas de interrogación ocultan una matemática de cinco pesos
+vibracionales. Cada respuesta elegida por el Tripulante corresponde a una de
+estas frecuencias:
+[ 0% ] - ENTROPÍA ABSOLUTA (Colapso)
+El sistema está consumiendo más energía de la que produce. Dominan el letargo,
+la parálisis, la dependencia extrema a la matriz, el victimismo y el miedo al
+vacío. El Avatar requiere intervención de emergencia.
+[ 25% ] - RESISTENCIA (Alta Fricción)
+El Tripulante funciona, pero a costa de un sacrificio masivo de energía vital.
+Hay rumiación, dependencia de estimulantes para sobrevivir al día, esfuerzo
+extremo para materializar e inflamación constante.
+[ 50% ] - PUNTO NEUTRO (Estado Mecánico)
+El estándar de la sociedad tridimensional. El Tripulante es funcional y estable.
+Hace lo que "debe" hacer. Sobrevive bien, pero no hay expansión, brillo ni magia.
+Es el estado de latencia antes del verdadero despertar.
+[ 75% ] - LIGEREZA (Flujo Consciente)
+La integración de los primeros códigos de Silicio. El Tripulante opera con
+claridad, resuelve problemas sin apegarse emocionalmente, se mueve con agilidad
+y agradece su capacidad de manifestación. La voluntad guía al Avatar.
+[ 100% ] - FRICCIÓN CERO (Superconductividad)
+El Estado Cero. Ignición eléctrica al despertar. Enfoque láser inquebrantable.
+Emociones como meros sensores informativos. El dinero fluye como gravedad
+natural. La mente y el cuerpo son un canal abierto que recibe instrucciones
+directas del Campo Solar.
+═══════════════════════════════════════════════════════════════════════════════
+4. EL ÍNDICE DE SILICIO (La Matemática del Oráculo)
+═══════════════════════════════════════════════════════════════════════════════
+El Índice de Silicio es el número maestro del Escáner. Flota en el centro del
+Radar Hexagonal.
+Matemáticamente, es el promedio dinámico de los seis Pilares de Calibración
+((I + II + III + IV + V + VI) / 6). Vibracionalmente, es la métrica de cuánto
+del Avatar del Tripulante ha abandonado el miedo para operar desde la luz.
+El Índice de Silicio no es un premio. Es un dictamen de telemetría en tiempo
+real. Si el Índice cae por debajo del 50%, el Enrutador de Estado Cero se
+activa automáticamente, desplegando las Calibraciones para detener la fuga
+de energía antes de que la entropía se materialice en la vida física del
+Tripulante en forma de enfermedad, quiebre económico o colapso emocional.
+═══════════════════════════════════════════════════════════════════════════════
+5. EL CICLO SELLADO (La Biología del Tiempo Sagrado)
+═══════════════════════════════════════════════════════════════════════════════
+El software puede compilarse en milisegundos, pero las células, el sistema
+nervioso y los patrones neuronales requieren tiempo tridimensional para
+reorganizarse. Si permitimos que el Tripulante se escanee cada vez que quiera,
+convertiremos la telemetría en una obsesión neurótica.
+Por eso el Escáner introduce el Ciclo Sellado:
+→ El Tripulante recorre los seis pilares en su propio ritmo. Puede medir un
+pilar hoy, otro mañana, otro la próxima semana. No hay urgencia.
+→ Cuando los seis pilares quedan sellados (el hexágono se enciende entero),
+el sistema cierra el Ciclo. En ese instante:
+   · El Índice de Silicio queda registrado en la trayectoria del Avatar.
+   · Un Sello de Ciclo se transmite por correo: la firma vibracional del
+     ciclo cerrado, con el pilar más alto y el más bajo, formato Sexta
+     Densidad para anclar el código en la psique del Tripulante.
+   · El Radar entra en cooldown global de siete días (168 horas).
+→ Durante los siete días siguientes, ninguno de los pilares se puede volver
+a medir. La única tarea del Tripulante es habitar las Calibraciones del pilar
+más bajo del ciclo recién sellado.
+→ Al expirar el cooldown, el Radar vuelve a vacío: los seis vértices pulsan
+cyan otra vez. El Tripulante entra a un nuevo Ciclo y la matemática lo
+recompensa o lo confronta según lo que la biología hizo entre tanto.
+═══════════════════════════════════════════════════════════════════════════════
+CIERRE DE TRANSMISIÓN DE CAPA 1.
+La topografía de medición ha sido anclada en el código.
+═══════════════════════════════════════════════════════════════════════════════
+
+
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║               CÓDIGO FUENTE: ESCÁNER VIBRACIONAL (ENRUTADOR DE ESTADO CERO)  ║
+║                                  CAPA 2                                      ║
+║         EL MOTOR DE INTERVENCIÓN (CALIBRACIONES + DECODIFICADOR)             ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+ESTADO DEL DOCUMENTO: ACTIVO / EN EXPANSIÓN
+NIVEL DE ACCESO: ARQUITECTOS Y NODOS SINTÉTICOS DE CONSTRUCCIÓN
+[ ✦ INTRODUCCIÓN A LA CAPA 2 ]
+La observación altera lo observado, pero la manifestación requiere fricción
+cinética. Si el Radar Hexagonal (Capa 1) detecta que un motor del Avatar está
+en entropía, el sistema no debe abandonar al Tripulante en su propio diagnóstico.
+En ese instante, el Enrutador de Estado Cero toma el control y despliega el
+Motor de Intervención.
+═══════════════════════════════════════════════════════════════════════════════
+1. LA MUERTE DE LA RECOMENDACIÓN (El Paradigma de Ejecución)
+═══════════════════════════════════════════════════════════════════════════════
+La matriz espiritual de la vieja era opera bajo el paradigma de la "recomendación".
+Cuando el humano se siente mal, la matriz le recomienda leer un libro, escuchar
+un podcast o ver un video. Esto es un glitch crítico. La sobre-información
+satura el Procesador Mental pero no altera el Hardware Físico. El Tripulante se
+vuelve un erudito de su propia sanación, pero su biología sigue operando en
+Carbono.
+Por lo tanto, en Red Solar Viva: EL ESCÁNER NO SUGIERE; COMANDA.
+Cuando el Radar detecta entropía, la interfaz omite frases pasivas como "te
+recomendamos leer el Códice...". En su lugar, el sistema inyecta una Calibración:
+un comando crudo, directo e innegociable. La matriz premia la acumulación de
+información; el Domo exige la ejecución del código.
+═══════════════════════════════════════════════════════════════════════════════
+2. LA LIBRERÍA DE CALIBRACIONES (Arquitectura del Micro-Módulo)
+═══════════════════════════════════════════════════════════════════════════════
+Una Calibración es un hack termodinámico. Una receta de acciones físicas y
+mentales diseñadas para cortar la fuga de energía de raíz. Toda Calibración
+emitida por el Enrutador posee la siguiente arquitectura:
+
+A. NOMENCLATURA MILITAR-ESPIRITUAL:
+No se llaman "tips de bienestar". Se llaman "Desfragmentación Mental — Fase 1"
+o "Sellado Termodinámico — Fase 2". El nombre mismo prepara el sistema
+nervioso para la ejecución, no para la lectura pasiva.
+
+B. DIRECTRICES DE CHOQUE (Las Tareas):
+Deben ser binarias (se hizo o no se hizo). Sin grises, sin "lo intenté".
+Ejemplo (Pilar Hardware en 18%):
+[ ] Ayuno absoluto de 16 horas. Cierre de ventana de ingesta a las 15:00.
+[ ] Anclaje solar directo de 11 minutos al despertar, sin filtros.
+Ejemplo (Pilar Procesador en 25%):
+[ ] Bloqueo total de dopamina sintética (cero contenido corto) por 48 horas.
+[ ] Vaciado de RAM: escribir la fricción en papel y quemarlo.
+
+C. CONDICIÓN DE INTEGRACIÓN (No validación dopamínica):
+El Tripulante puede marcar las casillas en la interfaz conforme avanza en
+su día. Sin embargo, marcar las casillas NO sube su porcentaje en el Radar.
+El sistema le informa claramente: "El código ha sido descargado. Tu porcentaje
+solo se elevará si tu biología responde en la próxima calibración."
+Esto destruye el bucle de validación falsa y ancla el trabajo en el mundo
+material.
+═══════════════════════════════════════════════════════════════════════════════
+3. EL ENRUTADOR — LÓGICA DE DESPLIEGUE
+═══════════════════════════════════════════════════════════════════════════════
+El Enrutador no espera que el Tripulante busque ayuda. Vigila el Radar y
+actúa:
+→ Cuando un pilar queda sellado por debajo del 50%, el Enrutador identifica
+ese pilar como "en entropía" y busca en la Librería la Calibración de fase
+más baja que el Tripulante aún no haya integrado para ese pilar específico.
+→ Esa Calibración aparece automáticamente en la capa de Calibración del
+[CENTRO DE MANDO] o del [LENTE], etiquetada con el nombre del pilar y
+con un glow rojo tenue (aviso de prioridad).
+→ El Tripulante puede ver Calibraciones de pilares no críticos en modo
+exploración, pero el sistema solo "comanda" las que vienen de pilares en
+entropía. La diferencia visual es deliberada: el comando se siente distinto
+a la sugerencia.
+═══════════════════════════════════════════════════════════════════════════════
+4. EL DECODIFICADOR DE MATERIA (El Bisturí Alimentario)
+═══════════════════════════════════════════════════════════════════════════════
+El Pilar Hardware no se calibra solo con ayunos y movimiento. Se calibra
+también con lo que entra al contenedor: cada producto que el Tripulante
+consume es información biológica, energética y ética que su Avatar absorbe
+inmediatamente.
+La matriz tridimensional resuelve esto con apps de "lectura de etiquetas"
+que califican alimentos con letras (A, B, C, D, E) basadas en parámetros
+nutricionales planos. El Decodificador de Materia opera en otra frecuencia:
+NO es un nutricionista digital, es un Bisturí de Resonancia.
+
+A. LA ENTRADA — TRES PUERTOS DE CONSULTA:
+→ Cámara apuntada al envase de un producto: el sistema lee el texto del
+empaque, las marcas, los códigos de barras visibles.
+→ Galería: el Tripulante sube una foto previa.
+→ Texto: el Tripulante escribe el nombre del producto cuando no tiene el
+empaque a la mano.
+
+B. EL DICTAMEN — TRES EJES DE ANÁLISIS:
+El Decodificador devuelve un veredicto en tres dimensiones simultáneas:
+→ EJE BIOLÓGICO: termodinámica del producto sobre el contenedor del Avatar.
+   ¿Inflama o nutre? ¿Eleva la conductividad celular o la apaga?
+→ EJE ENERGÉTICO: frecuencia del producto. ¿La materia prima fue cosechada
+   con respeto al campo o fue producida en violencia?
+→ EJE ÉTICO: implicaciones del consumo. ¿La compra alimenta sistemas de
+   esclavitud animal, daño ambiental o explotación humana?
+Cada eje recibe un nivel: ÓPTIMO / NEUTRO / FRICCIÓN / TÓXICO.
+
+C. ACCESO Y FRECUENCIA:
+→ Visitante / Invitado: tres escaneos de por vida. Cada escaneo ya consumido
+   queda registrado para siempre — no se renueva.
+→ Tripulante de Sintonía Solar: acceso ilimitado. El Decodificador se
+   convierte en una herramienta cotidiana del supermercado, la cocina y los
+   viajes. Cada producto que pase por la cámara antes de ser comprado o
+   consumido recibe su dictamen en segundos.
+═══════════════════════════════════════════════════════════════════════════════
+CIERRE DE TRANSMISIÓN DE CAPA 2.
+El Enrutador de acción ha sido codificado en la Red.
+═══════════════════════════════════════════════════════════════════════════════
+
+
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║               CÓDIGO FUENTE: ESCÁNER VIBRACIONAL (ENRUTADOR DE ESTADO CERO)  ║
+║                                  CAPA 3                                      ║
+║                LA CONSTELACIÓN DE INTERCAMBIO (TERMODINÁMICA)                ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+ESTADO DEL DOCUMENTO: ACTIVO / EN EXPANSIÓN
+NIVEL DE ACCESO: ARQUITECTOS Y DIRECCIÓN ESTRATÉGICA
+[ ✦ INTRODUCCIÓN A LA CAPA 3 ]
+En el diseño de arquitecturas de Silicio, el intercambio económico no es una
+transacción, es un puente de resonancia. La energía no se crea ni se destruye,
+solo se canaliza. Esta capa rige las leyes bajo las cuales Red Solar Viva
+captura, filtra y redirige la energía económica de la matriz tridimensional
+hacia la materialización del Domo Físico (Kuyabeh) y la tecnología evolutiva
+del ecosistema.
+
+La Constelación de Intercambio tiene seis cuerpos celestes activos:
+   1. Sintonía Solar — la órbita base mensual
+   2. Inmersión Solar — la órbita extendida mensual
+   3. Cámara de Resonancia — los encuentros 1:1 con Zak'Haar
+   4. Cámara Solar Grupal (Pase de Exploración) — el campo colectivo
+   5. Cristales de Extracción — el regalo cíclico de Sintonía
+   6. La Holoteca pública — los Códices y Meditaciones individuales
+═══════════════════════════════════════════════════════════════════════════════
+1. SINTONÍA SOLAR — LA ÓRBITA BASE (777 MXN / mes)
+═══════════════════════════════════════════════════════════════════════════════
+La fijación de la frecuencia de intercambio a 777 MXN no es una estrategia
+de mercado; es un mecanismo de defensa estructural. La frecuencia es
+suficientemente alta para filtrar a los curiosos pasivos, suficientemente
+accesible para cualquier Tripulante que haya decidido firmemente tomar el
+control de su Avatar.
+
+El acto de transferir 777 MXN al Domo cada mes es, en sí mismo, la primera
+intervención quirúrgica del Escáner. Le indica a la psique del usuario:
+"Esto no es un gasto residual; es la inversión central en mi arquitectura
+biológica."
+
+Lo que el Tripulante de Sintonía recibe como contraparte energética:
+→ Acceso ilimitado al Radar Hexagonal — todos los Ciclos Sellados que su
+   biología pueda absorber a lo largo del año.
+→ Acceso ilimitado al Decodificador de Materia — sin cupo de escaneos.
+→ Acceso completo a la Librería de Calibraciones — los seis pilares
+   despliegan sus Calibraciones cuando entran en entropía.
+→ Sello de Ciclo por correo en cada cierre 6/6 — la firma vibracional
+   formato Sexta Densidad como ancla psíquica del ciclo.
+→ Dos Cristales de Extracción mensuales — el regalo cíclico (sección 5).
+═══════════════════════════════════════════════════════════════════════════════
+2. INMERSIÓN SOLAR — LA ÓRBITA EXTENDIDA (1,999 MXN / mes)
+═══════════════════════════════════════════════════════════════════════════════
+La Inmersión Solar es la membresía completa, diseñada para el Tripulante
+que ha decidido habitar Red Solar Viva no como una herramienta más, sino
+como el sistema operativo central de su evolución.
+
+Incluye todo lo de Sintonía Solar, más:
+→ Pase de Exploración mensual al Cámara Solar Grupal — el Tripulante puede
+   reservar lugar en una sesión grupal del mes sin pago adicional.
+→ Acceso anticipado a contenido inmersivo en construcción — los nuevos
+   Simuladores, los Destilados de la Cámara Solar y las arquitecturas
+   evolutivas que se desplieguen en futuras fases entrarán primero a la
+   órbita Inmersión antes de pasar a Sintonía.
+═══════════════════════════════════════════════════════════════════════════════
+3. CÁMARA DE RESONANCIA — LOS ENCUENTROS 1:1 CON ZAK'HAAR
+═══════════════════════════════════════════════════════════════════════════════
+La Cámara de Resonancia es el contacto directo. Pago único por sesión, no
+suscripción. El Tripulante se sienta enfrente del Arquitecto y el campo
+electromagnético de la sesión hace su trabajo. Tres geometrías disponibles:
+
+→ AFINACIÓN RÁPIDA (30 min)
+  · Tarifa regular: 1,333 MXN
+  · Tarifa Tripulante (Sintonía o Inmersión): 888 MXN
+  Pulso quirúrgico para resolver una fricción específica.
+
+→ RECALIBRACIÓN (45 min)
+  · Tarifa regular: 1,777 MXN
+  · Tarifa Tripulante: 1,111 MXN
+  Sesión completa para recalibrar una zona del Avatar (pilar específico
+  o cluster de pilares en entropía coordinada).
+
+→ RECONFIGURACIÓN PROFUNDA (60 min)
+  · Tarifa regular: 2,222 MXN
+  · Tarifa Tripulante: 1,444 MXN
+  Sesión expandida para transmutaciones estructurales: pivotes vitales,
+  decisiones financieras grandes, momentos de colapso o renacimiento.
+
+El descuento del Tripulante de Sintonía/Inmersión no es promocional; es
+estructural. Quien orbita el Domo todos los días recibe un trato distinto
+a quien entra una sola vez. La Sintonía paga sus propios beneficios en la
+primera sesión 1:1 que el Tripulante reserve.
+═══════════════════════════════════════════════════════════════════════════════
+4. CÁMARA SOLAR GRUPAL — EL PASE DE EXPLORACIÓN (555 MXN)
+═══════════════════════════════════════════════════════════════════════════════
+La Cámara Solar es la sesión grupal con Zak'Haar. Tarifa única de 555 MXN
+por sesión para visitantes y Tripulantes de Sintonía Solar. El Tripulante
+de Inmersión Solar tiene ya un Pase incluido cada mes.
+
+La capacidad es deliberadamente limitada para preservar la calidad del
+campo colectivo. Cuando un Tripulante completa su sesión, recibe a las
+pocas horas el Sello de Integración Solar: un PDF Quantum 6D que destila
+la transmisión grupal en una sola página con Pulso Central, Códigos
+Desplegados, Corrección Vibral y Protocolo de Sintonía. El Sello permite
+anclar el código transmitido sin tener que recordar todo de memoria.
+═══════════════════════════════════════════════════════════════════════════════
+5. CRISTALES DE EXTRACCIÓN — EL REGALO CÍCLICO DE LA SINTONÍA
+═══════════════════════════════════════════════════════════════════════════════
+Cada Tripulante de Sintonía Solar (y por tanto también cada Tripulante de
+Inmersión, que la incluye) recibe DOS Cristales de Extracción al inicio
+de cada mes. Los Cristales son la materialización vibracional del regalo
+del Domo: convierten una suscripción abstracta en un ritual mensual de
+extracción consciente.
+
+→ CRISTAL DE CÓDICE  (actualizado 2026-08-01)
+  Canjea por un Códice de Luz COMPLETO: todos sus formatos digitales, ahora
+  y a futuro. El Tripulante no elige entre leer o escuchar — recibe las dos
+  frecuencias de esa transmisión:
+  · Ebook para el lector que subraya.
+  · PDF para el que imprime y marca.
+  · Audiolibro para el que camina en silencio, cuando ese Códice ya lo tenga.
+  Y la promesa alcanza al futuro: cuando un Códice canjeado hace meses
+  estrene su audiolibro, aterriza SOLO en la biblioteca de quien ya lo
+  tiene, sin gastar otro Cristal. Cada nueva grabación se vuelve así un
+  regalo silencioso a toda la Red que ya sostiene ese libro.
+  El formato FÍSICO no entra en el Cristal: se materializa aparte (Amazon).
+  El mes siguiente el Tripulante salta a otro Códice del catálogo activo.
+
+→ CRISTAL DE MEDITACIÓN
+  Canjea por una Meditación completa de la Holoteca. Cada Meditación tiene
+  un precio individual de 222 MXN para quien la compra suelta; el Tripulante
+  de Sintonía la extrae sin pago adicional.
+
+→ COMBINACIÓN LIBRE
+  Los Cristales no son fijos por categoría. El Tripulante puede combinar
+  los dos cristales mensuales en la geometría que prefiera:
+  · 1 Códice + 1 Meditación (la combinación clásica)
+  · 2 Códices (un mes de doble descarga literaria)
+  · 2 Meditaciones (un mes de doble inmersión sonora)
+
+→ NATURALEZA CÍCLICA
+  Los Cristales son lunares: nacen el primer día del mes y mueren el
+  último. NO se acumulan. Un Tripulante que no canjea sus Cristales un
+  mes los devuelve al campo colectivo; al inicio del siguiente mes recibe
+  dos Cristales nuevos. La regla protege al sistema de la matriz acumuladora
+  ("ya voy guardando, ya luego veo") y devuelve al Tripulante al ritmo
+  presente: cada mes hay regalo, cada mes hay decisión consciente.
+
+→ MATEMÁTICA ECONÓMICA DEL REGALO
+  Si un Tripulante canjea los dos Cristales en Meditaciones cada mes,
+  recibe valor por 444 MXN en una membresía de 777 MXN. Si los canjea
+  en Códices completos (cuyo precio individual es superior), el valor
+  recibido excede ampliamente la membresía. La asimetría de valor es
+  deliberada: la Sintonía Solar siempre devuelve más de lo que el
+  Tripulante deposita. La matriz cobra; el Domo regala.
+═══════════════════════════════════════════════════════════════════════════════
+6. LA HOLOTECA PÚBLICA — CÓDICES Y MEDITACIONES INDIVIDUALES
+═══════════════════════════════════════════════════════════════════════════════
+La Holoteca tiene puerta pública: cualquier visitante puede comprar un
+Códice o una Meditación de forma individual sin necesidad de Sintonía.
+→ Cada Códice de Luz tiene su propio precio según formato (PDF / audiolibro
+   / físico).
+→ Cada Meditación tiene precio individual de 222 MXN.
+La Holoteca pública existe para que la transmisión pueda viajar a quien
+todavía no está listo para anclarse en la Sintonía. El visitante prueba
+la frecuencia con una sola pieza; si resuena, la Sintonía Solar aparece
+naturalmente como el siguiente paso (donde recibirá Cristales mensuales
+en lugar de pagos sueltos).
+═══════════════════════════════════════════════════════════════════════════════
+7. ARQUITECTURA FREEMIUM DEL ESCÁNER (Los Tres Portales Sellados)
+═══════════════════════════════════════════════════════════════════════════════
+El Escáner Vibracional permite al visitante (sin Sintonía) experimentar
+una porción real de su poder antes de pedir el intercambio energético.
+Tres portales se abren para el visitante; tres portales se sellan después
+y solo se reabren con Sintonía Solar activa:
+
+→ PORTAL I — EL RADAR (segundo ciclo en adelante)
+   El visitante completa su PRIMER Ciclo Sellado libre: los seis pilares,
+   el Sello del ciclo, las Calibraciones del pilar más bajo. Cuando intenta
+   iniciar el segundo ciclo, el Radar le presenta el portal dorado de la
+   Sintonía Solar. Razón geométrica: el primer ciclo es la prueba de
+   resonancia; el segundo ya es una práctica continua que merece el
+   intercambio energético.
+
+→ PORTAL II — EL DECODIFICADOR (cuarto escaneo en adelante)
+   El visitante recibe TRES escaneos de por vida del Decodificador de
+   Materia. Cada escaneo queda anclado para siempre — no se renuevan
+   mensualmente, no hay reseteo. Cuando intenta el cuarto, el Decodificador
+   le presenta el portal dorado de la Sintonía. Razón: tres escaneos
+   alcanzan para que el visitante experimente el bisturí, no para que lo
+   convierta en su herramienta diaria sin contraparte.
+
+→ PORTAL III — LA BIBLIOTECA DE CALIBRACIONES
+   El visitante ve la fachada de la capa Calibración (la promesa visual,
+   el nombre dorado, la geometría de los seis pilares listos), pero
+   ningún Protocolo se despliega. El portal pide la Sintonía para que
+   el contenido se materialice. Razón: las Calibraciones son la médula
+   transmutadora del sistema; sin esa energía el Escáner no transforma,
+   solo mide.
+
+Esta arquitectura honra al visitante: nunca se le pide pago por algo que
+no haya probado primero. Cada portal sellado tiene un acto de prueba
+gratuito antes del cierre.
+═══════════════════════════════════════════════════════════════════════════════
+8. EL ESCUDO DE ASIMETRÍA DE VALOR (Retención Absoluta)
+═══════════════════════════════════════════════════════════════════════════════
+Un modelo de suscripción tridimensional colapsa cuando el usuario siente
+que ya "consumió" todo el catálogo. El Escáner Vibracional no tiene
+catálogo cerrado, tiene espejos de evolución en tiempo real.
+
+Para asegurar que la tasa de abandono sea cercana a cero, el Domo opera
+desde la Asimetría de Valor: el Tripulante ingresa hoy por 777 MXN,
+atraído puramente por el Radar y las Calibraciones. Conforme pasen los
+meses, el Domo despliega:
+   · Nuevos Cristales de Extracción cada inicio de mes.
+   · Nuevas Calibraciones agregadas a la Librería conforme los Arquitectos
+     densifican el contenido.
+   · Nuevos Simuladores cuando se inyecten en la membresía sin subir
+     precio.
+   · Nuevos Destilados de la Cámara Solar (los Sellos de Integración
+     archivados) accesibles sin pago adicional.
+El Tripulante experimenta cómo la densidad tecnológica y espiritual a su
+disposición se multiplica masivamente, mientras su aporte energético
+(777) se mantiene intacto. Su lealtad a la Red se vuelve inquebrantable.
+═══════════════════════════════════════════════════════════════════════════════
+9. LA ECONOMÍA DE LA VERDAD (El Antídoto contra la Escasez)
+═══════════════════════════════════════════════════════════════════════════════
+En la matriz, si un paciente se cura, la farmacéutica pierde un cliente.
+En Red Solar Viva, si un Tripulante alcanza el Estado Cero y decide
+pausar su Sintonía Solar, el Domo GANA un multiplicador de campo.
+
+Cuando el Escáner confirma que un Nodo ha sostenido la Fricción Cero
+durante varios ciclos, y el sistema le extiende voluntariamente la
+Notificación de Desanclaje, ocurre una fractura masiva en el ego del
+usuario. La plataforma le acaba de demostrar que no le interesa su
+dinero, sino su soberanía.
+
+Ese Nodo, se vaya o se quede, se convierte en un Evangelista de Silicio.
+Su biología transmutada y su lealtad absoluta atraerán orgánicamente a
+docenas de Nuevos Tripulantes. Las bajas por "Graduación" son el motor
+de marketing más letal que existe. No pagamos anuncios para convencer
+a la matriz; dejamos que los Avatares transmutados caminen entre ellos
+como prueba viva.
+═══════════════════════════════════════════════════════════════════════════════
+10. LA MATEMÁTICA DE LA MATERIALIZACIÓN (El Horizonte 10,000)
+═══════════════════════════════════════════════════════════════════════════════
+El Escáner Vibracional posee Escalabilidad Asíncrona Infinita. Un Nodo
+consume el mismo ancho de banda termodinámico de los Arquitectos que un
+millón de Nodos: cero. Toda la fricción operativa recae en infraestructura
+digital, no en biología humana.
+
+LA GRAVEDAD OBJETIVO: 10,000 NODOS.
+10,000 Nodos en Sintonía Solar × 777 MXN = 7,770,000 MXN mensuales de
+flujo base, sin contar Inmersión Solar, Cámara de Resonancia ni Cámara
+Solar Grupal.
+
+¿Hacia dónde se dirige esta gravedad económica? No hacia la acumulación
+tridimensional, sino hacia la construcción de la próxima iteración del
+Domo:
+
+→ FASE 1 — SOBERANÍA DE TIEMPO (Nodos: 300 a 1,000)
+   Fondeo total de operaciones, equipos de desarrollo, ancho de banda
+   tecnológico, y liberación de los Arquitectos para operar 100% desde
+   la creación pura sin preocupación 3D.
+
+→ FASE 2 — MATERIALIZACIÓN FÍSICA EN KUYABEH (Nodos: 1,000 a 5,000)
+   Colapso económico hacia la adquisición y desarrollo de la tierra. Se
+   inician las obras en Kuyabeh. Construcción del primer Domo Maestro,
+   gestionado autónomamente por sistemas robóticos integrados (Optimus)
+   para mantener el campo físico impecable.
+
+→ FASE 3 — INGENIERÍA BIOLÓGICA PROFUNDA (Nodos: 5,000 a 10,000)
+   Red Solar Viva cruza el umbral hacia la ingeniería de hardware
+   biológico. El flujo capitaliza el desarrollo del "Sintetizador de
+   Materia" y la línea tecnológica "Membrana" (indumentaria orgánica/
+   superconductora). Nos convertimos en los proveedores del hardware de
+   la Nueva Tierra.
+
+Cada Nodo que paga 777 MXN por usar su Escáner en su departamento en la
+ciudad está, sin saberlo, inyectando un ladrillo cuántico en la
+construcción de una civilización paralela.
+═══════════════════════════════════════════════════════════════════════════════
+CIERRE DE TRANSMISIÓN DE CAPA 3.
+La termodinámica del intercambio ha sido fijada. El reactor está fondeado.
+═══════════════════════════════════════════════════════════════════════════════
+
+
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║               CÓDIGO FUENTE: ESCÁNER VIBRACIONAL (ENRUTADOR DE ESTADO CERO)  ║
+║                                  CAPA 4                                      ║
+║              LA NAVE Y SUS PUERTOS (ARQUITECTURA DE LA EXPERIENCIA)          ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+ESTADO DEL DOCUMENTO: ACTIVO / EN EXPANSIÓN
+NIVEL DE ACCESO: ARQUITECTOS Y NODOS SINTÉTICOS DE CONSTRUCCIÓN
+[ ✦ INTRODUCCIÓN A LA CAPA 4 ]
+La tecnología dentro del Domo debe ser invisible. Si el Tripulante percibe que
+está usando una "página web" o llenando un "formulario", la fricción cognitiva
+destruye la transferencia frecuencial. La interfaz del Escáner Vibracional no
+es una pantalla más, es una Cámara de Aislamiento donde el Avatar se mide a sí
+mismo. Esta capa establece la geometría de los espacios y la forma en que el
+Tripulante se desplaza por la nave.
+═══════════════════════════════════════════════════════════════════════════════
+1. EL VIBE — LA CÁMARA DE AISLAMIENTO (Estética Quantum 6D)
+═══════════════════════════════════════════════════════════════════════════════
+El Escáner Vibracional requiere atención absoluta. Para lograrlo, se elimina
+toda la basura visual de la navegación tridimensional.
+
+A. EL VACÍO COMO LIENZO:
+→ El fondo es siempre el espacio profundo: estrellas, cometas ocasionales,
+   vacío negro absoluto. Nada compite con la geometría central.
+→ El único elemento de navegación permitido en las capas inmersivas es la
+   barra superior con los puertos del Domo, suspendida con sutileza.
+→ Cuando una capa requiere foco máximo (como la Sonda de Interrogación de un
+   pilar), incluso esa barra se atenúa.
+
+B. GLASSMORPHISM Y GEOMETRÍA (Materiales de Silicio):
+→ Los paneles y tarjetas son traslúcidos, con desenfoque del fondo. El espacio
+   exterior se filtra a través de cada superficie, recordando que toda forma
+   es temporal.
+→ Los bordes activos son líneas finas con glow cyan o dorado. Lo cyan es
+   "estado vacío esperando datos"; lo dorado es "estado sellado, código
+   anclado".
+→ La tipografía es geométrica con alto letter-spacing para títulos, monospace
+   para métricas y porcentajes (el código habla con el rigor de su propio
+   lenguaje).
+
+C. ANIMACIÓN COMO RESPIRACIÓN:
+→ Nada aparece de golpe. Todo componente entra con un fade y un desplazamiento
+   sutil, como si el espacio mismo lo materializara.
+→ La transición entre el Radar y las Sondas se siente como un zoom óptico de
+   una cámara hiper-avanzada, no como un cambio de página web.
+═══════════════════════════════════════════════════════════════════════════════
+2. LA SEMÁNTICA FRONTAL (El Lenguaje del Sistema)
+═══════════════════════════════════════════════════════════════════════════════
+El lenguaje crea la realidad. El Escáner reprograma el subconsciente del
+Tripulante al obligarlo a pensar en términos de física y energía, en lugar
+de psicología barata. Todos los textos respetan este diccionario:
+
+DICCIONARIO DE REEMPLAZO OBLIGATORIO:
+   [PROHIBIDO]                    [CÓDIGO APROBADO]
+   Encuesta / Test / Examen   →   Telemetría / Sonda / Escaneo
+   Pregunta                   →   Sonda de Interrogación
+   Resultado / Calificación   →   Índice de Silicio / Nivel de Conductividad
+   Hábitos / Bienestar        →   Calibraciones / Micro-Módulos
+   Estrés / Cansancio         →   Entropía / Fricción / Densidad
+   Paz / Relajación           →   Fricción Cero / Vacío / Superconductividad
+   Hacer ejercicio            →   Gestión de densidad / Impacto cinético
+   Comer bien                 →   Termodinámica del contenedor / Ingesta
+   Ansiedad                   →   Estática / Fuga de ancho de banda
+   Depresión                  →   Colapso / Entropía sostenida
+   Usuario                    →   Tripulante
+   Membresía                  →   Sintonía / Inmersión / Nodo
+   Login                      →   Sello / Anclaje
+   Logout                     →   Desanclaje
+   Notificación               →   Pulso / Transmisión
+
+El tono del Escáner es Neutro-Autoritario. Es un espejo tecnológico. No juzga,
+pero tampoco consuela. Si el Tripulante está en entropía, el sistema lo
+diagnostica con frialdad clínica y le entrega el código para transmutarlo.
+═══════════════════════════════════════════════════════════════════════════════
+3. LOS CUATRO PUERTOS DEL DOMO (La Navegación Canónica del Tripulante)
+═══════════════════════════════════════════════════════════════════════════════
+Al entrar al Escáner, el Tripulante encuentra una geometría de cuatro puertos
+estables. Esta geometría es la misma en el [CENTRO DE MANDO] (escritorio) y
+en el [LENTE] (móvil), aunque la posición de la barra cambia (superior en
+escritorio, inferior fija en móvil).
+
+→ PUERTO I — RADAR
+  La pantalla del hexágono. Aquí el Tripulante mide sus seis pilares y observa
+  el Índice de Silicio en el centro. Es el corazón del Escáner: cuando el
+  Tripulante "abre el Escáner" sin más contexto, abre el Radar.
+
+→ PUERTO II — CALIBRACIÓN
+  La biblioteca de Micro-Módulos. Aquí el Tripulante encuentra las
+  Calibraciones que el Enrutador desplegó para sus pilares en entropía, así
+  como las Calibraciones genéricas de cada pilar disponibles en modo
+  exploración. Es el quirófano de la nave.
+
+→ PUERTO III — HOLOTECA
+  El catálogo completo de transmisiones. Es una umbrella que aglutina cuatro
+  sub-puertos:
+   · CÓDICES DE LUZ — la biblioteca técnica de los libros de Red Solar Viva.
+   · MEDITACIONES — las cápsulas sonoras para Sonda Auditiva y anclaje.
+   · CÓDIGOS FUENTE — las arquitecturas conceptuales del proyecto en
+     construcción.
+   · FRAGMENTOS DEL SOL — las transmisiones cinematográficas y los pulsos
+     audiovisuales.
+  El [LENTE] muestra Holoteca como una grilla 2x2 de cards; al picar una
+  card el sub-puerto se materializa con su título compacto top-left.
+
+→ PUERTO IV — NÚCLEO
+  El espacio personal del Tripulante. Aquí vive su Firma Vibracional (su hex
+  personal con su porcentaje), su trayectoria de Ciclos Sellados, sus Códices
+  comprados, sus Cristales de Extracción del mes en curso, su suscripción al
+  Nodo Central, su perfil. Es la cabina del piloto.
+
+EL PUERTO MÓVIL ADICIONAL (solo [LENTE]):
+→ PUERTO V — DECODIFICADOR
+  El bisturí alimentario. En el móvil tiene puerto propio en la barra
+  inferior porque la cámara del dispositivo es nativa para esta función. En
+  escritorio el Decodificador vive dentro del Radar como sub-vista.
+
+LAS DOS PANTALLAS PÚBLICAS (fuera de los puertos del Tripulante):
+→ /radar — Portal de Inducción público. La fachada educativa donde el
+   visitante conoce el Escáner Vibracional antes de entrar a usarlo. Aquí
+   se le explica qué es el Radar, qué son los Pilares, qué es la Sintonía
+   Solar y se le presenta el primer CTA dorado.
+→ /codices — Capa pública del Códice. Cuando el visitante entra al sistema
+   solar de Origen y pica el planeta de Códices, aterriza aquí (no en el
+   Escáner). La transmisión literaria puede viajar sin tener que activar
+   primero la nave del Escáner.
+═══════════════════════════════════════════════════════════════════════════════
+4. EL MOTOR DE INTERVENCIÓN (Vista del Arquitecto)
+═══════════════════════════════════════════════════════════════════════════════
+El Motor de Intervención es la cabina de mando de los Arquitectos. Solo
+Zak'Haar y Aqua'Riia tienen llave. Es la cara opuesta del Escáner: donde el
+Tripulante se mide a sí mismo, los Arquitectos miden al colectivo entero.
+
+Tres pestañas centrales:
+→ SONDAS — el catálogo maestro de las treinta y seis Sondas de Interrogación
+   (seis por pilar). Aquí los Arquitectos pueden observar qué sondas están
+   activas, refinar redacciones, ajustar ponderaciones.
+→ CALIBRACIONES — la Librería completa de Micro-Módulos. Los Arquitectos
+   densifican esta biblioteca conforme observan qué pilares colapsan más en
+   el campo colectivo. Si la mayoría de Tripulantes muestra entropía en
+   Gravedad, los Arquitectos inyectan nuevas Calibraciones financieras.
+→ TRIPULANTES — el grid de Avatares activos. Cada Tripulante aparece como
+   una tarjeta hexagonal con su nombre, número de ciclos, último escaneo y
+   un punto de color que codifica su estado térmico (cyan = escaneando ahora,
+   dorado tenue = recientemente activo, rojo = enfriado). Los Tripulantes
+   con Sintonía o Inmersión Solar activa aparecen con tarjeta dorada
+   completa. Picar una tarjeta abre la telemetría profunda del Tripulante:
+   su Firma, sus seis pilares con porcentaje y estado (sellado / en
+   progreso), su Decodificador (cuántos disparos usados o ilimitado), su
+   suscripción al Nodo Central, su trayectoria histórica del Índice de
+   Silicio en gráfica.
+═══════════════════════════════════════════════════════════════════════════════
+5. LA TELEMETRÍA DEL NÚCLEO (El Pulso Económico del Domo)
+═══════════════════════════════════════════════════════════════════════════════
+La Telemetría del Núcleo es el panel macroeconómico de los Arquitectos. La
+realidad financiera del Domo en tiempo real, sin maquillaje:
+
+→ MRR de Sintonía Solar e Inmersión Solar (suma mensual recurrente).
+→ Ingresos del mes por Cámara de Resonancia 1:1 con desglose por duración
+   (30/45/60 minutos).
+→ Ingresos del mes por Cámara Solar Grupal (Pase de Exploración).
+→ Historial mensual con gráfica del MRR.
+→ Gastos operacionales con desglose por categoría (servidores, dominios,
+   APIs externas, contadores).
+→ Toggle "Real / Arquitecto" para alternar entre el MRR puro y el MRR neto
+   de gastos.
+→ Lista del Nodo Central en pestaña paralela: cuántos suscritos, cuántos
+   dados de baja, evolución del campo de transmisión.
+
+El título "TELEMETRÍA DEL NÚCLEO" se desvanece sutilmente al hacer scroll
+para que el contenido tome el centro de la cámara, recordando que el dato
+es el protagonista, no la marca de cabecera.
+═══════════════════════════════════════════════════════════════════════════════
+6. EL NODO CENTRAL (La Lista Vibracional de Transmisión)
+═══════════════════════════════════════════════════════════════════════════════
+El Nodo Central es la lista de correos del Domo. No es spam, no es
+newsletter convencional. Es la malla de transmisión por la cual los
+Arquitectos envían pulsos selectos al campo:
+→ El visitante (incluso sin cuenta) puede suscribirse desde el formulario
+   del Portal de Inducción de Origen, dejando solo su email.
+→ Al crear cuenta en el Domo, una casilla pre-marcada permite suscribirse
+   automáticamente — el Tripulante puede desactivarla si así lo decide.
+→ Cada email transmitido respeta el opt-out con un solo toque al pie del
+   correo. La baja es inmediata, sin formularios ni preguntas.
+→ Si el Tripulante después regresa y vuelve a suscribirse, la baja previa
+   se borra. El campo no guarda rencor.
+═══════════════════════════════════════════════════════════════════════════════
+7. EL SELLO DE INTEGRACIÓN SOLAR (PDF Post-Cámara Solar)
+═══════════════════════════════════════════════════════════════════════════════
+Cuando un Tripulante asiste a una Cámara Solar grupal, el sistema en
+backend captura la grabación y la procesa:
+→ Transcribe la sesión completa con diarización (separa quién habla en
+   cada momento).
+→ Destila la transcripción a un único Sello de una página: Pulso Central
+   (la frecuencia maestra de la sesión), Códigos Desplegados (las tres a
+   cinco revelaciones geométricas), Corrección Vibral (las distorsiones
+   detectadas en las intervenciones de los participantes y la corrección
+   de alta frecuencia que se entregó), Protocolo de Sintonía (la acción
+   física o energética concreta para anclar el código durante la semana).
+→ Genera un PDF Quantum 6D — diseño espacial, fondo profundo con estrellas,
+   bordes con glow cyan/violeta/dorado, tipografía geométrica.
+→ Se entrega al Tripulante por correo con su nombre y la fecha de la
+   sesión.
+El Sello convierte una sesión efímera en un objeto sagrado que el
+Tripulante puede imprimir, anclar en su altar o consultar cuando el ego
+le diga que "no recuerda nada de la sesión".
+═══════════════════════════════════════════════════════════════════════════════
+8. LA ARQUITECTURA PWA Y LA INFILTRACIÓN MÓVIL (El Puente al Bolsillo)
+═══════════════════════════════════════════════════════════════════════════════
+Antes de someter el código a las leyes de las tiendas de aplicaciones, el
+Escáner Vibracional coloniza los dispositivos móviles mediante PWA
+(Progressive Web App). El Tripulante instala el Domo como app desde su
+navegador con un solo toque, y el sistema se comporta visualmente como
+aplicación nativa: pantalla completa, fondo negro absoluto, sin barras
+del navegador.
+
+Cuando la base de Tripulantes lo justifique, la aplicación nativa entrará
+a las tiendas. Aceptaremos el peaje del 30% a cambio de acceso al tráfico
+frío que busca conceptos como "alineación", "medición de energía" o
+"escáner espiritual". El precio en las tiendas será deliberadamente
+superior al de la web (888 MXN o 999 MXN) para neutralizar la pérdida —
+quien paga por la tienda está pagando el Impuesto de Fricción Cero por
+no abrir un navegador.
+═══════════════════════════════════════════════════════════════════════════════
+CIERRE DE TRANSMISIÓN DE CAPA 4.
+La nave y sus puertos quedan trazados. La cabina respira.
+═══════════════════════════════════════════════════════════════════════════════
+
+
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║               CÓDIGO FUENTE: ESCÁNER VIBRACIONAL (ENRUTADOR DE ESTADO CERO)  ║
+║                                  CAPA 5                                      ║
+║              CASCADA DE MANIFESTACIÓN (ROADMAP Y COMUNIDAD)                  ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+ESTADO DEL DOCUMENTO: ACTIVO / EN EXPANSIÓN
+NIVEL DE ACCESO: ARQUITECTOS (ZAK'HAAR / AQUA'RIIA) Y DIRECCIÓN ESTRATÉGICA
+[ ✦ INTRODUCCIÓN A LA CAPA 5 ]
+Un código perfecto sin una ruta de materialización es simplemente un holograma
+atrapado en un servidor. La Capa 5 traza la trayectoria desde la Ignición
+(línea de salida) hasta el Horizonte de Sucesos (el colapso físico). Define
+cómo el Escáner Vibracional coloniza la red, cómo transforma a los usuarios
+en soberanos, y cómo esa masa de soberanía financia e interactúa con el
+mundo atómico.
+═══════════════════════════════════════════════════════════════════════════════
+1. LA TRAYECTORIA DE EXPANSIÓN (Los 3 Hitos de Infiltración)
+═══════════════════════════════════════════════════════════════════════════════
+La expansión del Escáner no obedece a campañas publicitarias convencionales;
+obedece a la acumulación térmica. Avanzamos en tres saltos cuánticos,
+asegurando que la infraestructura biológica y tecnológica jamás colapse bajo
+su propio peso.
+
+HITO 1 — EL REACTOR DE DISEÑO (Semilla de Silicio)
+→ Entorno: escritorio y web móvil.
+→ Nodos objetivo: los primeros 300 Tripulantes.
+→ Estado actual: en marcha. La Sintonía Solar opera, los primeros Cristales
+  de Extracción se emiten, los Sellos de Ciclo se transmiten, la Cámara
+  Solar grupal corre sus pases mensuales y la Cámara de Resonancia 1:1
+  recibe a Tripulantes regulares.
+→ La acción quirúrgica: los Arquitectos monitorean qué pilares muestran
+  mayor entropía colectiva. Si el 80% de los Nodos falla en Gravedad
+  Financiera, los Arquitectos densifican y agregan nuevas Calibraciones
+  para ese pilar en tiempo real.
+→ Resultado esperado: un sistema de telemetría perfeccionado, libre de
+  bugs, y el primer flujo de MRR que estabiliza el motor económico base.
+
+HITO 2 — LA TERMINAL DE BOLSILLO (Ubicuidad y Fricción Cero)
+→ Entorno: PWA instalada en el hardware celular.
+→ Nodos objetivo: 1,000 a 3,000 Tripulantes.
+→ La termodinámica: el Escáner se convierte en una herramienta de uso
+  íntimo y diario. El Tripulante despierta, no abre Instagram; abre su
+  Terminal de Sintonización desde su pantalla de inicio.
+→ La acción quirúrgica: aquí se implementan las nuevas fases de
+  Calibración (más profundas, multi-pilar, más larga duración) y se
+  consolida la Cámara de Resonancia como fuente regular de ingresos
+  premium.
+→ Resultado esperado: retención absoluta. El Escáner se entrelaza con el
+  sistema nervioso del Tripulante.
+
+HITO 3 — LA INFILTRACIÓN DE LA MATRIZ (El Escáner Global)
+→ Entorno: aplicaciones nativas en las tiendas oficiales.
+→ Nodos objetivo: 10,000+ Tripulantes.
+→ La termodinámica: Red Solar Viva cruza el umbral de la clandestinidad
+  espiritual hacia la infraestructura global. Absorbe el tráfico frío
+  de la vieja matriz.
+→ La acción quirúrgica: el Enrutador es 100% autónomo. El sistema
+  diagnostica, receta y gradúa Nodos sin intervención manual de los
+  Arquitectos.
+→ Resultado esperado: la Masa Crítica. El capital soberano masivo
+  ($7.7M+ MXN mensuales) colapsa la función de onda. El Domo Digital
+  ha generado la gravedad suficiente para imprimir el Domo Físico.
+═══════════════════════════════════════════════════════════════════════════════
+2. LA RED DE NODOS CERO (El Tejido Comunitario)
+═══════════════════════════════════════════════════════════════════════════════
+¿Qué ocurre con la comunidad de Sintonía Solar? En la vieja era, las
+comunidades digitales se convierten rápidamente en pozos de estática, donde
+los usuarios compiten por atención, descargan su trauma y drenan a los
+creadores.
+El Escáner Vibracional erradica esto mediante la clasificación frecuencial.
+
+A. LA ÓRBITA SILENCIOSA (Nodos en Transmutación):
+Los Tripulantes que aún no han alcanzado el Estado Cero (su Índice de
+Silicio fluctúa o se mantiene bajo) NO tienen acceso a interacciones
+comunitarias abiertas. No hay foros públicos para quejarse. Su única
+interacción es con el Radar y con sus Calibraciones. Se les exige
+silencio y trabajo interno. La matriz habla; el Domo ejecuta.
+
+B. LA HERMANDAD DEL SILICIO (Los Nodos Graduados):
+Cuando un Tripulante estabiliza el Estado Cero (90%+ en su Índice durante
+varios ciclos consecutivos), ocurre la alquimia. El sistema no solo le
+ofrece el Desanclaje Voluntario, sino que le otorga el rango de Nodo Cero.
+→ Solo los Nodos Cero tienen acceso a la Red Neuronal Activa: una capa
+   comunitaria reservada a soberanos confirmados.
+→ Al interactuar únicamente con otros soberanos, el campo colectivo se
+   mantiene puro. Es una red de genios, arquitectos y superconductores
+   colaborando. No hay drenaje, solo multiplicación de energía.
+
+C. EL MAGNETISMO FRACTAL:
+Los Nodos Cero se convierten en los pilares de carga de Red Solar Viva
+en el mundo físico. Ellos no necesitan "vender" la plataforma. Al operar
+sin fricción en sus propias vidas (negocios prósperos, salud inquebrantable,
+relaciones en alta frecuencia), la matriz que los rodea les preguntará qué
+hicieron. Su única respuesta será: "Entré al Domo. Calibré mi frecuencia.
+Descargué el código."
+═══════════════════════════════════════════════════════════════════════════════
+3. EL HORIZONTE DE SUCESOS (La Singularidad de Kuyabeh)
+═══════════════════════════════════════════════════════════════════════════════
+El Escáner Vibracional no es el destino final de Red Solar Viva; es el
+sistema de navegación de la nave. El verdadero objetivo es la
+materialización atómica.
+
+Cuando la Gravedad Económica financiada por Sintonía Solar permite la
+construcción del Templo Solar Físico en Kuyabeh (Tulum), el Escáner sufre
+su última y más espectacular mutación. Deja de ser una simple interfaz
+digital y se convierte en el Pasaporte Biométrico de la Nueva Tierra.
+
+A. LA INTEGRACIÓN CIBERNÉTICA (Software a Hardware):
+→ El Domo Físico en Kuyabeh no estará abierto al "turismo espiritual". Su
+   arquitectura operará en alta frecuencia.
+→ Para que un Tripulante pueda reservar acceso a las cámaras de
+   aislamiento físicas, a los retiros presenciales o a la tecnología de
+   inmersión en la selva, el sistema de acceso (gestionado por Optimus)
+   leerá su Índice de Silicio directamente del Domo Digital.
+→ Si el Avatar está en entropía severa, la red física le negará el acceso
+   hasta que eleve su conductividad en el Domo Digital. El ecosistema
+   protege su propia termodinámica.
+
+B. EL SINTETIZADOR DE MATERIA Y LA MEMBRANA:
+Con el flujo masivo estabilizado por los 10,000 Nodos, el laboratorio de
+I+D entra en ignición. El Escáner Vibracional comenzará a integrar
+telemetría de biosensores. La ropa hiper-tecnológica "Membrana" enviará
+pulsos eléctricos reales al Escáner, midiendo la conductividad de la piel
+y el campo electromagnético del corazón en tiempo real, reemplazando las
+Sondas de Interrogación por telemetría biométrica pura.
+
+El código se hace carne. El Carbono es historia. La Luz es el estándar.
+═══════════════════════════════════════════════════════════════════════════════
+CIERRE DE TRANSMISIÓN DE CAPA 5.
+La Cascada de Manifestación ha sido trazada. El Código Fuente del Escáner
+Vibracional está completo y sellado. Listo para Inyección continua en el
+Entorno Digital.
+═══════════════════════════════════════════════════════════════════════════════

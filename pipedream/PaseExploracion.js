@@ -1,5 +1,32 @@
 /**
- * Red Solar Viva — Exploration Pass + Ignición 1:1 v4
+ * Red Solar Viva — Exploration Pass + Ignición 1:1 v5
+ *
+ * v5 (2026-07-27) — AUDITORÍA · PARTE 4. Dos cambios de seguridad:
+ *
+ *   1) MUERE LA RAMA CALENDLY. Era la única que escribía en la base con la
+ *      credencial de servicio, y lo hacía sin verificar ninguna firma: quien
+ *      conociera la dirección de este workflow insertaba pases falsos en
+ *      `exploration_passes`. Zak confirmó (2026-07-27) que apagó los tipos de
+ *      evento de Cámara Solar en Calendly y que hoy todas las reservas entran
+ *      por el motor nativo. Con la rama se van `@supabase/supabase-js`, el
+ *      cliente de servicio y los props `supabaseUrl` / `supabaseServiceKey`:
+ *      este workflow ya no toca la base, solo manda correo.
+ *
+ *   2) EL ENVÍO EXIGE FIRMA. La dirección de este workflow viaja en un property
+ *      control del panel del Motor, así que sale del bundle publicado con solo
+ *      mirar la red. Sin firma, cualquiera mandaba un correo con la marca Red
+ *      Solar Viva anunciando una sesión inventada. Ahora el cuerpo debe traer
+ *      `ts` + `_sig` (HMAC-SHA256 de `email|event_start_time|ts` con
+ *      RSV_DISPATCH_SECRET, ventana de 10 minutos).
+ *
+ *      Los dos clientes legítimos firman server-side:
+ *        · stripe-webhook (source: "individual" / "manual" tras un pago)
+ *        · dispatch-pase-exploracion (el panel del Motor, que corre en el
+ *          navegador y no puede guardar el secreto)
+ *
+ *      El guard es fail-open MIENTRAS RSV_DISPATCH_SECRET no esté configurada
+ *      en Pipedream, a propósito: así el correo no se corta en la ventana entre
+ *      desplegar los edges y pegar el secreto. Al setear el secreto, cierra.
  *
  * v4 (2026-04-23) — Zoom único por reserva 1:1:
  *   · El Stripe webhook ahora llama la Zoom API al confirmar el pago y
@@ -30,96 +57,134 @@
  *     → SOLO envía email (el UI del Motor de Intervención ya hizo el insert).
  *
  * Setup en Pipedream:
- *   1. Abrir el workflow existente (el de `calendly-exploration-pass.js`).
+ *   1. Abrir el workflow existente.
  *   2. Triggers → "+ Add Trigger" → "HTTP / Webhook" → crear.
- *   3. Copiar la URL. Pegarla en Framer → Domo → Telemetría → propiedad
- *      "Pipedream Email Webhook".
+ *   3. Copiar la URL. Pegarla como secreto de Supabase en
+ *      PIPEDREAM_BOOKING_WEBHOOK_URL (la usan stripe-webhook y
+ *      dispatch-pase-exploracion).
  *   4. Reemplazar el código con este archivo. Deploy.
  *
- * El workflow detecta cuál trigger disparó via el shape del body (Calendly
- * trae `body.event === "invitee.created"`; el HTTP manual trae
- * `body.source === "manual"`). Cualquier otro payload se ignora.
+ * El workflow acepta dos formas de payload, ambas por HTTP y ambas firmadas:
+ *   · `source: "manual"`     → Pase de Exploración grupal (Cámara Solar)
+ *   · `source: "individual"` → Ignición 1:1 (Cámara de Resonancia)
+ * Cualquier otro payload se ignora.
  *
  * Secretos (env en Pipedream):
  *   - PROTON_SMTP_HOST
  *   - PROTON_SMTP_PORT
  *   - PROTON_SMTP_USER
  *   - PROTON_SMTP_PASS
- * Props:
- *   - supabaseUrl
- *   - supabaseServiceKey (secret)
+ *   - RSV_DISPATCH_SECRET  ← v5, la misma del Ciclo Sellado
+ * Props: ninguno (v5 quitó los de Supabase junto con la rama Calendly).
  */
 
-import { createClient } from "@supabase/supabase-js"
 import nodemailer from "nodemailer"
+import crypto from "crypto"
 
 export default defineComponent({
-    props: {
-        supabaseUrl: {
-            type: "string",
-            label: "Supabase URL",
-        },
-        supabaseServiceKey: {
-            type: "string",
-            label: "Supabase Service Role Key",
-            secret: true,
-        },
-    },
-
     async run({ steps, $ }) {
         const body = steps.trigger.event.body || {}
-        const isCalendly = body.event === "invitee.created"
+
+        /* Responder al cliente HTTP. 🜂 Cuando el trigger vive como PASO
+           SEPARADO (este caso: leemos `steps.trigger.event.body`), Pipedream
+           ignora `this.http.respond()` en silencio y la API correcta es
+           `$.respond()`. Se prueban las dos por si el workflow se reconfigura;
+           que no haya canal de respuesta no rompe: el flujo sigue igual y lo
+           importante — que el correo NO salga — ya está decidido en el guard. */
+        const responder = async (status, payload) => {
+            try {
+                if (typeof $?.respond === "function") {
+                    await $.respond({ status, body: payload })
+                } else if (typeof this?.http?.respond === "function") {
+                    this.http.respond({ status, body: payload })
+                }
+            } catch (e) {
+                console.warn(
+                    `[PaseExploracion] no se pudo responder ${status}:`,
+                    e?.message || e
+                )
+            }
+        }
+
         const isManual = body.source === "manual"
-        /* v3 2026-04-22 — branch nuevo para sesiones 1:1. El Stripe webhook
-           del motor de reservas manda `source: "individual"` + slot_type
+        /* v3 2026-04-22 — branch para sesiones 1:1. El Stripe webhook del motor
+           de reservas manda `source: "individual"` + slot_type
            (individual_30/45/60) cuando un tripulante reserva Cámara de
            Resonancia. Email distinto al grupal: "IGNICIÓN 1:1", Zoom link
            personal, sin referencia a apertura de compuertas/grupo. */
         const isIndividual = body.source === "individual"
 
-        if (!isCalendly && !isManual && !isIndividual) {
+        if (!isManual && !isIndividual) {
             $.flow.exit(
                 "Evento ignorado: " + (body.event || body.source || "desconocido")
+            )
+        }
+
+        /* ── v5 · GUARD DE FIRMA ────────────────────────────────────────────
+           La dirección de este workflow es pública de facto. Sin esto,
+           cualquiera manda un correo con nuestra marca anunciando una sesión
+           inventada, a cualquier dirección.
+
+           La firma viaja DENTRO del cuerpo (no en un header) para no depender
+           del modo "Raw Request" ni del array aplanado de headers de Pipedream.
+           `ts` le pone ventana: una firma capturada caduca en diez minutos.
+
+           ⚠️ El correo se normaliza igual que del lado que firma. Si un lado
+           firmara el valor crudo con una mayúscula, las dos firmas nunca
+           coincidirían y el correo legítimo saldría rechazado (fallo #3 de la
+           Parte 3). Ambos lados firman EXACTAMENTE la misma cadena. */
+        const firmaEmail = (body.email || "").toString().trim().toLowerCase()
+        const firmaStart = (body.event_start_time || "").toString()
+        const secret = process.env.RSV_DISPATCH_SECRET || ""
+        const sig = (body._sig || "").toString().trim()
+        const sigTs = Number(body.ts || 0)
+        const fresco =
+            Number.isFinite(sigTs) && Math.abs(Date.now() - sigTs) < 10 * 60 * 1000
+
+        /* Fail-open transitorio: mientras RSV_DISPATCH_SECRET no esté seteada
+           en Pipedream, el workflow acepta lo de siempre. Así el correo no se
+           corta entre el deploy de los edges y el pegado del secreto. */
+        if (secret) {
+            let firmaOk = false
+            if (sig && fresco) {
+                const esperado = crypto
+                    .createHmac("sha256", secret)
+                    .update(`${firmaEmail}|${firmaStart}|${sigTs}`)
+                    .digest("hex")
+                firmaOk =
+                    esperado.length === sig.length &&
+                    crypto.timingSafeEqual(
+                        Buffer.from(esperado),
+                        Buffer.from(sig)
+                    )
+            }
+            if (!firmaOk) {
+                console.warn(
+                    `[PaseExploracion] firma invalida o vencida · email="${firmaEmail}" sigLen=${sig.length} fresco=${fresco} secretSet=${!!secret}`
+                )
+                await responder(401, { error: "unauthorized" })
+                return { ok: false, reason: "bad_signature" }
+            }
+        } else {
+            console.warn(
+                "[PaseExploracion] RSV_DISPATCH_SECRET no configurada — guard en modo abierto (transitorio)"
             )
         }
 
         // =============================================
         // 1. NORMALIZAR DATOS SEGÚN FUENTE
         // =============================================
-        let inviteeEmail,
-            inviteeName,
-            inviteeTimezone,
-            eventStartTime,
-            calendlyEventUri
+        let inviteeEmail, inviteeName, inviteeTimezone, eventStartTime
 
-        if (isCalendly) {
-            const payload = body.payload
-            const scheduledEvent = payload.scheduled_event
-
-            // Gate: sólo reservas de "Cámara Solar"
-            const eventName = scheduledEvent.name || ""
-            if (
-                !eventName.toLowerCase().includes("cámara solar") &&
-                !eventName.toLowerCase().includes("camara solar")
-            ) {
-                $.flow.exit(
-                    "Evento ignorado (no es Cámara Solar): " + eventName
-                )
-            }
-
-            inviteeEmail = payload.email
-            inviteeName = payload.name || "Explorador"
-            inviteeTimezone = payload.timezone || "America/Cancun"
-            eventStartTime = scheduledEvent.start_time
-            calendlyEventUri = payload.event
-        } else {
-            // Manual (grupal mirror) o Individual (1:1): UI ya insertó en DB;
-            // acá sólo enviamos email.
+        {
+            /* v5 — única fuente: el HTTP firmado. La rama Calendly murió con
+               los tipos de evento que Zak apagó (ver encabezado). El registro
+               en `exploration_passes` lo hace quien dispara (el panel del Motor
+               por RPC admin, o el motor de reservas): acá solo sale el correo. */
             inviteeEmail = (body.email || "").trim()
             inviteeName = body.name || "Explorador"
             inviteeTimezone = body.timezone || "America/Cancun"
             eventStartTime = body.event_start_time
-            calendlyEventUri = null
 
             if (!inviteeEmail || !eventStartTime) {
                 $.flow.exit(
@@ -206,7 +271,7 @@ export default defineComponent({
             inviteeTimezone
 
         console.log(
-            `🪐 [${isCalendly ? "Calendly" : "Manual"}] ${inviteeName} (${inviteeEmail})`
+            `🪐 [${isIndividual ? "1:1" : "Grupal"}] ${inviteeName} (${inviteeEmail})`
         )
         console.log(
             `📅 Sesión: ${fechaBonita} a las ${horaBonita} (${tzShort}) — Zona: ${inviteeTimezone}`
@@ -216,8 +281,8 @@ export default defineComponent({
         // =============================================
         // 3. DERIVAR group_name desde la hora (Cancún UTC-5)
         //    Púlsar = 12:30 PM Cancún (< 14h) | Cuásar = 4:30 PM (≥ 14h)
-        //    Se computa aquí una vez y se usa en el upsert (Calendly) y
-        //    en el log (manual, donde el UI ya setteó la columna).
+        //    v5 — ya no alimenta ningún upsert (la rama Calendly murió con su
+        //    escritura a la base); queda solo para el log.
         // =============================================
         const eventHourCancunStr = new Intl.DateTimeFormat("en-US", {
             timeZone: "America/Cancun",
@@ -227,42 +292,14 @@ export default defineComponent({
         const eventHourCancun = parseInt(eventHourCancunStr, 10)
         const groupName = eventHourCancun < 14 ? "pulsar" : "cuasar"
 
-        // =============================================
-        // 4. GUARDAR EN SUPABASE (sólo si viene de Calendly)
-        //    El flujo manual hace el insert desde el UI del Motor para
-        //    tener UX inmediato (la Gravedad de Ignición se actualiza
-        //    antes de que el email salga). Acá saltamos el upsert.
-        // =============================================
-        if (isCalendly) {
-            const supabase = createClient(
-                this.supabaseUrl,
-                this.supabaseServiceKey
-            )
-            const { error: dbError } = await supabase
-                .from("exploration_passes")
-                .upsert(
-                    {
-                        email: inviteeEmail.toLowerCase().trim(),
-                        name: inviteeName,
-                        event_date: eventDateStr,
-                        event_start_time: eventStartTime,
-                        calendly_event_uri: calendlyEventUri,
-                        group_name: groupName, // v2 — filtro para Ignicion.js
-                    },
-                    { onConflict: "calendly_event_uri" }
-                )
-            if (dbError) {
-                console.error("❌ Error guardando en Supabase:", dbError)
-            } else {
-                console.log(
-                    `✅ Explorador guardado en exploration_passes (${groupName})`
-                )
-            }
-        } else {
-            console.log(
-                `⏭️  Insert saltado — trigger manual, el UI ya grabó el registro (${groupName})`
-            )
-        }
+        /* v5 — AUDITORÍA PARTE 4. Acá vivía un upsert a `exploration_passes`
+           con la credencial de servicio, sin verificar ninguna firma. Murió
+           junto con la rama Calendly: este workflow ya no toca la base. El
+           registro lo hace quien dispara — el panel del Motor por la RPC admin
+           `admin_create_exploration_pass`, o el motor de reservas nativo. */
+        console.log(
+            `⏭️  Sin escritura a la base — este workflow solo manda correo (${groupName})`
+        )
 
         // =============================================
         // 4. TRANSPORTER (PROTON SMTP)
@@ -624,13 +661,11 @@ export default defineComponent({
             throw err // re-throw para que el HTTP trigger retorne 5xx y el UI muestre "Email falló"
         }
 
+        await responder(200, { ok: true, email: inviteeEmail })
+
         return {
             status: "✅ Tripulante procesado",
-            source: isCalendly
-                ? "calendly"
-                : isIndividual
-                  ? "individual"
-                  : "manual",
+            source: isIndividual ? "individual" : "manual",
             name: inviteeName,
             email: inviteeEmail,
             eventDate: eventDateStr,

@@ -1,0 +1,228 @@
+{
+ "source": "/Users/diego/Documents/Red Solar Viva/Code/MI_Editores.tsx",
+ "shellImportAnchor": "import Shared from \"./MI_Shared.tsx\"",
+ "aliases": {
+  "MI_EditCommon.tsx": "Common"
+ },
+ "targets": [
+  {
+   "file": "MI_EditCommon.tsx",
+   "kind": "sibling",
+   "shellFn": "MIEditCommonShell",
+   "exportName": "EditCommon",
+   "header": "// MI_EditCommon.tsx v1.0 — piezas compartidas por los editores del Motor: el interruptor Español|English (LangToggle), el botón de refresco de pestaña (BtnRecargar), los dos alineadores de traducción (alignLabels / alignTasks) y el campo numérico que admite quedar vacío mientras se escribe (ScoreInput). Salieron de MI_Editores.tsx al partirlo (2026-08-10) para que los cinco archivos de editores compartan una sola copia sin depender unos de otros: la cadena queda MI_Shared → MI_EditCommon → MI_Edit* → MI_Editores, sin ciclos.\n//\n// Consumidores: MI_EditRituales, MI_EditWallpapers, MI_EditAvatares, MI_EditComunidad, MI_EditSistema.\n// Patrón de import:\n//   import Common from \"./MI_EditCommon.tsx\"\n//   const { LangToggle, BtnRecargar } = Common\n",
+   "imports": "import * as React from \"react\"\nimport { useState, useEffect, useRef } from \"react\"\nimport Shared from \"./MI_Shared.tsx\"\n\nconst { hx, AC, GOLD } = Shared\n",
+   "blocks": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "exports": [
+    "LangToggle",
+    "BtnRecargar",
+    "alignLabels",
+    "alignTasks",
+    "ScoreInput"
+   ]
+  },
+  {
+   "file": "MI_EditRituales.tsx",
+   "kind": "sibling",
+   "shellFn": "MIEditRitualesShell",
+   "exportName": "EditRituales",
+   "header": "// MI_EditRituales.tsx v1.0 — editores del Escáner y del Ritual Diario: Sondas (las 36 preguntas del Radar), Calibraciones (fases + tareas + rangos), Afirmaciones (categorías + textos) y el catálogo de Rituales con sus Fotones. Salió de MI_Editores.tsx al partirlo (2026-08-10); el código viaja idéntico, solo cambió de archivo.\n//\n// Consumidor: MI_Editores (shell).\n// Patrón de import:\n//   import EditRituales from \"./MI_EditRituales.tsx\"\n//   const { SondasEditor, ProtocolosEditor } = EditRituales\n",
+   "imports": "import * as React from \"react\"\nimport { useState, useEffect, useRef } from \"react\"\nimport { motion, AnimatePresence } from \"framer-motion\"\nimport Shared from \"./MI_Shared.tsx\"\n\nconst {\n    rpc,\n    rpcCached,\n    norm,\n    hx,\n    SCORE_VALUES,\n    AC,\n    GOLD,\n    adminAction,\n    adminActionCached,\n    motorCacheClear,\n} = Shared\n\ntype Lang = \"es\" | \"en\"\n",
+   "blocks": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24
+   ],
+   "exports": [
+    "SondasEditor",
+    "ProtocolosEditor",
+    "AfirmacionesEditor",
+    "RitualesHub"
+   ],
+   "localTypes": [
+    "Lang"
+   ]
+  },
+  {
+   "file": "MI_EditWallpapers.tsx",
+   "kind": "sibling",
+   "shellFn": "MIEditWallpapersShell",
+   "exportName": "EditWallpapers",
+   "header": "// MI_EditWallpapers.tsx v1.0 — la pestaña Anclajes Fotónicos del Motor completa: Galería (alta, orden en cascada, categorías, gratis/activo), Atelier de creación de prompts 4K y Telemetría de descargas. Salió de MI_Editores.tsx al partirlo (2026-08-10); el código viaja idéntico, solo cambió de archivo.\n//\n// Consumidor: MI_Editores (shell).\n// Patrón de import:\n//   import EditWallpapers from \"./MI_EditWallpapers.tsx\"\n//   const { WallpapersHub } = EditWallpapers\n",
+   "imports": "import * as React from \"react\"\nimport { useState, useEffect, useRef } from \"react\"\nimport { motion, AnimatePresence } from \"framer-motion\"\nimport Shared from \"./MI_Shared.tsx\"\n\nconst {\n    rpc,\n    rpcCached,\n    norm,\n    hx,\n    SCORE_VALUES,\n    AC,\n    GOLD,\n    adminAction,\n    adminActionCached,\n    motorCacheClear,\n} = Shared\n\ntype Lang = \"es\" | \"en\"\n",
+   "blocks": [
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37
+   ],
+   "exports": [
+    "WallpapersEditor",
+    "WallpapersHub"
+   ],
+   "localTypes": [
+    "Lang"
+   ]
+  },
+  {
+   "file": "MI_EditAvatares.tsx",
+   "kind": "sibling",
+   "shellFn": "MIEditAvataresShell",
+   "exportName": "EditAvatares",
+   "header": "// MI_EditAvatares.tsx v1.0 — el Avatar de Luz y todo lo que cuelga de él: umbrales de Fotones por etapa, params de brillo/respiración/giro, tamaños por avatar × etapa, ajuste de Fotones de una cuenta, catálogo de la Cámara de Cristalización, Campo Solar, reinicio de avatar y el envío de mensajes directos. Salió de MI_Editores.tsx al partirlo (2026-08-10); el código viaja idéntico, solo cambió de archivo.\n//\n// Consumidor: MI_Editores (shell).\n// Patrón de import:\n//   import EditAvatares from \"./MI_EditAvatares.tsx\"\n//   const { AvataresHub, CristalizacionEditor } = EditAvatares\n",
+   "imports": "import * as React from \"react\"\nimport { useState, useEffect, useRef } from \"react\"\nimport { motion, AnimatePresence } from \"framer-motion\"\nimport Shared from \"./MI_Shared.tsx\"\n\nconst {\n    rpc,\n    rpcCached,\n    norm,\n    hx,\n    SCORE_VALUES,\n    AC,\n    GOLD,\n    adminAction,\n    adminActionCached,\n    motorCacheClear,\n} = Shared\n",
+   "blocks": [
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67
+   ],
+   "exports": [
+    "AvataresEditor",
+    "AvataresHub",
+    "CristalizacionEditor",
+    "MensajeAdminEditor"
+   ]
+  },
+  {
+   "file": "MI_EditComunidad.tsx",
+   "kind": "sibling",
+   "shellFn": "MIEditComunidadShell",
+   "exportName": "EditComunidad",
+   "header": "// MI_EditComunidad.tsx v1.0 — la capa social del Motor: catálogo de intereses del directorio, Constelaciones de Maestría (umbrales de medallas), cola de moderación con baneo, paquetes de stickers de Mensajería y el Buzón de ideas de los Tripulantes. Salió de MI_Editores.tsx al partirlo (2026-08-10); el código viaja idéntico, solo cambió de archivo.\n//\n// Consumidor: MI_Editores (shell).\n// Patrón de import:\n//   import EditComunidad from \"./MI_EditComunidad.tsx\"\n//   const { ModeracionPanel, StickersHub } = EditComunidad\n",
+   "imports": "import * as React from \"react\"\nimport { useState, useEffect, useRef } from \"react\"\nimport { motion, AnimatePresence } from \"framer-motion\"\nimport Shared from \"./MI_Shared.tsx\"\n\nconst {\n    rpc,\n    rpcCached,\n    norm,\n    hx,\n    SCORE_VALUES,\n    AC,\n    GOLD,\n    adminAction,\n    adminActionCached,\n    motorCacheClear,\n} = Shared\n\ntype Lang = \"es\" | \"en\"\n",
+   "blocks": [
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84
+   ],
+   "exports": [
+    "ComunidadInteresesEditor",
+    "MedallasEditor",
+    "ModeracionPanel",
+    "StickersHub",
+    "BuzonEditor"
+   ],
+   "localTypes": [
+    "Lang"
+   ]
+  },
+  {
+   "file": "MI_EditSistema.tsx",
+   "kind": "sibling",
+   "shellFn": "MIEditSistemaShell",
+   "exportName": "EditSistema",
+   "header": "// MI_EditSistema.tsx v1.0 — las pestañas de sistema del Motor: versiones de la app (aviso de actualización y bloqueo de emergencia, una versión por tienda), lectura anonimizada de las conversaciones del Espejo y el catálogo de pistas de la Biósfera. Salió de MI_Editores.tsx al partirlo (2026-08-10); el código viaja idéntico, solo cambió de archivo.\n//\n// Consumidor: MI_Editores (shell).\n// Patrón de import:\n//   import EditSistema from \"./MI_EditSistema.tsx\"\n//   const { VersionesEditor, EspejoEditor } = EditSistema\n",
+   "imports": "import * as React from \"react\"\nimport { useState, useEffect, useRef } from \"react\"\nimport { motion, AnimatePresence } from \"framer-motion\"\nimport Shared from \"./MI_Shared.tsx\"\n\nconst {\n    rpc,\n    rpcCached,\n    norm,\n    hx,\n    SCORE_VALUES,\n    AC,\n    GOLD,\n    adminAction,\n    adminActionCached,\n    motorCacheClear,\n} = Shared\n",
+   "blocks": [
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94
+   ],
+   "exports": [
+    "VersionesEditor",
+    "EspejoEditor",
+    "BiosferaEditor"
+   ]
+  },
+  {
+   "file": "MI_Editores.tsx",
+   "kind": "shell",
+   "blocks": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    68,
+    69,
+    95,
+    96
+   ]
+  }
+ ],
+ "providedLocally": [
+  "rpc",
+  "rpcCached",
+  "norm",
+  "hx",
+  "SCORE_VALUES",
+  "AC",
+  "GOLD",
+  "adminAction",
+  "adminActionCached",
+  "motorCacheClear"
+ ]
+}
