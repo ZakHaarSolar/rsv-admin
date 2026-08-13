@@ -1,3 +1,8 @@
+// Red Solar Viva · admin-action v1.52 — 🜂 EL PANEL DE VOZ APRENDE A SOLTAR:
+// rutea admin_voz_frases_borrar (Motor → "Voz"), el borrado por texto de las
+// frases sin resolver — pruebas propias, ruido, o carencias ya convertidas en
+// ejemplos del prompt salen de la lista en vez de acumularse. Requiere
+// migración 20260813_voz_frases_borrar.
 // Red Solar Viva · admin-action v1.51 — 🜂 LO QUE LA VOZ NO ENTENDIÓ: rutea
 // admin_voz_frases_top (Motor → "Voz"), la lectura de voz_frases_sin_resolver que
 // hasta ahora nadie podía pedir — la tabla se llenaba desde voz-intent y la RPC
@@ -396,6 +401,10 @@ const ADMIN_RPCS: Record<string, string | null> = {
     // único uso es no contar diez veces al mismo. Requiere migración
     // 20260806_voz_frases_sin_resolver.
     admin_voz_frases_top: "p_admin_clerk_id",
+    // Y su reverso: BORRAR entradas del panel por texto (pruebas propias,
+    // ruido, o frases ya convertidas en ejemplos del prompt). Barre todas las
+    // filas cuyo texto normalizado coincida. Requiere 20260813_voz_frases_borrar.
+    admin_voz_frases_borrar: "p_admin_clerk_id",
     // Aviso de nueva versión (Motor → "App"): fija última versión + mensaje + link.
     admin_set_app_release: "p_admin_clerk_id",
     // BLOQUEO DE EMERGENCIA (Motor → "App"): pantalla sin salida para versiones
