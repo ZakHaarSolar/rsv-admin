@@ -1,4 +1,12 @@
-// Red Solar Viva · oraculo-chat v1.43 — 🜂 EL ESPEJO DEJA DE NEGAR QUE CONOCE
+// Red Solar Viva · oraculo-chat v1.45 — 🜂 FIDELIDAD ANTE TODO (Zak
+// 2026-08-14: dos respuestas rotas más, una en cada modo — "peatonales
+// peatonales", "tiriada", "cellulos", "piel tal en tu mano"). Medido en el
+// catálogo de OpenRouter: seis anfitriones sirven el modelo comprimido a la
+// MITAD de su precisión nativa (fp4) y varios no declaran qué sirven. La
+// lista blanca pasa a declarada-fiel (fp8/fp16/bf16/fp32, sin "unknown") y
+// aplica a LOS DOS modos, clásico y en vivo. El freno de eco sigue siendo
+// solo del carril efímero. | v1.44 — el carril profundo pasa al build 0813.
+// | v1.43 — 🜂 EL ESPEJO DEJA DE NEGAR QUE CONOCE
 // LA CASA (Zak 2026-08-14: preguntó dónde encontraba su plan y le contestó
 // "no tengo acceso directo a la estructura del Escáner ni a sus archivos").
 // Dos causas, las dos curadas: (1) la lista de pantallas llegaba sin una
@@ -230,6 +238,23 @@ const sb = createClient(
    tono, que es justo por lo que elegimos DeepSeek. Por eso el preview queda
    vivo en el selector de abajo (v4p) para comparar la voz en caliente. */
 const MODEL = "deepseek/deepseek-v4-flash-0731"
+/* 🜂 v1.45 — FIDELIDAD ANTE TODO, EN LOS DOS MODOS (Zak 2026-08-14, con dos
+   capturas: "peatonales peatonales… tiriada… cellulos… piel tal en tu mano").
+   El mismo modelo lo sirven ~20 anfitriones y MEDIDO en el catálogo vivo hay
+   seis sirviéndolo comprimido A LA MITAD (fp4: DeepInfra, OpenInference,
+   Decart, Sail, Inceptron, AtlasCloud…) y varios que no declaran qué sirven
+   ("unknown": Together, Fireworks, Cloudflare, DigitalOcean). El modelo nace
+   en fp8: eso ES su precisión completa. fp4 es la mitad de la mitad, y lo
+   primero que rompe es el español — concordancia, conectores, palabras
+   inventadas. La ruleta de velocidad caía ahí a veces, y por eso el desastre
+   era intermitente.
+   La lista blanca es DECLARADA-FIEL solamente: fuera fp4 Y fuera "unknown",
+   porque "no sé qué te estoy sirviendo" no es una promesa de fidelidad.
+   Quedan 10+ anfitriones fieles en el rápido y 3 en el profundo (GMICloud,
+   SiliconFlow, Novita) — de sobra para seguir ordenando por velocidad. El
+   reintento vainilla (sin filtro) queda como red si el pool fallara: distinto
+   es mejor que mudo, pero solo como último recurso. */
+const QUANTS_FIELES = ["fp8", "fp16", "bf16", "fp32"]
 /* v1.9 — SELECTOR DE MODELO (solo admin desde el cliente): compara el cerebro
    del Espejo. v4 = el build 0731 (default); v4p = el preview anterior (para
    oír si la voz cambió); R1 = deepseek-r1 (reasoner: razona antes de
@@ -257,7 +282,16 @@ const MODEL = "deepseek/deepseek-v4-flash-0731"
 const MODELS: Record<string, string> = {
     v4: "deepseek/deepseek-v4-flash-0731",
     v4p: "deepseek/deepseek-v4-flash",
-    pro: "deepseek/deepseek-v4-pro",
+    /* 🜂 v1.44 — EL CARRIL PROFUNDO PASA AL BUILD 0813 (Zak 2026-08-14: "acaban
+       de sacar un nuevo DeepSeek Pro"). Tenía razón, y la sala del 13 lo dio
+       por hecho de más: anotó "mismo id, nada que cambiar", pero en OpenRouter
+       `deepseek-v4-pro` y `deepseek-v4-pro-0813` son DOS endpoints distintos —
+       el primero sigue fechado el 24 de abril y cobra 0,4138/0,8275 por millón;
+       el 0813 salió el 12 de agosto y cobra 0,435/0,87. O sea que el Espejo
+       llevaba dos días pensando con el modelo viejo. Se pinnea el build, igual
+       que ya se hacía con el rápido (v4-flash-0731): un id sin fecha puede
+       cambiar de contenido bajo los pies sin que nadie se entere. */
+    pro: "deepseek/deepseek-v4-pro-0813",
     r1: "deepseek/deepseek-r1",
 }
 /* Los que razonan: con estos se enciende `reasoning` y se les da más techo de
@@ -2143,7 +2177,13 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
                        que ordene por rendimiento hace que el reflejo vuelva por
                        el más veloz disponible. Si alguna vez conviene priorizar
                        precio, es cambiar esta palabra por "price". */
-                    cuerpo.provider = { sort: "throughput" }
+                    cuerpo.provider = {
+                        sort: "throughput",
+                        /* v1.45 — el más veloz DE LOS FIELES, en los dos
+                           modos: el Espejo original también sufría la ruleta
+                           (la respuesta a Kal'el con "piel tal en tu mano"). */
+                        quantizations: QUANTS_FIELES,
+                    }
                     // V4 es híbrido: apagamos el "pensamiento" para latencia
                     // baja + la voz del Espejo. R1 es reasoner: lo ENCENDEMOS
                     // (su naturaleza es razonar; el content ya trae la
@@ -2264,28 +2304,14 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
                                   ? 6000
                                   : 3600,
                             stream: true,
-                            /* 🜂 v1.43 — RÁPIDO, PERO NO APLASTADO. El carril
-                               de la Matriz exige precisión mínima: entre los
-                               proveedores del mismo modelo, los que sirven
-                               cuantizaciones agresivas devuelven español con
-                               la concordancia rota, y ahí se pierde el género,
-                               el número y los conectores. Sigue ordenando por
-                               rendimiento: elige el más veloz de los que no
-                               aplastan el modelo. El Espejo original conserva
-                               su configuración exacta. */
-                            provider:
-                                body?.efimero === true
-                                    ? {
-                                          sort: "throughput",
-                                          quantizations: [
-                                              "fp8",
-                                              "fp16",
-                                              "bf16",
-                                              "fp32",
-                                              "unknown",
-                                          ],
-                                      }
-                                    : { sort: "throughput" },
+                            /* 🜂 v1.45 — RÁPIDO, PERO FIEL, EN LOS DOS MODOS
+                               (deroga el "solo efimero" de la v1.43 y saca
+                               "unknown" de la lista: no declarar qué sirves
+                               no es una promesa de fidelidad). */
+                            provider: {
+                                sort: "throughput",
+                                quantizations: QUANTS_FIELES,
+                            },
                             reasoning: { enabled: isReasoner },
                             /* v1.31 — el freno de eco del carril efímero vale
                                igual en vivo: el bucle de Zak llegó POR el canal
