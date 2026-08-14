@@ -1,4 +1,14 @@
-// Red Solar Viva · espejo-voz v3.2 — 🜂 LAS MARCAS DE TIEMPO REALES, DETRÁS DE
+// Red Solar Viva · espejo-voz v3.4 — 🜂 LA VOZ NO CAMBIA DE PERSONA A MEDIA
+// LECTURA (Zak 2026-08-14: "entró la voz de Goku y nosotros habíamos mandado
+// la de Bennett; y cuando comenzó la parte práctica volvió a Bennett"). Cada
+// parte de una lectura larga se pide por separado, así que un tropiezo suelto
+// de Soniox hacía que ESA parte —y solo esa— cayera al respaldo de Fish, que
+// es otro proveedor y por lo tanto otra voz. Cambiar de timbre a la mitad no
+// se lee como "degradó con gracia": se lee como que la app se rompió. Ahora un
+// transitorio se reintenta con el MISMO proveedor tras 600 ms, que es lo que
+// conserva la voz; solo si Soniox está de verdad caído se cruza a Fish, porque
+// mudo sigue siendo peor que distinto. Llave, saldo y cuota no se reintentan.
+// | v3.2 — 🜂 LAS MARCAS DE TIEMPO REALES, DETRÁS DE
 // BANDERA (Zak 2026-08-12 · VI). La palabra dorada siempre fue una ESTIMACIÓN
 // —reloj más largo de texto— y por eso derivaba; Fish no daba otra cosa.
 // Soniox sí, por WebSocket, y devuelve algo mejor que tiempos por palabra:
@@ -1518,7 +1528,33 @@ Deno.serve(async (req: Request) => {
 
         /* 🜂 Si Soniox se cae, la lectura NO se cae con él: se reintenta por
            Fish, que sigue vivo y con saldo. Un proveedor nuevo con un día de
-           vida no puede ser un punto único de falla. */
+           vida no puede ser un punto único de falla.
+
+           🜂 v3.4 — PERO PRIMERO SE LE DA OTRA OPORTUNIDAD AL MISMO PROVEEDOR
+           (Zak 2026-08-14: "entró la voz de Goku y nosotros habíamos mandado
+           la de Bennett; y cuando comenzó la parte práctica volvió a Bennett").
+           Cada parte de una lectura larga se pide por separado, así que un
+           tropiezo suelto de Soniox en la parte 3 hacía que ESA parte —y solo
+           esa— sonara con la voz clonada de Fish, y la 4 volviera a la de
+           siempre. Cambiar de timbre a media lectura no se lee como
+           "degradó con gracia": se lee como que la app se rompió.
+           Un transitorio no es una negativa: se respira 600 ms y se insiste
+           con el MISMO proveedor, que es lo que conserva la voz. Solo si
+           Soniox está de verdad caído se cruza a Fish, porque mudo sigue
+           siendo peor que distinto. Los errores que no son transitorios
+           (llave, saldo, cuota) no se reintentan: sería quemar una llamada
+           para el mismo error. */
+        if (
+            usaSoniox &&
+            !r.ok &&
+            r.status !== 401 &&
+            r.status !== 402 &&
+            r.status !== 429
+        ) {
+            await new Promise((res) => setTimeout(res, 600))
+            const segundo = await sintetizarSoniox().catch(() => null)
+            if (segundo) r = segundo
+        }
         if (usaSoniox && !r.ok && FISH_KEY) {
             r = await sintetizar(voiceId)
             usoRespaldo = true

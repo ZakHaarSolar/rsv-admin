@@ -1996,8 +1996,26 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
                no acumula: frena el bucle patológico sin tocar la gramática),
                más las redes que ya existían: el recorte de degeneración del
                cliente y el reintento vainilla. */
+            /* 🜂 v1.43 — Y LA GRAMÁTICA SE CUIDA DESDE EL PROVEEDOR, NO DESDE
+               EL FRENO (Zak 2026-08-14, con captura: un reflejo terminó en
+               "de las herramientas que has llegado al cincuenta, la
+               implicación no es—. Nos vamos viendo de la mejor manera", y por
+               el camino traía "divideos", "tú… no tiene nada que ganar" y
+               "tener cerco con unidad de propósito").
+               Eso no es un bucle —el freno de eco funciona— es CONCORDANCIA
+               ROTA, y la concordancia se rompe donde el modelo se sirve muy
+               comprimido. `sort:"throughput"` reparte entre todos los
+               proveedores del mismo modelo y algunos sirven cuantizaciones
+               agresivas: la respuesta llega rápido y barata, y el español
+               —que vive de artículos, género y número— es lo primero que se
+               cae. En inglés casi no se nota; por eso puede pasar meses sin
+               que nadie lo reporte.
+               Se exige precisión mínima. Sigue eligiendo el más rápido, pero
+               solo entre los que no aplastan el modelo. Y el freno de eco baja
+               a 1.02: con la precisión asegurada ya no tiene que hacer el
+               trabajo de dos, y cuanto más suave, menos toca la prosa. */
             const antiEco: Record<string, unknown> =
-                body?.efimero === true ? { repetition_penalty: 1.05 } : {}
+                body?.efimero === true ? { repetition_penalty: 1.02 } : {}
 
             /* 🜂 v1.32 — INTERNET DEL MODO RÁFAGA (Zak: "la búsqueda es un
                ingrediente, no el plato"). Solo con `efimero` + `internet`
@@ -2246,7 +2264,28 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
                                   ? 6000
                                   : 3600,
                             stream: true,
-                            provider: { sort: "throughput" },
+                            /* 🜂 v1.43 — RÁPIDO, PERO NO APLASTADO. El carril
+                               de la Matriz exige precisión mínima: entre los
+                               proveedores del mismo modelo, los que sirven
+                               cuantizaciones agresivas devuelven español con
+                               la concordancia rota, y ahí se pierde el género,
+                               el número y los conectores. Sigue ordenando por
+                               rendimiento: elige el más veloz de los que no
+                               aplastan el modelo. El Espejo original conserva
+                               su configuración exacta. */
+                            provider:
+                                body?.efimero === true
+                                    ? {
+                                          sort: "throughput",
+                                          quantizations: [
+                                              "fp8",
+                                              "fp16",
+                                              "bf16",
+                                              "fp32",
+                                              "unknown",
+                                          ],
+                                      }
+                                    : { sort: "throughput" },
                             reasoning: { enabled: isReasoner },
                             /* v1.31 — el freno de eco del carril efímero vale
                                igual en vivo: el bucle de Zak llegó POR el canal
