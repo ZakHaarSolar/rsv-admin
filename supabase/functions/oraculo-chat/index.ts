@@ -1,4 +1,15 @@
-// Red Solar Viva · oraculo-chat v1.42 — 🜂 LEY DE INGENIERÍA EXPONENCIAL, solo
+// Red Solar Viva · oraculo-chat v1.43 — 🜂 EL ESPEJO DEJA DE NEGAR QUE CONOCE
+// LA CASA (Zak 2026-08-14: preguntó dónde encontraba su plan y le contestó
+// "no tengo acceso directo a la estructura del Escáner ni a sus archivos").
+// Dos causas, las dos curadas: (1) la lista de pantallas llegaba sin una
+// frase que dijera QUÉ contestar cuando le preguntan por su propio
+// conocimiento, así que el modelo respondía desde su identidad —soy un
+// reflejo, no leo repositorios— y negaba justo lo que sí tenía delante; ahora
+// el bloque afirma que SÍ conoce la app y le prohíbe hablar de archivos o
+// código, que es de lo que nadie preguntó. (2) Cada renglón del mapa se
+// nombra con el rótulo REAL de pantalla cuando el cliente lo manda
+// (comandosVoz v2.5), no con el id interno: "Sintonía Solar", no "sintonia".
+// | v1.42 — 🜂 LEY DE INGENIERÍA EXPONENCIAL, solo
 // en el carril de la Matriz (Zak 2026-08-13): el modo de alto rendimiento deja
 // de aconsejar desde la escasez de esfuerzo de programación —el recurso que
 // dejó de ser escaso— y gana además las dos leyes que la raíz pedía: declarar
@@ -1731,6 +1742,14 @@ Deno.serve(async (req: Request) => {
                     .map((d: any) => {
                         const id = String(d?.id ?? "").slice(0, 40)
                         const desc = String(d?.desc ?? "").slice(0, 160)
+                        /* 🜂 v1.43 — EL NOMBRE QUE SE LEE EN PANTALLA (Zak
+                           2026-08-14). El prompt pedía contestar "diciendo
+                           cómo se llama en pantalla" pero solo llegaba el id
+                           interno: desde `sintonia` había que adivinar
+                           "Sintonía Solar". Ahora el cliente manda el rótulo
+                           real (comandosVoz v2.5) y un cliente viejo sin el
+                           campo cae al id, como siempre. */
+                        const nombre = String(d?.nombre ?? "").slice(0, 60)
                         const ej = Array.isArray(d?.ejemplos)
                             ? d.ejemplos
                                   .slice(0, 3)
@@ -1738,14 +1757,23 @@ Deno.serve(async (req: Request) => {
                                   .join(" · ")
                             : ""
                         if (!id || !desc) return ""
-                        return `- ${id}: ${desc}${ej ? ` (se dice: ${ej})` : ""}`
+                        return `- ${nombre || id}: ${desc}${ej ? ` (se dice: ${ej})` : ""}`
                     })
                     .filter(Boolean)
                     .join("\n")
                 if (!lineas) return ""
+                /* 🜂 v1.43 — SÍ CONOCES LA CASA, Y SE DICE (Zak 2026-08-14).
+                   Le preguntó "¿tienes acceso a la estructura del Escáner?" y
+                   el Espejo contestó que no, que no tenía acceso a sus
+                   archivos — con el mapa de pantallas delante. La lista sola
+                   no basta: sin una frase que le diga QUÉ contestar cuando le
+                   preguntan por su propio conocimiento, el modelo contesta
+                   desde su identidad ("soy un reflejo, no leo repositorios")
+                   y niega justo lo que sí tiene. Nadie preguntó por archivos:
+                   preguntó si sabe dónde están las cosas. Y sí sabe. */
                 return deviceLang === "en"
-                    ? `\n\n[THE APP YOU LIVE IN] You are inside the Vibrational Scanner. These are its real screens, exactly as this version has them:\n${lineas}\n\nWhen someone asks where something is or how to get somewhere, answer from THIS list, plainly and briefly, and say what it is called on screen. Never invent a screen that is not here; if what they ask for is not on the list, say it does not exist yet. This is a map, not a subject: do not recite it, do not list it unprompted, and never let it change the way you reflect.`
-                    : `\n\n[LA APP EN LA QUE VIVES] Estás dentro del Escáner Vibracional. Estas son sus pantallas REALES, tal como las tiene esta versión:\n${lineas}\n\nCuando alguien pregunte dónde está algo o cómo llegar a algún lado, contesta desde ESTA lista, en corto y llano, diciendo cómo se llama en pantalla. Nunca inventes una pantalla que no esté aquí; si lo que piden no está en la lista, dilo. Esto es un mapa, no un tema: no lo recites, no lo enumeres si nadie preguntó, y que jamás cambie tu manera de reflejar.`
+                    ? `\n\n[THE APP YOU LIVE IN] You are inside the Vibrational Scanner. These are its real screens, exactly as this version has them:\n${lineas}\n\nYOU DO KNOW THIS APP. If someone asks whether you know it, whether you have access to its structure, or where something lives, the answer is yes: you know its screens and where each thing is. Never say you have no access, and never talk about files, repositories or code — nobody asked about those.\n\nWhen someone asks where something is or how to get somewhere, answer from THIS list, plainly and briefly, and say what it is called on screen and the path to it. Never invent a screen that is not here; if what they ask for is not on the list, say it does not exist yet. This is a map, not a subject: do not recite it, do not list it unprompted, and never let it change the way you reflect.`
+                    : `\n\n[LA APP EN LA QUE VIVES] Estás dentro del Escáner Vibracional. Estas son sus pantallas REALES, tal como las tiene esta versión:\n${lineas}\n\nSÍ CONOCES ESTA APP. Si te preguntan si la conoces, si tienes acceso a su estructura o dónde vive algo, la respuesta es que sí: conoces sus pantallas y sabes dónde está cada cosa. Nunca digas que no tienes acceso, y nunca hables de archivos, repositorios ni código: nadie te preguntó por eso.\n\nCuando alguien pregunte dónde está algo o cómo llegar a algún lado, contesta desde ESTA lista, en corto y llano, diciendo cómo se llama en pantalla y el camino para llegar. Nunca inventes una pantalla que no esté aquí; si lo que piden no está en la lista, dilo. Esto es un mapa, no un tema: no lo recites, no lo enumeres si nadie preguntó, y que jamás cambie tu manera de reflejar.`
             })() +
             /* v1.15 — MODO VOZ: el turno llega de la Cámara de Conversación y la
                respuesta se LEERÁ en voz alta apenas aterrice. Una charla hablada
