@@ -1,3 +1,145 @@
+<!-- ARCHIVADO 2026-08-14 · entradas 2026-08-04 → 2026-08-09 movidas del CLAUDE.md -->
+
+#### 2026-08-09 · 🪞 EL ESPEJO RECONSTRUIDO Y AFINADO (2.693 líneas repuestas desde el bundle · renombrar reflejos · imágenes que sobreviven · botón de enviar de alta tecnología) · 🔐 LOS TRES REPOS PRIVADOS EN GITHUB · 📱 EL iPHONE RECIBE LA BUILD SOLO
+
+*(Comprimida al cierre del 2026-08-10 — lo hecho vive en el código: la
+reconstrucción de las 2.693 líneas de `EV_Oraculo` desde el bundle con cobertura
+medida 172 de 173, los dos botones flotantes, los tres repos privados en GitHub,
+el despliegue solo al iPhone y el lote del Espejo. Sus dos pendientes —panel de
+uso, streaming y el orbe en el onboarding— quedaron HECHOS el 2026-08-10.)*
+
+- 💡 **Decisiones importantes:**
+  - **No se persiste lo que cuesta dinero.** Imágenes y Presencia hablada nacen
+    apagadas y se desarman en cuanto se usan; si el reflejo no llegó, siguen
+    armadas porque no se gastó nada.
+  - **Preparar la app para el cambio de cuenta, sin perseguir el abuso.** Se
+    quitó el borrado de charlas entre cuentas: el aislamiento nunca dependió de
+    él (cada cuenta tiene su propia llave). El tope freemium lo gobierna el
+    servidor contra la cuenta verificada, que es donde se cuenta de verdad.
+  - **Las voces NO se guardan en la base:** el audio del Espejo hoy no vive en
+    ningún lado y eso es parte de la promesa; subirlo cambia la naturaleza del
+    producto por un ahorro chico.
+- 🔧 **Patrones nuevos:**
+  - 🜂 **Reconstruir desde el bundle:** anclarse en los literales que
+    sobreviven (claves i18n, clases CSS, textos) y **medir la cobertura**
+    contra el original antes de dar nada por completo.
+  - 🜂 **Dos números que se restan tienen que venir del MISMO frame.** Restar
+    un valor de estado a una medida del DOM falla si la propiedad ANIMA: el
+    observador mide a mitad de camino mientras el estado ya saltó. Se lee del
+    propio elemento con `getComputedStyle`, que devuelve el valor interpolado
+    de ese frame. Costó cinco intentos y lo cerró un arnés de seis frames.
+  - **Lo que se compara es el PÍXEL, no el número:** un elemento con `scale`
+    declara 46 y dibuja 38; igualar los números aleja los tamaños.
+  - **`git push` NO publica** y el simulador **no reproduce el teclado** (usa
+    el del Mac). Ver [[feedback_vercel_pnpm_version_lockfile]].
+- 🧬 **Versión al cierre:** App Store **1.1.3 LIVE**, en curso 1.1.4.
+  Escritorio y iPhone LIVE con todo lo de la sala.
+*(🔮 retirado al cierre de la · II — el streaming y el panel de uso se
+  construyeron en la sala paralela del streaming ese mismo día y ya viven en
+  el código, `EV_Oraculo` v2.97+ y `oraculo-chat` v1.30.)*
+
+#### 2026-08-08 · SOPORTE DE PUNTA A PUNTA · EL PANEL DEL ESPEJO VUELVE A LEERSE · 🜂 SE BORRARON 2.693 LÍNEAS Y NO HABÍA RED (comprimida)
+
+- 💡 **Decisiones:** el hilo de soporte vive en el CASO, no en Comunidad (el
+  contexto es lo que convierte atención en soporte; el caso muestra su estado) ·
+  un tope o etiqueta se expresa en la unidad que la persona VIVE · el caso de
+  cobros se nombra por lo que se quiere RESOLVER · el Espejo conoce al
+  Tripulante pero NO la app (integrar el mapa quedó decidido-sin-construir) ·
+  OpenRouter pide el proveedor MÁS RÁPIDO con pensamiento apagado.
+- 🔧 **Patrones:** lo cifrado se transforma DESPUÉS de descifrar; tachar
+  identidad por palabra completa tolerando acentos · un sonido de llegada
+  cuelga de la LLEGADA, no del fin de la animación · una caché no guarda
+  fallos y toda escritura olvida su familia · un velo de arrastre se apaga por
+  LATIDO · verificar el arnés antes de creerle. La lección del borrado vive en
+  el protocolo (Paso 0-quaterdecies).
+
+#### 2026-08-06 · III · LA VOZ EMPIEZA A HACERLO TODO (Fases C y D+) · LA VOZ CONTESTA DONDE ESTÁS (comprimida)
+
+- 💡 **Decisiones:** preguntar no puede sacarte de donde estás, y hacer
+  tampoco (la regla que ordenó la sala) · el contexto no depende de la capa:
+  decide que lo dicho nombre algo TUYO · la prioridad es ENTENDER, no evitar
+  falsos positivos · costo medido: navegar ~$0.20 / actuar ~$2.39 USD por
+  1000 comandos. Detalle vivo en [[proyecto_voz_plan_maestro]] y
+  [[proyecto_comandos_voz]].
+- 🔧 **Patrones:** la tarjeta de permiso guarda su propio ejecutor · un pulso
+  en loop nace y muere en CERO · lo que el prompt enseña depende de lo que la
+  pantalla muestra · un gesto exploratorio no es destructivo en un paso ·
+  `tsc -b --force` es el chequeo real ([[feedback_tsc_b_no_tsc_p]]).
+
+#### 2026-08-06 · II · EL PANEL VE MÁS Y REVELA MENOS · EL PORTÓN DE ARQUITECTO DEJA DE FALLAR · el misterio de Ashburn era NUESTRO servidor (comprimida)
+
+- 💡 **Decisiones:** un transitorio NO es una negativa (solo el servidor dice
+  "no", [[feedback_transitorio_no_es_negativa]]) · Clerk ve la IP de NUESTRO
+  proxy en la web ([[proyecto_freno_registros_web]]) · atajos con letra suelta
+  y guardián, no Command · la foto en el panel apagada de fábrica · el tablero
+  del Núcleo se queda limpio (tarjeta de suscripción rechazada en el acto).
+- 🔧 **Patrones:** un panel anónimo se delata por el CONTENIDO · una capa que
+  se reemplaza nunca pasa por vacío · una caché del bundle miente al recargar:
+  la memoria vive en el aparato.
+
+#### 2026-08-06 · 🖼 EL ESPEJO ILUSTRA DE VERDAD (FLUX.2 Pro, arte libre) · LA VOZ SE COBRA POR MINUTOS REALES (comprimida)
+
+- 💡 **Decisiones:** cuando el prompt falla tres veces, la garantía se muda al
+  CÓDIGO · un tope se expresa en la unidad que la persona VIVE (la voz en
+  minutos) · el interruptor ES la elección · todo tope con su palanca de
+  escape (pase del Arquitecto, atado a su correo en el servidor).
+- 🔧 **Patrones:** lo pesado JAMÁS a localStorage (imgCache IndexedDB; un
+  catch{} en setItem = pérdida silenciosa de todo) · un campo eco parte el
+  diagnóstico en dos · atan(y,x) pinta costura: muestrear la dirección
+  unitaria · el copy vive donde se lee, no en el transporte.
+
+#### 2026-08-05 · LA VOZ EMPIEZA A HACER (rachas por voz con permiso · IA de respaldo) · UNA VERSIÓN POR TIENDA (comprimida)
+
+- 💡 **Decisiones:** la IA de respaldo es COMPLEMENTO del intérprete local ·
+  confirmación por voz con tokens EXACTOS, jamás fuzzy · el número del AVISO
+  es por tienda; el del BLOQUEO es único · precio de Sintonía: mantener + plan
+  anual + subas solo a nuevos (decisión de Zak pendiente).
+- 🔧 **Patrones:** una acción por voz con parámetros ESPERA el fin de la frase ·
+  congelar una escena mientras el usuario viaja hacia ella · una hoja con
+  inputs necesita su propio scroll · un uuid se pasa CRUDO · un acceso nunca
+  se abre bajo una capa tapada (se buffera al flip de visibilidad) · un verbo
+  destructivo se DETECTA aunque no se ejecute.
+
+#### 2026-08-04 · IV · LA LANDING RESPIRA · LA FICHA DEL PLANETA NO SE SALE · EL LENGUAJE BAJA A TIERRA · AQUA´RIIA JUNTO A ZAK´HAAR · CORREOS EN TRES LISTAS (comprimida)
+
+- 💡 **Decisiones:** 🜂 NUNCA anotar builds ni deploys como pendientes (Zak) y
+  limpieza del CLAUDE.md de 1.298.085 a ~90.000 caracteres, con la arqueología
+  en `admin/CLAUDE_archivo_hasta_2026-08-04.md` · la pausa del sistema solar se
+  queda, lo que faltaba era que se leyera como FOCO (atenuar el resto) · la
+  puerta de escritorio es una entrada, no una nota al pie · un sello que no
+  dice lo que hace la capa se rehace, no se retoca · las tres listas de correo
+  se derivan del `source`, sin columna nueva.
+- 🔧 **Patrones:** llegada limpia a tráfico frío (`body{opacity:0}` +
+  `document.fonts.ready` con tope) mata el salto de tipografía · un `resize` de
+  solo alto en móvil NO es cambio de viewport, es la barra del navegador: nunca
+  colgar trabajo caro de ahí · medir el alto REAL de un flotante
+  (`offsetHeight` + `ResizeObserver`), nunca una constante escrita a mano ·
+  ficha de persona como componente reusable · aislar un SVG en un HTML de
+  comparación (grande + a tamaño real, junto a sus hermanos) antes de darlo por
+  bueno.
+
+#### 2026-08-04 · III · EL CAMPO DESPIERTA · LA EXTRACCIÓN ES RITUAL · EL SENDERO SE VE AVANZAR · "DEJA DE ESCUCHAR" · el agujero del aviso del Radar (comprimida)
+
+- 💡 **Decisiones:** la disponibilidad del ciclo se anuncia DENTRO de la app
+  (hexágono que llama + ceremonia `RadarDespierto` una vez por CICLO, llave =
+  timestamp del ciclo); una ceremonia que existe en dos capas vive en el
+  módulo compartido (`Cristales` con `kind`); el auto-scroll del Sendero solo
+  viaja si la escena no está a la vista; los comandos de voz que apagan algo
+  llevan 2+ palabras portadoras. `PushSync` v1.4: la marca de token se sella
+  SOLO con el sí del servidor ([[feedback_registro_se_sella_con_el_si]]).
+- 🔧 **Patrones:** un `motion.div` no se centra con `translateX(-50%)`
+  ([[feedback_framer_motion_transform_clash]]); puerta única
+  `rsv-abrir-meditacion` (3er caso del patrón); señal de campo listo leída del
+  HISTORIAL, no del estado vivo; en preview `innerText` ≠ `textContent` con
+  `text-transform: uppercase`.
+- *(🔮 retirado al cierre del 2026-08-05 — sus builds acumulados viajan en el
+  marcador v 1.4.3 M; el diagnóstico del aviso del Radar sigue vivo en
+  § Pendientes vivos; los pendientes operativos de edges quedaron
+  desplegados por Zak ese día.)*
+
+---
+
+
 # CLAUDE.md — Red Solar Viva / Escáner Vibracional
 
 [✦ DIRECTIVA MAESTRA DE FRICCIÓN CERO]
