@@ -1,3 +1,4 @@
+// Red Solar Viva · council-gate v1.3 — el Observatorio entra a la lista de cámaras válidas (sus turnos con el Cronista también se guardan)
 // Red Solar Viva · council-gate v1.2 — 🜂 EL PORTÓN DEL COUNCIL SOLAR
 // (redsolarviva.com/council, el Centro de Mando).
 // v1.2 — LA BÓVEDA: { quiero: "boveda-guardar" } recibe en un solo lote los
@@ -69,7 +70,7 @@ const VOCES: Record<string, { voice: string; speed: number }> = {
 
 /* ── Bóveda ─────────────────────────────────────────────────────────── */
 
-const SALAS = new Set(["central", "escaner", "foton", "zakcero"])
+const SALAS = new Set(["central", "escaner", "foton", "zakcero", "observatorio"])
 const ETAPAS = new Set(["propuesta", "friccion", "evolucion"])
 /* Topes de defensa: un lote no puede ser infinito */
 const MAX_PLAYBOOKS = 40
