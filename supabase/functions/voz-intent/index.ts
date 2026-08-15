@@ -1,3 +1,10 @@
+// admin/supabase/functions/voz-intent/index.ts v1.11 — 🜂 GROQ RETIRA LLAMA 3.3 70B
+// (correo del 2026-08-15: se apaga el 16-ago-2026). El carril de ACCIONES pasa a
+// `qwen/qwen3.6-27b` en Groq con `reasoning_effort: "none"` (sin cadena de
+// pensamiento: misma latencia sub-segundo, mismo JSON) y `reasoning_format:
+// "hidden"` (Groq exige parsed/hidden con JSON mode). El respaldo en OpenRouter
+// sigue en llama-3.3-70b-instruct: ahí no se retira. El carril de NAVEGACIÓN
+// (llama-3.1-8b-instant) no cambia. Sigue mandando el secreto VOZ_MODEL si está.
 // admin/supabase/functions/voz-intent/index.ts v1.10 — 🜂 FASE E · EL CONTEXTO
 // VIVO (Zak 2026-08-13): el cliente manda `contexto.capa_activa` +
 // `contexto.lista_visible` (la pila central de lib/vozContexto: la capa del
@@ -83,8 +90,19 @@ const MODELO_OR_DEFAULT = "meta-llama/llama-3.1-8b-instruct"
    (device-QA de Zak: metió "llamada/ponle de título" al título e ignoró
    "llevo 8 años"). El 70b en Groq sigue contestando en <1 s y un intento
    cuesta ~0.001 USD: la calidad aquí ES la experiencia. */
-const MODELO_GROQ_ACCIONES = "llama-3.3-70b-versatile"
+/* v1.11 — Groq retiró llama-3.3-70b-versatile el 16-ago-2026. Qwen 3.6 27B es
+   uno de sus dos reemplazos recomendados; se pide SIN razonamiento porque
+   aquí la latencia es la experiencia y la tarea es extraer un JSON. */
+const MODELO_GROQ_ACCIONES = "qwen/qwen3.6-27b"
 const MODELO_OR_ACCIONES = "meta-llama/llama-3.3-70b-instruct"
+
+/* Los modelos con cadena de pensamiento (qwen3.x, gpt-oss) reciben los
+   parámetros que la apagan / la esconden; los llama no los aceptan. */
+function parametrosRazonamiento(modelo: string): Record<string, unknown> {
+    if (modelo.startsWith("qwen/qwen3")) return { reasoning_effort: "none", reasoning_format: "hidden" }
+    if (modelo.startsWith("openai/gpt-oss")) return { reasoning_effort: "low", reasoning_format: "hidden" }
+    return {}
+}
 
 const CORS = {
     "Access-Control-Allow-Origin": "*",
@@ -297,9 +315,12 @@ async function llamarGroq(
         body: JSON.stringify({
             model: modelo,
             temperature: 0,
-            max_tokens: 140,
+            /* v1.11 — 240 y no 140: los modelos nuevos rellenan un poco más
+               el JSON antes de cerrarlo y 140 lo truncaba a veces. */
+            max_tokens: 240,
             /* Structured output: el proveedor garantiza JSON sintáctico. */
             response_format: { type: "json_object" },
+            ...parametrosRazonamiento(modelo),
             messages: [
                 { role: "system", content: system },
                 { role: "user", content: texto },
