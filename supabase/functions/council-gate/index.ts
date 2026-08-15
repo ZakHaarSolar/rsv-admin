@@ -1,3 +1,4 @@
+// Red Solar Viva · council-gate v1.4 — la Forja entra a las cámaras válidas; { quiero: "boveda-versiones", clave, limite } devuelve las evoluciones anteriores de un playbook (con su propuesta y fricción por ciclo)
 // Red Solar Viva · council-gate v1.3 — el Observatorio entra a la lista de cámaras válidas (sus turnos con el Cronista también se guardan)
 // Red Solar Viva · council-gate v1.2 — 🜂 EL PORTÓN DEL COUNCIL SOLAR
 // (redsolarviva.com/council, el Centro de Mando).
@@ -70,7 +71,7 @@ const VOCES: Record<string, { voice: string; speed: number }> = {
 
 /* ── Bóveda ─────────────────────────────────────────────────────────── */
 
-const SALAS = new Set(["central", "escaner", "foton", "zakcero", "observatorio"])
+const SALAS = new Set(["central", "escaner", "foton", "zakcero", "forja", "observatorio"])
 const ETAPAS = new Set(["propuesta", "friccion", "evolucion"])
 /* Topes de defensa: un lote no puede ser infinito */
 const MAX_PLAYBOOKS = 40
@@ -278,6 +279,47 @@ async function leerBoveda(userId: string): Promise<Response> {
     return json({ ok: true, playbooks, turnos })
 }
 
+/* Versiones anteriores de un playbook: las evoluciones (y la propuesta y
+   fricción de cada ciclo) desde el archivo append-only. */
+async function versionesBoveda(
+    userId: string,
+    body: { clave?: unknown; limite?: unknown }
+): Promise<Response> {
+    const clave = texto(body.clave, 80)
+    if (!clave) return json({ ok: false, error: "sin_clave" }, 400)
+    const limite = Math.min(60, Math.max(1, entero(body.limite) || 30))
+    const db = sb()
+    const { data, error } = await db
+        .from("council_deliberaciones")
+        .select("ciclo, etapa, texto, ts")
+        .eq("clerk_user_id", userId)
+        .eq("clave", clave)
+        .order("ts", { ascending: false })
+        .limit(limite * 3)
+    if (error) {
+        console.error("[council-gate] versiones", error.code, error.message)
+        return json({ ok: false, error: motivoDb(error) }, 500)
+    }
+    /* Se agrupa por ciclo: la evolución manda; propuesta y fricción del
+       mismo ciclo la acompañan. */
+    const porCiclo = new Map<number, { ciclo: number; contenido: string; propuesta: string; friccion: string; ts: number }>()
+    for (const f of data ?? []) {
+        const c = Number(f.ciclo) || 0
+        const v = porCiclo.get(c) ?? { ciclo: c, contenido: "", propuesta: "", friccion: "", ts: 0 }
+        if (f.etapa === "evolucion") {
+            v.contenido = f.texto
+            v.ts = Number(f.ts) || 0
+        } else if (f.etapa === "propuesta") v.propuesta = f.texto
+        else if (f.etapa === "friccion") v.friccion = f.texto
+        porCiclo.set(c, v)
+    }
+    const versiones = Array.from(porCiclo.values())
+        .filter((v) => v.contenido)
+        .sort((a, b) => b.ciclo - a.ciclo)
+        .slice(0, limite)
+    return json({ ok: true, versiones })
+}
+
 /* ── Soniox ─────────────────────────────────────────────────────────── */
 
 async function llaveTemporal(
@@ -322,6 +364,8 @@ serve(async (req) => {
         deliberaciones?: unknown
         turnos?: unknown
         modelo?: unknown
+        clave?: unknown
+        limite?: unknown
     } = {}
     try {
         body = await req.json()
@@ -337,6 +381,7 @@ serve(async (req) => {
     if (quiero === "acceso") return json({ ok: true, userId: gate.userId })
     if (quiero === "boveda-guardar") return guardarBoveda(userId, body)
     if (quiero === "boveda-leer") return leerBoveda(userId)
+    if (quiero === "boveda-versiones") return versionesBoveda(userId, body)
 
     if (quiero !== "voz" && quiero !== "voz-salida") return json({ error: "quiero_desconocido" }, 400)
     if (!SONIOX_KEY) return json({ ok: false, error: "soniox_key_missing" }, 500)
