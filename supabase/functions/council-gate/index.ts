@@ -1,12 +1,20 @@
-// Red Solar Viva · council-gate v1.1 — 🜂 EL PORTÓN DEL COUNCIL SOLAR
+// Red Solar Viva · council-gate v1.2 — 🜂 EL PORTÓN DEL COUNCIL SOLAR
 // (redsolarviva.com/council, el Centro de Mando).
+// v1.2 — LA BÓVEDA: { quiero: "boveda-guardar" } recibe en un solo lote los
+// outputs del Council (playbooks vivos por cámara/nodo, cada etapa del bucle
+// de deliberación autónoma y cada turno con su respuesta) y los escribe con
+// service role en council_playbooks / council_deliberaciones / council_turnos
+// (migración 20260815_council_boveda.sql). { quiero: "boveda-leer" } devuelve
+// los playbooks del Arquitecto y sus últimos turnos por cámara para fundirlos
+// con lo local al abrir. Si las tablas no existen todavía responde
+// { error: "sin_tabla" } y el cliente lo dice en pantalla (Paso 0-quater).
 // v1.1 — LA VOZ DE SALIDA: { quiero: "voz-salida" } acuña una llave temporal
 // de Soniox con usage_type "tts_rt" (TTS en tiempo real por WebSocket) y
 // devuelve el CATÁLOGO de voces (las cuatro de la Matriz Sincrónica, con la
 // velocidad que Zak eligió en espejo-voz v3.0). El nombre del proveedor y la
 // velocidad viven aquí, no en el cliente; el navegador solo elige un id.
 //
-// Tres servicios, un solo portón:
+// Cinco servicios, un solo portón:
 //   { token, quiero: "acceso" } → verifica que el token de Clerk sea de un
 //     Arquitecto (gateAdmin: JWKS de nuestra instancia + profiles.is_admin) y
 //     responde { ok: true }. El cliente expulsa a la portada si no.
@@ -17,6 +25,8 @@
 //   { token, quiero: "voz-salida" } → llave temporal usage_type tts_rt +
 //     catálogo de voces, para que el navegador abra el WebSocket de TTS
 //     directo (sin relevo: menor latencia).
+//   { token, quiero: "boveda-guardar", playbooks?, deliberaciones?, turnos? }
+//   { token, quiero: "boveda-leer" }
 //
 // La inferencia del Council NO pasa por aquí: corre en la Mac del Arquitecto
 // (Ollama, localhost) y el navegador le habla directo.
@@ -26,6 +36,7 @@
 // Despliegue: supabase functions deploy council-gate --no-verify-jwt
 
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0"
 import { gateAdmin } from "../_shared/clerkAuth.ts"
 
 const corsHeaders = {
@@ -55,6 +66,218 @@ const VOCES: Record<string, { voice: string; speed: number }> = {
     cordelia: { voice: "Cordelia", speed: 1.3 },
     margo: { voice: "Margo", speed: 1.2 },
 }
+
+/* ── Bóveda ─────────────────────────────────────────────────────────── */
+
+const SALAS = new Set(["central", "escaner", "foton", "zakcero"])
+const ETAPAS = new Set(["propuesta", "friccion", "evolucion"])
+/* Topes de defensa: un lote no puede ser infinito */
+const MAX_PLAYBOOKS = 40
+const MAX_DELIBERACIONES = 400
+const MAX_TURNOS = 200
+const MAX_TEXTO = 60000
+const TURNOS_AL_LEER = 20
+
+let _sb: ReturnType<typeof createClient> | null = null
+function sb() {
+    if (_sb) return _sb
+    _sb = createClient(
+        Deno.env.get("SUPABASE_URL")!,
+        Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+        { auth: { persistSession: false } }
+    )
+    return _sb
+}
+
+const texto = (v: unknown, tope = MAX_TEXTO): string =>
+    typeof v === "string" ? v.slice(0, tope) : ""
+const entero = (v: unknown): number =>
+    typeof v === "number" && Number.isFinite(v) ? Math.max(0, Math.floor(v)) : 0
+const nodoDe = (v: unknown): string | null =>
+    typeof v === "string" && /^[a-z]{1,24}$/.test(v) ? v : null
+
+/* Un error de Postgres por tabla inexistente (42P01) se traduce a un motivo
+   que el cliente sabe explicar: "pega la migración". */
+function motivoDb(e: { code?: string; message?: string } | null): string {
+    if (!e) return "db"
+    if (e.code === "42P01" || /does not exist|schema cache/i.test(e.message || "")) return "sin_tabla"
+    return `db_${e.code || "error"}`
+}
+
+interface PlaybookIn {
+    clave?: unknown
+    sala?: unknown
+    nodo?: unknown
+    titulo?: unknown
+    contenido?: unknown
+    ciclo?: unknown
+    propuesta?: unknown
+    friccion?: unknown
+    actualizadoTs?: unknown
+}
+interface EtapaIn {
+    clave?: unknown
+    sala?: unknown
+    nodo?: unknown
+    ciclo?: unknown
+    etapa?: unknown
+    texto?: unknown
+    ts?: unknown
+}
+interface TurnoIn {
+    id?: unknown
+    sala?: unknown
+    nodo?: unknown
+    pregunta?: unknown
+    respuesta?: unknown
+    ts?: unknown
+    interrumpido?: unknown
+    fallo?: unknown
+}
+
+async function guardarBoveda(
+    userId: string,
+    body: { playbooks?: unknown; deliberaciones?: unknown; turnos?: unknown; modelo?: unknown }
+): Promise<Response> {
+    const modelo = texto(body.modelo, 80) || null
+    const guardados = { playbooks: 0, deliberaciones: 0, turnos: 0 }
+    const db = sb()
+
+    const playbooks = (Array.isArray(body.playbooks) ? (body.playbooks as PlaybookIn[]) : [])
+        .slice(0, MAX_PLAYBOOKS)
+        .filter((p) => p && typeof p.clave === "string" && SALAS.has(String(p.sala)))
+        .map((p) => ({
+            clerk_user_id: userId,
+            clave: texto(p.clave, 80),
+            sala: String(p.sala),
+            nodo: nodoDe(p.nodo),
+            titulo: texto(p.titulo, 200),
+            contenido: texto(p.contenido),
+            ciclo: entero(p.ciclo),
+            propuesta: texto(p.propuesta),
+            friccion: texto(p.friccion),
+            modelo,
+            actualizado_ts: entero(p.actualizadoTs),
+            updated_at: new Date().toISOString(),
+        }))
+    if (playbooks.length) {
+        const { error } = await db
+            .from("council_playbooks")
+            .upsert(playbooks, { onConflict: "clerk_user_id,clave" })
+        if (error) {
+            console.error("[council-gate] playbooks", error.code, error.message)
+            return json({ ok: false, error: motivoDb(error), guardados }, 500)
+        }
+        guardados.playbooks = playbooks.length
+    }
+
+    const deliberaciones = (Array.isArray(body.deliberaciones) ? (body.deliberaciones as EtapaIn[]) : [])
+        .slice(0, MAX_DELIBERACIONES)
+        .filter(
+            (d) =>
+                d && typeof d.clave === "string" && SALAS.has(String(d.sala)) && ETAPAS.has(String(d.etapa)) && typeof d.texto === "string" && d.texto
+        )
+        .map((d) => ({
+            clerk_user_id: userId,
+            clave: texto(d.clave, 80),
+            sala: String(d.sala),
+            nodo: nodoDe(d.nodo),
+            ciclo: entero(d.ciclo),
+            etapa: String(d.etapa),
+            texto: texto(d.texto),
+            modelo,
+            ts: entero(d.ts),
+        }))
+    if (deliberaciones.length) {
+        const { error } = await db.from("council_deliberaciones").insert(deliberaciones)
+        if (error) {
+            console.error("[council-gate] deliberaciones", error.code, error.message)
+            return json({ ok: false, error: motivoDb(error), guardados }, 500)
+        }
+        guardados.deliberaciones = deliberaciones.length
+    }
+
+    const turnos = (Array.isArray(body.turnos) ? (body.turnos as TurnoIn[]) : [])
+        .slice(0, MAX_TURNOS)
+        .filter((t) => t && typeof t.id === "string" && t.id && SALAS.has(String(t.sala)) && typeof t.pregunta === "string" && t.pregunta)
+        .map((t) => ({
+            id: texto(t.id, 64),
+            clerk_user_id: userId,
+            sala: String(t.sala),
+            nodo: nodoDe(t.nodo),
+            pregunta: texto(t.pregunta),
+            respuesta: texto(t.respuesta),
+            interrumpido: t.interrumpido === true,
+            fallo: typeof t.fallo === "string" && t.fallo ? texto(t.fallo, 2000) : null,
+            modelo,
+            ts: entero(t.ts),
+            updated_at: new Date().toISOString(),
+        }))
+    if (turnos.length) {
+        const { error } = await db.from("council_turnos").upsert(turnos, { onConflict: "id" })
+        if (error) {
+            console.error("[council-gate] turnos", error.code, error.message)
+            return json({ ok: false, error: motivoDb(error), guardados }, 500)
+        }
+        guardados.turnos = turnos.length
+    }
+
+    return json({ ok: true, guardados })
+}
+
+async function leerBoveda(userId: string): Promise<Response> {
+    const db = sb()
+    const { data: pbs, error: e1 } = await db
+        .from("council_playbooks")
+        .select("clave, sala, nodo, titulo, contenido, ciclo, propuesta, friccion, actualizado_ts")
+        .eq("clerk_user_id", userId)
+    if (e1) {
+        console.error("[council-gate] leer playbooks", e1.code, e1.message)
+        return json({ ok: false, error: motivoDb(e1) }, 500)
+    }
+    const playbooks = (pbs ?? []).map((p) => ({
+        clave: p.clave,
+        sala: p.sala,
+        nodo: p.nodo,
+        titulo: p.titulo,
+        contenido: p.contenido,
+        ciclo: p.ciclo,
+        propuesta: p.propuesta,
+        friccion: p.friccion,
+        actualizadoTs: Number(p.actualizado_ts) || 0,
+    }))
+
+    /* Últimos N turnos POR cámara (cuatro consultas chicas; el volumen es de
+       un solo Arquitecto) */
+    const turnos: unknown[] = []
+    for (const sala of SALAS) {
+        const { data, error } = await db
+            .from("council_turnos")
+            .select("id, sala, nodo, pregunta, respuesta, interrumpido, fallo, ts")
+            .eq("clerk_user_id", userId)
+            .eq("sala", sala)
+            .order("ts", { ascending: false })
+            .limit(TURNOS_AL_LEER)
+        if (error) {
+            console.error("[council-gate] leer turnos", error.code, error.message)
+            return json({ ok: false, error: motivoDb(error) }, 500)
+        }
+        for (const t of data ?? [])
+            turnos.push({
+                id: t.id,
+                sala: t.sala,
+                nodo: t.nodo,
+                pregunta: t.pregunta,
+                respuesta: t.respuesta,
+                interrumpido: t.interrumpido || undefined,
+                fallo: t.fallo || undefined,
+                ts: Number(t.ts) || 0,
+            })
+    }
+    return json({ ok: true, playbooks, turnos })
+}
+
+/* ── Soniox ─────────────────────────────────────────────────────────── */
 
 async function llaveTemporal(
     usage_type: "transcribe_websocket" | "tts_rt",
@@ -91,7 +314,14 @@ serve(async (req) => {
     if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders })
     if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405)
 
-    let body: { token?: string; quiero?: string } = {}
+    let body: {
+        token?: string
+        quiero?: string
+        playbooks?: unknown
+        deliberaciones?: unknown
+        turnos?: unknown
+        modelo?: unknown
+    } = {}
     try {
         body = await req.json()
     } catch {
@@ -100,13 +330,15 @@ serve(async (req) => {
 
     const gate = await gateAdmin(body?.token)
     if (!gate.ok) return json({ error: gate.error }, gate.status ?? 401)
-
-    const quiero =
-        body.quiero === "voz" ? "voz" : body.quiero === "voz-salida" ? "voz-salida" : "acceso"
-    if (quiero === "acceso") return json({ ok: true, userId: gate.userId })
-
-    if (!SONIOX_KEY) return json({ ok: false, error: "soniox_key_missing" }, 500)
     const userId = gate.userId || "arquitecto"
+
+    const quiero = body.quiero || "acceso"
+    if (quiero === "acceso") return json({ ok: true, userId: gate.userId })
+    if (quiero === "boveda-guardar") return guardarBoveda(userId, body)
+    if (quiero === "boveda-leer") return leerBoveda(userId)
+
+    if (quiero !== "voz" && quiero !== "voz-salida") return json({ error: "quiero_desconocido" }, 400)
+    if (!SONIOX_KEY) return json({ ok: false, error: "soniox_key_missing" }, 500)
 
     if (quiero === "voz") {
         const l = await llaveTemporal("transcribe_websocket", userId)
