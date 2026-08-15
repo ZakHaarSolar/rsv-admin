@@ -1,3 +1,4 @@
+// Red Solar Viva · council-gate v1.5 — 🜂 EL MENSAJERO: puente con Telegram para que el Council le escriba al iPhone del Arquitecto (avisos al cerrar una tanda de ciclos) y él le conteste desde el teléfono. { quiero: "mensajero-estado" | "mensajero-envia" | "mensajero-lee" }. La llave del bot vive aquí, nunca en el navegador.
 // Red Solar Viva · council-gate v1.4 — la Forja entra a las cámaras válidas; { quiero: "boveda-versiones", clave, limite } devuelve las evoluciones anteriores de un playbook (con su propuesta y fricción por ciclo)
 // Red Solar Viva · council-gate v1.3 — el Observatorio entra a la lista de cámaras válidas (sus turnos con el Cronista también se guardan)
 // Red Solar Viva · council-gate v1.2 — 🜂 EL PORTÓN DEL COUNCIL SOLAR
@@ -33,8 +34,15 @@
 // La inferencia del Council NO pasa por aquí: corre en la Mac del Arquitecto
 // (Ollama, localhost) y el navegador le habla directo.
 //
+//   { token, quiero: "mensajero-estado" }              → ¿hay bot? ¿cómo se llama?
+//   { token, quiero: "mensajero-envia", chatId, texto } → le escribe al iPhone
+//   { token, quiero: "mensajero-lee", chatId, offset }  → lo que él contestó
+//
 // Secrets: CLERK_SECRET_KEY · SUPABASE_URL · SUPABASE_SERVICE_ROLE_KEY ·
-//          SONIOX_API_KEY (ya existe para espejo-voz) · SONIOX_STT_MODEL (opcional)
+//          SONIOX_API_KEY (ya existe para espejo-voz) · SONIOX_STT_MODEL (opcional) ·
+//          TELEGRAM_BOT_TOKEN (el Mensajero; sin él responde "sin_llave" y la
+//          pantalla lo explica) · TELEGRAM_CHAT_ID (opcional: si está, manda
+//          sobre el chat que elija el navegador)
 // Despliegue: supabase functions deploy council-gate --no-verify-jwt
 
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts"
@@ -353,6 +361,124 @@ async function llaveTemporal(
     }
 }
 
+/* ── El Mensajero (Telegram) ─────────────────────────────────────────── */
+
+const TG_TOKEN = Deno.env.get("TELEGRAM_BOT_TOKEN") || ""
+/* Si el chat viene fijado por secret, manda sobre lo que pida el navegador */
+const TG_CHAT_FIJO = (Deno.env.get("TELEGRAM_CHAT_ID") || "").trim()
+/* Telegram corta en 4096 caracteres; 3600 deja aire para el encabezado */
+const TG_TOPE_MENSAJE = 3600
+const TG_MAX_PARTES = 12
+
+const chatValido = (v: unknown): string =>
+    typeof v === "string" && /^-?\d{5,20}$/.test(v.trim()) ? v.trim() : ""
+
+async function tg(metodo: string, cuerpo?: unknown): Promise<{ ok: boolean; datos?: any; error?: string }> {
+    try {
+        const r = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/${metodo}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(cuerpo ?? {}),
+        })
+        const j = (await r.json().catch(() => ({}))) as { ok?: boolean; result?: unknown; description?: string }
+        if (!r.ok || !j.ok) {
+            const desc = j.description || `http_${r.status}`
+            console.error("[council-gate] telegram", metodo, r.status, desc)
+            return { ok: false, error: desc }
+        }
+        return { ok: true, datos: j.result }
+    } catch (e) {
+        console.error("[council-gate] telegram fetch", metodo, String(e))
+        return { ok: false, error: "telegram_unreachable" }
+    }
+}
+
+/* Parte un texto largo por líneas para que ningún mensaje pase el tope de
+   Telegram; una línea más larga que el tope se corta a la fuerza. */
+function partirMensaje(t: string): string[] {
+    const partes: string[] = []
+    let actual = ""
+    for (const linea of t.split("\n")) {
+        const trozos = linea.length > TG_TOPE_MENSAJE ? (linea.match(new RegExp(`[\\s\\S]{1,${TG_TOPE_MENSAJE}}`, "g")) ?? []) : [linea]
+        for (const trozo of trozos) {
+            if (actual && actual.length + trozo.length + 1 > TG_TOPE_MENSAJE) {
+                partes.push(actual)
+                actual = trozo
+            } else {
+                actual = actual ? `${actual}\n${trozo}` : trozo
+            }
+        }
+    }
+    if (actual.trim()) partes.push(actual)
+    return partes.slice(0, TG_MAX_PARTES)
+}
+
+async function mensajeroEstado(): Promise<Response> {
+    if (!TG_TOKEN) return json({ ok: true, listo: false, error: "sin_llave" })
+    const r = await tg("getMe")
+    if (!r.ok) return json({ ok: true, listo: false, error: r.error })
+    return json({
+        ok: true,
+        listo: true,
+        bot: { usuario: r.datos?.username || "", nombre: r.datos?.first_name || "" },
+        chatFijo: TG_CHAT_FIJO || null,
+    })
+}
+
+async function mensajeroEnvia(body: { chatId?: unknown; texto?: unknown }): Promise<Response> {
+    if (!TG_TOKEN) return json({ ok: false, error: "sin_llave" }, 400)
+    const chat = TG_CHAT_FIJO || chatValido(body.chatId)
+    if (!chat) return json({ ok: false, error: "sin_chat" }, 400)
+    const cuerpo = texto(body.texto, 30000).trim()
+    if (!cuerpo) return json({ ok: false, error: "sin_texto" }, 400)
+    const partes = partirMensaje(cuerpo)
+    let enviadas = 0
+    for (const parte of partes) {
+        /* sin parse_mode a propósito: los playbooks vienen llenos de
+           asteriscos y almohadillas y Telegram rechazaría el markdown */
+        const r = await tg("sendMessage", { chat_id: chat, text: parte, disable_web_page_preview: true })
+        if (!r.ok) return json({ ok: false, error: r.error, enviadas }, 502)
+        enviadas++
+    }
+    return json({ ok: true, enviadas, partes: partes.length })
+}
+
+async function mensajeroLee(body: { chatId?: unknown; offset?: unknown }): Promise<Response> {
+    if (!TG_TOKEN) return json({ ok: false, error: "sin_llave" }, 400)
+    const chat = TG_CHAT_FIJO || chatValido(body.chatId)
+    const offset = entero(body.offset)
+    const r = await tg("getUpdates", {
+        ...(offset ? { offset } : {}),
+        timeout: 0,
+        limit: 20,
+        allowed_updates: ["message"],
+    })
+    if (!r.ok) return json({ ok: false, error: r.error }, 502)
+    const lista = Array.isArray(r.datos) ? r.datos : []
+    const mensajes: Array<{ updateId: number; chatId: string; de: string; texto: string; ts: number }> = []
+    /* Para el descubrimiento del chat: quién le ha escrito al bot */
+    const vistos = new Map<string, string>()
+    let ultimo = 0
+    for (const u of lista) {
+        const id = Number(u?.update_id) || 0
+        if (id > ultimo) ultimo = id
+        const m = u?.message
+        if (!m || typeof m.text !== "string" || !m.text.trim()) continue
+        const cid = String(m.chat?.id ?? "")
+        const de = String(m.from?.first_name || m.chat?.title || "").slice(0, 60)
+        if (cid) vistos.set(cid, de)
+        /* con chat elegido, lo de cualquier otro se consume y se tira */
+        if (chat && cid !== chat) continue
+        mensajes.push({ updateId: id, chatId: cid, de, texto: m.text.slice(0, 4000), ts: (Number(m.date) || 0) * 1000 })
+    }
+    return json({
+        ok: true,
+        mensajes,
+        siguienteOffset: ultimo ? ultimo + 1 : offset,
+        chats: Array.from(vistos.entries()).map(([id, nombre]) => ({ id, nombre })),
+    })
+}
+
 serve(async (req) => {
     if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders })
     if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405)
@@ -366,6 +492,9 @@ serve(async (req) => {
         modelo?: unknown
         clave?: unknown
         limite?: unknown
+        chatId?: unknown
+        offset?: unknown
+        texto?: unknown
     } = {}
     try {
         body = await req.json()
@@ -382,6 +511,9 @@ serve(async (req) => {
     if (quiero === "boveda-guardar") return guardarBoveda(userId, body)
     if (quiero === "boveda-leer") return leerBoveda(userId)
     if (quiero === "boveda-versiones") return versionesBoveda(userId, body)
+    if (quiero === "mensajero-estado") return mensajeroEstado()
+    if (quiero === "mensajero-envia") return mensajeroEnvia(body)
+    if (quiero === "mensajero-lee") return mensajeroLee(body)
 
     if (quiero !== "voz" && quiero !== "voz-salida") return json({ error: "quiero_desconocido" }, 400)
     if (!SONIOX_KEY) return json({ ok: false, error: "soniox_key_missing" }, 500)
