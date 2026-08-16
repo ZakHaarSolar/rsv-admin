@@ -1,3 +1,4 @@
+// Red Solar Viva · council-gate v1.6 — 🜂 LOS REGISTROS DEL ARQUITECTO viajan al servidor: { quiero: "registros-guardar" | "registros-leer" } guarda y devuelve el pergamino (oro y plata), el bote, el cofre, el arsenal, el ábaco, las leyes, la bitácora y dónde quedó cada reliquia. Escritura CONDICIONAL por fecha (lo viejo no pisa lo nuevo) y lápidas al borrar (migración 20260816_council_registros.sql).
 // Red Solar Viva · council-gate v1.5 — 🜂 EL MENSAJERO: puente con Telegram para que el Council le escriba al iPhone del Arquitecto (avisos al cerrar una tanda de ciclos) y él le conteste desde el teléfono. { quiero: "mensajero-estado" | "mensajero-envia" | "mensajero-lee" }. La llave del bot vive aquí, nunca en el navegador.
 // Red Solar Viva · council-gate v1.4 — la Forja entra a las cámaras válidas; { quiero: "boveda-versiones", clave, limite } devuelve las evoluciones anteriores de un playbook (con su propuesta y fricción por ciclo)
 // Red Solar Viva · council-gate v1.3 — el Observatorio entra a la lista de cámaras válidas (sus turnos con el Cronista también se guardan)
@@ -30,6 +31,12 @@
 //     directo (sin relevo: menor latencia).
 //   { token, quiero: "boveda-guardar", playbooks?, deliberaciones?, turnos? }
 //   { token, quiero: "boveda-leer" }
+//   { token, quiero: "registros-guardar", documentos?, entradas? } → lo que el
+//     ARQUITECTO escribe con su mano (no el Council): cofre, arsenal, ábaco,
+//     leyes, bitácora, juicios del pergamino y del bote, y dónde dejó cada
+//     reliquia. Escribe por las funciones council_guardar_* , que solo pisan
+//     una fila si la que llega es MÁS NUEVA.
+//   { token, quiero: "registros-leer" } → todo eso para fundirlo al abrir.
 //
 // La inferencia del Council NO pasa por aquí: corre en la Mac del Arquitecto
 // (Ollama, localhost) y el navegador le habla directo.
@@ -107,10 +114,18 @@ const nodoDe = (v: unknown): string | null =>
     typeof v === "string" && /^[a-z]{1,24}$/.test(v) ? v : null
 
 /* Un error de Postgres por tabla inexistente (42P01) se traduce a un motivo
-   que el cliente sabe explicar: "pega la migración". */
+   que el cliente sabe explicar: "pega la migración". Lo mismo la FUNCIÓN que
+   no existe (42883 en Postgres, PGRST202 cuando PostgREST no la encuentra en
+   su caché de esquema): el arreglo es idéntico, así que el motivo también. */
 function motivoDb(e: { code?: string; message?: string } | null): string {
     if (!e) return "db"
-    if (e.code === "42P01" || /does not exist|schema cache/i.test(e.message || "")) return "sin_tabla"
+    if (
+        e.code === "42P01" ||
+        e.code === "42883" ||
+        e.code === "PGRST202" ||
+        /does not exist|schema cache|could not find the function/i.test(e.message || "")
+    )
+        return "sin_tabla"
     return `db_${e.code || "error"}`
 }
 
@@ -328,6 +343,131 @@ async function versionesBoveda(
     return json({ ok: true, versiones })
 }
 
+/* ── Los REGISTROS del Arquitecto ────────────────────────────────────── */
+/* Lo que escribe SU mano: el pergamino (oro y plata), el bote, el cofre, el
+   arsenal, el ábaco, la ley y el registro de cada nodo, y dónde dejó cada
+   reliquia en la sala. Viaja en dos formas porque son dos naturalezas:
+   DOCUMENTOS (se reescriben enteros, gana el más reciente) y ENTRADAS (una
+   fila cada una, con lápida al borrar). La escritura la hacen las funciones
+   council_guardar_*: solo pisan una fila si la que llega es más nueva, así
+   dos computadoras a la vez no se destruyen. */
+
+const TIPOS_DOC = new Set(["cofre", "ley", "bitacora", "posicion"])
+const TIPOS_ENTRADA = new Set(["juicio", "tarea"])
+const MAX_DOCUMENTOS = 300
+const MAX_ENTRADAS = 800
+const MAX_DOC_CHARS = 8000
+const ENTRADAS_AL_LEER = 3000
+
+interface DocIn {
+    tipo?: unknown
+    clave?: unknown
+    contenido?: unknown
+    ts?: unknown
+}
+interface EntradaIn {
+    tipo?: unknown
+    id?: unknown
+    clave?: unknown
+    datos?: unknown
+    borrada?: unknown
+    ts?: unknown
+}
+
+async function guardarRegistros(
+    userId: string,
+    body: { documentos?: unknown; entradas?: unknown }
+): Promise<Response> {
+    const db = sb()
+    const guardados = { documentos: 0, entradas: 0 }
+
+    const documentos = (Array.isArray(body.documentos) ? (body.documentos as DocIn[]) : [])
+        .slice(0, MAX_DOCUMENTOS)
+        .filter((d) => d && TIPOS_DOC.has(String(d.tipo)) && typeof d.clave === "string" && d.clave)
+        .map((d) => ({
+            tipo: String(d.tipo),
+            clave: texto(d.clave, 120),
+            contenido: texto(d.contenido, MAX_DOC_CHARS),
+            ts: entero(d.ts),
+        }))
+    if (documentos.length) {
+        const { data, error } = await db.rpc("council_guardar_registros", {
+            p_user: userId,
+            p_items: documentos,
+        })
+        if (error) {
+            console.error("[council-gate] registros doc", error.code, error.message)
+            return json({ ok: false, error: motivoDb(error), guardados }, 500)
+        }
+        guardados.documentos = Number(data) || 0
+    }
+
+    const entradas = (Array.isArray(body.entradas) ? (body.entradas as EntradaIn[]) : [])
+        .slice(0, MAX_ENTRADAS)
+        .filter((e) => e && TIPOS_ENTRADA.has(String(e.tipo)) && typeof e.id === "string" && e.id)
+        .map((e) => ({
+            tipo: String(e.tipo),
+            id: texto(e.id, 64),
+            clave: texto(e.clave, 120),
+            /* el objeto entero, tal cual lo usa la app */
+            datos: e.datos && typeof e.datos === "object" ? e.datos : {},
+            borrada: e.borrada === true,
+            ts: entero(e.ts),
+        }))
+    if (entradas.length) {
+        const { data, error } = await db.rpc("council_guardar_entradas", {
+            p_user: userId,
+            p_items: entradas,
+        })
+        if (error) {
+            console.error("[council-gate] registros entradas", error.code, error.message)
+            return json({ ok: false, error: motivoDb(error), guardados }, 500)
+        }
+        guardados.entradas = Number(data) || 0
+    }
+
+    return json({ ok: true, guardados })
+}
+
+async function leerRegistros(userId: string): Promise<Response> {
+    const db = sb()
+    const { data: docs, error: e1 } = await db
+        .from("council_registros")
+        .select("tipo, clave, contenido, actualizado_ts")
+        .eq("clerk_user_id", userId)
+    if (e1) {
+        console.error("[council-gate] leer registros", e1.code, e1.message)
+        return json({ ok: false, error: motivoDb(e1) }, 500)
+    }
+    const { data: ents, error: e2 } = await db
+        .from("council_entradas")
+        .select("tipo, id, clave, datos, borrada, actualizado_ts")
+        .eq("clerk_user_id", userId)
+        .order("actualizado_ts", { ascending: false })
+        .limit(ENTRADAS_AL_LEER)
+    if (e2) {
+        console.error("[council-gate] leer entradas", e2.code, e2.message)
+        return json({ ok: false, error: motivoDb(e2) }, 500)
+    }
+    return json({
+        ok: true,
+        documentos: (docs ?? []).map((d) => ({
+            tipo: d.tipo,
+            clave: d.clave,
+            contenido: d.contenido,
+            ts: Number(d.actualizado_ts) || 0,
+        })),
+        entradas: (ents ?? []).map((e) => ({
+            tipo: e.tipo,
+            id: e.id,
+            clave: e.clave,
+            datos: e.datos,
+            borrada: e.borrada === true,
+            ts: Number(e.actualizado_ts) || 0,
+        })),
+    })
+}
+
 /* ── Soniox ─────────────────────────────────────────────────────────── */
 
 async function llaveTemporal(
@@ -495,6 +635,8 @@ serve(async (req) => {
         chatId?: unknown
         offset?: unknown
         texto?: unknown
+        documentos?: unknown
+        entradas?: unknown
     } = {}
     try {
         body = await req.json()
@@ -511,6 +653,8 @@ serve(async (req) => {
     if (quiero === "boveda-guardar") return guardarBoveda(userId, body)
     if (quiero === "boveda-leer") return leerBoveda(userId)
     if (quiero === "boveda-versiones") return versionesBoveda(userId, body)
+    if (quiero === "registros-guardar") return guardarRegistros(userId, body)
+    if (quiero === "registros-leer") return leerRegistros(userId)
     if (quiero === "mensajero-estado") return mensajeroEstado()
     if (quiero === "mensajero-envia") return mensajeroEnvia(body)
     if (quiero === "mensajero-lee") return mensajeroLee(body)
