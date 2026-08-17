@@ -1,4 +1,5 @@
-// Red Solar Viva · council-gate v1.6 — 🜂 LOS REGISTROS DEL ARQUITECTO viajan al servidor: { quiero: "registros-guardar" | "registros-leer" } guarda y devuelve el pergamino (oro y plata), el bote, el cofre, el arsenal, el ábaco, las leyes, la bitácora y dónde quedó cada reliquia. Escritura CONDICIONAL por fecha (lo viejo no pisa lo nuevo) y lápidas al borrar (migración 20260816_council_registros.sql).
+// Red Solar Viva · council-gate v1.7 — 🜂 LA PRODUCCIÓN DE FOTÓN CERO (sello, serie, personaje, episodio, album, cancion) viaja como documentos de council_registros en su PROPIA llamada (si falta la migración 20260817 se reporta `produccion: produccion_sin_tipos` sin tumbar el resto)
+// v1.6 — 🜂 LOS REGISTROS DEL ARQUITECTO viajan al servidor: { quiero: "registros-guardar" | "registros-leer" } guarda y devuelve el pergamino (oro y plata), el bote, el cofre, el arsenal, el ábaco, las leyes, la bitácora y dónde quedó cada reliquia. Escritura CONDICIONAL por fecha (lo viejo no pisa lo nuevo) y lápidas al borrar (migración 20260816_council_registros.sql).
 // Red Solar Viva · council-gate v1.5 — 🜂 EL MENSAJERO: puente con Telegram para que el Council le escriba al iPhone del Arquitecto (avisos al cerrar una tanda de ciclos) y él le conteste desde el teléfono. { quiero: "mensajero-estado" | "mensajero-envia" | "mensajero-lee" }. La llave del bot vive aquí, nunca en el navegador.
 // Red Solar Viva · council-gate v1.4 — la Forja entra a las cámaras válidas; { quiero: "boveda-versiones", clave, limite } devuelve las evoluciones anteriores de un playbook (con su propuesta y fricción por ciclo)
 // Red Solar Viva · council-gate v1.3 — el Observatorio entra a la lista de cámaras válidas (sus turnos con el Cronista también se guardan)
@@ -353,6 +354,13 @@ async function versionesBoveda(
    dos computadoras a la vez no se destruyen. */
 
 const TIPOS_DOC = new Set(["cofre", "ley", "bitacora", "posicion"])
+/* 🜂 LA PRODUCCIÓN DE FOTÓN CERO (2026-08-17 · II): seis tipos más, con JSON
+   en el contenido. Van en su PROPIA llamada a la base: si la migración
+   20260817_council_produccion.sql todavía no se pegó, la restricción de tipos
+   los rechaza y ese rechazo no debe tumbar el guardado del pergamino y los
+   cofres que viajan en el mismo lote. */
+const TIPOS_PRODUCCION = new Set(["sello", "serie", "personaje", "episodio", "album", "cancion"])
+const MAX_DOC_PRODUCCION_CHARS = 60000
 const TIPOS_ENTRADA = new Set(["juicio", "tarea"])
 const MAX_DOCUMENTOS = 300
 const MAX_ENTRADAS = 800
@@ -381,8 +389,8 @@ async function guardarRegistros(
     const db = sb()
     const guardados = { documentos: 0, entradas: 0 }
 
-    const documentos = (Array.isArray(body.documentos) ? (body.documentos as DocIn[]) : [])
-        .slice(0, MAX_DOCUMENTOS)
+    const crudos = (Array.isArray(body.documentos) ? (body.documentos as DocIn[]) : []).slice(0, MAX_DOCUMENTOS)
+    const documentos = crudos
         .filter((d) => d && TIPOS_DOC.has(String(d.tipo)) && typeof d.clave === "string" && d.clave)
         .map((d) => ({
             tipo: String(d.tipo),
@@ -390,6 +398,26 @@ async function guardarRegistros(
             contenido: texto(d.contenido, MAX_DOC_CHARS),
             ts: entero(d.ts),
         }))
+    const produccion = crudos
+        .filter((d) => d && TIPOS_PRODUCCION.has(String(d.tipo)) && typeof d.clave === "string" && d.clave)
+        .map((d) => ({
+            tipo: String(d.tipo),
+            clave: texto(d.clave, 120),
+            contenido: texto(d.contenido, MAX_DOC_PRODUCCION_CHARS),
+            ts: entero(d.ts),
+        }))
+    /* la producción, en su propia llamada: su fallo se reporta aparte */
+    let produccionError: string | null = null
+    if (produccion.length) {
+        const { data, error } = await db.rpc("council_guardar_registros", {
+            p_user: userId,
+            p_items: produccion,
+        })
+        if (error) {
+            console.error("[council-gate] registros produccion", error.code, error.message)
+            produccionError = /check constraint|violates/i.test(error.message) ? "produccion_sin_tipos" : motivoDb(error)
+        } else guardados.documentos += Number(data) || 0
+    }
     if (documentos.length) {
         const { data, error } = await db.rpc("council_guardar_registros", {
             p_user: userId,
@@ -399,7 +427,7 @@ async function guardarRegistros(
             console.error("[council-gate] registros doc", error.code, error.message)
             return json({ ok: false, error: motivoDb(error), guardados }, 500)
         }
-        guardados.documentos = Number(data) || 0
+        guardados.documentos += Number(data) || 0
     }
 
     const entradas = (Array.isArray(body.entradas) ? (body.entradas as EntradaIn[]) : [])
@@ -426,7 +454,8 @@ async function guardarRegistros(
         guardados.entradas = Number(data) || 0
     }
 
-    return json({ ok: true, guardados })
+    /* ok para todo lo demás; la producción dice aparte si le falta su lugar */
+    return json(produccionError ? { ok: true, guardados, produccion: produccionError } : { ok: true, guardados })
 }
 
 async function leerRegistros(userId: string): Promise<Response> {
