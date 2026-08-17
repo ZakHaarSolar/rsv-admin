@@ -1,3 +1,4 @@
+// Red Solar Viva · cuidado-revisar v1.1 — 🜂 JSON A PRUEBA DE BALAS: se exige un ESQUEMA de respuesta (responseSchema) además del mime JSON, la salida sube a 8.192 tokens y la transcripción se acota (una pieza de 86 cuadros con audio devolvía un JSON cortado por el tope y el panel decía "el motor contestó algo que no se pudo leer"); un limpiador quita cercas, texto alrededor y comas colgantes, y si aun así llega truncado, CIERRA lo abierto y rescata lo que se pueda. Devuelve el uso real de tokens (usageMetadata) para el ticket de telemetría.
 // Red Solar Viva · cuidado-revisar v1.0
 // =====================================================================
 // 🜂 EL PANEL DE CUIDADO DEL COUNCIL: revisa una pieza TERMINADA desde la
@@ -111,7 +112,102 @@ REGLAS DEL JSON:
 - "segundo" es un número en segundos, tomado de la etiqueta del cuadro donde lo viste. Nunca lo inventes.
 - El veredicto es REQUIERE AJUSTE si hay al menos un hallazgo de gravedad alta o dos de media. Con solo hallazgos bajos, es APROBADO y los bajos van igual en la lista, para que el creador los vea.
 - Si no hay hallazgos, "hallazgos" es un arreglo vacío.
-- Máximo 12 hallazgos: los que más importan.`
+- Máximo 12 hallazgos: los que más importan.
+- "transcripcion": lo dicho, seguido; si el video es largo, resúmelo fielmente en no más de 2.500 caracteres. Ningún campo de texto pasa de 600 caracteres salvo la transcripción.`
+
+/* 🜂 EL ESQUEMA que Gemini tiene que respetar (structured output). Con esto y el
+   mime JSON, el modelo no puede devolver prosa ni cercas; lo único que puede
+   fallar es el TOPE de salida, que también se subió. */
+const ESQUEMA = {
+    type: "OBJECT",
+    properties: {
+        veredicto: { type: "STRING", enum: ["APROBADO", "REQUIERE AJUSTE"] },
+        resumen: { type: "STRING" },
+        transcripcion: { type: "STRING" },
+        personas: { type: "STRING" },
+        hallazgos: {
+            type: "ARRAY",
+            items: {
+                type: "OBJECT",
+                properties: {
+                    segundo: { type: "NUMBER" },
+                    tipo: { type: "STRING", enum: ["incomodidad", "vulnerabilidad", "contexto", "gesto_del_creador", "dato_identificable"] },
+                    que: { type: "STRING" },
+                    porque: { type: "STRING" },
+                    accion: { type: "STRING", enum: ["cortar", "difuminar", "reencuadrar", "acortar", "silenciar"] },
+                    gravedad: { type: "STRING", enum: ["alta", "media", "baja"] },
+                },
+                required: ["segundo", "tipo", "que", "porque", "accion", "gravedad"],
+            },
+        },
+        notas: { type: "STRING" },
+    },
+    required: ["veredicto", "resumen", "transcripcion", "personas", "hallazgos", "notas"],
+}
+
+/* 🜂 EL LIMPIADOR. Quita cercas de código (donde estén), texto antes del primer
+   { y después del último }, y comas colgantes. Si el JSON llegó CORTADO (el
+   modelo se quedó sin tokens a media cadena), cierra la cadena y los corchetes
+   y llaves abiertos: se pierde el último campo, no la revisión entera. */
+export function limpiarJson(crudo: string): Record<string, unknown> | null {
+    let t = String(crudo || "")
+        .replace(/```(?:json|JSON)?/g, "")
+        .replace(/\u0000/g, "")
+        .trim()
+    const i = t.indexOf("{")
+    if (i < 0) return null
+    const j = t.lastIndexOf("}")
+    t = j > i ? t.slice(i, j + 1) : t.slice(i)
+    const intentar = (x: string): Record<string, unknown> | null => {
+        try {
+            const o = JSON.parse(x)
+            return o && typeof o === "object" && !Array.isArray(o) ? (o as Record<string, unknown>) : null
+        } catch {
+            return null
+        }
+    }
+    const directo = intentar(t)
+    if (directo) return directo
+    /* comas colgantes antes de } o ] */
+    const sinComas = t.replace(/,\s*([}\]])/g, "$1")
+    const segundo = intentar(sinComas)
+    if (segundo) return segundo
+    /* truncado: cerrar lo abierto respetando cadenas y escapes. Si el corte
+       cayó en un sitio que no admite cierre (una clave a medias), se recorta
+       hasta la coma anterior y se vuelve a intentar: se pierde el último
+       campo o el último hallazgo, no la revisión entera. */
+    const cerrar = (x: string): string => {
+        let enCadena = false
+        let escape = false
+        const pila: string[] = []
+        for (const ch of x) {
+            if (enCadena) {
+                if (escape) escape = false
+                else if (ch === "\\") escape = true
+                else if (ch === '"') enCadena = false
+                continue
+            }
+            if (ch === '"') enCadena = true
+            else if (ch === "{") pila.push("}")
+            else if (ch === "[") pila.push("]")
+            else if (ch === "}" || ch === "]") pila.pop()
+        }
+        let r = x
+        if (enCadena) r += '"'
+        r = r.replace(/,\s*$/, "").replace(/:\s*$/, ': ""')
+        while (pila.length) r += pila.pop()
+        return r.replace(/,\s*([}\]])/g, "$1")
+    }
+    let base = sinComas
+    for (let k = 0; k < 60 && base.length > 2; k++) {
+        const o = intentar(cerrar(base))
+        if (o) return o
+        const coma = base.lastIndexOf(",")
+        if (coma <= 0) break
+        base = base.slice(0, coma)
+    }
+    return null
+}
 
 Deno.serve(async (req: Request) => {
     if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders })
@@ -175,8 +271,11 @@ Deno.serve(async (req: Request) => {
         contents: [{ role: "user", parts: partes }],
         generationConfig: {
             temperature: 0.2,
-            maxOutputTokens: 4096,
+            /* 🜂 8.192: la transcripción de un Reel de 90 s más doce hallazgos
+               cabían justo en 4.096 y a veces no; el JSON llegaba cortado */
+            maxOutputTokens: 8192,
             responseMimeType: "application/json",
+            responseSchema: ESQUEMA,
         },
     }
 
@@ -184,6 +283,9 @@ Deno.serve(async (req: Request) => {
     let texto = ""
     let usado = ""
     let ultimo = ""
+    /* el uso real de tokens que reporta Gemini, para el ticket del panel */
+    let uso: { entrada: number; salida: number } | null = null
+    let finalizo = ""
     for (const { model, attempts } of MODELOS) {
         for (let i = 0; i < attempts; i++) {
             try {
@@ -205,12 +307,18 @@ Deno.serve(async (req: Request) => {
                     continue
                 }
                 const data = (await r.json()) as {
-                    candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>
+                    candidates?: Array<{ content?: { parts?: Array<{ text?: string }> }; finishReason?: string }>
+                    usageMetadata?: { promptTokenCount?: number; candidatesTokenCount?: number; totalTokenCount?: number }
                 }
                 texto = (data?.candidates?.[0]?.content?.parts || [])
                     .map((p) => p?.text || "")
                     .join("")
                     .trim()
+                finalizo = String(data?.candidates?.[0]?.finishReason || "")
+                const um = data?.usageMetadata
+                if (um && typeof um.promptTokenCount === "number")
+                    uso = { entrada: um.promptTokenCount, salida: Number(um.candidatesTokenCount) || 0 }
+                if (finalizo && finalizo !== "STOP") console.warn("[cuidado-revisar] finishReason", model, finalizo)
                 if (texto) {
                     usado = model
                     break
@@ -226,25 +334,11 @@ Deno.serve(async (req: Request) => {
     }
     if (!texto) return json({ error: "analisis_fallo", detalle: ultimo }, 502)
 
-    /* ── El JSON, tolerante a cercas ─────────────────────────────────── */
-    let out: Record<string, unknown> | null = null
-    try {
-        const limpio = texto.replace(/^```(?:json)?\s*/i, "").replace(/```\s*$/, "").trim()
-        out = JSON.parse(limpio) as Record<string, unknown>
-    } catch {
-        const i = texto.indexOf("{")
-        const j = texto.lastIndexOf("}")
-        if (i >= 0 && j > i) {
-            try {
-                out = JSON.parse(texto.slice(i, j + 1)) as Record<string, unknown>
-            } catch {
-                out = null
-            }
-        }
-    }
+    /* ── El JSON, a prueba de cercas, texto alrededor y cortes ───────── */
+    const out = limpiarJson(texto)
     if (!out) {
-        console.error("[cuidado-revisar] JSON ilegible:", texto.slice(0, 300))
-        return json({ error: "respuesta_ilegible" }, 502)
+        console.error("[cuidado-revisar] JSON ilegible:", finalizo, texto.slice(0, 300), "…", texto.slice(-200))
+        return json({ error: "respuesta_ilegible", detalle: finalizo ? `finishReason ${finalizo}` : "sin JSON" }, 502)
     }
 
     const veredicto = String(out.veredicto || "").toUpperCase().includes("AJUSTE") ? "REQUIERE AJUSTE" : "APROBADO"
@@ -276,5 +370,9 @@ Deno.serve(async (req: Request) => {
         motor: usado,
         cuadros: cuadros.length,
         conAudio: !!audioB64,
+        /* el uso real de tokens (si Gemini lo reportó) y si el JSON llegó
+           entero o hubo que rescatarlo */
+        uso,
+        truncado: finalizo === "MAX_TOKENS",
     })
 })

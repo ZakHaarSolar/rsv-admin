@@ -1,3 +1,4 @@
+// Red Solar Viva · council-gate v1.8 — 🜂 LA MÚSICA DEL TEMPLO: { quiero: "musica-subir", nombre, audio_base64 } verifica el audio por sus bytes (mp3, m4a, wav, ogg, hasta 25 MB), lo deja en R2 (Council/musica/…) y devuelve su dirección; { quiero: "musica-borrar", url } lo quita del bucket. Secrets R2_* (los mismos de upload-wallpaper).
 // Red Solar Viva · council-gate v1.7 — 🜂 LA PRODUCCIÓN DE FOTÓN CERO (sello, serie, personaje, episodio, album, cancion) viaja como documentos de council_registros en su PROPIA llamada (si falta la migración 20260817 se reporta `produccion: produccion_sin_tipos` sin tumbar el resto)
 // v1.6 — 🜂 LOS REGISTROS DEL ARQUITECTO viajan al servidor: { quiero: "registros-guardar" | "registros-leer" } guarda y devuelve el pergamino (oro y plata), el bote, el cofre, el arsenal, el ábaco, las leyes, la bitácora y dónde quedó cada reliquia. Escritura CONDICIONAL por fecha (lo viejo no pisa lo nuevo) y lápidas al borrar (migración 20260816_council_registros.sql).
 // Red Solar Viva · council-gate v1.5 — 🜂 EL MENSAJERO: puente con Telegram para que el Council le escriba al iPhone del Arquitecto (avisos al cerrar una tanda de ciclos) y él le conteste desde el teléfono. { quiero: "mensajero-estado" | "mensajero-envia" | "mensajero-lee" }. La llave del bot vive aquí, nunca en el navegador.
@@ -56,6 +57,7 @@
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0"
 import { gateAdmin } from "../_shared/clerkAuth.ts"
+import { verifyUpload, type UploadKind } from "../_shared/upload.ts"
 
 const corsHeaders = {
     "Access-Control-Allow-Origin": "*",
@@ -497,6 +499,141 @@ async function leerRegistros(userId: string): Promise<Response> {
     })
 }
 
+/* ── 🜂 La MÚSICA del templo (R2) ────────────────────────────────────── */
+/* El Arquitecto sube pistas desde la biblioteca del Council; viven en R2 bajo
+   Council/musica/ y el catálogo viaja como registro (cofre:musica). Aquí solo
+   se sube y se borra: el archivo se verifica por sus BYTES (no por lo que diga
+   el cliente) y nunca pasa de 25 MB. */
+
+const MUSICA_MAX_BYTES = 25 * 1024 * 1024
+const MUSICA_KINDS: UploadKind[] = ["mp3", "m4a", "wav", "ogg", "mp4"]
+const MUSICA_PREFIJO = "Council/musica/"
+
+interface R2Config {
+    accountId: string
+    accessKeyId: string
+    secretAccessKey: string
+    bucket: string
+    publicBaseUrl: string
+}
+
+function r2Config(): R2Config | { faltan: string[] } {
+    const accountId = Deno.env.get("R2_ACCOUNT_ID") || ""
+    const accessKeyId = Deno.env.get("R2_ACCESS_KEY_ID") || ""
+    const secretAccessKey = Deno.env.get("R2_SECRET_ACCESS_KEY") || ""
+    const bucket = Deno.env.get("R2_BUCKET") || ""
+    const publicBaseUrl = Deno.env.get("R2_PUBLIC_BASE_URL") || ""
+    const faltan: string[] = []
+    if (!accountId) faltan.push("R2_ACCOUNT_ID")
+    if (!accessKeyId) faltan.push("R2_ACCESS_KEY_ID")
+    if (!secretAccessKey) faltan.push("R2_SECRET_ACCESS_KEY")
+    if (!bucket) faltan.push("R2_BUCKET")
+    if (!publicBaseUrl) faltan.push("R2_PUBLIC_BASE_URL")
+    if (faltan.length) return { faltan }
+    return { accountId, accessKeyId, secretAccessKey, bucket, publicBaseUrl }
+}
+
+function bytesToHex(bytes: Uint8Array): string {
+    let out = ""
+    for (let i = 0; i < bytes.length; i++) out += bytes[i].toString(16).padStart(2, "0")
+    return out
+}
+async function sha256Hex(data: Uint8Array | string): Promise<string> {
+    const buf = typeof data === "string" ? new TextEncoder().encode(data) : data
+    return bytesToHex(new Uint8Array(await crypto.subtle.digest("SHA-256", buf)))
+}
+async function hmacSha256(key: Uint8Array | string, msg: string): Promise<Uint8Array> {
+    const keyData = typeof key === "string" ? new TextEncoder().encode(key) : key
+    const k = await crypto.subtle.importKey("raw", keyData, { name: "HMAC", hash: "SHA-256" }, false, ["sign"])
+    return new Uint8Array(await crypto.subtle.sign("HMAC", k, new TextEncoder().encode(msg)))
+}
+const s3Path = (bucket: string, key: string) =>
+    `/${encodeURIComponent(bucket)}/${key.split("/").map((x) => encodeURIComponent(x)).join("/")}`
+
+/* Una petición firmada (AWS Sig V4) a R2: PUT con cuerpo o DELETE sin él */
+async function r2Peticion(cfg: R2Config, metodo: "PUT" | "DELETE", key: string, bytes?: Uint8Array, contentType?: string): Promise<Response> {
+    const host = `${cfg.accountId}.r2.cloudflarestorage.com`
+    const region = "auto"
+    const service = "s3"
+    const canonicalUri = s3Path(cfg.bucket, key)
+    const payloadHash = await sha256Hex(bytes ?? new Uint8Array())
+    const amzDate = new Date().toISOString().replace(/[:\-]|\.\d{3}/g, "")
+    const dateStamp = amzDate.slice(0, 8)
+    const cabeceras: Array<[string, string]> = []
+    if (contentType) cabeceras.push(["content-type", contentType])
+    cabeceras.push(["host", host], ["x-amz-content-sha256", payloadHash], ["x-amz-date", amzDate])
+    const canonicalHeaders = cabeceras.map(([k, v]) => `${k}:${v}\n`).join("")
+    const signedHeaders = cabeceras.map(([k]) => k).join(";")
+    const canonicalRequest = `${metodo}\n${canonicalUri}\n\n${canonicalHeaders}\n${signedHeaders}\n${payloadHash}`
+    const scope = `${dateStamp}/${region}/${service}/aws4_request`
+    const stringToSign = `AWS4-HMAC-SHA256\n${amzDate}\n${scope}\n${await sha256Hex(canonicalRequest)}`
+    const kDate = await hmacSha256(`AWS4${cfg.secretAccessKey}`, dateStamp)
+    const kRegion = await hmacSha256(kDate, region)
+    const kService = await hmacSha256(kRegion, service)
+    const kSigning = await hmacSha256(kService, "aws4_request")
+    const firma = bytesToHex(await hmacSha256(kSigning, stringToSign))
+    const headers: Record<string, string> = {
+        "x-amz-content-sha256": payloadHash,
+        "x-amz-date": amzDate,
+        Authorization: `AWS4-HMAC-SHA256 Credential=${cfg.accessKeyId}/${scope}, SignedHeaders=${signedHeaders}, Signature=${firma}`,
+    }
+    if (contentType) headers["Content-Type"] = contentType
+    return fetch(`https://${host}${canonicalUri}`, { method: metodo, headers, body: bytes })
+}
+
+const fechaHoy = () => new Date().toISOString().slice(0, 10)
+
+async function musicaSubir(body: { nombre?: unknown; audio_base64?: unknown }): Promise<Response> {
+    const cfg = r2Config()
+    if ("faltan" in cfg) return json({ ok: false, error: "missing_secrets", detail: cfg.faltan.join(", ") }, 500)
+    const v = verifyUpload(String(body.audio_base64 ?? ""), { allow: MUSICA_KINDS, maxBytes: MUSICA_MAX_BYTES })
+    if (!v.ok) return json({ ok: false, error: v.error, detail: v.detail }, v.status)
+    /* el mp4 que pase el filtro es audio en contenedor ISO (un m4a sin marca) */
+    const mime = v.ext === "mp4" ? "audio/mp4" : v.mime
+    const id = crypto.randomUUID()
+    const key = `${MUSICA_PREFIJO}${fechaHoy()}/${id}.${v.ext === "mp4" ? "m4a" : v.ext}`
+    try {
+        const r = await r2Peticion(cfg, "PUT", key, v.bytes, mime)
+        if (!r.ok) {
+            const t = await r.text().catch(() => "")
+            console.error("[council-gate] r2 put", r.status, t.slice(0, 300))
+            return json({ ok: false, error: "r2_upload_failed", detail: `R2 ${r.status}` }, 502)
+        }
+    } catch (e) {
+        console.error("[council-gate] r2 put", String(e))
+        return json({ ok: false, error: "r2_upload_failed", detail: String((e as Error)?.message || e) }, 502)
+    }
+    const url = `${cfg.publicBaseUrl.replace(/\/+$/, "")}/${key.split("/").map((x) => encodeURIComponent(x)).join("/")}`
+    return json({ ok: true, id, url, bytes: v.bytes.length, ext: v.ext, nombre: texto(body.nombre, 120) })
+}
+
+async function musicaBorrar(body: { url?: unknown }): Promise<Response> {
+    const cfg = r2Config()
+    if ("faltan" in cfg) return json({ ok: false, error: "missing_secrets", detail: cfg.faltan.join(", ") }, 500)
+    const url = texto(body.url, 800)
+    const base = `${cfg.publicBaseUrl.replace(/\/+$/, "")}/`
+    /* solo lo que vive bajo Council/musica/: ninguna otra llave del bucket */
+    if (!url.startsWith(base)) return json({ ok: false, error: "url_ajena" }, 400)
+    let key = ""
+    try {
+        key = url.slice(base.length).split("/").map((x) => decodeURIComponent(x)).join("/")
+    } catch {
+        return json({ ok: false, error: "url_ilegible" }, 400)
+    }
+    if (!key.startsWith(MUSICA_PREFIJO) || key.includes("..")) return json({ ok: false, error: "url_ajena" }, 400)
+    try {
+        const r = await r2Peticion(cfg, "DELETE", key)
+        if (!r.ok && r.status !== 404) {
+            const t = await r.text().catch(() => "")
+            console.error("[council-gate] r2 delete", r.status, t.slice(0, 300))
+            return json({ ok: false, error: "r2_delete_failed", detail: `R2 ${r.status}` }, 502)
+        }
+    } catch (e) {
+        return json({ ok: false, error: "r2_delete_failed", detail: String((e as Error)?.message || e) }, 502)
+    }
+    return json({ ok: true })
+}
+
 /* ── Soniox ─────────────────────────────────────────────────────────── */
 
 async function llaveTemporal(
@@ -666,6 +803,9 @@ serve(async (req) => {
         texto?: unknown
         documentos?: unknown
         entradas?: unknown
+        nombre?: unknown
+        audio_base64?: unknown
+        url?: unknown
     } = {}
     try {
         body = await req.json()
@@ -687,6 +827,8 @@ serve(async (req) => {
     if (quiero === "mensajero-estado") return mensajeroEstado()
     if (quiero === "mensajero-envia") return mensajeroEnvia(body)
     if (quiero === "mensajero-lee") return mensajeroLee(body)
+    if (quiero === "musica-subir") return musicaSubir(body)
+    if (quiero === "musica-borrar") return musicaBorrar(body)
 
     if (quiero !== "voz" && quiero !== "voz-salida") return json({ error: "quiero_desconocido" }, 400)
     if (!SONIOX_KEY) return json({ ok: false, error: "soniox_key_missing" }, 500)
