@@ -8878,3 +8878,391 @@ ARCHIVADO_DETALLE_FIN -->
      Hardcoded Clerk Key fallback, pathname listener inline,
      migración semántica de bloques) en MEMORY. Migración SQL
      `get_profiles_no_scan_fix` aplicada. -->
+
+
+<!-- ARCHIVADO 2026-08-17 · X — entradas del historial del 2026-08-09 al 2026-08-17 · VI.
+     Lo durable de cada una vive en las memorias y en el código; esto es la arqueología. -->
+
+#### 2026-08-17 · VI · 🜂 EL SONIDO MADURA (volumen de efectos, fundido cruzado, cierres, perilla, pantalla completa) · LOS OBJETOS RESPETAN LA CÚPULA · ESPACIO SOSTENIDO ACTIVA UN NODO · EL NODO A ESCRIBE FICHAS · NACEN G Y H CON EL TALLER DE RODAJE
+
+- ✅ **Resuelto (misma sala que la · V, segunda tanda de Zak):** volumen de
+  efectos en la biblioteca del pedestal; música con dos reproductores y fundido
+  cruzado de 3 s (medido: sin bajón en la juntura); cierres de paneles, engrane,
+  atajos, pantalla completa, perilla (chasquidos + cuarto de vuelta antes de
+  abrir) y activar/detener con sonido; tomar/dejar y el panel cambiaron a tomas
+  graves (centroide 300-500 Hz contra 7,8 kHz de las anteriores); objetos con
+  tope circular dentro de la cúpula; etiquetas «Nodo A · Impacto & Viralidad»;
+  espacio sostenido sobre un orbe activa/detiene (anillo en la mira); L esconde
+  la fila de nodos; sin nodo elegido no hay tarjeta; el Nodo A con FICHA por
+  dinámica y entradas de dos pisos (tope 600 → 4.000); nodos G y H + Taller de
+  Rodaje (probado de punta a punta con el núcleo real: 6 variables con camino,
+  5 preparativos, señal de abortar, ángulo, 3 hooks, cierre, ritmo).
+- 📁 **Archivos:** (rsv-web · council) `taller.ts` v1.0, `ui/Taller.tsx` v1.0,
+  `ui/entrada.tsx` v1.0 (NUEVOS) · `sonido` v1.1 · `store` v2.9 · `types` v3.0
+  · `salas` v2.11 · `deliberacion` (+1) · `useCouncil` v2.8 · `scene/{Caminata
+  v3.3, Reliquias v1.5, PedestalMusica v1.1, Orbe v1.6, CouncilScene v1.9,
+  tocables v1.2}` · `ui/{HUD v3.2, Musica v1.1, Playbook v2.2, Cine v1.3,
+  Reliquia (+1), estilos v2.8 cs-css-v23}` · `public/council/sfx/` (31 archivos,
+  `?v=2`).
+- ⏳ **Pendiente:** ver una tanda real del Nodo A con fichas; device-QA con oído.
+- 💡 **Decisiones importantes:**
+  - Los dos nodos nuevos NO son un bucle más: trabajan UNA dinámica del ábaco a
+    petición (el Taller); su playbook es su manual (criterio) y sí entra al
+    bucle si Zak lo activa. El plan de la semana sigue en el Nodo D.
+  - El Taller toma el hilo del núcleo (`puedeTomarHilo` lo niega al bucle) y lo
+    devuelve al terminar; un turno de Zak no lo aborta.
+  - Una entrada de ranking son DOS pisos: la línea de resumen y la ficha
+    sangrada con etiquetas; el parser acepta sangría O etiqueta (el modelo
+    respeta más la etiqueta), y todo lo que se juzga viaja entero.
+  - Las cámaras con nodos arrancan sin nodo elegido; la D elige el primero si
+    no hay ninguno, para que se vea qué se activa.
+- 🔧 **Patrones nuevos:**
+  - 🜂 **Un sonido "chillón" se diagnostica por su centroide espectral**
+    (ffmpeg `aspectralstats`), no de oído: el panel y el tomar viejos tenían
+    su energía en 7,8 kHz y por eso se parecían; se re-piden "low, warm, no
+    high-pitched tones" y se elige la toma de centroide más bajo.
+  - 🜂 **Un bucle de música sin bajón son DOS reproductores que se relevan**:
+    tres segundos antes del final el otro arranca desde cero subiendo mientras
+    el primero baja; se verifica leyendo `currentTime` y `volume` de los dos
+    por segundo, no de oído.
+  - 🜂 **Un objeto que se lleva en las manos se POSA al salir de la vista**: si
+    no, la siguiente barra espaciadora al volver lo suelta en vez de tocar lo
+    que hay delante (se cazó en el arnés: el primer "mantener" soltó el
+    pergamino en vez de activar el orbe).
+  - 🜂 **Un mp4 sin pista de audio en un `<audio>` no arranca en segundo plano**
+    ("video-only background media was paused to save power"): no es un fallo del
+    reproductor; se prueba con audio real.
+- 🧬 **Versión al cierre:** Council LIVE en `redsolarviva.com/council` (chunk
+  `CouncilApp-D7hzIORy.js`). rsv-web en `origin/main` (5844167).
+
+#### 2026-08-17 · V · 🜂 EL TEMPLO SUENA (25 efectos premium + música ambiente con su pedestal y su biblioteca en R2) · LAS FLECHAS GIRAN LA VISTA · EL CONSEJO DEJA DE ABRIRSE SOLO · LA BARRA DE ATAJOS SE LIMPIA · EL CUIDADO ESCANEA EN HOLOGRAMA Y COBRA SU TICKET
+
+- ✅ **Resuelto:**
+  - **EL SONIDO DEL TEMPLO.** Los efectos se generaron con fal.ai (ElevenLabs
+    Sound Effects v2, dos tomas por sonido, seis pisadas de tres tandas porque
+    las primeras salían casi mudas) por el puente temporal `atelier-fal-bridge`
+    (creado y BORRADO en la misma sala) y se masterizaron con ffmpeg (recorte
+    de silencio, fundidos, pico a −3 dBFS; los bucles con la costura fundida y
+    en .ogg). Motor `sonido.ts`: un AudioContext, buffers decodificados una vez,
+    bucles con nivel objetivo (zumbido de portal, rumor de levitación), pasos
+    con variación, música por HTMLAudioElement con fundidos y reintento tras
+    la política de autoplay, y un REACTOR que traduce transiciones del store a
+    sonido. Interruptor en Ajustes → Sonido.
+  - **LA MÚSICA AMBIENTE**: pedestal gemelo con disco (enciende/apaga) y
+    perilla (biblioteca), ventana `ui/Musica.tsx` (soltar pistas, elegir,
+    volumen, quitar con confirmación), `council-gate` v1.8 sube a R2 y borra,
+    catálogo como `cofre:musica`.
+  - **Flechas = girar la vista** (caminando; y en la órbita, más despacio).
+    Con objeto en las manos siguen girándolo y alzándolo. WASD ya no comparte
+    las flechas.
+  - **El Observatorio ya no abre el Consejo solo**, y la pantalla grande dice
+    EL CONSEJO en todas las cámaras.
+  - **La barra de atajos del pie se queda con lo vivo**: Esc, O y el C de
+    volver a la órbita viven solo en «ver todos los atajos». Ahí entran las
+    flechas como giro de la vista.
+  - **El Panel de Cuidado**: `cuidado-revisar` v1.1 exige `responseSchema` +
+    mime JSON, sube la salida a 8.192 tokens y acota la transcripción (el
+    "contestó algo que no se pudo leer" con 86 cuadros era un JSON CORTADO por
+    el tope); un limpiador quita cercas y texto alrededor y, si llega
+    truncado, cierra lo abierto recortando hasta la coma anterior (probado con
+    9 casos, arnés en node/deno sobre la función extraída del archivo real).
+    En pantalla: HUD monoespaciado (`[ EXTRACCIÓN: CUADRO n / N ]`,
+    `[ SEPARANDO ESPECTRO DE AUDIO ]`, `[ ENVIANDO A NÚCLEO FLASH... ]`), onda
+    dorada latiendo, tira de cuadros que se llena, y el ticket
+    `[ TELEMETRÍA DE RED ]` (cuadros, segundos de audio, tokens ~260/cuadro y
+    ~32/seg, costo en MXN a tarifa Flash 0.30/1.00/2.50 USD por millón y 18.5
+    MXN/USD; si Gemini reporta `usageMetadata`, manda lo medido).
+- 📁 **Archivos:** (rsv-web · council) `sonido.ts` v1.0, `scene/PedestalMusica.tsx`
+  v1.0, `ui/Musica.tsx` v1.0 (NUEVOS) · `store` v2.8 · `types` v2.9 ·
+  `scene/{Caminata v3.2, Portales v5.1, Pedestal v1.1, Reliquias v1.4,
+  CouncilScene v1.8}` · `ui/{HUD v3.1, Cine v1.2, Cuidado v1.1, estilos v2.7
+  cs-css-v22}` · `useCouncil` v2.7 · `gate/AdminGate` v1.5 · `CouncilApp` v1.4 ·
+  `salas` v2.10 (COUNCIL_HOY sabe del sonido) · `public/council/sfx/` (25).
+- 🔌 **Edges desplegadas:** `council-gate` v1.8 (musica-subir · musica-borrar,
+  Sig V4 PUT/DELETE a R2, verifyUpload por bytes) · `cuidado-revisar` v1.1.
+  `atelier-fal-bridge` creado y borrado (404 verificado).
+- ⏳ **Pendiente:** el device-QA con oído (niveles de mezcla, primera pisada en
+  frío) y subir una pista real con la sesión de Arquitecto; el Panel de Cuidado
+  con un Reel real (sigue de la · IV).
+- 💡 **Decisiones importantes:**
+  - Los efectos van por AudioContext (latencia de un cuadro, sin `<audio>` que
+    compitan); la música por HTMLAudioElement (no exige CORS del bucket y
+    sobrevive a que el contexto se duerma). Un bucle se gobierna por NIVEL, no
+    por play/stop: quien lo usa dice cuánto, cada cuadro si quiere, y el motor
+    lo alcanza suave y apaga la fuente tras un rato en cero.
+  - El catálogo de música viaja como documento `cofre:musica` (mismo camino
+    que la papelera y el cuidado): cero migración. Si suena o no es de cada
+    computadora; la biblioteca, la elegida y el volumen son del Arquitecto.
+  - Encender la música sin pista elegida ABRE la biblioteca con el motivo en
+    vez de sonar en silencio (Paso 0-quater).
+  - Zak: "si agregamos nuevos atajos, no metas más abajo": la barra del pie
+    queda cerrada; todo lo nuevo va al panel completo.
+- 🔧 **Patrones nuevos:**
+  - 🜂 **Un efecto de sonido "suave" pedido a un generador sale MUDO**: las
+    pisadas a −35/−50 dBFS de pico no se rescatan normalizando (sube el ruido
+    del códec); se re-piden con "loud, close-miked, dry, full level" y se
+    eligen por PICO medido, no de oído.
+  - 🜂 **Un bucle sin costura en la web**: mp3 trae relleno de codificador y
+    hace clic al repetir; se decodifica a WAV, se funde la cola sobre la cabeza
+    (`acrossfade` de 200 ms, tail→main) y se exporta a .ogg. Y arranca en un
+    punto al azar (`start(0, offset)`) para que dos instancias no vayan en fase.
+  - 🜂 **Un JSON truncado por el tope de salida se rescata cerrando lo abierto
+    y recortando hasta la coma anterior hasta que parsee** (se pierde el
+    último campo, no la revisión), y el `finishReason` se registra: es la
+    diferencia entre "el modelo devolvió basura" y "el modelo se quedó sin
+    tokens".
+  - Verificar sonido sin oído: envolver `AudioBufferSourceNode.prototype.start`
+    y contar arranques por transición (reliquia, puertas, pasos, bucle con
+    `loop=true`), y `st.setSfx(false)` → cero arranques.
+- 🧬 **Versión al cierre:** App Store 1.1.3 LIVE, en curso 1.1.4. Escritorio
+  macOS 1.1.10. Council LIVE (chunk `CouncilApp-02aHe9dX.js`). Repos rsv-web y
+  admin en `origin/main`.
+
+#### 2026-08-17 · IV · 🜂 LA VOZ DEJA DE TRABARSE · EL ARQUITECTO CAMINA (era la copia del esqueleto) · NACE LA CASA PRODUCTORA EN FOTÓN CERO · Y LOS NODOS DE CUIDADO Y EXPANSIÓN CON SU PANEL DE REVISIÓN (comprimida)
+
+- 💡 **Decisiones:** el video del Panel de Cuidado no sale de la Mac (el
+  navegador saca los cuadros y el audio: el cuerpo baja de 40 MB a 3, cada
+  cuadro llega etiquetado con su segundo y un cuadro por segundo es lo que
+  Gemini muestrea de un video nativo) · el Nodo E no juzga el método de
+  captura, cuida el resultado publicado · el criterio se aprende marcando cada
+  hallazgo como acertado o falsa alarma · Fotón Cero es casa productora (cuatro
+  nodos de la casa, cuatro por estudio, la palomita CREA) · nada de lo que
+  escribe el Arquitecto se destruye (la papelera).
+- 🔧 **Patrones:** 🜂 `Object3D.clone()` sobre una malla con piel produce una
+  ESTATUA en el origen (la copia sigue atada al esqueleto original; se clona
+  con `SkeletonUtils.clone`) · 🜂 un archivo que promete N cosas se ABRE y se
+  cuentan (el GLB decía traer tres animaciones y traía una de un fotograma) ·
+  un botón dentro de una fila que se recorta es lo primero que se pierde · una
+  transición CSS no avanza con la pestaña oculta · un pergamino vacío es
+  indistinguible de uno borrado.
+
+#### 2026-08-17 · 🜂 LOS ARCOS SE VUELVEN LOS PORTALES · LA PANTALLA SE LIMPIA · EL ANDÉN DE LLEGADA · EL AVATAR SUBE A PRESENCIA SOLAR · LA VOZ DEJA DE NACER MUDA (comprimida)
+
+- 💡 **Decisiones:** el portal no se construye, se ABRE (un templo con dieciséis
+  arcos no necesita puertas nuevas) · las cinco puertas van juntas para leerse
+  de un vistazo · soltar la tecla del micrófono lo APAGA aunque cueste el
+  arranque frío · el avatar definitivo viene de fuera (Meshy → R2 → GLB) y el
+  procedural se queda como red permanente.
+- 🔧 **Patrones:** 🜂 un cierre asíncrono tiene que decir a QUIÉN pertenece (el
+  `catch` del turno abortado silenciaba la voz del que acababa de nacer) · lo
+  que está VACÍO también se dice en el prompt · el cierre a mano de un dictado
+  espera un suspiro y luego se queda SORDO · una ventana abierta se queda con
+  la barra espaciadora y con el Escape · cada primitiva de three tiene su
+  propio origen de ángulos (escrito en `scene/bahias.ts`).
+
+#### 2026-08-16 · VIII · 🜂 SE REHACEN LOS PORTALES CON SU VÓRTICE · NACE LA TERCERA PERSONA CON AVATAR · EL DOMO SE HACE PANTEÓN SOLAR · EL NODO D DE PROYECCIÓN Y EL METRÓNOMO DEL RITMO (comprimida)
+
+- 💡 **Decisiones:** el vórtice de los portales es shader (espiral logarítmica,
+  ruido fractal en tres capas, núcleo blanco), no textura · el avatar nace
+  procedural para no descargar nada · los cuatro orbes de Zak Cero se reparten
+  en arco DETRÁS del altar porque el frente lo ocupan las reliquias · el RITMO
+  viaja como documento `cofre:ritmo` y no necesita tabla nueva · las ramas
+  nuevas del ecosistema son trabajo explícito del Núcleo Solar, sin nodo aparte.
+- 🔧 **Patrones:** 🜂 un NaN en un shader pinta una mancha negra a través del
+  Bloom (blindar pow/atan/smoothstep) · el peso visual de una arquitectura sale
+  del GRUESO y las molduras, no de los polígonos (tubos de pocos lados = chaflán
+  gratis; fundir y instanciar deja la jaula en dos llamadas de dibujo) · una
+  vista en tercera persona mide la cercanía contra el CUERPO, no contra la
+  cámara · la voz de salida distingue dormida, sin audio y cortada en vez de
+  decir "lista" siempre.
+
+#### 2026-08-16 · VI · 🜂 EL COUNCIL SE VUELVE MULTI-COMPUTADORA · SE CAMINA LA SALA EN PRIMERA PERSONA · NACEN LAS SEIS PUERTAS · Y EL PERGAMINO DEJA DE COPIARSE (comprimida)
+
+- 💡 **Decisiones:** lo que escribe la mano del Arquitecto vive fuera del
+  navegador (entrada por entrada, con lápidas al borrar y escritura condicional
+  por fecha) · las activaciones del bucle NO viajan entre computadoras: el
+  núcleo corre en la Mac que se tiene enfrente · el pergamino es archivo y el
+  playbook mesa de trabajo: lo que se juzga SALE del documento · la lentitud del
+  Nodo A no es el modelo pensando sino el TAMAÑO del encargo (6.042 tokens =
+  29,3 s solo de lectura) · un nodo de PROYECCIÓN sí merece existir; el ritmo de
+  grabación es un REGISTRO, no un nodo.
+- 🔧 **Patrones:** 🜂 dos órdenes contrarias en un prompt: gana la que está
+  pegada al dato · 🜂 no le des el guion de lo que prohíbes · 🜂 registrar es un
+  efecto, no un `useMemo` · un import dinámico desde la consola puede traer otra
+  copia del módulo · la barra espaciadora pulsa el botón que tenga el foco ·
+  validar antes de tocar lo que hay.
+
+#### 2026-08-16 · V · 🜂 EL COUNCIL SE VUELVE TALLER DEL ARQUITECTO: nacen el COFRE, el ARSENAL y el ÁBACO, el PERGAMINO gana ORO y PLATA (comprimida)
+
+- 💡 **Decisiones:** el juicio se enciende cámara por cámara (declarar
+  `juzgables` ES el interruptor) · un ábaco y no un dado para las tareas (el
+  dado dice azar, el ábaco dice cuenta y avance) · el pergamino y el bote flotan
+  en el aire de la sala porque son del Council; el cofre, el arsenal y el ábaco
+  descansan en la mesa porque son de Zak · la frecuencia de publicación la lee
+  el Nodo C, no un nodo nuevo.
+- 🔧 **Patrones:** 🜂 una prohibición en prosa al final de un bloque largo no se
+  obedece; una lista corta de nombres propios al principio, sí · una regla de
+  estado CSS puesta antes de la regla base pierde aunque tenga más clases · el
+  clic sintético no llega al mundo 3D en el panel de vista · retener texto con
+  el canal abierto lo mata de inanición.
+
+#### 2026-08-16 · 🜂 EL COUNCIL SE VUELVE OPERABLE: el Mensajero en Telegram, las LEYES y el REGISTRO del Arquitecto · Y EL LOGIN DE LA WEB DEJA DE ENTREGARLE LA SESIÓN A LA APP DE ESCRITORIO (comprimida)
+
+- 💡 **Decisiones:** Telegram y no correo para el Mensajero (es el único canal
+  que CONVERSA y no mezcla el mando con los tripulantes,
+  [[proyecto_council_mensajero]]) · la LEY se escribe en caliente y vale para
+  ese navegador, el PROMPT es la fuente de verdad: la ley es el borrador, el
+  prompt la ley firmada · NO a que todos los nodos se hablen con todos (el
+  pacto de escucha funciona porque es dirigido) · realidad económica: una sola
+  fuente viva, Sintonía 499/149 al mismo precio en app y web.
+- 🔧 **Patrones:** 🜂 un objeto invisible sigue existiendo para el clic (el rayo
+  de three.js no respeta `visible`) · 🜂 un umbral se calibra contra el TAMAÑO
+  REAL del dato, no contra uno de juguete · 🜂 un desenfoque de fondo sobre un
+  lienzo WebGL pinta un cuadro en blanco al re-dibujarse · 🜂 el navegador
+  SUSPENDE el audio con la pestaña escondida y hablarle al micrófono no cuenta
+  como gesto · instalar una app nativa registra su esquema en TODO el sistema y
+  desde ahí se lleva los pases de un solo uso del login social.
+
+#### 2026-08-15 · III · 🜂 EL COUNCIL SE VUELVE ORGANISMO: qwen3.8:27b, cámaras soberanas, el bucle de deliberación autónoma, la bóveda, el Observatorio y la Forja (comprimida)
+
+- 💡 **Decisiones:** nadie del Council toca código ni ejecuta (los orbes
+  proponen; Zak decide) · nada arranca solo: la deliberación se activa por
+  nodo y los activados se turnan, porque el hilo de Ollama es uno · un playbook
+  por nodo, versionado, y la última versión es la que se lee · 24 ciclos de un
+  27B NO equivalen a un modelo grande: cuando un playbook madura, una fricción
+  con un modelo grande vale más que otros 24 ciclos · el Observatorio es la
+  única cámara que mira el conjunto.
+- 🔧 **Patrones:** 🜂 lo que trabaja en segundo plano no depende de lo que se ve
+  (activaciones explícitas, cola y trabajo persistido;
+  [[feedback_nada_arranca_solo_ni_depende_de_la_vista]]) · 🜂 un colchón de
+  audio corto convierte el jitter en hueco a mitad de palabra · 🜂 un hijo de
+  una columna flex se APLASTA antes que desbordar · las etiquetas DOM sobre un
+  lienzo 3D van lejos del cuerpo del objeto · verificar en el panel de vista
+  exige `resize_window` ANTES de navegar.
+
+#### 2026-08-15 · 🜂 NACE EL COUNCIL SOLAR (templo 3D admin-only con el modelo corriendo en la Mac) · LA CONVERSACIÓN POR VOZ SE CIERRA · GROQ RETIRA EL MODELO DE LAS ACCIONES (comprimida)
+
+- 💡 **Decisiones:** el Council vive en `rsv-web/src/council/`, la primera capa
+  escrita directo para Vite y fuera de la herencia de Framer, y viaja como
+  paquete aparte (el sitio público no carga un byte del motor 3D) · la
+  inferencia es LOCAL (el navegador habla con Ollama en la Mac) y la voz es
+  directa a Soniox: cada salto que se quita es latencia que no se paga · los
+  orbes proponen, nadie ejecuta · Groq retiró llama-3.3-70b y el carril de
+  acciones de la voz pasó a `qwen/qwen3.6-27b` con razonamiento apagado
+  ([[referencia_groq_modelos]]).
+- 🔧 **Patrones:** 🜂 un canal que espera datos se muere de inactividad (no se
+  abre un recurso con tiempo de vida hasta tener con qué alimentarlo, y si
+  puede morir a mitad, reabrirlo es parte del diseño) · 🜂 un NaN en un shader
+  pinta una mancha negra enorme a través del Bloom
+  ([[feedback_nan_shader_bloom_mancha_negra]]) · 🜂 React Three Fiber no
+  arranca en el panel de vista oculto: se destraba con un `resize` sintético y
+  un puente que pinta cuadros con reloj fijo
+  ([[feedback_r3f_panel_oculto_resize_advance]]).
+
+#### 2026-08-14 · 🜂 FIDELIDAD ANTE TODO (el español roto era COMPRESIÓN, no el prompt) · EL SELLO DE LA ESPERA · LA APP DE macOS ES UN DESTINO APARTE · FOTÓN CERO EN LA PORTADA (comprimida)
+
+- 💡 **Decisiones:** el español roto ("peatonales peatonales") era el
+  ANFITRIÓN de OpenRouter sirviendo el modelo en fp4, no el prompt: lista
+  blanca declarada-fiel `QUANTS_FIELES` en los dos modos
+  ([[referencia_openrouter_cuantizacion]]) · el carril profundo se pinnea a
+  `deepseek-v4-pro-0813` (endpoint distinto del sin fecha) · 🜂 la app de macOS
+  es un DESTINO APARTE del deploy a Vercel
+  ([[feedback_app_macos_destino_aparte]]) y se publica DESPUÉS del push
+  ([[feedback_automatizacion_pisa_publicacion]]) · la versión del escritorio no
+  se amarra a la de la tienda · Gemini Flash para el Espejo descartado por
+  ahora (otra voz, ~10x la salida) · Pika API Club es revendedor, no modelo.
+- 🔧 **Patrones:** 🜂 el borrador no se perdía, se BORRABA (la llave nacía con
+  "anon" y el guardado corría con el campo vacío: no se escribe nada antes de
+  haber leído) · los delimitadores de marcas se leen tolerantes (⟦RES⟦) · un
+  efecto que solo sabe ENCENDER deja el latido colgado (derivar el sonido del
+  estado) · una ceremonia puede correr invisible por z-index · un control que
+  aparece según cuántas cosas tengas se lee como inexistente · resaltar con el
+  resaltador NATIVO (CSS Custom Highlight) cuando el texto ya tiene markdown.
+
+#### 2026-08-13 · II · 🖥 EL ESCÁNER NACE COMO APP DE macOS (Tauri) · LA LEY DE ENCARNACIÓN · NACE LA CONSTELACIÓN · TRES SELLOS CON DOMINIO (comprimida)
+
+- 💡 **Decisiones:** la app de escritorio nace con Tauri sobre la MISMA base de
+  React (cero pantallas reimplementadas), con actualizador firmado · el origen
+  de una app nativa se AUTORIZA en el proveedor (`allowed_origins` de Clerk),
+  no se disfraza desde el cliente: el PATCH reemplaza la lista, así que se
+  manda la UNIÓN · Ley de Encarnación Absoluta del Espejo (primera persona
+  siempre, las hipotéticas se ACTÚAN, el rango del interlocutor se resuelve en
+  el servidor) · la Constelación: un hito entra si CAMBIA lo que alguien de
+  afuera puede tocar, y se escribe para quien no conoce nada · Fotón Cero
+  entra (tiene dominio y obra), Soma Cero y Tejido Cero esperan · los
+  instalables NO viven en `public/` (Vite lo copia a `dist/` y Tauri embebe
+  `dist/`: 9,7 MB → 310 MB).
+- 🔧 **Patrones:** un respaldo que se activa en silencio esconde el fallo que
+  hay que ver · el inspector es herramienta de taller, no parte del producto
+  (9,7 → 152 MB) · un empaquetado que "termina bien" puede no haber producido
+  nada (`create-dmg` bloqueado por AppleScript; `hdiutil` no le pide nada a
+  Finder) · una publicación se verifica por CONTENIDO, no por código de estado
+  (una SPA con catch-all contesta 200 a cualquier cosa) · agregar un dominio
+  no emite su certificado: se pide explícito.
+
+#### 2026-08-13 · 🜂 FASE E DE LA VOZ (el contexto vivo) · LA FECHA NO ES UNA NOTICIA · RACHAS EN TARJETAS · LOS 5 REPOS RESPALDADOS (comprimida)
+
+- 💡 **Decisiones:** 🜂 nace la REGLA DE ORO del respaldo automático (todo
+  build/deploy cierra con commit + push; ver su sección propia arriba), y con
+  ella el repo privado `rsv-web` · descartados por Zak, no volver a proponer:
+  el mapa de giros de la Matriz y la i18n Fase 3 · el deploy al iPhone sin
+  Xcode abierto va por `xcodebuild -destination id=<udid>` + `devicectl`
+  (el runner de Capacitor no ve dispositivos por red), y "developer disk image
+  could not be mounted" significa teléfono BLOQUEADO, no imagen faltante.
+- 🔧 **Patrones:** 🜂 "primera vez falla, segunda funciona" = pase de Clerk
+  vencido (60 s de vida; el 401/403 rechaza ANTES de ejecutar, así que
+  reintentar con pase fresco no duplica) · un botón que promete "sin costo"
+  tiene que preguntarle al cofre con la MISMA llave (voz incluida) · el punto
+  de espera que se convierte en planeta: transform/opacity sobre nodos que ya
+  existen, cero canvas, y `prefers-reduced-motion` lo apaga.
+
+#### 2026-08-12 · 🜂 LA VOZ SE MUDA A SONIOX · LA PALABRA DORADA DEJA DE ESTIMAR · EL NEGRO DEL ESPEJO ERA UN HOOK (comprimida)
+
+- 💡 **Decisiones:** Soniox TTS v2 contra Fish en la MISMA unidad ($0.70/hora
+  contra ~$1.25; en español la brecha se abre porque Fish cobra por BYTES y
+  cada tilde son dos) · el tope de minutos NO sube con el ahorro · el resumen
+  vivo NO sirve como memoria ("está súper chafa": tres viñetas del hilo entero
+  son una portada, no un recuerdo) · las muestras de voz son ARCHIVOS, no
+  llamadas.
+- 🔧 **Patrones:** 🜂 un botón que gobierna UNA cosa pero promete TODO no está
+  roto, está mintiendo · 🜂 un adelanto que compensa un error se vuelve error
+  cuando el error desaparece · 🜂 un mirror verificado se cambia con arnés ·
+  el negro total al cambiar de modo era un hook bajo un return temprano, y sin
+  frontera de error React desmonta el árbol ENTERO (auditar con AST).
+
+#### 2026-08-11 · II · EL SITIO SALE DE FRAMER · Domo SE CORROMPIÓ Y SE RESTAURÓ · TELEMETRÍA DE IA COMPLETA · EL SPLIT CONGELADO (comprimida — el detalle vivo está en § Salida de Framer)
+
+- 💡 **Decisiones:** Framer se cancela (§ Salida de Framer tiene TODO el corte verificado) · `/zuur'naal` no viaja · el ida y vuelta del ingreso nativo se mudó a `app.escanervibracional.com` con el dominio viejo conservado al lado (cero apagón) · el split de los tres grandes quedó CONGELADO en `admin/split-pendiente/`.
+- 🔧 **Patrones:** un "no hay nada" de una API se confirma por otra vía (Paso 0-duodevicies: las 77 perillas que midieron CERO) · lo que Framer ponía y el código daba por sentado (box-sizing, sans-serif, sin StrictMode) · una perilla guardada no prueba que el sitio la use (codicesBooks arrastraba 294 MB muertos) · partición lossless con el parser de TypeScript · el panel de vista miente con el viewport (innerWidth 0).
+
+#### 2026-08-11 · 🜂 LA MATRIZ SINCRÓNICA SE VUELVE INSTRUMENTO (velocímetro · palabra dorada · Tu plan adentro · el Sello visual) — comprimida
+
+- 💡 **Decisiones:** el resalte de la voz viaja por GRUPOS y no por palabra (un
+  grupo absorbe el error de la aproximación) · la fidelidad del dictado la juzga
+  un modelo, no un diff (un conteo castigaría "300" por "trescientas") · el
+  texto se puede seleccionar en la Matriz · el carril de ráfaga sube a 14.000
+  caracteres de entrada y 6.000 de salida.
+- 🔧 **Patrones:** 🜂 el tope de longitud mide lo que escribió la PERSONA (la
+  directiva del modo se comía 2.885 de 4.000) · 🜂 lo que suena y lo que se mide
+  tienen que ser el MISMO texto (la voz sintetiza el limpio; el corte se
+  calculaba sobre el crudo y el oro se adelantaba en las negritas) · un salto en
+  vuelo MIENTE (el motor reporta el punto viejo hasta que la parte nueva
+  aterriza) · el gain de una síntesis escala el pico, no el ataque · el velo de
+  arrastre se apaga por LATIDO · 🜂 un lote de edits con guardas que aborta NO
+  escribió nada: verificar por contenido tras re-aplicar.
+
+#### 2026-08-10 · II · LA MATRIZ SINCRÓNICA MADURA (nombre, reestructura 1-2-3, mapa, píldora unificada) · LA BARRA DE REFLEJOS · LA BASE ÉTICA · CLERK EXPLICADO (comprimida)
+
+- 💡 **Decisiones:** el Modo Ráfaga se llama MATRIZ SINCRÓNICA (ids internos `rafaga`) · el visual del reflejo tiene dos naturalezas (⟦DIA⟧ diagrama / ⟦ESC⟧ escena) · la columna 1 es el MAPA (miniaturas por intercambio) · píldora unificada con el MISMO sigilo viajando como prop · el Espejo vive en /espejo · la base ética: lo que el Espejo PROPONE nace del reino vegetal, sin bandera (oraculo-chat v1.33) · frequency_penalty mata los conectores del español (v1.34: solo repetition_penalty 1.05) · Clerk cobra por dominios satélite, no por usuarios.
+- 🔧 **Patrones:** la fila `auto` de un grid fixed se dimensiona por el item SIN overflow (minmax(0,1fr) clava la fila) · una ruta nueva en la SPA: el catch-all del router es el primer sospechoso · prueba diferencial en prod (la misma sonda antes y después del fix).
+
+#### 2026-08-10 · EL REFLEJO EN VIVO A RITMO PAREJO · EL CAMPO DE UN SOLO TONO · EL COMPOSITOR EN UNA FILA · PANEL DE USO (comprimida)
+
+- 💡 **Decisiones:** la ventana deslizante de topes se queda (protege costo; su defecto era de comunicación y se curó con la hora de liberación en pantalla) · la campana de llegada se muda al FINAL del reflejo · entregar archivos con `open "ruta"`.
+- 🔧 **Patrones:** el estanque entre canal y vista sirve a velocidad continua (medido: salto máximo 123 → 6 caracteres) · una medición honesta usa la MISMA base de tiempo (muestrear por cuadro, no por pintura — Paso 0-quindecies) · reordenar sin mover código con `display:contents` + `order` · una capa animada por transform se agranda más allá de los bordes o destapa su propio filo · el control corre el MISMO comando (`vercel build`, no `vite build`) · `flex-basis:auto` en un campo dentro de una fila con wrap lo manda al renglón siguiente.
+
+#### 2026-08-09 · II · EL MOTOR RECUERDA TODO · NACE EL MODO RÁFAGA (interfaz aparte de cuatro zonas) · INTERNET CON PORTERO (comprimida)
+
+- 💡 **Decisiones:** los deploys de edges son de CLAUDE (la CLI local ya tiene
+  sesión; el SQL sigue siendo de Zak, [[feedback_claude_despliega_edges]]) · la
+  bandeja de la Matriz vive LOCAL por cuenta · topología de arquetipos FIJOS,
+  no nube por respuesta (el ojo aprende el mapa una vez y después solo lee
+  intensidades) · la búsqueda es un ingrediente, no el plato: un portero de
+  intención decide, y lo personal jamás busca.
+- 🔧 **Patrones:** aditivo-con-bandera para bifurcar una edge compartida (el
+  cliente viejo no manda la bandera y su camino queda idéntico) · una señal a
+  mitad de canal JAMÁS se pinta · todo rAF lleva temporizador de respaldo (el
+  navegador lo congela con la pestaña oculta) · Escape de un overlay se atiende
+  en CAPTURA y antes del chequeo de "estás escribiendo" · lo guardado local se
+  NORMALIZA al leerlo, campo por campo.
+
