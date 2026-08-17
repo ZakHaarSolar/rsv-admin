@@ -1,3 +1,4 @@
+// Red Solar Viva · council-gate v1.9 — 🜂 BORRAR UN PLAYBOOK BORRA DE VERDAD: { quiero: "boveda-borrar-playbook", clave } quita su fila de council_playbooks Y todas sus rondas de council_deliberaciones (el archivo de versiones), para que al recargar no vuelva a aparecer. Antes el borrado vivía solo en el navegador y la bóveda lo resucitaba.
 // Red Solar Viva · council-gate v1.8 — 🜂 LA MÚSICA DEL TEMPLO: { quiero: "musica-subir", nombre, audio_base64 } verifica el audio por sus bytes (mp3, m4a, wav, ogg, hasta 25 MB), lo deja en R2 (Council/musica/…) y devuelve su dirección; { quiero: "musica-borrar", url } lo quita del bucket. Secrets R2_* (los mismos de upload-wallpaper).
 // Red Solar Viva · council-gate v1.7 — 🜂 LA PRODUCCIÓN DE FOTÓN CERO (sello, serie, personaje, episodio, album, cancion) viaja como documentos de council_registros en su PROPIA llamada (si falta la migración 20260817 se reporta `produccion: produccion_sin_tipos` sin tumbar el resto)
 // v1.6 — 🜂 LOS REGISTROS DEL ARQUITECTO viajan al servidor: { quiero: "registros-guardar" | "registros-leer" } guarda y devuelve el pergamino (oro y plata), el bote, el cofre, el arsenal, el ábaco, las leyes, la bitácora y dónde quedó cada reliquia. Escritura CONDICIONAL por fecha (lo viejo no pisa lo nuevo) y lápidas al borrar (migración 20260816_council_registros.sql).
@@ -307,6 +308,42 @@ async function leerBoveda(userId: string): Promise<Response> {
 
 /* Versiones anteriores de un playbook: las evoluciones (y la propuesta y
    fricción de cada ciclo) desde el archivo append-only. */
+/* 🜂 EL BORRADO DE VERDAD (Zak, 2026-08-17 · IX: "le doy a borrar porque
+   quiero que empiece desde 0… los borra pero apenas recargo se vuelven a poner
+   las 6 rondas"). Se va el documento vivo Y su archivo de rondas: si el
+   Arquitecto quiere empezar de cero, no puede quedar una versión 6 esperando
+   en un cajón. Lo que NO se toca es el pergamino ni el bote: lo que aprobó y
+   lo que tiró vive en otra rama y es su criterio, no el trabajo del nodo. */
+async function borrarPlaybookBoveda(
+    userId: string,
+    body: { clave?: unknown }
+): Promise<Response> {
+    const clave = texto(body.clave, 80)
+    if (!clave) return json({ ok: false, error: "sin_clave" }, 400)
+    const db = sb()
+    const { error: e1 } = await db
+        .from("council_playbooks")
+        .delete()
+        .eq("clerk_user_id", userId)
+        .eq("clave", clave)
+    if (e1) {
+        console.error("[council-gate] borrar playbook", e1.code, e1.message)
+        return json({ ok: false, error: motivoDb(e1) }, 500)
+    }
+    /* y sus rondas (propuesta, fricción y evolución de cada ciclo) */
+    const { error: e2 } = await db
+        .from("council_deliberaciones")
+        .delete()
+        .eq("clerk_user_id", userId)
+        .eq("clave", clave)
+    if (e2) {
+        console.error("[council-gate] borrar deliberaciones", e2.code, e2.message)
+        /* el documento ya se fue; que queden rondas huérfanas no lo resucita */
+        return json({ ok: true, playbook: true, rondas: false, error: motivoDb(e2) })
+    }
+    return json({ ok: true, playbook: true, rondas: true })
+}
+
 async function versionesBoveda(
     userId: string,
     body: { clave?: unknown; limite?: unknown }
@@ -822,6 +859,7 @@ serve(async (req) => {
     if (quiero === "boveda-guardar") return guardarBoveda(userId, body)
     if (quiero === "boveda-leer") return leerBoveda(userId)
     if (quiero === "boveda-versiones") return versionesBoveda(userId, body)
+    if (quiero === "boveda-borrar-playbook") return borrarPlaybookBoveda(userId, body)
     if (quiero === "registros-guardar") return guardarRegistros(userId, body)
     if (quiero === "registros-leer") return leerRegistros(userId)
     if (quiero === "mensajero-estado") return mensajeroEstado()
