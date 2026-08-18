@@ -1278,15 +1278,36 @@ Android: primera versión en Prueba interna. Detalle en
   ojo: si el cuello es el ancho de banda, dos en paralelo van a media velocidad
   cada uno. En una 5090 se nota; en la Mac de hoy, no. **Requiere además tocar
   el bucle**, que hoy es round-robin de uno en uno a propósito.
-  · **Video local: los números que sí se pueden dar.** ⚠️ MiniMax Hailuo (H3) es
-  un servicio CERRADO: hasta donde sé no publica pesos descargables, así que
-  "correrlo local" hoy no es una opción de hardware sino de licencia — hay que
-  verificarlo antes de comprar nada. Los modelos de video ABIERTOS comparables
-  (Wan, HunyuanVideo, LTX, Mochi) piden 16-24 GB para 720p y 5 s, y 32-48 GB
-  para 1080p. **2K a 15 segundos de un tirón está fuera del alcance de una sola
-  tarjeta de consumo**: se hace generando a menos resolución y escalando, o con
-  varias tarjetas. Y video + Council NO caben juntos en 32 GB: o dos tarjetas,
-  o se turnan.
+  · 🜂 **MINIMAX H3 SÍ ES DE PESOS ABIERTOS, y una sola 5090 lo corre (corregido
+  2026-08-18 · II, Zak me lo señaló).** Una sala anterior lo dio por cerrado sin
+  buscar bien y citó el peor banco de pruebas publicado (559 s por clip de 5 s
+  con DOS 5090, sin optimizar). Los datos reales: `MiniMaxAI/MiniMax-H3` en
+  Hugging Face, 33B densos, 42,5 GB de pesos, **la licencia excluye EE.UU., UE,
+  Reino Unido y Corea del despliegue local — México NO está excluido**.
+  **Medido por la comunidad en UNA RTX 5090** (ai-muninn): NVFP4, 10 pasos,
+  864×480, clip de 10,125 s en **175 segundos**, pico de **26,9 GB**, y encima
+  con SageAttention APAGADO y la tarjeta limitada a 500W. Las Turbo LoRA
+  (LightX2V) bajan de 25-40 pasos a 4-8.
+  · **Escalado a lo que Zak quiere (15 s, 768p):** ×1,48 de duración y ×2,49 de
+  píxeles → 10,8 min a 10 pasos; con Turbo LoRA y SageAttention, **3 min a 4
+  pasos (previa), 4,5 a 6 pasos y 6 a 8 pasos (final)**. Un video de 10 minutos
+  son 40 tomas: **4 a 5 horas de generación, 6 a 7,5 con reintentos.** Una noche.
+  · ⚠️ **EL 2K NO SE PUEDE EN LOCAL, y esto manda sobre lo demás:** de los tres
+  módulos solo se abrió **H3-Base (768p)**. `H3-Context-IR` y
+  `H3-Regenerate-2K` (el que regenera en contexto a 2K, no un escalador tonto)
+  **siguen siendo API**. Así que local = 768p, y el 2K o pasa por su API o se
+  hace con un escalador abierto, que da menos.
+  · **Council + H3 NO caben en una 5090:** 26,9 GB de H3 + ~19,5 del Council son
+  46,4 contra 32. Pero **con UNA sola tarjeta ya se tienen los dos a la vez**,
+  porque el Council puede quedarse en la Mac (que ya lo corre) y la 5090
+  dedicarse a video: no comparten nada. La SEGUNDA tarjeta no sirve para eso,
+  sirve para sacar el Council de la Mac (y entonces el templo va a 60 cuadros)
+  o para generar dos tomas en paralelo.
+  · **Los 256 GB de RAM NO hacen falta**: en NVFP4 el modelo vive en VRAM y la
+  RAM solo se usa para descargar lo que no cabe. Con 128 va sobrado, y esa
+  diferencia rinde mucho más puesta en la segunda tarjeta. Precios agosto 2026:
+  5090 entre 3.500 y 4.500 USD; estación con dos, Threadripper y 128 GB, entre
+  8.000 y 14.000 según se arme o se compre hecha; fuente de 1.600W mínimo.
   · **El Council dirigiendo un video largo: sí, y el camino está medio
   construido.** No se genera de un tirón: se generan planos de 5-15 s y se
   cosen, con la continuidad sostenida por el último cuadro de cada plano más la
