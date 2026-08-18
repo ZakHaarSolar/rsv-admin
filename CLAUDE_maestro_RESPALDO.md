@@ -1213,6 +1213,15 @@ Aquí queda SOLO lo abierto:
    Espejo. Lo que SÍ me sigue tocando es convertir un motivo en LEY del prompt
    cuando mata a una familia grande (ese día, la LEY DEL ENCUENTRO ÚNICO del
    Nodo A). Detalle en [[proyecto_council_solar]].
+3-bis. ⏳ **Zak revisa con su equipo la DIRECTRIZ DE FORMATO del Nodo A**
+   (2026-08-18 · II) y confirma o corrige. La vigente: línea de resumen «N.
+   NOMBRE — Gancho (3 s) · Dinámica · Giro y cierre · Costo: $X MXN ·
+   Convierte: directo|indirecto · Por qué se comparte» + ficha de seis líneas
+   (Concepto · Elemento clave · Fórmula de impacto · Mecánica con lo que Zak
+   DICE textual paso a paso · Escenarios A/B + giro · Tiempos con el instante
+   exacto). Vive en `salas.ts` (`playbook.reglaEvolucion` del nodo `impacto`).
+   Desde hoy el pergamino le llega al nodo como IDEA en prosa (`ideaDe`), así
+   que su formato depende SOLO de esa directriz.
 4. ⏳ **Activar por primera vez los nodos I, J, K y L** (nacen sin playbook; el
    K empieza por la HOJA DE RESULTADOS si nada se ha rodado).
 5. ⏳ **De Fotón Cero falta** un objeto 3D propio en la sala (hoy se entra por
