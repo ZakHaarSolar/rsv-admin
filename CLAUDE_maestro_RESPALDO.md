@@ -1197,11 +1197,16 @@ Aquí queda SOLO lo abierto:
    pase el token, Claude cablea la lectura en una pasada**. No conviene
    construirlo antes de publicar seguido: el cuello de botella no es leer los
    números. YouTube no entra: ese canal todavía no existe.
-3. ⏳ **Ver una tanda real del Nodo A** con el juez encendido, las fichas nuevas
-   y el primer BORDE escrito: que la ficha sobreviva a la depuración del
-   ranking, que el ciclo no se alargue de más, y que el juez use el eje nuevo
-   (`ROMPE`) sin volverse tijera — si descartara de más, el remedio no es
-   quitarlo, es escribir el borde más estrecho.
+3. ⏳ **Ver una tanda real del Nodo A** con la LLUVIA DE CINCO encendida
+   (2026-08-18 · II: cinco ideas de una línea sobre cinco territorios rotados,
+   el juez las mira de una vez y solo la que sobrevive se desarrolla), el juez,
+   las fichas y los bordes: que el ranking VUELVA A LLENARSE (llegó a la vuelta
+   25 vacío), que la ficha sobreviva a la depuración, que el ciclo no se alargue
+   de más, y que el juez use el eje `ROMPE` sin volverse tijera. Si la lluvia
+   se seca dos veces seguidas, el remedio es territorio nuevo (Nodo F) o una
+   ley, no quitar el juez. El Telegram sale al cerrar la tanda (24 vueltas
+   desde el ÚLTIMO informe, ya no desde la activación): la pantalla dice
+   «tanda k/24».
    · 🜂 **CONSULTA RESPONDIDA (2026-08-17 · XI): tirar al bote NO enseñaba el
    porqué, y por eso el nodo volvía con una hermana.** Zak preguntó si basta con
    tirar algo, o si conviene además venir a contármelo, o darle al bote un campo
