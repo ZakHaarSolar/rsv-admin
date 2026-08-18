@@ -1249,6 +1249,55 @@ Android: primera versión en Prueba interna. Detalle en
 ### 🔵 Decididos, sin construir
 
 
+- **🖥 EL SERVIDOR DE INFERENCIA — consulta respondida (2026-08-18).** Zak
+  preguntó desde qué hardware el lag del Council es CERO, si 32 GB de una 5090
+  son menos que sus 48 GB de Mac, si se pueden correr dos orbes a la vez, qué
+  haría falta para generar video localmente y si el Council podría dirigir un
+  video largo iterando. **Medido en su máquina: M3 Max de 40 núcleos, 48 GB
+  unificados, `qwen3.8:27b` ocupando 17 GB al 100% en GPU con 32K de contexto y
+  `OLLAMA_NUM_PARALLEL` sin definir (o sea, UNO).**
+  · **Los 48 GB NO son 48 GB de gráfica.** Es memoria unificada: la comparten
+  procesador y gráfica, y macOS no le deja tomar más de ~3/4. Y lo que manda la
+  velocidad de generación no es cuánta memoria hay sino a qué velocidad se LEE:
+  el M3 Max va a ~400 GB/s y una 5090 a ~1.790 GB/s. **Con 32 GB dedicados la
+  5090 rinde varias veces más que los 48 unificados**, y el modelo de 17 GB le
+  cabe con 15 de sobra.
+  · **La prueba de que el cuello es compartir:** el HUD marcaba 1,8 a 3,9 t/s
+  mientras el templo 3D renderizaba. Un 27B Q4 en un M3 Max a solas da del
+  orden de 15-20. Casi todo lo que falta se lo come el render, que usa LA MISMA
+  gráfica. **El lag no se arregla con más máquina: se arregla SEPARANDO la
+  inferencia del render.** Con el modelo en otra máquina de la red local, la
+  Mac solo pinta y el lag desaparece, aunque esa máquina sea modesta.
+  · **Cero lag literal desde 24 GB de VRAM dedicada** (que es lo que pide el
+  modelo de 17 GB con su contexto). 32 GB dan aire para más contexto o un
+  modelo mayor. **Los 256 GB de RAM del sistema NO hacen falta** (32-64 sobran:
+  el modelo vive en la gráfica), y el procesador casi da igual.
+  · **Dos orbes a la vez SÍ se puede**, y es una variable, no una ley: hoy es
+  uno porque Ollama corre con un solo carril. Cada carril extra cuesta su
+  propia memoria de contexto (~2-3 GB a 32K); con 15 GB libres caben 4-6. Pero
+  ojo: si el cuello es el ancho de banda, dos en paralelo van a media velocidad
+  cada uno. En una 5090 se nota; en la Mac de hoy, no. **Requiere además tocar
+  el bucle**, que hoy es round-robin de uno en uno a propósito.
+  · **Video local: los números que sí se pueden dar.** ⚠️ MiniMax Hailuo (H3) es
+  un servicio CERRADO: hasta donde sé no publica pesos descargables, así que
+  "correrlo local" hoy no es una opción de hardware sino de licencia — hay que
+  verificarlo antes de comprar nada. Los modelos de video ABIERTOS comparables
+  (Wan, HunyuanVideo, LTX, Mochi) piden 16-24 GB para 720p y 5 s, y 32-48 GB
+  para 1080p. **2K a 15 segundos de un tirón está fuera del alcance de una sola
+  tarjeta de consumo**: se hace generando a menos resolución y escalando, o con
+  varias tarjetas. Y video + Council NO caben juntos en 32 GB: o dos tarjetas,
+  o se turnan.
+  · **El Council dirigiendo un video largo: sí, y el camino está medio
+  construido.** No se genera de un tirón: se generan planos de 5-15 s y se
+  cosen, con la continuidad sostenida por el último cuadro de cada plano más la
+  biblia y las fichas de personaje, que YA existen en Producción. El bucle
+  proponer → criticar → ejecutar → verificar ya funciona con manos (La Fachada
+  escribe código y lo prueba contra el compilador). Y la pieza más difícil —que
+  el nodo VEA lo que generó— también existe: el Panel de Cuidado ya saca un
+  cuadro por segundo a 448 px y el audio a 16 kHz. Falta cablear "ejecutar" al
+  generador y "verificar" a esos cuadros. **Sin construir**: primero el
+  servidor, porque sin él cada iteración de video tumbaría la sala.
+
 - **🧠 QWEN3.8 35B A3B PARA LA MAC — consulta respondida (2026-08-17).** Zak vio
   el aviso en GitHub (un commit de `ms-swift` que ya lo lista) y preguntó si
   conviene cambiarlo por el `qwen3.8:27b` denso que corre hoy.
