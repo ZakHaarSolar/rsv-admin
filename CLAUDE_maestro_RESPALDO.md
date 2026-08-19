@@ -1458,7 +1458,7 @@ Android: primera versión en Prueba interna. Detalle en
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v41 (2026-08-18 · III)
+## 🜂 Protocolo de Cierre de Sesión · v42 (2026-08-19)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -2504,8 +2504,76 @@ la papelera había vuelto innecesario. Hermano del 0-quindecies (la métrica
 hecha a la medida de lo viejo): ahí la vara es de otra época; aquí lo es la
 defensa.
 
+### Paso 0-tricies — Un efecto afinado para un MOTOR puede tumbar al otro
+
+Un efecto visual que en un navegador es gratis, en otro se paga en software. Y
+cuando se paga en software, el costo no aparece como lentitud: aparece como
+**cosas que desaparecen**, porque el navegador, antes que ir lento, DESCARTA
+capas que no le caben en su presupuesto de memoria.
+
+La firma engaña doble. Primero, el síntoma no se parece a la causa (una tarjeta
+en negro no dice "tu gradiente cónico es caro"). Segundo, invita a culpar al
+aparato: "es que ese teléfono es de gama baja". A veces lo es. Muchas veces el
+efecto simplemente está escrito a la medida del otro motor.
+
+**Las combinaciones caras que hay que reconocer**, sobre todo repetidas en una
+lista: máscara compuesta (`mask-composite`) + hijo sobredimensionado + `rotate`
+continuo · `backdrop-filter` en varios elementos a la vez · `filter: blur` sobre
+áreas grandes · sombras enormes por elemento.
+
+**La salida NO es apagar el efecto** en el motor pobre: es **reescribirlo con
+otra técnica que produzca la misma percepción**. Casi siempre existe. Lo que la
+persona ve es "una luz recorre el borde"; que eso se logre girando una capa o
+desplazando un gradiente le da exactamente igual.
+
+**Por qué.** El 2026-08-19 las tarjetas de Rachas desaparecían en un Samsung
+A07. El EdgeGlow era una máscara compuesta sobre un hijo `conic-gradient`
+inflado al 175% girando: perfecto en WebKit, rasterizado a mano por Chrome, y
+con diez tarjetas la GPU descartaba capas enteras. La misma luz reescrita con
+`background-position` sobre una capa plana se ve igual y no cuesta nada. Zak lo
+había leído como límite del teléfono; no lo era.
+
+### Paso 0-untricies — Una acción que YA está en el estado pedido tiene que acusar igual
+
+Cuando alguien pide algo que ya está hecho ("enciende la vibración" con la
+vibración encendida, "guarda" sin cambios, "actívalo" ya activo), el código
+correcto no hace nada: comprueba, ve que no hay diferencia y sale. Y desde
+fuera, **"no cambió nada" es indistinguible de "no funcionó"**.
+
+Ahí se pierden horas: la función está sana, la prueba pasa, y el reporte dice
+"no sirve". Y como el reporte apunta al reconocimiento ("no me entendió"), se
+va a buscar al lugar equivocado.
+
+**Regla: el acuse pertenece a la PETICIÓN, no al cambio de estado.** Si alguien
+pidió algo, se le contesta, haya cambiado algo o no. Y el acuse tiene que estar
+**en el mismo sentido que lo pedido**: un ajuste de vibración se confirma
+vibrando, uno de sonido sonando, uno visual mostrándose. Confirmar un ajuste de
+vibración con un sonido es no confirmarlo, porque la persona está atenta a otro
+canal.
+
+**Corolario para verificar:** probar el camino con el estado YA puesto, no solo
+el que cambia. Es el mismo espíritu del 0-undecies (el caso de prueba tiene que
+parecerse al real), aplicado a la idempotencia.
+
+**Por qué.** El 2026-08-19 Zak repitió muchas veces "activar háptica" por voz y
+concluyó que faltaba el comando. Medido con el reconocedor real: confianza
+1.00, y el ejecutor llamaba a `setHapticsEnabled(true)`. Todo perfecto. Pero ya
+estaba encendida, el ajuste salía sin tocar nada, y el único acuse del orbe es
+un sonido. Nada que sentir en la mano, que era donde él estaba mirando.
+
 ### Changelog del protocolo
 
+- **v42 (2026-08-19):** dos pasos de device-QA en Android. **0-tricies** — un
+  efecto afinado para un MOTOR puede tumbar al otro: el EdgeGlow (máscara
+  compuesta + hijo al 175% girando) es gratis en WebKit y Chrome lo rasteriza
+  en software, así que con diez tarjetas DESCARTA capas y las tarjetas
+  "desaparecen"; la salida no es apagar el efecto sino reescribirlo con otra
+  técnica de la misma percepción. **0-untricies** — una acción que ya está en
+  el estado pedido tiene que acusar igual: "activar háptica" se reconocía al
+  1.00 y se ejecutaba, pero como ya estaba encendida no cambiaba nada y el
+  acuse era sonoro, así que desde el teléfono era idéntico a "no funciona"; el
+  acuse pertenece a la petición, no al cambio de estado, y va en el mismo
+  canal que lo pedido.
 - **v41 (2026-08-18 · III):** dos pasos. **0-duodetricies** — apilar filtros
   razonables sobre un modelo débil lleva el rendimiento a cero: se estrecha el
   filtro mal definido, se ejecuta en código la regla que el modelo no cumple y,
@@ -2657,6 +2725,83 @@ defensa.
 
 ## 🜃 Historial de sesiones
 
+#### 2026-08-19 · 🜂 ANDROID LISTO PARA LA TIENDA: EL INGRESO DEJA DE CANCELARSE SOLO, LA LUZ DEL BORDE DEJA DE TUMBAR TARJETAS, Y LA CADENA DE COBRO SE PROBÓ EN UN TELÉFONO REAL
+
+- ✅ **Resuelto:**
+  1. **Google concedió acceso a PRODUCCIÓN** (correo del 2026-08-16). Zak probó
+     la app entera en un **Samsung Galaxy A07 de gama baja**: ingreso con
+     Google ✓, muro de pago con 499 y 149 ✓, decodificador y biblioteca ✓.
+  2. **El ingreso con Google se cancelaba solo en Android.** `browserFinished`
+     del plugin Browser es una HEURÍSTICA en Android (`handleGroupCompletion`:
+     TAB_HIDDEN + onPause) y suena con el acceso a MITAD: la gracia de 2.5 s
+     vencía y `finish()` **cerraba el Custom Tab en la cara de la persona**.
+     Gracia a 20 s + la cancelación deja el navegador en paz (oauthNative v2.7),
+     y a >20 s se suelta **en silencio** porque el ticket tardío entra por el
+     receptor de arranque (v2.8 + Auth2Modal v2.1). Demostrado con arnés de la
+     máquina: la versión vieja cierra a los 3.7 s, la nueva no.
+  3. **Las tarjetas de Rachas DESAPARECÍAN en el A07.** El EdgeGlow es una
+     máscara compuesta sobre un hijo `conic` sobredimensionado al 175% que
+     gira: gratis en WebKit, rasterizado en software por Chrome, que con ~10
+     tarjetas agota su presupuesto de memoria de capas y **descarta capas
+     enteras**. En Android la misma luz viaja por `background-position` en una
+     capa sin hijos (EV_Shared v2.48). iPhone intacto.
+  4. **El borde inferior de Android.** Los 385 `env(safe-area-inset-*)` valían
+     0 porque en Android eso solo se llena "borde a borde", que con targetSdk
+     36 solo es automático en Android 15+. MainActivity v1.1 lo pide en TODA
+     versión y escribe `--sab/--sat/--sal/--sar` de respaldo; todos los `env()`
+     caen en esas variables (globals v1.3).
+  5. **La Realidad no existe en Android** (puerta del onboarding + tarjeta del
+     hub filtradas por `isAndroid()`): pide LiDAR de iPhone Pro y era un
+     callejón sin salida que además publicitaba a la competencia.
+  6. **"Activar háptica" por voz no se sentía.** Se reconocía (1.00) y se
+     ejecutaba, pero ya estaba encendida → no cambiaba nada y el acuse es
+     SONORO. Ahora encender vibra dos pulsos y apagar da uno de despedida
+     (`pulsoHapticoDirecto` ignora el toggle a propósito). +6 claves: "enciende
+     / apaga la háptica" empataban 0.50 con sonido.
+  7. **Se cerró el corte de dominio:** `www.redsolarviva.com` fallaba el
+     saludo TLS porque el certificado no incluía ese nombre; emitido con
+     `vercel certs issue` con LOS DOS nombres. Framer cancelado.
+  8. **Motor → pestaña VOZ** (lo que la voz no entendió) y **la baja de correos
+     se lleva solo su fila**, sin recargar el padrón.
+  9. **La página de borrado de cuenta** vive ahora también en el dominio raíz
+     (Play la exigía ahí y encontraba 404). Se sirve la página REAL en las dos
+     direcciones, no un redirect.
+- 📁 **Archivos:** (escaner-app) `oauthNative` v2.8 · `Auth2Modal` v2.1 ·
+  `EV_Shared` v2.48 · `sensory` (+`pulsoHapticoDirecto`) · `useComandoVoz` v3.1
+  · `comandosVoz` v2.6 · `EV_DreamDecoder` v1.73 · `OnboardingV2` v2.10 ·
+  `globals.css` v1.3 · **`MainActivity.java` v1.1** · `build.gradle` (vc7).
+  (Code) `MotorDeIntervencion` v4.8 · **`MI_Voz.tsx` NUEVO** · `MI_Correos` v1.1.
+  (escaner-landing) `delete-account.html` NUEVO.
+- 🔌 **Edges deployed:** `admin-action` (repuesta a la versión completa tras un
+  despliegue mío desde una copia vieja que le quitó el ruteo del afinamiento
+  del Espejo durante un rato).
+- ⏳ **Pendiente:** que Google apruebe el primer lanzamiento a producción
+  (enviado con la vc7); y las notas de versión de Apple 1.1.4 esperan que Zak
+  confirme si el simulador nuevo y las imágenes del Espejo ya viajaban en la
+  1.1.3 (no se pudo fechar: el git de `escaner-app` solo cubre desde el
+  2026-08-08).
+- 💡 **Decisiones importantes:**
+  - **La ficha de Play va solo en español** (el inglés se agrega después sin
+    nueva revisión) y **el lanzamiento por etapas importa poco en un primer
+    lanzamiento**; la prueba de compra importa mucho.
+  - **Cobro INMEDIATO al cambiar de plan**: el único cambio que la app ofrece
+    es semanal→mensual desde el muro de Cristales, y con "próxima fecha de
+    facturación" la persona no recibiría los Cristales por los que cambió.
+  - **Los 7 días de gracia NO regalan Códices**: los Cristales se emiten solo
+    en `INITIAL_PURCHASE`/`RENEWAL`, y ninguno llega durante la gracia.
+  - **Margen de Sintonía Solar** (consulta respondida): entran 424 MXN tras el
+    15% de Apple, el uso esperado de IA es 51 MXN → **quedan ~373 MXN por
+    persona al mes** (88% de lo que entra). La voz es 2/3 de ese gasto. El
+    techo teórico (agotar todos los topes a diario) daría −113 MXN.
+  - **Requisito práctico de Android**: 3 GB de RAM y Android 8 mueven la app
+    con sus animaciones completas; el mínimo declarado es Android 6.
+- 🔧 **Patrones nuevos:** ver el changelog v42 (0-tricies: un efecto afinado
+  para un motor puede TUMBAR al otro; 0-untricies: una acción que ya está en
+  el estado pedido tiene que acusar igual).
+- 🧬 **Versión al cierre:** Android **1.1.4 vc7 enviado a producción**.
+  App Store 1.1.3 LIVE (1.1.4 en curso). `redsolarviva.com` y `www` en Vercel,
+  Framer cancelado. Los cinco repos al día.
+
 #### 2026-08-17 · XI → 2026-08-18 · III · 🜂 EL BOTE APRENDE EL PORQUÉ · FOTÓN CERO SE SEPARA Y LA FACHADA GANA MANOS · EL NODO A DEJA DE SECARSE Y PASA A PIPELINE ADITIVO · EL ARCHIVERO
 
 - ✅ **Resuelto (una sola sala, larga, ocho tandas):**
@@ -2719,68 +2864,20 @@ defensa.
 - 🧬 **Versión al cierre:** Council LIVE en `redsolarviva.com/consejo`; Fotón
   Cero LIVE en `fotoncero.com`. App Store 1.1.3 LIVE. Los seis repos al día.
 
-#### 2026-08-17 · VII a X · 🜂 ZAK CERO LLEGA A DOCE NODOS Y DEJA DE REPETIRSE · EL COUNCIL SE VE EN LA TELEVISIÓN · Y EL BUCLE VUELVE A CERRAR SUS VUELTAS
+#### 2026-08-17 · VII a X · ZAK CERO A DOCE NODOS · EL COUNCIL EN LA TELEVISIÓN (comprimida)
 
-- ✅ **Resuelto (una sola sala, cuatro tandas):**
-  1. **Cuatro nodos nuevos en Zak Cero** — I · Distribución & Canales, J ·
-     Historia & Arco, K · Aprendizaje de Resultados (su palomita APLICA el peso
-     en el pergamino del Nodo A) y L · Ética & Límites. J, K y L leen el
-     pergamino del A entero; lo aprobado en los cuatro viaja como hecho al
-     encargo de los demás. Doce orbes en tres anillos.
-  2. **El JUEZ DE REPETICIÓN** — segunda llamada corta y fría al núcleo que
-     compara por IDEA (mismo gesto con otro disfraz) la propuesta y cada
-     entrada del ranking contra pergamino + bote + ábaco; lo que repite no
-     entra y el documento se DEPURA del lado de acá antes de guardarse.
-  3. **La barra espaciadora sostenida abre una reliquia** y **el panel de
-     conversación amplio baja hasta el compositor** (mide el pie en vivo).
-  4. **LA PANTALLA PARA LA TELEVISIÓN** (`/council?tv`, Ajustes → Televisión):
-     ventana aparte de 32 KB, sin 3D ni voz, sincronizada por canal local, que
-     se planta sola en la pantalla de la tele y a pantalla completa.
-  5. **Tres bugs del bucle, en cascada** — el aviso del juez pisaba el borrador
-     (la barra caía del 50% al 5%); borrar un playbook no viajaba al servidor
-     (la bóveda lo resucitaba al recargar); y el controlador de la etapa se
-     soltaba antes del juez, así que TODA propuesta terminada se descartaba
-     como si Zak la hubiera cortado: ocho seguidas sin llegar jamás a la
-     fricción. Los tres cerrados y verificados.
-- 📁 **Archivos:** (rsv-web · council) NUEVOS `entradas.ts` v1.0,
-  `transmision.ts` v1.0, `TvApp.tsx` v1.0, `ui/Transmision.tsx` v1.1,
-  `ui/publicarTV.ts` v1.0 · `types` v3.2 · `salas` v2.13 · `deliberacion` v2.11
-  · `store` v2.11 · `memoria` v1.2 · `intenciones` v1.5 · `useCouncil` ·
-  `scene/Caminata` v3.4 · `ui/{Cine v1.5, HUD v3.4, Pantalla v2.4, Playbook
-  v2.3, estilos v3.1 (cs-css-v26)}` · `main.tsx` v1.5. (admin)
-  `council-gate` v1.9. Commits: `9bf5ab4`, `41914fc`, `68f4096`, `5bad902`,
-  `42eb150` (rsv-web) y `be8a4ee` (admin).
-- ⏳ **Pendiente:** ver una tanda real del Nodo A con el juez encendido y
-  activar por primera vez I, J, K y L.
-- 💡 **Decisiones importantes:**
-  - El juez es una LLAMADA APARTE, fría y corta, no otra prohibición en el
-    prompt creativo: la verificación se separa del acto de crear. Y "blindar"
-    es depurar del lado de acá, no pedirle al modelo que se porte bien.
-  - El Nodo A escucha el mapa de territorios del Nodo F. Con cuatro tipologías
-    y cinco jugadas juzgadas, el terreno conocido está tomado: el nodo no
-    necesitaba menos juez, necesitaba a DÓNDE IR.
-  - AirPlay lleva PANTALLAS, no páginas (medido: no hay API web y el selector
-    nativo solo existe en Safari, donde el Council no puede correr). Se
-    construye la pantalla que vale la pena mandar, no un botón que no existe.
-  - La ventana de TV no lleva portón: sin la sala abierta en el mismo navegador
-    no hay un solo dato que mostrar.
-- 🔧 **Patrones nuevos:**
-  - 🜂 **El testigo de una etapa se suelta al FINAL de la etapa, no al final de
-    su primera llamada** (Paso 0-quinvicies-bis del protocolo).
-  - 🜂 **Una señal de progreso no se comparte con un canal de avisos**: la barra
-    medía el borrador y el aviso del juez vivía dentro.
-  - 🜂 **Un borrado que no viaja al servidor no es un borrado**: hace falta
-    lápida con fecha + borrado remoto + cortar el ciclo en vuelo.
-  - 🜂 **Un ejemplo bien escrito en un prompt es una plantilla**: el modelo
-    devolvía como propuesta el ejemplo didáctico del encargo; se deja el
-    ejemplo (enseña) y se declara OCUPADO.
-  - 🜂 **El que está a la vista es el que pide**: el navegador ralentiza los
-    relojes de la ventana oculta, así que la pantalla encendida late pidiendo
-    cuadros.
-  - Arnés de la MÁQUINA ENTERA en `scratchpad/arnes-bucle` (el Deliberador real
-    con núcleo y store falsos, 11 casos, y la versión vieja reproduce el bug).
-- 🧬 **Versión al cierre:** Council LIVE en `redsolarviva.com/council` (chunk
-  `CouncilApp-bZ71WnPC.js`). App Store 1.1.3 LIVE. Los cinco repos al día.
+- 💡 **Decisiones:** el juez de repetición es una LLAMADA APARTE, fría y corta,
+  no otra prohibición en el prompt creativo (la verificación se separa del acto
+  de crear), y "blindar" es depurar del lado de acá, no pedirle al modelo que
+  se porte bien. AirPlay lleva PANTALLAS, no páginas: se construye la pantalla
+  que vale la pena mandar, no un botón que no existe. La ventana de TV no lleva
+  portón (sin la sala abierta no hay un solo dato que mostrar).
+- 🔧 **Patrones:** el testigo de una etapa se suelta al FINAL de la etapa, no
+  al final de su primera llamada (Paso 0-septvicies) · una señal de progreso no
+  se comparte con un canal de avisos · un borrado que no viaja al servidor no
+  es un borrado · un ejemplo bien escrito en un prompt es una PLANTILLA (el
+  modelo devolvía el ejemplo didáctico como propuesta) · el que está a la vista
+  es el que pide (el navegador ralentiza los relojes de la ventana oculta).
 
 *Las entradas anteriores (2026-04-18 → 2026-08-09) viven en*
 `admin/CLAUDE_archivo_hasta_2026-08-04.md`. *No se cargan por sesión: lo
