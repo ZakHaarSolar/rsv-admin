@@ -1439,13 +1439,18 @@ Android: primera versión en Prueba interna. Detalle en
   `escaner-landing`). Mientras la raíz no sea repo, cada cierre de sala deja
   una copia en `admin/CLAUDE_maestro_respaldo.md` (que sí viaja). Si algún día
   se hace repo de la raíz, este bullet se va.
-- **Device-QA de la ESCUCHA AUTOMÁTICA de la Matriz** (construida 2026-08-17,
-  LIVE en escritorio): con la tecla V encendida, mandar un mensaje largo y
+- **Device-QA de la ESCUCHA AUTOMÁTICA de la Matriz** (LIVE en escritorio
+  desde el 2026-08-19): con la tecla V encendida, mandar un mensaje largo y
   escuchar la cadena entera — que la voz arranque mucho antes que hoy, que las
   uniones entre tramos no se oigan, y que tocar Detener o mandar otro mensaje
   la corte limpio. El motor y la partición están probados con arnés (36 ✓) y el
-  botón dorado verificado en pantalla; lo que falta es oírla, que exige sesión
-  y llamadas reales de voz. Detalle en [[proyecto_escucha_automatica_matriz]].
+  botón dorado verificado en pantalla; lo que falta es OÍRLA, que exige sesión
+  y llamadas de pago. Detalle en [[proyecto_escucha_automatica_matriz]].
+- **Ver en el teléfono la tanda del 2026-08-19 · II:** la barra de reflejos con
+  su buscador, el compositor abriéndose en dos renglones, las Rachas en filas
+  parejas y la puerta de "Tu plan" para quien no tiene. Todo verificado midiendo
+  en pantalla de 375, pero ninguna de esas cuatro capas se pudo abrir con sesión
+  real desde aquí (el gate de cuenta y el de Clerk lo impiden).
 - **Device-QA del escape del navegador de Instagram** desde un enlace REAL
   (mandarse el link por DM y abrirlo ahí). El código está probado; falta el
   caso real.
@@ -1458,7 +1463,7 @@ Android: primera versión en Prueba interna. Detalle en
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v42 (2026-08-19)
+## 🜂 Protocolo de Cierre de Sesión · v43 (2026-08-19 · II)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -2561,8 +2566,78 @@ concluyó que faltaba el comando. Medido con el reconocedor real: confianza
 estaba encendida, el ajuste salía sin tocar nada, y el único acuse del orbe es
 un sonido. Nada que sentir en la mano, que era donde él estaba mirando.
 
+### Paso 0-duotricies — Lo que se pide para UNA superficie NO se aplica a las dos
+
+Cuando el pedido nombra una cara ("en celular", "en escritorio", "en la
+Matriz"), el cambio va SOLO ahí. Extenderlo a las demás no es generosidad: es
+ampliar el alcance sin permiso, y encima suele romper la otra, porque un diseño
+que resuelve un problema de 375 píxeles casi nunca es el correcto en 1600.
+
+**La trampa es que la extensión se siente coherente.** "Ya que lo arreglé aquí,
+que quede igual en todas" suena a consistencia y es lo contrario: la
+consistencia real es que cada superficie resuelva bien SU problema. Si al
+arreglar una se te ocurre que la otra también lo necesita, se dice en una línea
+del reporte y se espera, no se hace de paso.
+
+**Y la verificación se hace en la superficie del pedido Y en la que tocaste.**
+Si el diff cruza a una cara que nadie mencionó, esa cara hay que mirarla antes
+de reportar.
+
+**Por qué.** El 2026-08-19 Zak pidió rediseñar las Rachas "en celular, no en
+escritorio" y lo apliqué a las dos: la columna angosta de 360 que en el
+teléfono es correcta dejaba, en un monitor, dos tercios de pantalla vacíos.
+Textual: *"¿Qué hiciste en escritorio? Se ve horrible… un chorizo"*. El arreglo
+final no fue deshacer, fue lo que debió hacerse desde el principio: la misma
+fila, repartida en las columnas que quepan según la pantalla.
+
+### Paso 0-tertricies — Una medida que DECIDE el layout no puede depender del layout que decide
+
+Si mides algo para elegir entre dos formas, y la forma elegida cambia esa misma
+medida, no tienes una decisión: tienes un columpio. El síntoma no es que
+oscile a la vista (React suele estabilizarlo en algún extremo arbitrario), es
+que el comportamiento se vuelve **impredecible y distinto según por dónde
+llegaste** al mismo estado.
+
+**La cura son dos separaciones:**
+1. **La vara se fija.** Se mide siempre contra la misma referencia —guardada
+   mientras el elemento vive en la forma base—, no contra la geometría de
+   ahora. Como la vara no cambia de tamaño con la decisión, la decisión es
+   estable.
+2. **La consecuencia se recalcula después.** Todo lo que dependía del tamaño
+   viejo (aquí, la altura) se vuelve a calcular en una segunda pasada, con la
+   forma nueva ya aplicada. Sin eso, el elemento se queda con la medida de la
+   forma que abandonó, que es exactamente lo que se ve como un hueco.
+
+🜂 **Y la vara se guarda con el valor del RENDER, no con un ref.** Un ref que
+se actualiza en un `useEffect` normal está un paso atrasado dentro de un
+`useLayoutEffect`: en la pasada del cambio todavía tiene el valor anterior. Si
+lo usas para decidir si guardar la referencia, la guardas justo en el momento
+equivocado y queda corrompida **para siempre y en silencio** — todo sigue
+"funcionando", solo que el salto no vuelve a ocurrir nunca.
+
+**Por qué.** El 2026-08-19 el compositor del Espejo debía pasar a dos renglones
+en la segunda línea. La primera versión decidía y medía con una sola lectura:
+el campo saltaba al ancho completo conservando el alto que había calculado
+siendo angosto (hueco enorme), y de fondo la condición del salto dejaba de
+cumplirse en cuanto el salto ocurría, porque al ensancharse el texto ya cabía
+en una línea. Zak: *"quedó peor"*. Y el segundo defecto —la vara guardada con
+el ancho grande— lo encontré instrumentando el propio cálculo, no leyéndolo:
+dos mediciones anteriores me habían dado lecturas falsas por el estado sucio de
+la recarga en caliente.
+
 ### Changelog del protocolo
 
+- **v43 (2026-08-19 · II):** dos pasos sobre el ALCANCE y la MEDIDA.
+  **0-duotricies** — lo que se pide para UNA superficie no se aplica a las dos:
+  el rediseño de Rachas pedido "en celular" se extendió a escritorio y ahí la
+  columna angosta dejaba dos tercios de pantalla vacíos ("un chorizo"); la
+  consistencia real es que cada cara resuelva bien su problema, y si se te
+  ocurre que la otra lo necesita, se dice y se espera. **0-tertricies** — una
+  medida que decide el layout no puede depender del layout que decide: la vara
+  se fija (guardada en la forma base) y la consecuencia se recalcula en una
+  segunda pasada; y esa vara se guarda con el valor del RENDER, nunca con un
+  ref, que dentro de un layout effect va un paso atrasado y la corrompe en
+  silencio para siempre.
 - **v42 (2026-08-19):** dos pasos de device-QA en Android. **0-tricies** — un
   efecto afinado para un MOTOR puede tumbar al otro: el EdgeGlow (máscara
   compuesta + hijo al 175% girando) es gratis en WebKit y Chrome lo rasteriza
@@ -2725,6 +2800,77 @@ un sonido. Nada que sentir en la mano, que era donde él estaba mirando.
 
 ## 🜃 Historial de sesiones
 
+#### 2026-08-19 · II · 🜂 EL ESPEJO SE VUELVE APP DE TELÉFONO: BARRA DE REFLEJOS, COMPOSITOR DE DOS RENGLONES Y LA PUERTA DEL PLAN · LA MATRIZ SE LEE SOLA · EL iPHONE VUELVE A COMPILARSE SIN MANOS
+
+- ✅ **Resuelto:**
+  1. **LA ESCUCHA AUTOMÁTICA DE LA MATRIZ** (tecla V, botón de voz dorado con
+     aro): el reflejo se lee solo SIN esperar a que termine de escribirse. Se
+     parte en tramos crecientes mientras llega (uno corto para arrancar pronto,
+     uno mediano para cubrir la síntesis del siguiente, y el resto entero a la
+     máquina de siempre) y cada tramo se precalienta en cuanto existe, así que
+     al tocarle sonar ya vive en el cofre. De ~1 min a ~12 s hasta la primera
+     palabra hablada. El motor no cambió: `precalentarVoz` sintetiza sin sonar
+     y `cortePrimeraVoz` decide dónde partir un texto que aún llega.
+  2. **LA BARRA DE REFLEJOS LLEGA AL TELÉFONO** (el MISMO panel, no una copia):
+     lista, BUSCADOR por nombre sin tildes, papelera y lápiz visibles al toque,
+     y al pie Tu uso · Tu plan · qué-es. Se abre desde un botón nuevo bajo la
+     flecha de regreso. El menú del sigilo queda con los ajustes de la lectura
+     (voz, qué es, eliminar) y la lista a pantalla completa se retiró (454
+     líneas), con su renombrar mudado a la fila de la barra.
+  3. **EL CARRIL PROFUNDO TENÍA EL RELOJ DEL RÁPIDO.** Consulta larga en
+     profundo → "(timeout)" sin reflejo y con el turno cobrado. El corte lo
+     hacía el CLIENTE a los 75 s mientras el servidor tenía permiso de tardar
+     120 en ese carril. Ahora el reloj se lee del propio encargo (135 s / 75 de
+     silencio). **Y el profundo se cobra en dos tramos** (1 al entrar, 7 al
+     confirmar el reflejo): un turno caído ya no se cobra entero.
+  4. **RESONANCIA EN CERO:** la plantilla del prompt traía los siete valores en
+     0.0 y copiarla producía una señal presente y hueca que pasaba el control.
+     Plantilla con valores variados + siete ceros tratados como ausencia.
+  5. **AL ENVIAR SE VA AL FONDO** y nace el interruptor de seguimiento (tecla
+     S). La cuenta anterior NUNCA llegaba al fondo: 290 px de hueco con tres
+     líneas y 876 con un dictado.
+  6. **LAS FOTOS YA NO SE QUEDAN ATRÁS:** prepararlas es asíncrono y nada lo
+     decía, así que el envío salía sin ellas. Ahora se ven entrando y el envío
+     las espera.
+  7. **LAS IMÁGENES DE LA MATRIZ ELIGEN SU ESTILO** (el cine analógico se
+     retira; solo se veta el texto dentro de la imagen) y **se ven enteras**: el
+     zoom del 4,5% existía para comerse las franjas que dibujaba ese estilo.
+  8. **"SIN PLAN ACTIVO" ES AHORA LA PUERTA:** nombra Sintonía Solar, muestra
+     los dos ritmos (499/mes · 149/semana) y lleva al selector con un toque.
+  9. **RACHAS EN FILAS PAREJAS**, una columna en el teléfono y tres en pantalla
+     grande. Tres cosas empujaban solo a algunas (matiz del año, sello de pausa
+     y récord): las tres tienen su sitio reservado.
+  10. **EL COMPOSITOR DEL ESPEJO SE ABRE EN DOS RENGLONES** en el teléfono
+      desde la segunda línea, con el texto a todo el ancho.
+  11. **EL DESPLIEGUE AL iPHONE VUELVE A SER DE CLAUDE Y ES UN SOLO COMANDO:**
+      `./al-iphone.sh`, en el repo.
+- 📁 **Archivos:** (escaner-app) `EV_Oraculo` v6.8 · `EV_Rafaga` v5.29 ·
+  `EV_Rachas` v2.7 · `espejoVozFish` v2.27 · `espejo.es/en` v1.20 ·
+  **`al-iphone.sh` NUEVO** · `publicar-escritorio.sh` (versión derivada, ya no
+  escrita a mano) · `.gitignore`/`.vercelignore` (DerivedData).
+  (admin) `oraculo-chat` v1.46 · `espejo-imagen` v2.7.
+- 🔌 **Edges deployed:** `oraculo-chat` v1.46 (cobro del profundo en dos
+  tramos) · `espejo-imagen` v2.7 (sin estilo de casa en el carril de la Matriz).
+- ⏳ **Pendiente:** oír la escucha automática con voz real (exige sesión y
+  llamadas de pago) y ver las Rachas en el teléfono.
+- 💡 **Decisiones importantes:**
+  - **LA APP MANDA SOBRE LA WEB** (Zak, textual): un cambio "desplegado a
+    Vercel" NO está en su app de escritorio. Un cambio de producto se cierra
+    con web + app de macOS con su actualizador + iPhone.
+  - **MÚSICA: los SEIS álbumes, no uno** (corregí mi propia recomendación). El
+    trabajo real es el reproductor con su lista y se hace UNA vez; seis álbumes
+    se leen como discografía y uno como tienda a medio surtir. El valor no es
+    tener música: es que la app SUENE a él (ambiente de las ceremonias), que es
+    lo único que Spotify no puede hacer. Sin enlace a Spotify dentro.
+  - **En el teléfono "Tu plan" NO va a Stripe**, abre la pestaña de adentro:
+    mandar a pagar fuera desde iOS rompe las reglas de la tienda.
+- 🔧 **Patrones nuevos:** ver el changelog v43 (0-duotricies: lo que se pide
+  para UNA superficie no se aplica a las dos; 0-tertricies: una medida que
+  decide el layout no puede depender del layout que decide).
+- 🧬 **Versión al cierre:** escritorio **1.1.18** publicada y verificada ·
+  iPhone con la última instalada · App Store 1.1.3 LIVE (1.1.4 en curso) ·
+  Android vc7 enviado a producción. Los cinco repos al día.
+
 #### 2026-08-19 · 🜂 ANDROID LISTO PARA LA TIENDA: EL INGRESO DEJA DE CANCELARSE SOLO, LA LUZ DEL BORDE DEJA DE TUMBAR TARJETAS, Y LA CADENA DE COBRO SE PROBÓ EN UN TELÉFONO REAL
 
 - ✅ **Resuelto:**
@@ -2802,82 +2948,22 @@ un sonido. Nada que sentir en la mano, que era donde él estaba mirando.
   App Store 1.1.3 LIVE (1.1.4 en curso). `redsolarviva.com` y `www` en Vercel,
   Framer cancelado. Los cinco repos al día.
 
-#### 2026-08-17 · XI → 2026-08-18 · III · 🜂 EL BOTE APRENDE EL PORQUÉ · FOTÓN CERO SE SEPARA Y LA FACHADA GANA MANOS · EL NODO A DEJA DE SECARSE Y PASA A PIPELINE ADITIVO · EL ARCHIVERO
+#### 2026-08-17 · XI → 2026-08-18 · III · EL COUNCIL: BOTE CON PORQUÉ, FOTÓN CERO APARTE, PIPELINE ADITIVO (comprimida)
 
-- ✅ **Resuelto (una sola sala, larga, ocho tandas):**
-  1. **El bote gana su PORQUÉ y el juez lo usa como BORDE** (`ROMPE`): al tirar
-     una jugada se escribe en una línea por qué murió; viaja arriba del encargo
-     como RAZÓN y mata a la familia, no al ejemplar. LEY DEL ENCUENTRO ÚNICO.
-  2. **Fotón Cero se va a su propio proyecto y dominio** (`fotoncero.com`,
-     repo privado `ZakHaarSolar/fotoncero`): compartir el build con
-     redsolarviva.com era un riesgo real. **La Fachada gana manos**
-     (`taller-web.ts`): escribe archivos de verdad en el disco dentro de un
-     corral de tres cerraduras (permiso de UNA carpeta · lista de rutas y
-     dependencias · nada vale hasta que compila, y se revierte solo).
-  3. **El portón deja cambiar de cuenta** (entrar con el correo equivocado era
-     un callejón). `/council` → `/consejo`.
-  4. **La vara de poder** (mover orbes; el toque abre y el sostenido mueve en
-     las reliquias), **las etapas dicen el oficio** (ideando · revisando ·
-     escribiendo código), el reflejo del suelo deja de parpadear verde, los
-     hilos siguen al orbe movido, la vara en la pared opuesta a las puertas.
-  5. **El MODO NÚCLEO (tecla X)**: el templo se desmonta y el núcleo pasa de
-     3,6 a 6,5 t/s (medido). Se recuerda al recargar.
-  6. **Los dorados dejan de duplicarse y de resucitar** (dos fallas: el lector
-     de la semilla no conocía el formato viejo de id, y la siembra levantaba
-     la lápida); la chapa cuenta lo real; la ficha es un solo texto; el
-     pergamino viaja al nodo como IDEA en prosa (no como plantilla); regla
-     dura del Escáner (lee ETIQUETAS, jamás comida servida).
-  7. **El Nodo A dejaba el ranking vacío**: misma idea = mismo GESTO y misma
-     MECÁNICA (el premio no cuenta); la fricción solo descarta por causal dura;
-     la que sobrevive ENTRA; la LLUVIA DE CINCO sobre territorios rotados; la
-     tanda cuenta desde el último informe (Telegram) y se lee «tanda k/24».
-  8. **PIPELINE ADITIVO + EL ARCHIVERO**: directriz nueva del Nodo A (cinco
-     líneas rojas + formato exigido), tres ideas nuevas por vuelta, fricción
-     por idea, el documento SOLO CRECE y al cerrar la tanda se sella como
-     Sesión N en el Archivero (mueble nuevo, ventana con copiar una/todas,
-     sellar a mano). El bote se lee de diez en diez y se copia con su borde.
-- 📁 **Archivos:** (rsv-web · council) `taller-web.ts` NUEVO, `scene/Vara.tsx`
-  NUEVO, `types` v3.8, `store` v2.18, `salas` v2.19, `deliberacion` v2.19,
-  `entradas` v1.4, `gate/AdminGate` v1.7, `CouncilApp` v1.4, `useCouncil`,
-  `scene/{CouncilScene, Caminata v3.5, Reliquias v1.5, Orbe v1.8, Enlaces
-  v1.2, tocables}`, `ui/{Cine v1.8, Reliquia v1.7, Playbook v2.7, HUD v3.5,
-  entrada v1.1, estilos v3.7}`, `sonido`. (fotoncero) proyecto entero NUEVO.
-  (rsv-web) `main.tsx` v1.7.
-- ⏳ **Pendiente:** ver una tanda real del Nodo A con el pipeline aditivo (que
-  el modelo respete el formato de las tres fichas y `partirFichas` las separe);
-  Zak revisa la directriz de formato con su equipo; la Fachada escribiendo de
-  verdad con la carpeta abierta; las puertas (Zak vio que no se guardaban; aquí
-  sí se guardan: pedirle los pasos exactos si vuelve a pasar).
-- 💡 **Decisiones importantes:**
-  - **Pagar por alguien NO es una idea, es un premio** (Zak): el juez compara
-    gesto y mecánica, nunca la recompensa.
-  - **El catálogo del Nodo A solo crece** y se sella por sesiones; el ranking
-    de cinco que competía se fue (se ciclaba y sobrescribía).
-  - **Fotón Cero vive aparte** porque un nodo va a escribir código ahí sin que
-    nadie revise cada línea: lo peor que puede pasar es que se rompa esa página.
-  - **El servidor de inferencia** (consulta): el lag es compartir la gráfica;
-    cero lag desde 24 GB dedicados; 256 GB de RAM no hacen falta; H3 SÍ es de
-    pesos abiertos y UNA 5090 lo corre (768p; el 2K sigue siendo API).
-- 🔧 **Patrones nuevos:** ver el changelog v41 (0-duodetricies: apilar filtros
-  sobre un modelo débil lleva el rendimiento a cero; 0-undetricies: una defensa
-  construida para una condición que ya no existe se vuelve el bug).
-- 🧬 **Versión al cierre:** Council LIVE en `redsolarviva.com/consejo`; Fotón
-  Cero LIVE en `fotoncero.com`. App Store 1.1.3 LIVE. Los seis repos al día.
-
-#### 2026-08-17 · VII a X · ZAK CERO A DOCE NODOS · EL COUNCIL EN LA TELEVISIÓN (comprimida)
-
-- 💡 **Decisiones:** el juez de repetición es una LLAMADA APARTE, fría y corta,
-  no otra prohibición en el prompt creativo (la verificación se separa del acto
-  de crear), y "blindar" es depurar del lado de acá, no pedirle al modelo que
-  se porte bien. AirPlay lleva PANTALLAS, no páginas: se construye la pantalla
-  que vale la pena mandar, no un botón que no existe. La ventana de TV no lleva
-  portón (sin la sala abierta no hay un solo dato que mostrar).
-- 🔧 **Patrones:** el testigo de una etapa se suelta al FINAL de la etapa, no
-  al final de su primera llamada (Paso 0-septvicies) · una señal de progreso no
-  se comparte con un canal de avisos · un borrado que no viaja al servidor no
-  es un borrado · un ejemplo bien escrito en un prompt es una PLANTILLA (el
-  modelo devolvía el ejemplo didáctico como propuesta) · el que está a la vista
-  es el que pide (el navegador ralentiza los relojes de la ventana oculta).
+- 💡 **Decisiones:** pagar por alguien NO es una idea, es un premio (el juez
+  compara gesto y mecánica, nunca la recompensa) · el catálogo del Nodo A solo
+  CRECE y se sella por sesiones en el Archivero; el ranking de cinco que
+  competía se fue porque se ciclaba y se sobrescribía · Fotón Cero vive en su
+  propio repo y dominio porque un nodo va a escribir código ahí sin que nadie
+  revise cada línea · el servidor de inferencia: el lag es compartir la
+  gráfica, cero lag desde 24 GB dedicados, y MiniMax H3 SÍ es de pesos
+  abiertos y una 5090 lo corre a 768p.
+- 🔧 **Patrones:** apilar filtros razonables sobre un modelo débil lleva el
+  rendimiento a CERO · una defensa construida para una condición que ya no
+  existe se vuelve el bug (changelog v41).
+- 🧬 Council LIVE en `redsolarviva.com/consejo` · Fotón Cero en `fotoncero.com`.
+  Todo el detalle vive en [[proyecto_council_solar]], [[proyecto_council_sonido]]
+  y [[proyecto_council_mensajero]].
 
 *Las entradas anteriores (2026-04-18 → 2026-08-09) viven en*
 `admin/CLAUDE_archivo_hasta_2026-08-04.md`. *No se cargan por sesión: lo

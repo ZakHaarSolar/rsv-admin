@@ -1,5 +1,5 @@
 // Red Solar Viva · oraculo-chat v1.46 — 🜂 EL PROFUNDO SE COBRA EN DOS
-// TRAMOS (Zak 2026-08-17: "mi uso pasó de un reflejo a nueve reflejos usados,
+// TRAMOS (Zak 2026-08-19: "mi uso pasó de un reflejo a nueve reflejos usados,
 // y no me llegó nada"). Los ocho estaban bien contados —un profundo cuesta
 // unas diez veces más que un rápido— pero se reservaban ANTES de llamar al
 // modelo, así que un turno que se caía por el camino se cobraba entero sin
@@ -1500,7 +1500,7 @@ Deno.serve(async (req: Request) => {
            medido ronda los 8 reflejos diarios. */
         const PESO_PROFUNDO = 8
         /* ═══════════════════════════════════════════════════════════════
-           🜂 v1.46 — EL PROFUNDO SE COBRA EN DOS TRAMOS (Zak 2026-08-17)
+           🜂 v1.46 — EL PROFUNDO SE COBRA EN DOS TRAMOS (Zak 2026-08-19)
            ═══════════════════════════════════════════════════════════════
            "Mi uso pasó de un reflejo a nueve reflejos usados. Y no me llegó
            nada." Los ocho estaban bien contados —un profundo cuesta unas diez

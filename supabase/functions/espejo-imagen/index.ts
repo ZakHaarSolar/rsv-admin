@@ -1,5 +1,5 @@
 // Red Solar Viva · espejo-imagen v2.7 — 🜂 EL ESTILO DE LA CASA SALE DEL
-// CARRIL RÁFAGA (Zak 2026-08-17: "no le pongas estilo, deja que nos dé el
+// CARRIL RÁFAGA (Zak 2026-08-19: "no le pongas estilo, deja que nos dé el
 // estilo… queremos poder ver la imagen completa"). El cine analógico de la
 // v2.4 se retira entero: la escena que el Espejo describe viaja cruda, con
 // 600 caracteres en vez de 420 (el sitio que ocupaba el estilo se lo queda
@@ -222,7 +222,7 @@ Deno.serve(async (req) => {
     /* ═══════════════════════════════════════════════════════════════════
        🜂 v2.7 — EL ESTILO DE LA CASA SE RETIRA DEL CARRIL RÁFAGA
        ═══════════════════════════════════════════════════════════════════
-       Zak, 2026-08-17: "quitar el estilo ese como de película, no le pongas
+       Zak, 2026-08-19: "quitar el estilo ese como de película, no le pongas
        estilo, deja que nos dé el estilo… lo mejor es no dar ningún estilo y
        dejar que él decida. Queremos poder ver la imagen completa."
 
