@@ -1197,16 +1197,15 @@ Aquí queda SOLO lo abierto:
    pase el token, Claude cablea la lectura en una pasada**. No conviene
    construirlo antes de publicar seguido: el cuello de botella no es leer los
    números. YouTube no entra: ese canal todavía no existe.
-3. ⏳ **Ver una tanda real del Nodo A** con la LLUVIA DE CINCO encendida
-   (2026-08-18 · II: cinco ideas de una línea sobre cinco territorios rotados,
-   el juez las mira de una vez y solo la que sobrevive se desarrolla), el juez,
-   las fichas y los bordes: que el ranking VUELVA A LLENARSE (llegó a la vuelta
-   25 vacío), que la ficha sobreviva a la depuración, que el ciclo no se alargue
-   de más, y que el juez use el eje `ROMPE` sin volverse tijera. Si la lluvia
-   se seca dos veces seguidas, el remedio es territorio nuevo (Nodo F) o una
-   ley, no quitar el juez. El Telegram sale al cerrar la tanda (24 vueltas
-   desde el ÚLTIMO informe, ya no desde la activación): la pantalla dice
-   «tanda k/24».
+3. ⏳ **Ver una tanda real del Nodo A con el PIPELINE ADITIVO** (2026-08-18
+   · III): tres ideas nuevas por vuelta (la lluvia recoge hasta tres, la
+   fricción juzga una por una, el documento SOLO CRECE y se sella como Sesión
+   en el Archivero al cerrar la tanda). Lo primero que mirar: que el modelo
+   respete el formato de las tres fichas y que `partirFichas` las separe; que
+   el catálogo crezca vuelta a vuelta; que el Telegram salga al cerrar (24
+   vueltas desde el ÚLTIMO informe; la pantalla dice «tanda k/24»). Si la
+   lluvia se seca dos veces seguidas, el remedio es territorio nuevo (Nodo F)
+   o una ley, no quitar el juez.
    · 🜂 **CONSULTA RESPONDIDA (2026-08-17 · XI): tirar al bote NO enseñaba el
    porqué, y por eso el nodo volvía con una hermana.** Zak preguntó si basta con
    tirar algo, o si conviene además venir a contármelo, o darle al bote un campo
@@ -1256,7 +1255,24 @@ Android: primera versión en Prueba interna. Detalle en
   Application** (distinto del de App Store) y notarizarlo. Es lo único que
   separa la descarga actual de una descarga profesional.
 
-
+- **🤖 ANDROID: LANZAR (Google concedió producción el 2026-08-16; la vc6 YA
+  SE PROBÓ en el A07: ingreso con Google ✓, muro de pago con 499 y 149 ✓,
+  decodificador y biblioteca ✓).** La build de lanzamiento es la **vc7**
+  (`Claves Android/EscanerVibracional-1.1.4-vc7-lanzamiento.aab`): suma la luz
+  del borde que no tumba tarjetas en gama baja, la háptica por voz que
+  contesta vibrando y el ingreso sin el aviso fugaz. Lo que queda es de Zak:
+  (1) subir la vc7 a Prueba interna y confirmar en el A07 que las rachas se
+  ven y que "activar háptica" vibra; (2) promover a PRODUCCIÓN con "Promover
+  actualización" (no se resube: el mismo versionCode se rechaza), 100% o por
+  etapas, a gusto. Ficha solo en español (el inglés se agrega después
+  sin nueva revisión). El lanzamiento por etapas importa poco en un primer
+  lanzamiento; la prueba de compra importa mucho.
+  · Decisión pendiente: si el botón de Apple se queda en el modal de acceso
+  en Android (funciona; casi nadie tiene Apple ID ahí).
+  · Lo cazado en el A07 y cómo se arregló vive en [[proyecto_android_port]]
+  (browserFinished heurístico → gracia 20 s sin cerrar el navegador; borde a
+  borde en todo Android con `--sab` de respaldo; la Realidad no existe en
+  Android).
 
 ---
 
@@ -1442,7 +1458,7 @@ Android: primera versión en Prueba interna. Detalle en
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v40 (2026-08-17 · X)
+## 🜂 Protocolo de Cierre de Sesión · v41 (2026-08-18 · III)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -2449,8 +2465,55 @@ había probado el juez en aislado (parser, depuración, veredictos contra el
 núcleo real, todo verde) y la máquina asíncrona quedó sin modelar: exactamente
 el hueco que el 0-duodecies describe, cometido por quien lo escribió.
 
+### Paso 0-duodetricies — Apilar filtros razonables sobre un modelo débil lleva el rendimiento a CERO
+
+Cuando un pipeline encadena varios filtros (un juez, una crítica, una regla de
+entrada, una depuración), cada uno con su tasa de falsos negativos, el producto
+de todos puede ser cero aunque cada filtro por separado sea sensato. El síntoma
+no es un error: es un sistema que trabaja horas y entrega NADA ("llegamos a la
+vuelta 25 sin ideas porque todas se descartaron").
+
+Dos movimientos, y los dos se hacen sobre el texto, no pidiéndole al modelo:
+1. **Estrechar el filtro que estaba mal definido.** El juez metía todo "pagar
+   por alguien" en una sola bolsa: un juego de dados con premio de comida
+   "repetía" el pago silencioso de la fila. Misma idea = mismo gesto Y misma
+   mecánica; el premio no cuenta.
+2. **Ejecutar del lado de acá la regla que el modelo debía cumplir y no
+   cumplía.** La regla decía "con menos de cinco, la que sobrevive entra"; el
+   modelo, con el ranking vacío, no la metía. Se mete en código.
+
+Y cuando ni así alcanza, cambiar la FORMA del flujo: más tiros baratos antes
+del caro (la lluvia de cinco), y un catálogo que solo crece en vez de un
+ranking que se reescribe y se cicla.
+
+**Por qué.** El 2026-08-18 el Nodo A llevaba 32 vueltas con el ranking vacío.
+Ninguna pieza estaba rota: el juez juzgaba, la fricción criticaba, la evolución
+obedecía. Apiladas, no dejaban pasar nada.
+
+### Paso 0-undetricies — Una defensa construida para una condición que ya no existe se vuelve el bug
+
+Cuando encuentres código que hace algo raro a propósito ("levanta la lápida:
+el catálogo manda sobre un borrado"), busca la CONDICIÓN para la que se
+escribió antes de decidir si sigue valiendo. Si la condición desapareció (borrar
+ya no es un clic sin vuelta: pide confirmación y va a la papelera), la defensa
+ya no protege de nada y lo único que hace es el daño que se ve.
+
+**Por qué.** El 2026-08-18 los dorados borrados volvían en cada recarga. La
+siembra levantaba su lápida a propósito, por un motivo de hacía dos días que
+la papelera había vuelto innecesario. Hermano del 0-quindecies (la métrica
+hecha a la medida de lo viejo): ahí la vara es de otra época; aquí lo es la
+defensa.
+
 ### Changelog del protocolo
 
+- **v41 (2026-08-18 · III):** dos pasos. **0-duodetricies** — apilar filtros
+  razonables sobre un modelo débil lleva el rendimiento a cero: se estrecha el
+  filtro mal definido, se ejecuta en código la regla que el modelo no cumple y,
+  si no alcanza, se cambia la forma del flujo (más tiros baratos antes del caro;
+  un catálogo que crece en vez de un ranking que se reescribe). **0-undetricies**
+  — una defensa construida para una condición que ya no existe se vuelve el bug
+  (la siembra levantaba la lápida de los dorados por un motivo que la papelera
+  había vuelto innecesario).
 - **v40 (2026-08-17 · X):** Paso 0-septvicies — el TESTIGO de una etapa se
   suelta al final de la ETAPA, no al final de su primera llamada. El juez de
   repetición, añadido como segunda llamada dentro de la etapa, heredaba un
@@ -2593,6 +2656,68 @@ el hueco que el 0-duodecies describe, cometido por quien lo escribió.
 ---
 
 ## 🜃 Historial de sesiones
+
+#### 2026-08-17 · XI → 2026-08-18 · III · 🜂 EL BOTE APRENDE EL PORQUÉ · FOTÓN CERO SE SEPARA Y LA FACHADA GANA MANOS · EL NODO A DEJA DE SECARSE Y PASA A PIPELINE ADITIVO · EL ARCHIVERO
+
+- ✅ **Resuelto (una sola sala, larga, ocho tandas):**
+  1. **El bote gana su PORQUÉ y el juez lo usa como BORDE** (`ROMPE`): al tirar
+     una jugada se escribe en una línea por qué murió; viaja arriba del encargo
+     como RAZÓN y mata a la familia, no al ejemplar. LEY DEL ENCUENTRO ÚNICO.
+  2. **Fotón Cero se va a su propio proyecto y dominio** (`fotoncero.com`,
+     repo privado `ZakHaarSolar/fotoncero`): compartir el build con
+     redsolarviva.com era un riesgo real. **La Fachada gana manos**
+     (`taller-web.ts`): escribe archivos de verdad en el disco dentro de un
+     corral de tres cerraduras (permiso de UNA carpeta · lista de rutas y
+     dependencias · nada vale hasta que compila, y se revierte solo).
+  3. **El portón deja cambiar de cuenta** (entrar con el correo equivocado era
+     un callejón). `/council` → `/consejo`.
+  4. **La vara de poder** (mover orbes; el toque abre y el sostenido mueve en
+     las reliquias), **las etapas dicen el oficio** (ideando · revisando ·
+     escribiendo código), el reflejo del suelo deja de parpadear verde, los
+     hilos siguen al orbe movido, la vara en la pared opuesta a las puertas.
+  5. **El MODO NÚCLEO (tecla X)**: el templo se desmonta y el núcleo pasa de
+     3,6 a 6,5 t/s (medido). Se recuerda al recargar.
+  6. **Los dorados dejan de duplicarse y de resucitar** (dos fallas: el lector
+     de la semilla no conocía el formato viejo de id, y la siembra levantaba
+     la lápida); la chapa cuenta lo real; la ficha es un solo texto; el
+     pergamino viaja al nodo como IDEA en prosa (no como plantilla); regla
+     dura del Escáner (lee ETIQUETAS, jamás comida servida).
+  7. **El Nodo A dejaba el ranking vacío**: misma idea = mismo GESTO y misma
+     MECÁNICA (el premio no cuenta); la fricción solo descarta por causal dura;
+     la que sobrevive ENTRA; la LLUVIA DE CINCO sobre territorios rotados; la
+     tanda cuenta desde el último informe (Telegram) y se lee «tanda k/24».
+  8. **PIPELINE ADITIVO + EL ARCHIVERO**: directriz nueva del Nodo A (cinco
+     líneas rojas + formato exigido), tres ideas nuevas por vuelta, fricción
+     por idea, el documento SOLO CRECE y al cerrar la tanda se sella como
+     Sesión N en el Archivero (mueble nuevo, ventana con copiar una/todas,
+     sellar a mano). El bote se lee de diez en diez y se copia con su borde.
+- 📁 **Archivos:** (rsv-web · council) `taller-web.ts` NUEVO, `scene/Vara.tsx`
+  NUEVO, `types` v3.8, `store` v2.18, `salas` v2.19, `deliberacion` v2.19,
+  `entradas` v1.4, `gate/AdminGate` v1.7, `CouncilApp` v1.4, `useCouncil`,
+  `scene/{CouncilScene, Caminata v3.5, Reliquias v1.5, Orbe v1.8, Enlaces
+  v1.2, tocables}`, `ui/{Cine v1.8, Reliquia v1.7, Playbook v2.7, HUD v3.5,
+  entrada v1.1, estilos v3.7}`, `sonido`. (fotoncero) proyecto entero NUEVO.
+  (rsv-web) `main.tsx` v1.7.
+- ⏳ **Pendiente:** ver una tanda real del Nodo A con el pipeline aditivo (que
+  el modelo respete el formato de las tres fichas y `partirFichas` las separe);
+  Zak revisa la directriz de formato con su equipo; la Fachada escribiendo de
+  verdad con la carpeta abierta; las puertas (Zak vio que no se guardaban; aquí
+  sí se guardan: pedirle los pasos exactos si vuelve a pasar).
+- 💡 **Decisiones importantes:**
+  - **Pagar por alguien NO es una idea, es un premio** (Zak): el juez compara
+    gesto y mecánica, nunca la recompensa.
+  - **El catálogo del Nodo A solo crece** y se sella por sesiones; el ranking
+    de cinco que competía se fue (se ciclaba y sobrescribía).
+  - **Fotón Cero vive aparte** porque un nodo va a escribir código ahí sin que
+    nadie revise cada línea: lo peor que puede pasar es que se rompa esa página.
+  - **El servidor de inferencia** (consulta): el lag es compartir la gráfica;
+    cero lag desde 24 GB dedicados; 256 GB de RAM no hacen falta; H3 SÍ es de
+    pesos abiertos y UNA 5090 lo corre (768p; el 2K sigue siendo API).
+- 🔧 **Patrones nuevos:** ver el changelog v41 (0-duodetricies: apilar filtros
+  sobre un modelo débil lleva el rendimiento a cero; 0-undetricies: una defensa
+  construida para una condición que ya no existe se vuelve el bug).
+- 🧬 **Versión al cierre:** Council LIVE en `redsolarviva.com/consejo`; Fotón
+  Cero LIVE en `fotoncero.com`. App Store 1.1.3 LIVE. Los seis repos al día.
 
 #### 2026-08-17 · VII a X · 🜂 ZAK CERO LLEGA A DOCE NODOS Y DEJA DE REPETIRSE · EL COUNCIL SE VE EN LA TELEVISIÓN · Y EL BUCLE VUELVE A CERRAR SUS VUELTAS
 
