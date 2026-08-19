@@ -1,4 +1,14 @@
-// Red Solar Viva · espejo-imagen v2.6 — 🜂 EL CARRIL CONCEPTUAL (Zak 2026-08-10, la reestructura de la Matriz): con `tipo_visual:"diagrama"` la escena se viste de esquema técnico (línea fina cian sobre azul de la casa, nodos/flechas/ciclos, sin una sola letra: los modelos escriben texto roto, así que el diagrama explica por forma y conexión). Sin la bandera, cine analógico como siempre. Mismo modelo, mismo costo, mismo cupo. | v2.5 — SIN BORDES DE NEGATIVO (Zak 2026-08-10, device-QA del cine analógico: franjas blancas laterales — el estilo de película hacía que Schnell dibujara el borde del fotograma escaneado). El prompt exige composición a sangre completa y prohíbe marcos de film/polaroid/viñeta; el cliente además recorta 4.5% (EV_Rafaga v3.5). | v2.4 — 🜂 CINE ANALÓGICO EN EL CARRIL RÁFAGA (Zak 2026-08-10): fotografía de película de 35mm, claroscuro low-key, sombras profundas, grano orgánico y paleta fría con acentos de luz indirecta. Prohibidos el render 3D, la estética Pixar, las caras sonrientes de foto de stock, la piel hiper-suavizada y la luz comercial de mediodía; como Schnell no acepta negative_prompt, cada prohibición viaja como su afirmación contraria más la negación explícita. Además de ser el sello de la casa, el low-key con grano ESCONDE los artefactos del modelo barato: donde el render limpio delata cada dedo, la sombra profunda perdona. Pro (Espejo normal) intacto. | v2.3 — ESTILO PROPIO DEL CARRIL RÁFAGA: Schnell crudo se veía "caricatura wannabe realista pero chafa" (Zak); con estilo fijo pictórico-etéreo en la paleta de la casa el modelo barato rinde su máximo y todo el modo se ve de UNA sola mano. La escena del Espejo manda (va primero); el estilo la viste. Pro (Espejo normal) intacto. | v2.2 — 🜂 CARRIL DEL MODO RÁFAGA (Zak 2026-08-09): con `modo: "rafaga"` la edge usa FLUX SCHNELL (4 pasos, ~$0.003 contra los $0.03 de Pro) y un cupo PROPIO de 30 al día, porque ese modo pide 2 o 3 imágenes por envío y con el tope del Espejo (2/día) se agotaría en el primer uso. Treinta imágenes de Schnell cuestan menos que tres de Pro. Es aditivo y con bandera: el cliente del Espejo nunca la manda, así que su camino queda idéntico — mismo modelo, mismo cupo, mismo pase del Arquitecto. | v2.1 — TOPE COMERCIAL 2/día (Zak lo selló: FLUX.2 Pro $0.03 → peor caso $1.80 USD/mes) + PASE DEL ARQUITECTO: antes de reservar se lee `ia_pase_imagen` (extras del día en curso, otorgados desde el Motor) y se suman al tope. Un pase ausente o una tabla caída devuelven 0: jamás abre el cupo, solo lo amplía. | espejo-imagen v2.0 — FLUX.2 PRO + ESCENA CRUDA (Zak): el modelo pasa de flux/schnell (~$0.003) a fal-ai/flux-2-pro ($0.03 la imagen cuadrada) y el estilo fijo de la casa MUERE: la escena que el Espejo describe viaja tal cual (acotada a 600 chars, sin corchetes) — arte libre, entornos completos, figuras si el Espejo las pide. Sin num_inference_steps (el Pro maneja el suyo). El cupo del gobernador queda como estaba (15/día) mientras Zak prueba; el tope comercial (propuesta 2/día) se materializa después. | espejo-imagen v1.0 — EL ESPEJO ILUSTRA (Zak 2026-08-05,
+// Red Solar Viva · espejo-imagen v2.7 — 🜂 EL ESTILO DE LA CASA SALE DEL
+// CARRIL RÁFAGA (Zak 2026-08-17: "no le pongas estilo, deja que nos dé el
+// estilo… queremos poder ver la imagen completa"). El cine analógico de la
+// v2.4 se retira entero: la escena que el Espejo describe viaja cruda, con
+// 600 caracteres en vez de 420 (el sitio que ocupaba el estilo se lo queda
+// la descripción) y lo único que se sigue prohibiendo es el TEXTO dentro de
+// la imagen, que no es estética sino límite del medio. El Espejo normal ya
+// iba así desde la v2.0; este carril se había quedado atrás por una razón de
+// otro problema: la sombra profunda escondía los artefactos de Schnell. Si
+// ahora se ven pobres, la causa es el modelo barato y la salida es subirlo,
+// no volver a vestirlas de sombra. | v2.6 — 🜂 EL CARRIL CONCEPTUAL (Zak 2026-08-10, la reestructura de la Matriz): con `tipo_visual:"diagrama"` la escena se viste de esquema técnico (línea fina cian sobre azul de la casa, nodos/flechas/ciclos, sin una sola letra: los modelos escriben texto roto, así que el diagrama explica por forma y conexión). Sin la bandera, cine analógico como siempre. Mismo modelo, mismo costo, mismo cupo. | v2.5 — SIN BORDES DE NEGATIVO (Zak 2026-08-10, device-QA del cine analógico: franjas blancas laterales — el estilo de película hacía que Schnell dibujara el borde del fotograma escaneado). El prompt exige composición a sangre completa y prohíbe marcos de film/polaroid/viñeta; el cliente además recorta 4.5% (EV_Rafaga v3.5). | v2.4 — 🜂 CINE ANALÓGICO EN EL CARRIL RÁFAGA (Zak 2026-08-10): fotografía de película de 35mm, claroscuro low-key, sombras profundas, grano orgánico y paleta fría con acentos de luz indirecta. Prohibidos el render 3D, la estética Pixar, las caras sonrientes de foto de stock, la piel hiper-suavizada y la luz comercial de mediodía; como Schnell no acepta negative_prompt, cada prohibición viaja como su afirmación contraria más la negación explícita. Además de ser el sello de la casa, el low-key con grano ESCONDE los artefactos del modelo barato: donde el render limpio delata cada dedo, la sombra profunda perdona. Pro (Espejo normal) intacto. | v2.3 — ESTILO PROPIO DEL CARRIL RÁFAGA: Schnell crudo se veía "caricatura wannabe realista pero chafa" (Zak); con estilo fijo pictórico-etéreo en la paleta de la casa el modelo barato rinde su máximo y todo el modo se ve de UNA sola mano. La escena del Espejo manda (va primero); el estilo la viste. Pro (Espejo normal) intacto. | v2.2 — 🜂 CARRIL DEL MODO RÁFAGA (Zak 2026-08-09): con `modo: "rafaga"` la edge usa FLUX SCHNELL (4 pasos, ~$0.003 contra los $0.03 de Pro) y un cupo PROPIO de 30 al día, porque ese modo pide 2 o 3 imágenes por envío y con el tope del Espejo (2/día) se agotaría en el primer uso. Treinta imágenes de Schnell cuestan menos que tres de Pro. Es aditivo y con bandera: el cliente del Espejo nunca la manda, así que su camino queda idéntico — mismo modelo, mismo cupo, mismo pase del Arquitecto. | v2.1 — TOPE COMERCIAL 2/día (Zak lo selló: FLUX.2 Pro $0.03 → peor caso $1.80 USD/mes) + PASE DEL ARQUITECTO: antes de reservar se lee `ia_pase_imagen` (extras del día en curso, otorgados desde el Motor) y se suman al tope. Un pase ausente o una tabla caída devuelven 0: jamás abre el cupo, solo lo amplía. | espejo-imagen v2.0 — FLUX.2 PRO + ESCENA CRUDA (Zak): el modelo pasa de flux/schnell (~$0.003) a fal-ai/flux-2-pro ($0.03 la imagen cuadrada) y el estilo fijo de la casa MUERE: la escena que el Espejo describe viaja tal cual (acotada a 600 chars, sin corchetes) — arte libre, entornos completos, figuras si el Espejo las pide. Sin num_inference_steps (el Pro maneja el suyo). El cupo del gobernador queda como estaba (15/día) mientras Zak prueba; el tope comercial (propuesta 2/día) se materializa después. | espejo-imagen v1.0 — EL ESPEJO ILUSTRA (Zak 2026-08-05,
 // "nuestra función más soñada"). Recibe UNA escena (⟦GEN⟧ cosechada por el
 // cliente de la respuesta de oraculo-chat v1.19), la viste con el ESTILO FIJO
 // de la casa y pide la imagen al carril FLUX rápido de fal.ai (~$0.003 USD por
@@ -209,31 +219,45 @@ Deno.serve(async (req) => {
         "2D vector style. Abstract relational diagram that explains by shape " +
         "and connection alone: no text, no letters, no numbers, no labels, " +
         "no words, no watermark, no photorealism, no people"
-    const ESTILO_RAFAGA =
-        "shot on 35mm analog film, cinematic film still, low-key chiaroscuro " +
-        "lighting, deep shadows, single indirect motivated light source, " +
-        "cool neutral desaturated palette, organic cinematic film grain, " +
-        "shallow depth of field, natural imperfect skin texture, candid " +
-        "unposed introspective moment, quiet and restrained. " +
-        /* Las prohibiciones de Zak. Schnell no acepta negative_prompt, así que
-           cada una viaja como su AFIRMACIÓN contraria (que es lo que un modelo
-           de difusión sabe leer) seguida de la negación explícita. */
-        "Photographic, not a 3D render, not CGI, not an illustration, not " +
-        "cartoon, no Pixar or animation aesthetic, no smiling stock-photo " +
-        "faces, no airbrushed plastic skin, no bright commercial daylight, " +
-        "no flat even studio lighting, no text, no letters, no watermark. " +
-        /* v2.5 — el estilo de película hacía que Schnell a veces dibujara el
-           BORDE del negativo escaneado: franjas blancas laterales (device-QA
-           de Zak). La composición llena el cuadro, sin marco. */
-        "Full-bleed edge-to-edge composition, no film strip borders, no " +
-        "scanned negative frame, no white edges, no vignette frame, no " +
-        "polaroid border"
+    /* ═══════════════════════════════════════════════════════════════════
+       🜂 v2.7 — EL ESTILO DE LA CASA SE RETIRA DEL CARRIL RÁFAGA
+       ═══════════════════════════════════════════════════════════════════
+       Zak, 2026-08-17: "quitar el estilo ese como de película, no le pongas
+       estilo, deja que nos dé el estilo… lo mejor es no dar ningún estilo y
+       dejar que él decida. Queremos poder ver la imagen completa."
+
+       Y es coherente con lo que ya pasó en el Espejo normal: su estilo fijo
+       murió en la v2.0 por la misma razón ("el Espejo ya está en completa
+       sintonía, él nos dará los visuales indicados"). El carril de la Matriz
+       se quedó atrás por una razón que era de OTRO problema: el claroscuro
+       low-key con grano se eligió en la v2.4 tanto por sello como porque la
+       sombra profunda ESCONDE los artefactos de un modelo barato. Esconder
+       defectos con oscuridad tiene un precio, y el precio era justamente lo
+       que Zak nombró: la imagen no se ve entera.
+
+       🜂 LO QUE SOBREVIVE NO ES ESTILO, ES EL MEDIO. Se prohíbe solo el texto
+       dentro de la imagen, y no por gusto: los modelos de difusión escriben
+       letras rotas, y eso ya costó el retiro completo del carril de diagrama
+       (etiquetas alucinadas tipo "Rendermesiio", idénticas en Schnell y en
+       Pro). Todo lo demás —luz, paleta, técnica, encuadre, si es foto o
+       pintura— lo decide el Espejo escena por escena.
+
+       ⚠️ Si las imágenes vuelven a verse pobres, la causa NO será la falta de
+       estilo: será Schnell, que es el modelo barato de este carril (Zak lo
+       describió crudo en la v2.3 como "caricatura wannabe realista pero
+       chafa"). La salida entonces es subir de modelo, no volver a vestirlas
+       de sombra. */
+    const ESTILO_RAFAGA = "no text, no letters, no numbers, no watermark"
     /* v2.6 — el cliente declara el tipo del visual: "diagrama" viste con el
        carril conceptual; cualquier otra cosa (o nada) es la escena de cine
        de siempre. Solo existe dentro del carril de la Matriz. */
     const esDiagrama = esRafaga && body?.tipo_visual === "diagrama"
+    /* 🜂 v2.7 — la escena de la Matriz respira igual que la del Espejo (600):
+       los 420 de antes eran para hacerle sitio al estilo, que ya no viaja. Lo
+       que gana ese espacio es la descripción del propio Espejo, que es
+       exactamente a quien se le devolvió la decisión. */
     const prompt = esRafaga
-        ? `${escena.slice(0, 420).replace(/[⟦⟧]/g, "")} — ${
+        ? `${escena.slice(0, 600).replace(/[⟦⟧]/g, "")} — ${
               esDiagrama ? ESTILO_DIAGRAMA : ESTILO_RAFAGA
           }`
         : escena.slice(0, 600).replace(/[⟦⟧]/g, "")

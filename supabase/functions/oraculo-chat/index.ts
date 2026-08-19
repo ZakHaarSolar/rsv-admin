@@ -1,4 +1,13 @@
-// Red Solar Viva · oraculo-chat v1.45 — 🜂 FIDELIDAD ANTE TODO (Zak
+// Red Solar Viva · oraculo-chat v1.46 — 🜂 EL PROFUNDO SE COBRA EN DOS
+// TRAMOS (Zak 2026-08-17: "mi uso pasó de un reflejo a nueve reflejos usados,
+// y no me llegó nada"). Los ocho estaban bien contados —un profundo cuesta
+// unas diez veces más que un rápido— pero se reservaban ANTES de llamar al
+// modelo, así que un turno que se caía por el camino se cobraba entero sin
+// entregar una palabra. Ahora se reserva 1 al entrar (lo que frena una ráfaga
+// no puede esperar al final) y los 7 restantes en finalizar(), con el reflejo
+// ya en la mano y en fail-open: la contabilidad jamás puede convertirse en un
+// error en pantalla. El techo diario no se mueve: un profundo ENTREGADO sigue
+// descontando 8. | v1.45 — 🜂 FIDELIDAD ANTE TODO (Zak
 // 2026-08-14: dos respuestas rotas más, una en cada modo — "peatonales
 // peatonales", "tiriada", "cellulos", "piel tal en tu mano"). Medido en el
 // catálogo de OpenRouter: seis anfitriones sirven el modelo comprimido a la
@@ -1490,7 +1499,27 @@ Deno.serve(async (req: Request) => {
            (≈1,7 contra ≈1,9 MXN al día). Nadie con uso real los toca: el uso
            medido ronda los 8 reflejos diarios. */
         const PESO_PROFUNDO = 8
-        const PESO_TURNO = isReasoner ? PESO_PROFUNDO : 1
+        /* ═══════════════════════════════════════════════════════════════
+           🜂 v1.46 — EL PROFUNDO SE COBRA EN DOS TRAMOS (Zak 2026-08-17)
+           ═══════════════════════════════════════════════════════════════
+           "Mi uso pasó de un reflejo a nueve reflejos usados. Y no me llegó
+           nada." Los ocho estaban bien contados —un profundo cuesta unas diez
+           veces más— pero se reservaban ANTES de llamar al modelo, así que un
+           turno que se cayó por el camino se cobró entero sin entregar una
+           sola palabra. Cobrar por adelantado algo que puede no ocurrir es
+           exactamente lo que no debe hacer un contador.
+
+           Ahora la reserva se parte: 1 AL ENTRAR, que es lo que frena una
+           ráfaga de peticiones (esa protección no puede esperar al final), y
+           los 7 restantes AL CONFIRMAR que el reflejo existe. Si el turno
+           muere, quedó cobrado 1 en vez de 8.
+
+           El techo diario no se mueve ni un peso: un profundo entregado sigue
+           descontando 8. Lo único que cambia es QUÉ se cobra cuando no hubo
+           reflejo. */
+        const PESO_ENTRADA = 1
+        const PESO_RESTO = isReasoner ? PESO_PROFUNDO - PESO_ENTRADA : 0
+        const PESO_TURNO = PESO_ENTRADA
 
         // 3. Budget governor (fail-open si la RPC no existe).
         try {
@@ -2470,6 +2499,43 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
            tiene el reflejo entero. De una sola pieza o en vivo, esto es
            idéntico — es la misma función. */
         const finalizar = async (): Promise<Record<string, unknown>> => {
+        /* 🜂 v1.46 — Y ACÁ SE COBRA EL RESTO DEL PROFUNDO, ya con el reflejo
+           en la mano. Todo lo de abajo es fail-open a propósito: el reflejo ya
+           salió y ya se lo llevó el Tripulante, así que un tropiezo de la
+           contabilidad no puede convertirse en un error en su pantalla. Si la
+           reserva devuelve `ok:false` tampoco se hace nada: el techo es para
+           frenar lo que VIENE, no para retirar lo ya entregado. */
+        if (PESO_RESTO > 0 && reply && reply.trim()) {
+            try {
+                const _ip2 =
+                    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+                    null
+                await sb.rpc("reserve_edge_spend", {
+                    p_edge: "oraculo",
+                    p_user_key: clerkUserId,
+                    p_ip: _ip2,
+                    p_cost: PESO_RESTO,
+                    p_user_limit: 60,
+                    p_user_window_seconds: 3600,
+                    p_ip_limit: 100,
+                    p_ip_window_seconds: 3600,
+                    p_global_limit: ORACULO_GLOBAL_DIA,
+                    p_global_window_seconds: 86400,
+                })
+                await sb.rpc("reserve_edge_spend", {
+                    p_edge: "oraculo-dia",
+                    p_user_key: clerkUserId,
+                    p_ip: _ip2,
+                    p_cost: PESO_RESTO,
+                    p_user_limit: 150,
+                    p_user_window_seconds: 86400,
+                    p_ip_limit: 600,
+                    p_ip_window_seconds: 86400,
+                })
+            } catch (e) {
+                console.error("[oraculo-chat] cobro diferido falló:", String(e))
+            }
+        }
         /* 🜂 v1.24 — GARANTÍA EN CÓDIGO, NO EN INSTRUCCIONES (tercer device-QA
            en cero): si el modo imágenes viene encendido y el modelo ignoró la
            directiva (cero ⟦GEN⟧ en el reflejo), una SEGUNDA llamada mínima
