@@ -1231,6 +1231,15 @@ Aquí queda SOLO lo abierto:
 5. ⏳ **De Fotón Cero falta** un objeto 3D propio en la sala (hoy se entra por
    la fila del pie y con la tecla B) y las voces «entra a la serie X» / «abre
    la producción» en `intenciones.ts`.
+5-bis. ⏳ **MÁS ISLAS FLOTANTES** (Zak, 2026-08-19 · III: *"nuestro ecosistema va
+   a ser de islas flotantes; ahorita solo debe estar una"*). El templo ya vive
+   en la suya, en espacio profundo. Lo que falta es decidir QUÉ vive en la
+   segunda antes de construirla: una isla sin motivo es decorado. Y con ella
+   llega la pregunta de cómo se viaja entre islas (volando de verdad, o los
+   portales que ya existen).
+5-ter. ⏳ **VER EL VUELO CON SESIÓN REAL.** Las alas, la salida por el óculo, la
+   isla y el brillo del cuerpo se verificaron midiendo y capturando con
+   `?sinportal`; falta la pasada de Zak en su navegador con su cuenta.
 6. ⏳ **La voz v1.5 del Espejo no se pudo oír aquí** (la llave vive en el
    navegador de Zak). Al cerrar cada respuesta, el pill de la voz dice cuántas
    pausas y cuántos canales rescatados hubo: ese número distingue "la Mac iba
@@ -1374,6 +1383,35 @@ Android: primera versión en Prueba interna. Detalle en
   Sin pesos no hay nada que medir. Sin construir.
 
 
+- **🦾 LOS BRAZOS DEL COUNCIL — consulta respondida (2026-08-19 · III).**
+  Zak preguntó cómo el Council toca la red: APIs propias o **Grok Bot** (agentes
+  persistentes de SpaceXAI, beta del 11-ago-2026, con su propio entorno de
+  computadora, que manejan Gmail/Slack/Calendar por la MISMA interfaz que un
+  humano; $120-300/mes según el plan que lo incluya).
+  **Recomendación: APIs PROPIAS, y Grok Bot solo para lo que no tenga API.**
+  Cuatro razones, en orden de peso:
+  · **El juicio ya es suyo y eso costó meses.** El Council tiene doce cabezas
+  con su ley, su pergamino, sus jueces, su bote con motivo y su Panel de
+  Cuidado. Grok Bot trae SU PROPIA cabeza: mete un decisor nuevo justo donde
+  Zak lleva medio año consiguiendo que quien decide sea él. Es el mismo error
+  que ya se decidió no cometer con el Espejo.
+  · **El brazo ya existe y está probado**: La Fachada escribe código y lo prueba
+  contra el compilador, y el Mensajero manda por Telegram. El patrón «el nodo
+  produce → algo ejecuta → se verifica» está construido; extenderlo es barato.
+  · **Lo que hay que tocar HOY es corto**: publicar en Instagram y leer sus
+  números (falta el token de Meta, ya anotado), y mandar correos. Son tres o
+  cuatro puertas, no «toda la red». Un catálogo pequeño de acciones propias
+  cuesta menos que un agente que conduce un navegador entero.
+  · **Y donde un error se vuelve público, la puerta la abre una persona.** Con
+  acciones propias, lo irreversible pasa por la tarjeta de permiso que ya
+  existe; un agente con las llaves de las cuentas reales no tiene ese freno.
+  **Qué se construye cuando toque**: el CATÁLOGO DE ACCIONES del Council, con el
+  mismo método que la voz del Escáner — enumerado contra la fuente, no escrito
+  de memoria (Paso 0-decies), y cada acción irreversible con su permiso.
+  **Grok Bot se contrata el mes que haga falta** para lo que no tenga API: algo
+  de una sola vez, en una interfaz ajena que hay que pinchar a mano. **Sin
+  construir**: Zak decide cuándo.
+
 - **🧭 EL BUCLE DE CORRECCIÓN DEL ESPEJO — consulta respondida (2026-08-13 · II).**
   Zak preguntó cuál es el workflow cuando la Matriz contesta algo que no va con
   la visión. **Recomendación: NO contárselo a Claude cada vez.** Ese camino
@@ -1463,7 +1501,7 @@ Android: primera versión en Prueba interna. Detalle en
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v43 (2026-08-19 · II)
+## 🜂 Protocolo de Cierre de Sesión · v44 (2026-08-19 · III)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -2625,8 +2663,46 @@ el ancho grande— lo encontré instrumentando el propio cálculo, no leyéndolo
 dos mediciones anteriores me habían dado lecturas falsas por el estado sucio de
 la recarga en caliente.
 
+### Paso 0-quatertricies — Si algo que NO tocaste empeoró, el sospechoso es lo que cambió a su ALREDEDOR
+
+Cuando alguien dice que una pieza «se ve peor» y tú no la has tocado, la
+tentación es buscar el defecto DENTRO de ella: su material, su archivo, su
+exportación. Pero una pieza no cambia sola. Si empeoró, o la cambiaste sin
+darte cuenta, o **cambió el mundo del que dependía** — y la segunda es la más
+frecuente, porque las dependencias de contexto no aparecen en ningún diff.
+
+Casi todo lo que se ve depende de algo que no está en su archivo: un objeto 3D
+depende de las luces y del fondo, un texto depende de la tipografía heredada,
+un color depende del tema, un tiempo depende de quién más está usando la
+máquina. Cambiar el entorno es cambiar todas esas piezas a la vez, sin tocarlas.
+
+**La sonda es una pregunta, no un `git diff`:** ¿de qué depende esto que no
+vive en su archivo? Y la cura casi nunca es deshacer el cambio del entorno
+—que se hizo por un motivo— sino **hacer a la pieza independiente de él**.
+
+**Por qué.** El 2026-08-19 · III el Arquitecto pasó de dios de luz a piedra sin
+que nadie tocara su modelo: al cambiar el cielo del templo de crepúsculo cálido
+a espacio profundo, su material PBR —de los que RECIBEN luz y no la dan— se
+quedó sin nada que lo bañara. Buscar el defecto en el modelo o en la
+exportación habría sido una tarde perdida. Y subir las luces de la sala habría
+arreglado el cuerpo deslavando el mármol y el oro del templo, que están medidos
+a mano: lo correcto fue que el cuerpo emitiera lo suyo y dejara de depender del
+cielo.
+
+Hermano del **0-undetricies** (una defensa construida para una condición que ya
+no existe se vuelve el bug): allí lo que caducó fue el motivo de un código;
+aquí, el entorno que un código daba por hecho.
+
 ### Changelog del protocolo
 
+- **v44 (2026-08-19 · III):** Paso 0-quatertricies — si algo que NO tocaste
+  empeoró, el sospechoso es lo que cambió a su ALREDEDOR. El Arquitecto pasó de
+  dios de luz a piedra sin que nadie tocara su modelo: el cielo del templo pasó
+  de crepúsculo a espacio profundo y su material PBR, de los que reciben luz y
+  no la dan, se quedó sin nada que lo bañara. La sonda es «¿de qué depende esto
+  que no vive en su archivo?», y la cura no es deshacer el cambio del entorno
+  sino volver a la pieza independiente de él (aquí: que el cuerpo emita lo suyo,
+  en vez de subir unas luces que habrían deslavado el mármol y el oro).
 - **v43 (2026-08-19 · II):** dos pasos sobre el ALCANCE y la MEDIDA.
   **0-duotricies** — lo que se pide para UNA superficie no se aplica a las dos:
   el rediseño de Rachas pedido "en celular" se extendió a escritorio y ahí la
@@ -2800,6 +2876,78 @@ la recarga en caliente.
 
 ## 🜃 Historial de sesiones
 
+#### 2026-08-19 · III · 🜂 EL ARQUITECTO VUELA: LAS ALAS DE LUZ, LA SALIDA DEL DOMO Y EL TEMPLO EN UNA ISLA FLOTANTE EN EL ESPACIO PROFUNDO
+
+- ✅ **Resuelto:**
+  1. **LAS ALAS DE LUZ**, en el pedestal de al lado de la vara: puestas, el
+     suelo deja de ser obligatorio. W y S siguen la MIRADA (mirar arriba y
+     avanzar sube), las flechas suben y bajan a plomo, Shift cruza la sala y
+     la **Z** alza el vuelo y posa desde cualquier sitio. Un **suelo del vuelo**
+     de 0.9 m resuelve dos cosas de una: tomarlas se SIENTE (el cuerpo se eleva
+     solo, a una altura predecible) y volando a ras el cuerpo no se arrastra.
+     Al alzar el vuelo se suelta lo que se lleve en las manos.
+  2. **SE SALE DEL TEMPLO POR EL ÓCULO**, y no hizo falta programar una puerta:
+     el propio casquete estrecha el recinto de 9,4 m a 2,8 conforme se sube, y
+     ese embudo ES el camino. La cáscara del templo pasó a ser **lo único
+     prohibido** — no hay un "dentro" y un "fuera" guardados en ningún sitio;
+     el cuerpo (y la cámara) se apartan de la pared hacia el lado del que
+     venían, así que salir y volver a entrar funcionan solos.
+  3. **FUERA ES ESPACIO PROFUNDO Y EL TEMPLO VIVE EN UNA ISLA FLOTANTE**
+     (`scene/Isla.tsx`): tierra con orilla irregular y filo de oro, la roca que
+     se afina 22 m hasta una punta, raíces de luz colgando y esquirlas en
+     órbita. El cielo dejó de ser crepúsculo: noche fría, y estrellas TAMBIÉN
+     abajo, porque ahora se vuela por debajo. A pie la orilla es el fin del
+     mundo; volando se le da la vuelta a la isla por la sima. Las alas no se
+     sueltan sobre el vacío, y la pantalla lo dice.
+  4. **LA CÁMARA SE ABRE EN VUELO**: más lejos, casi centrada y baja, con el
+     retroceso enderezado hacia la horizontal, así que se ve el cuerpo entero y
+     por encima de la barra. A pie se queda exactamente como estaba.
+  5. **LAS ALAS SE ENCHUFAN EN EL CUERPO**: son hijas del hueso de la espalda
+     (por portal), así que heredan la pose del vuelo y dejaron de ser
+     atravesadas por la espalda. El hueso se elige por cercanía al medio de los
+     hombros. Y ALETEAN: cada ala en sentido contrario, fuerte al subir,
+     brazadas al posarse.
+  6. **EL ARQUITECTO VESTIDO DE LUZ.** En el espacio profundo su material PBR
+     se apagó y parecía piedra. Ahora su propia textura entra como emisiva
+     (cada trazo dorado brilla con su color), el filo se enciende con un
+     **Fresnel inyectado en su propio shader** —ni malla extra ni pelea con el
+     esqueleto— que pasa el umbral del Bloom y florece, y refleja el doble del
+     ambiente.
+  7. **LA TECLA L ESCONDE TAMBIÉN EL PANEL AZUL** de la conversación: era lo
+     único grande que se quedaba puesto al desnudar la sala.
+  8. **LOS NODOS SE QUEDAN DONDE LOS DEJAS.** `posicionesOrbes` SÍ se escribía
+     en el almacén y NO se volvía a leer al abrir, así que cada recarga los
+     devolvía a su sitio de catálogo (las reliquias no sufrían el defecto
+     porque su lectura sí existía). Demostrado contra la lógica vieja.
+- 📁 **Archivos:** (rsv-web/src/council) **`scene/Alas.tsx` NUEVO** ·
+  **`scene/Isla.tsx` NUEVO** · `scene/Caminata.tsx` v3.6 · `scene/AvatarGLB.tsx`
+  v3.4 · `scene/Avatar.tsx` v2.2 · `scene/Vara.tsx` v1.2 · `scene/CouncilScene.tsx`
+  v2.1 · `scene/Cupula.tsx` (exporta el óculo) · `scene/tocables.ts` v1.4 ·
+  `scene/shaders.ts` · `ui/HUD.tsx` v3.6 · `store.ts` · `types.ts` v3.9 ·
+  `config.ts` (la URL del avatar).
+- ⏳ **Pendiente:** ver el vuelo, la isla y el brillo con sesión real en su
+  navegador (todo se verificó con `?sinportal`).
+- 💡 **Decisiones importantes:**
+  - **UN PEDIDO DE MUNDO NO SE TOMA LITERAL.** Zak pidió "acercarnos a una mini
+    ciudad" y le entregué un skyline de rascacielos: *"qué basura hiciste de la
+    ciudad, te lo tomaste literal… le quitaste toda la magia, tiene que ser
+    espacio profundo"*. El ecosistema es de **islas flotantes en el espacio**, y
+    de momento SOLO UNA; las demás vienen después.
+  - **LOS BRAZOS DEL COUNCIL: APIS PROPIAS, NO GROK BOT** (consulta respondida,
+    detalle en Pendientes vivos).
+  - **El SDK de Python de Soniox no sirve para la latencia**: es una envoltura
+    de servidor de las mismas APIs, y el navegador ya habla directo con Soniox.
+- 🔧 **Patrones nuevos:** ver el changelog v44 (0-quatertricies: cuando algo que
+  NO tocaste empeora, el sospechoso es lo que cambió a su alrededor). Y dos
+  gotchas de three que viven en [[proyecto_council_solar]]: el orden de rotación
+  Y-X-Z (con X-Y-Z la inclinación se aplicaba sobre el eje del MUNDO y el cuerpo
+  se ponía de cabeza según a dónde mirara), y que **Meshy no exporta los nombres
+  de su biblioteca** (las pistas nuevas salen con identificador; se reparten por
+  orden, confirmado por la firma de movimiento medida en el binario).
+- 🧬 **Versión al cierre:** Council LIVE en `redsolarviva.com/consejo` ·
+  App Store 1.1.3 (1.1.4 en curso) · Android vc7 en producción. Los cinco repos
+  al día.
+
 #### 2026-08-19 · II · 🜂 EL ESPEJO SE VUELVE APP DE TELÉFONO: BARRA DE REFLEJOS, COMPOSITOR DE DOS RENGLONES Y LA PUERTA DEL PLAN · LA MATRIZ SE LEE SOLA · EL iPHONE VUELVE A COMPILARSE SIN MANOS
 
 - ✅ **Resuelto:**
@@ -2871,99 +3019,22 @@ la recarga en caliente.
   iPhone con la última instalada · App Store 1.1.3 LIVE (1.1.4 en curso) ·
   Android vc7 enviado a producción. Los cinco repos al día.
 
-#### 2026-08-19 · 🜂 ANDROID LISTO PARA LA TIENDA: EL INGRESO DEJA DE CANCELARSE SOLO, LA LUZ DEL BORDE DEJA DE TUMBAR TARJETAS, Y LA CADENA DE COBRO SE PROBÓ EN UN TELÉFONO REAL
+#### 2026-08-19 · ANDROID LISTO PARA LA TIENDA (comprimida)
 
-- ✅ **Resuelto:**
-  1. **Google concedió acceso a PRODUCCIÓN** (correo del 2026-08-16). Zak probó
-     la app entera en un **Samsung Galaxy A07 de gama baja**: ingreso con
-     Google ✓, muro de pago con 499 y 149 ✓, decodificador y biblioteca ✓.
-  2. **El ingreso con Google se cancelaba solo en Android.** `browserFinished`
-     del plugin Browser es una HEURÍSTICA en Android (`handleGroupCompletion`:
-     TAB_HIDDEN + onPause) y suena con el acceso a MITAD: la gracia de 2.5 s
-     vencía y `finish()` **cerraba el Custom Tab en la cara de la persona**.
-     Gracia a 20 s + la cancelación deja el navegador en paz (oauthNative v2.7),
-     y a >20 s se suelta **en silencio** porque el ticket tardío entra por el
-     receptor de arranque (v2.8 + Auth2Modal v2.1). Demostrado con arnés de la
-     máquina: la versión vieja cierra a los 3.7 s, la nueva no.
-  3. **Las tarjetas de Rachas DESAPARECÍAN en el A07.** El EdgeGlow es una
-     máscara compuesta sobre un hijo `conic` sobredimensionado al 175% que
-     gira: gratis en WebKit, rasterizado en software por Chrome, que con ~10
-     tarjetas agota su presupuesto de memoria de capas y **descarta capas
-     enteras**. En Android la misma luz viaja por `background-position` en una
-     capa sin hijos (EV_Shared v2.48). iPhone intacto.
-  4. **El borde inferior de Android.** Los 385 `env(safe-area-inset-*)` valían
-     0 porque en Android eso solo se llena "borde a borde", que con targetSdk
-     36 solo es automático en Android 15+. MainActivity v1.1 lo pide en TODA
-     versión y escribe `--sab/--sat/--sal/--sar` de respaldo; todos los `env()`
-     caen en esas variables (globals v1.3).
-  5. **La Realidad no existe en Android** (puerta del onboarding + tarjeta del
-     hub filtradas por `isAndroid()`): pide LiDAR de iPhone Pro y era un
-     callejón sin salida que además publicitaba a la competencia.
-  6. **"Activar háptica" por voz no se sentía.** Se reconocía (1.00) y se
-     ejecutaba, pero ya estaba encendida → no cambiaba nada y el acuse es
-     SONORO. Ahora encender vibra dos pulsos y apagar da uno de despedida
-     (`pulsoHapticoDirecto` ignora el toggle a propósito). +6 claves: "enciende
-     / apaga la háptica" empataban 0.50 con sonido.
-  7. **Se cerró el corte de dominio:** `www.redsolarviva.com` fallaba el
-     saludo TLS porque el certificado no incluía ese nombre; emitido con
-     `vercel certs issue` con LOS DOS nombres. Framer cancelado.
-  8. **Motor → pestaña VOZ** (lo que la voz no entendió) y **la baja de correos
-     se lleva solo su fila**, sin recargar el padrón.
-  9. **La página de borrado de cuenta** vive ahora también en el dominio raíz
-     (Play la exigía ahí y encontraba 404). Se sirve la página REAL en las dos
-     direcciones, no un redirect.
-- 📁 **Archivos:** (escaner-app) `oauthNative` v2.8 · `Auth2Modal` v2.1 ·
-  `EV_Shared` v2.48 · `sensory` (+`pulsoHapticoDirecto`) · `useComandoVoz` v3.1
-  · `comandosVoz` v2.6 · `EV_DreamDecoder` v1.73 · `OnboardingV2` v2.10 ·
-  `globals.css` v1.3 · **`MainActivity.java` v1.1** · `build.gradle` (vc7).
-  (Code) `MotorDeIntervencion` v4.8 · **`MI_Voz.tsx` NUEVO** · `MI_Correos` v1.1.
-  (escaner-landing) `delete-account.html` NUEVO.
-- 🔌 **Edges deployed:** `admin-action` (repuesta a la versión completa tras un
-  despliegue mío desde una copia vieja que le quitó el ruteo del afinamiento
-  del Espejo durante un rato).
-- ⏳ **Pendiente:** que Google apruebe el primer lanzamiento a producción
-  (enviado con la vc7); y las notas de versión de Apple 1.1.4 esperan que Zak
-  confirme si el simulador nuevo y las imágenes del Espejo ya viajaban en la
-  1.1.3 (no se pudo fechar: el git de `escaner-app` solo cubre desde el
-  2026-08-08).
-- 💡 **Decisiones importantes:**
-  - **La ficha de Play va solo en español** (el inglés se agrega después sin
-    nueva revisión) y **el lanzamiento por etapas importa poco en un primer
-    lanzamiento**; la prueba de compra importa mucho.
-  - **Cobro INMEDIATO al cambiar de plan**: el único cambio que la app ofrece
-    es semanal→mensual desde el muro de Cristales, y con "próxima fecha de
-    facturación" la persona no recibiría los Cristales por los que cambió.
-  - **Los 7 días de gracia NO regalan Códices**: los Cristales se emiten solo
-    en `INITIAL_PURCHASE`/`RENEWAL`, y ninguno llega durante la gracia.
-  - **Margen de Sintonía Solar** (consulta respondida): entran 424 MXN tras el
-    15% de Apple, el uso esperado de IA es 51 MXN → **quedan ~373 MXN por
-    persona al mes** (88% de lo que entra). La voz es 2/3 de ese gasto. El
-    techo teórico (agotar todos los topes a diario) daría −113 MXN.
-  - **Requisito práctico de Android**: 3 GB de RAM y Android 8 mueven la app
-    con sus animaciones completas; el mínimo declarado es Android 6.
-- 🔧 **Patrones nuevos:** ver el changelog v42 (0-tricies: un efecto afinado
-  para un motor puede TUMBAR al otro; 0-untricies: una acción que ya está en
-  el estado pedido tiene que acusar igual).
-- 🧬 **Versión al cierre:** Android **1.1.4 vc7 enviado a producción**.
-  App Store 1.1.3 LIVE (1.1.4 en curso). `redsolarviva.com` y `www` en Vercel,
-  Framer cancelado. Los cinco repos al día.
-
-#### 2026-08-17 · XI → 2026-08-18 · III · EL COUNCIL: BOTE CON PORQUÉ, FOTÓN CERO APARTE, PIPELINE ADITIVO (comprimida)
-
-- 💡 **Decisiones:** pagar por alguien NO es una idea, es un premio (el juez
-  compara gesto y mecánica, nunca la recompensa) · el catálogo del Nodo A solo
-  CRECE y se sella por sesiones en el Archivero; el ranking de cinco que
-  competía se fue porque se ciclaba y se sobrescribía · Fotón Cero vive en su
-  propio repo y dominio porque un nodo va a escribir código ahí sin que nadie
-  revise cada línea · el servidor de inferencia: el lag es compartir la
-  gráfica, cero lag desde 24 GB dedicados, y MiniMax H3 SÍ es de pesos
-  abiertos y una 5090 lo corre a 768p.
-- 🔧 **Patrones:** apilar filtros razonables sobre un modelo débil lleva el
-  rendimiento a CERO · una defensa construida para una condición que ya no
-  existe se vuelve el bug (changelog v41).
-- 🧬 Council LIVE en `redsolarviva.com/consejo` · Fotón Cero en `fotoncero.com`.
-  Todo el detalle vive en [[proyecto_council_solar]], [[proyecto_council_sonido]]
-  y [[proyecto_council_mensajero]].
+- 💡 **Decisiones:** la ficha de Play va solo en español (el inglés se agrega
+  después sin nueva revisión) y el lanzamiento por etapas importa poco en un
+  primer lanzamiento; la prueba de compra importa mucho · cobro INMEDIATO al
+  cambiar de plan (con "próxima fecha de facturación" la persona no recibiría
+  los Cristales por los que cambió) · los 7 días de gracia NO regalan Códices ·
+  margen de Sintonía Solar: entran 424 MXN tras Apple, el uso esperado de IA es
+  51, quedan ~373 por persona al mes · requisito práctico de Android: 3 GB de
+  RAM y Android 8.
+- 🔧 **Patrones:** un efecto afinado para un MOTOR puede tumbar al otro (el
+  EdgeGlow con máscara compuesta es gratis en WebKit y Chrome lo rasteriza en
+  software, así que DESCARTA capas y las tarjetas desaparecen) · una acción que
+  ya está en el estado pedido tiene que acusar igual, y en el mismo canal que
+  lo pedido (changelog v42).
+- 🧬 Todo el detalle vive en [[proyecto_android_port]] y en el código.
 
 *Las entradas anteriores (2026-04-18 → 2026-08-09) viven en*
 `admin/CLAUDE_archivo_hasta_2026-08-04.md`. *No se cargan por sesión: lo
