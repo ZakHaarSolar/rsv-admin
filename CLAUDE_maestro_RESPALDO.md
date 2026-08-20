@@ -1228,9 +1228,16 @@ Aquí queda SOLO lo abierto:
    que su formato depende SOLO de esa directriz.
 4. ⏳ **Activar por primera vez los nodos I, J, K y L** (nacen sin playbook; el
    K empieza por la HOJA DE RESULTADOS si nada se ha rodado).
-5. ⏳ **De Fotón Cero falta** un objeto 3D propio en la sala (hoy se entra por
-   la fila del pie y con la tecla B) y las voces «entra a la serie X» / «abre
-   la producción» en `intenciones.ts`.
+5. ⏳ **De Fotón Cero faltan** las voces «entra a la serie X» / «abre la
+   producción» en `intenciones.ts`. ~~El objeto 3D propio en la sala~~ CERRADO
+   el 2026-08-20: el MONOLITO de la bahía 6 abre el Panel de Densificación
+   (y por voz: «abre la densificación» / «abre el monolito»).
+5-bis-densi. ⏳ **El Panel de Densificación espera dos cosas**: que Zak pegue
+   `admin/supabase/migrations/20260820_densificacion_foton_cero.sql` en el SQL
+   Editor (sin él, el panel guarda solo en el navegador Y la Producción de
+   Fotón Cero sigue sin viajar al servidor, que es el bug reparado en esa
+   misma migración) y el device-QA del monolito con gesto real (clic y
+   espacio sostenido; el velo con transiciones se ve solo en device).
 5-bis. ⏳ **MÁS ISLAS FLOTANTES** (Zak, 2026-08-19 · III: *"nuestro ecosistema va
    a ser de islas flotantes; ahorita solo debe estar una"*). El templo ya vive
    en la suya, en espacio profundo. Lo que falta es decidir QUÉ vive en la
@@ -2876,6 +2883,82 @@ aquí, el entorno que un código daba por hecho.
 
 ## 🜃 Historial de sesiones
 
+#### 2026-08-20 · 🜂 EL PANEL DE DENSIFICACIÓN DE FOTÓN CERO: EL MONOLITO DEL TEMPLO ABRE EL ESTUDIO DE SERIES
+
+- ✅ **Resuelto:**
+  1. **EL MONOLITO DE FOTÓN CERO vive en el templo** (bahía 6, libre de
+     portales): una losa de obsidiana con una grieta de luz cian que respira y
+     el glifo ◈ flotando. Es sólido al caminar, la mira lo nombra, y al tocarlo
+     la cámara hace un dolly hacia la grieta mientras un velo funde a negro;
+     al llegar, **el templo 3D se DESMONTA entero** (la gráfica queda libre
+     para el núcleo, como en el Modo Núcleo) y se abre el panel. El regreso
+     (Esc o «al templo») remonta el templo bajo otro velo. También se abre
+     desde la barra de estudios de Fotón Cero («◈ densificación») y por voz
+     («abre la densificación» / «abre el monolito»). Recargar dentro del panel
+     vuelve directo al panel.
+  2. **EL PANEL: tres columnas sobre obsidiana** (chunk perezoso de 78 KB que
+     solo baja al entrar). LA BÓVEDA DE ENTIDADES: personajes, objetos,
+     locaciones, mundo y estilo, cada uno con su ficha (esencia, creencias,
+     nivel de conciencia, cuerpo canónico, vestuario, voz) y su MODEL SHEET de
+     láminas (frente, perfil, espalda…), cada lámina con su prompt y su
+     imagen. Las pestañas «mundo» y «estilo» editan la serie REAL de la
+     Producción (biblia, ADN visual, sello): los nodos del estudio ven lo
+     mismo. Los personajes de la Producción se traen con un botón. EL LIENZO
+     DE SECUENCIAS: actos como filas (con propósito emocional y avance), tomas
+     como tarjetas de cine 16:9 con narrativa, diálogo, entidades presentes,
+     encuadre/cámara/luz/duración y los DOS prompts plegados (imagen para Nano
+     Banana Pro, movimiento para animar). El fotograma se pega con ⌘V, se
+     suelta encima o se sube; el ciclo se ve de reojo (◌ boceto → ◈ prompt →
+     ■ imagen → ▶ animada). LA TIRA proyecta el animatic (imágenes + narrativa
+     al ritmo de las duraciones) y el botón «guion» copia el episodio entero
+     en markdown. LA FORJA DEL CONSEJO: el núcleo local con TODO el contexto
+     cargado (sello + serie + fichas canónicas + toma anterior para
+     continuidad) forja el prompt de imagen, el de movimiento, la lámina de
+     una entidad o la secuencia entera de un acto, y el texto SE ESCRIBE EN
+     VIVO en su campo. Comparte el hilo único de Ollama con la ley del Taller.
+  3. **VERIFICADO con el núcleo real**: una forja de prompt de imagen contra
+     qwen3.8:27b aterrizó 965 caracteres de cine denso en el campo de la toma
+     y el estado subió solo a ◈. El viaje completo (dolly → desmonte → panel →
+     regreso) verificado en pantalla; persistencia local verificada.
+  4. **La bóveda remota del panel**: tres tablas nuevas (entidades, actos,
+     tomas) con escritura condicional por fecha y LÁPIDAS en la fila (multi
+     computadora sin pisarse), imágenes en R2 (fotograma + miniatura,
+     verificadas por bytes) vía council-gate v2.0 (desplegada y verificada
+     viva). Sin el SQL pegado el panel funciona local y el pill lo dice.
+  5. 🜂 **CAZADO Y REPARADO UN BUG GRAVE DE LA PRODUCCIÓN**: la función SQL
+     `council_guardar_registros` nunca aprendió los seis tipos de producción
+     (la migración 20260817 amplió la tabla pero NO el filtro de la función),
+     así que el sello, las series, los personajes, los episodios, los álbumes
+     y las canciones se DESCARTABAN EN SILENCIO al viajar: la Producción
+     entera de Fotón Cero vivía solo en el navegador. La migración nueva
+     arregla la función (y les da su tope real de 60.000 caracteres).
+- 📁 **Archivos:** (rsv-web/src/council) **`densificacion/` NUEVA** (tipos ·
+  hilo · almacen · forja-prompts · forja · estilos · campos · Velo ·
+  PanelDensificacion · Boveda · Lienzo · ConsolaForja) · **`scene/Monolito.tsx`
+  NUEVO** (objeto + cinemática) · CouncilApp v1.6 · CouncilScene v2.3 ·
+  Caminata v3.8 · store v2.19 · types v4.0 · useCouncil v1.1 · HUD v3.7 ·
+  intenciones v1.6 · sonido v1.2 · AdminGate v1.8. (admin)
+  `20260820_densificacion_foton_cero.sql`.
+- 🔌 **Edge functions deployed:** council-gate v2.0 (densi-leer ·
+  densi-guardar · densi-imagen · densi-imagen-borrar; R2 bajo Council/densi/).
+- ⏳ **Pendiente:** Zak pega el SQL (abajo en «Lo que tienes que hacer» de la
+  sala; sin él, panel solo local y la Producción sigue sin viajar) · device-QA
+  del monolito con gesto real (clic y espacio sostenido quedan fuera del
+  panel de vista, como siempre) y del velo (las transiciones CSS se congelan
+  en pestaña oculta).
+- 💡 **Decisiones importantes:** el panel NO duplica las series: edita la
+  Producción real (una sola fuente de verdad) y añade la capa visual que
+  faltaba · los prompts se forjan con las fichas canónicas REPETIDAS palabra
+  por palabra (la consistencia del personaje es esa repetición) · la imagen
+  nunca vive en el estado (R2 + miniatura; dataURL solo sin sesión) · el
+  panel desmonta templo Y HUD (pantalla limpia, gráfica libre).
+- 🔧 **Patrones nuevos:** un selector DERIVADO (array fresco) dentro de
+  useSyncExternalStore = bucle de renders infinito; el selector devuelve
+  referencias crudas del estado y el useMemo deriva (memoria
+  [[feedback_useSyncExternalStore_selector_derivado]]) · en disco que no
+  distingue mayúsculas, `forja.ts` y `Forja.tsx` son EL MISMO archivo para
+  tsc: nombres de módulo distintos aunque el caso difiera.
+
 #### 2026-08-19 · III · 🜂 EL ARQUITECTO VUELA: LAS ALAS DE LUZ, LA SALIDA DEL DOMO Y EL TEMPLO EN UNA ISLA FLOTANTE EN EL ESPACIO PROFUNDO
 
 - ✅ **Resuelto:**
@@ -2948,93 +3031,22 @@ aquí, el entorno que un código daba por hecho.
   App Store 1.1.3 (1.1.4 en curso) · Android vc7 en producción. Los cinco repos
   al día.
 
-#### 2026-08-19 · II · 🜂 EL ESPEJO SE VUELVE APP DE TELÉFONO: BARRA DE REFLEJOS, COMPOSITOR DE DOS RENGLONES Y LA PUERTA DEL PLAN · LA MATRIZ SE LEE SOLA · EL iPHONE VUELVE A COMPILARSE SIN MANOS
+#### 2026-08-19 · II · EL ESPEJO COMO APP DE TELÉFONO + LA MATRIZ SE LEE SOLA (comprimida)
 
-- ✅ **Resuelto:**
-  1. **LA ESCUCHA AUTOMÁTICA DE LA MATRIZ** (tecla V, botón de voz dorado con
-     aro): el reflejo se lee solo SIN esperar a que termine de escribirse. Se
-     parte en tramos crecientes mientras llega (uno corto para arrancar pronto,
-     uno mediano para cubrir la síntesis del siguiente, y el resto entero a la
-     máquina de siempre) y cada tramo se precalienta en cuanto existe, así que
-     al tocarle sonar ya vive en el cofre. De ~1 min a ~12 s hasta la primera
-     palabra hablada. El motor no cambió: `precalentarVoz` sintetiza sin sonar
-     y `cortePrimeraVoz` decide dónde partir un texto que aún llega.
-  2. **LA BARRA DE REFLEJOS LLEGA AL TELÉFONO** (el MISMO panel, no una copia):
-     lista, BUSCADOR por nombre sin tildes, papelera y lápiz visibles al toque,
-     y al pie Tu uso · Tu plan · qué-es. Se abre desde un botón nuevo bajo la
-     flecha de regreso. El menú del sigilo queda con los ajustes de la lectura
-     (voz, qué es, eliminar) y la lista a pantalla completa se retiró (454
-     líneas), con su renombrar mudado a la fila de la barra.
-  3. **EL CARRIL PROFUNDO TENÍA EL RELOJ DEL RÁPIDO.** Consulta larga en
-     profundo → "(timeout)" sin reflejo y con el turno cobrado. El corte lo
-     hacía el CLIENTE a los 75 s mientras el servidor tenía permiso de tardar
-     120 en ese carril. Ahora el reloj se lee del propio encargo (135 s / 75 de
-     silencio). **Y el profundo se cobra en dos tramos** (1 al entrar, 7 al
-     confirmar el reflejo): un turno caído ya no se cobra entero.
-  4. **RESONANCIA EN CERO:** la plantilla del prompt traía los siete valores en
-     0.0 y copiarla producía una señal presente y hueca que pasaba el control.
-     Plantilla con valores variados + siete ceros tratados como ausencia.
-  5. **AL ENVIAR SE VA AL FONDO** y nace el interruptor de seguimiento (tecla
-     S). La cuenta anterior NUNCA llegaba al fondo: 290 px de hueco con tres
-     líneas y 876 con un dictado.
-  6. **LAS FOTOS YA NO SE QUEDAN ATRÁS:** prepararlas es asíncrono y nada lo
-     decía, así que el envío salía sin ellas. Ahora se ven entrando y el envío
-     las espera.
-  7. **LAS IMÁGENES DE LA MATRIZ ELIGEN SU ESTILO** (el cine analógico se
-     retira; solo se veta el texto dentro de la imagen) y **se ven enteras**: el
-     zoom del 4,5% existía para comerse las franjas que dibujaba ese estilo.
-  8. **"SIN PLAN ACTIVO" ES AHORA LA PUERTA:** nombra Sintonía Solar, muestra
-     los dos ritmos (499/mes · 149/semana) y lleva al selector con un toque.
-  9. **RACHAS EN FILAS PAREJAS**, una columna en el teléfono y tres en pantalla
-     grande. Tres cosas empujaban solo a algunas (matiz del año, sello de pausa
-     y récord): las tres tienen su sitio reservado.
-  10. **EL COMPOSITOR DEL ESPEJO SE ABRE EN DOS RENGLONES** en el teléfono
-      desde la segunda línea, con el texto a todo el ancho.
-  11. **EL DESPLIEGUE AL iPHONE VUELVE A SER DE CLAUDE Y ES UN SOLO COMANDO:**
-      `./al-iphone.sh`, en el repo.
-- 📁 **Archivos:** (escaner-app) `EV_Oraculo` v6.8 · `EV_Rafaga` v5.29 ·
-  `EV_Rachas` v2.7 · `espejoVozFish` v2.27 · `espejo.es/en` v1.20 ·
-  **`al-iphone.sh` NUEVO** · `publicar-escritorio.sh` (versión derivada, ya no
-  escrita a mano) · `.gitignore`/`.vercelignore` (DerivedData).
-  (admin) `oraculo-chat` v1.46 · `espejo-imagen` v2.7.
-- 🔌 **Edges deployed:** `oraculo-chat` v1.46 (cobro del profundo en dos
-  tramos) · `espejo-imagen` v2.7 (sin estilo de casa en el carril de la Matriz).
-- ⏳ **Pendiente:** oír la escucha automática con voz real (exige sesión y
-  llamadas de pago) y ver las Rachas en el teléfono.
-- 💡 **Decisiones importantes:**
-  - **LA APP MANDA SOBRE LA WEB** (Zak, textual): un cambio "desplegado a
-    Vercel" NO está en su app de escritorio. Un cambio de producto se cierra
-    con web + app de macOS con su actualizador + iPhone.
-  - **MÚSICA: los SEIS álbumes, no uno** (corregí mi propia recomendación). El
-    trabajo real es el reproductor con su lista y se hace UNA vez; seis álbumes
-    se leen como discografía y uno como tienda a medio surtir. El valor no es
-    tener música: es que la app SUENE a él (ambiente de las ceremonias), que es
-    lo único que Spotify no puede hacer. Sin enlace a Spotify dentro.
-  - **En el teléfono "Tu plan" NO va a Stripe**, abre la pestaña de adentro:
-    mandar a pagar fuera desde iOS rompe las reglas de la tienda.
-- 🔧 **Patrones nuevos:** ver el changelog v43 (0-duotricies: lo que se pide
-  para UNA superficie no se aplica a las dos; 0-tertricies: una medida que
-  decide el layout no puede depender del layout que decide).
-- 🧬 **Versión al cierre:** escritorio **1.1.18** publicada y verificada ·
-  iPhone con la última instalada · App Store 1.1.3 LIVE (1.1.4 en curso) ·
-  Android vc7 enviado a producción. Los cinco repos al día.
-
-#### 2026-08-19 · ANDROID LISTO PARA LA TIENDA (comprimida)
-
-- 💡 **Decisiones:** la ficha de Play va solo en español (el inglés se agrega
-  después sin nueva revisión) y el lanzamiento por etapas importa poco en un
-  primer lanzamiento; la prueba de compra importa mucho · cobro INMEDIATO al
-  cambiar de plan (con "próxima fecha de facturación" la persona no recibiría
-  los Cristales por los que cambió) · los 7 días de gracia NO regalan Códices ·
-  margen de Sintonía Solar: entran 424 MXN tras Apple, el uso esperado de IA es
-  51, quedan ~373 por persona al mes · requisito práctico de Android: 3 GB de
-  RAM y Android 8.
-- 🔧 **Patrones:** un efecto afinado para un MOTOR puede tumbar al otro (el
-  EdgeGlow con máscara compuesta es gratis en WebKit y Chrome lo rasteriza en
-  software, así que DESCARTA capas y las tarjetas desaparecen) · una acción que
-  ya está en el estado pedido tiene que acusar igual, y en el mismo canal que
-  lo pedido (changelog v42).
-- 🧬 Todo el detalle vive en [[proyecto_android_port]] y en el código.
+- 💡 **Decisiones:** LA APP MANDA SOBRE LA WEB (un cambio "desplegado a
+  Vercel" NO está en su app de escritorio; un cambio de producto se cierra con
+  web + app de macOS con su actualizador + iPhone) · MÚSICA: los SEIS álbumes,
+  no uno (el valor es que la app SUENE a él; sin enlace a Spotify dentro) · en
+  el teléfono "Tu plan" NO va a Stripe: abre la pestaña de adentro (reglas de
+  la tienda) · el despliegue al iPhone es UN comando en el repo
+  (`./al-iphone.sh`) · el carril profundo se cobra en dos tramos (un turno
+  caído no se cobra entero).
+- 🔧 **Patrones:** changelog v43 (0-duotricies: lo pedido para UNA superficie
+  no se aplica a las dos; 0-tertricies: la medida que decide el layout no
+  puede depender del layout que decide). Detalle vivo en
+  [[proyecto_escucha_automatica_matriz]] y el código.
+- 🧬 **Versión al cierre:** escritorio 1.1.18 · App Store 1.1.3 LIVE (1.1.4 en
+  curso) · Android vc7 en producción.
 
 *Las entradas anteriores (2026-04-18 → 2026-08-09) viven en*
 `admin/CLAUDE_archivo_hasta_2026-08-04.md`. *No se cargan por sesión: lo
