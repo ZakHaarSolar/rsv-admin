@@ -1475,7 +1475,7 @@ Android: primera versión en Prueba interna. Detalle en
   lo respalda. Los cinco proyectos SÍ tienen remoto privado en GitHub y hoy
   están los cinco al día (`escaner-app`, `Code`, `admin`, `rsv-web`,
   `escaner-landing`). Mientras la raíz no sea repo, cada cierre de sala deja
-  una copia en `admin/CLAUDE_maestro_respaldo.md` (que sí viaja). Si algún día
+  una copia en `admin/CLAUDE_maestro_RESPALDO.md` (que sí viaja). Si algún día
   se hace repo de la raíz, este bullet se va.
 - **Device-QA de la ESCUCHA AUTOMÁTICA de la Matriz** (LIVE en escritorio
   desde el 2026-08-19): con la tecla V encendida, mandar un mensaje largo y
