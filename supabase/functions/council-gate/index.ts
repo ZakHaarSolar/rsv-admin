@@ -1,3 +1,4 @@
+// Red Solar Viva · council-gate v2.0 — 🜂 EL PANEL DE DENSIFICACIÓN de Fotón Cero: { quiero: "densi-leer" } devuelve entidades/actos/tomas del Arquitecto (lápidas incluidas); { quiero: "densi-guardar", entidades?, actos?, tomas? } escribe por council_densi_guardar (condicional por fecha, migración 20260820); { quiero: "densi-imagen", imagen_base64, mini_base64? } verifica por bytes (png/jpg/webp/gif, 10 MB), sube fotograma y miniatura a R2 (Council/densi/…) y devuelve sus direcciones; { quiero: "densi-imagen-borrar", url } quita fotograma Y su miniatura del bucket.
 // Red Solar Viva · council-gate v1.9 — 🜂 BORRAR UN PLAYBOOK BORRA DE VERDAD: { quiero: "boveda-borrar-playbook", clave } quita su fila de council_playbooks Y todas sus rondas de council_deliberaciones (el archivo de versiones), para que al recargar no vuelva a aparecer. Antes el borrado vivía solo en el navegador y la bóveda lo resucitaba.
 // Red Solar Viva · council-gate v1.8 — 🜂 LA MÚSICA DEL TEMPLO: { quiero: "musica-subir", nombre, audio_base64 } verifica el audio por sus bytes (mp3, m4a, wav, ogg, hasta 25 MB), lo deja en R2 (Council/musica/…) y devuelve su dirección; { quiero: "musica-borrar", url } lo quita del bucket. Secrets R2_* (los mismos de upload-wallpaper).
 // Red Solar Viva · council-gate v1.7 — 🜂 LA PRODUCCIÓN DE FOTÓN CERO (sello, serie, personaje, episodio, album, cancion) viaja como documentos de council_registros en su PROPIA llamada (si falta la migración 20260817 se reporta `produccion: produccion_sin_tipos` sin tumbar el resto)
@@ -58,7 +59,7 @@
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0"
 import { gateAdmin } from "../_shared/clerkAuth.ts"
-import { verifyUpload, type UploadKind } from "../_shared/upload.ts"
+import { IMAGE_KINDS, verifyUpload, type UploadKind } from "../_shared/upload.ts"
 
 const corsHeaders = {
     "Access-Control-Allow-Origin": "*",
@@ -671,6 +672,143 @@ async function musicaBorrar(body: { url?: unknown }): Promise<Response> {
     return json({ ok: true })
 }
 
+/* ── 🜂 El Panel de Densificación de Fotón Cero ─────────────────────────
+   Tres tablas propias (council_densi_entidades / _actos / _tomas, migración
+   20260820) con escritura CONDICIONAL por fecha vía council_densi_guardar y
+   lápidas en la fila (borrado_ts viaja: todas las computadoras ven morir lo
+   borrado). Las imágenes (fotogramas y láminas) van a R2 bajo Council/densi/
+   con el mismo verificador por bytes que la música. */
+
+const DENSI_PREFIJO = "Council/densi/"
+const DENSI_MAX_BYTES = 10 * 1024 * 1024
+const DENSI_MINI_MAX_BYTES = 2 * 1024 * 1024
+const DENSI_MAX_FILAS = 400
+const DENSI_MAX_FILA_CHARS = 60000
+const DENSI_MAX_LEER = 5000
+
+function densiLote(v: unknown): unknown[] {
+    if (!Array.isArray(v)) return []
+    const out: unknown[] = []
+    for (const fila of v.slice(0, DENSI_MAX_FILAS)) {
+        if (!fila || typeof fila !== "object") continue
+        try {
+            if (JSON.stringify(fila).length > DENSI_MAX_FILA_CHARS) continue
+        } catch {
+            continue
+        }
+        out.push(fila)
+    }
+    return out
+}
+
+async function densiGuardar(
+    userId: string,
+    body: { entidades?: unknown; actos?: unknown; tomas?: unknown }
+): Promise<Response> {
+    const db = sb()
+    const { data, error } = await db.rpc("council_densi_guardar", {
+        p_user: userId,
+        p_entidades: densiLote(body.entidades),
+        p_actos: densiLote(body.actos),
+        p_tomas: densiLote(body.tomas),
+    })
+    if (error) {
+        console.error("[council-gate] densi-guardar", error.code, error.message)
+        return json({ ok: false, error: motivoDb(error) }, 500)
+    }
+    return json({ ok: true, guardados: data ?? {} })
+}
+
+async function densiLeer(userId: string): Promise<Response> {
+    const db = sb()
+    const pedir = (tabla: string, cols: string) =>
+        db.from(tabla).select(cols).eq("clerk_user_id", userId).limit(DENSI_MAX_LEER)
+    const [ent, act, tom] = await Promise.all([
+        pedir("council_densi_entidades", "id, serie_id, tipo, nombre, orden, datos, actualizado_ts, borrado_ts"),
+        pedir("council_densi_actos", "id, serie_id, episodio_id, titulo, orden, datos, actualizado_ts, borrado_ts"),
+        pedir("council_densi_tomas", "id, serie_id, acto_id, orden, datos, actualizado_ts, borrado_ts"),
+    ])
+    const fallo = ent.error ?? act.error ?? tom.error
+    if (fallo) {
+        console.error("[council-gate] densi-leer", fallo.code, fallo.message)
+        return json({ ok: false, error: motivoDb(fallo) }, 500)
+    }
+    return json({ ok: true, entidades: ent.data ?? [], actos: act.data ?? [], tomas: tom.data ?? [] })
+}
+
+async function densiImagen(body: { nombre?: unknown; imagen_base64?: unknown; mini_base64?: unknown }): Promise<Response> {
+    const cfg = r2Config()
+    if ("faltan" in cfg) return json({ ok: false, error: "missing_secrets", detail: cfg.faltan.join(", ") }, 500)
+    const v = verifyUpload(String(body.imagen_base64 ?? ""), { allow: IMAGE_KINDS, maxBytes: DENSI_MAX_BYTES })
+    if (!v.ok) return json({ ok: false, error: v.error, detail: v.detail }, v.status)
+    const id = crypto.randomUUID()
+    const key = `${DENSI_PREFIJO}${fechaHoy()}/${id}.${v.ext}`
+    try {
+        const r = await r2Peticion(cfg, "PUT", key, v.bytes, v.mime)
+        if (!r.ok) {
+            const t = await r.text().catch(() => "")
+            console.error("[council-gate] densi r2 put", r.status, t.slice(0, 300))
+            return json({ ok: false, error: "r2_upload_failed", detail: `R2 ${r.status}` }, 502)
+        }
+    } catch (e) {
+        console.error("[council-gate] densi r2 put", String(e))
+        return json({ ok: false, error: "r2_upload_failed", detail: String((e as Error)?.message || e) }, 502)
+    }
+    const base = cfg.publicBaseUrl.replace(/\/+$/, "")
+    const aUrl = (k: string) => `${base}/${k.split("/").map((x) => encodeURIComponent(x)).join("/")}`
+    const url = aUrl(key)
+    /* la MINIATURA es opcional y falla suave: sin ella la tarjeta usa la
+       imagen completa (más pesada pero correcta) */
+    let miniUrl = url
+    const miniCruda = String(body.mini_base64 ?? "")
+    if (miniCruda) {
+        const m = verifyUpload(miniCruda, { allow: IMAGE_KINDS, maxBytes: DENSI_MINI_MAX_BYTES })
+        if (m.ok) {
+            const miniKey = `${DENSI_PREFIJO}${fechaHoy()}/${id}-mini.${m.ext}`
+            try {
+                const r = await r2Peticion(cfg, "PUT", miniKey, m.bytes, m.mime)
+                if (r.ok) miniUrl = aUrl(miniKey)
+            } catch (e) {
+                console.error("[council-gate] densi r2 put mini", String(e))
+            }
+        }
+    }
+    return json({ ok: true, id, url, miniUrl, bytes: v.bytes.length, ext: v.ext, nombre: texto(body.nombre, 120) })
+}
+
+async function densiImagenBorrar(body: { url?: unknown }): Promise<Response> {
+    const cfg = r2Config()
+    if ("faltan" in cfg) return json({ ok: false, error: "missing_secrets", detail: cfg.faltan.join(", ") }, 500)
+    const url = texto(body.url, 800)
+    const base = `${cfg.publicBaseUrl.replace(/\/+$/, "")}/`
+    /* solo lo que vive bajo Council/densi/: ninguna otra llave del bucket */
+    if (!url.startsWith(base)) return json({ ok: false, error: "url_ajena" }, 400)
+    let key = ""
+    try {
+        key = url.slice(base.length).split("/").map((x) => decodeURIComponent(x)).join("/")
+    } catch {
+        return json({ ok: false, error: "url_ilegible" }, 400)
+    }
+    if (!key.startsWith(DENSI_PREFIJO) || key.includes("..")) return json({ ok: false, error: "url_ajena" }, 400)
+    /* la miniatura hermana cae con el fotograma (y viceversa el 404 se tolera) */
+    const llaves = [key]
+    const m = key.match(/^(.*)(\.[a-z0-9]+)$/i)
+    if (m) llaves.push(key.includes("-mini.") ? key.replace("-mini.", ".") : `${m[1]}-mini${m[2]}`)
+    for (const k of llaves) {
+        try {
+            const r = await r2Peticion(cfg, "DELETE", k)
+            if (!r.ok && r.status !== 404) {
+                const t = await r.text().catch(() => "")
+                console.error("[council-gate] densi r2 delete", r.status, t.slice(0, 300))
+                return json({ ok: false, error: "r2_delete_failed", detail: `R2 ${r.status}` }, 502)
+            }
+        } catch (e) {
+            return json({ ok: false, error: "r2_delete_failed", detail: String((e as Error)?.message || e) }, 502)
+        }
+    }
+    return json({ ok: true })
+}
+
 /* ── Soniox ─────────────────────────────────────────────────────────── */
 
 async function llaveTemporal(
@@ -843,6 +981,11 @@ serve(async (req) => {
         nombre?: unknown
         audio_base64?: unknown
         url?: unknown
+        entidades?: unknown
+        actos?: unknown
+        tomas?: unknown
+        imagen_base64?: unknown
+        mini_base64?: unknown
     } = {}
     try {
         body = await req.json()
@@ -867,6 +1010,10 @@ serve(async (req) => {
     if (quiero === "mensajero-lee") return mensajeroLee(body)
     if (quiero === "musica-subir") return musicaSubir(body)
     if (quiero === "musica-borrar") return musicaBorrar(body)
+    if (quiero === "densi-leer") return densiLeer(userId)
+    if (quiero === "densi-guardar") return densiGuardar(userId, body)
+    if (quiero === "densi-imagen") return densiImagen(body)
+    if (quiero === "densi-imagen-borrar") return densiImagenBorrar(body)
 
     if (quiero !== "voz" && quiero !== "voz-salida") return json({ error: "quiero_desconocido" }, 400)
     if (!SONIOX_KEY) return json({ ok: false, error: "soniox_key_missing" }, 500)
