@@ -1238,6 +1238,17 @@ Aquí queda SOLO lo abierto:
    Fotón Cero sigue sin viajar al servidor, que es el bug reparado en esa
    misma migración) y el device-QA del monolito con gesto real (clic y
    espacio sostenido; el velo con transiciones se ve solo en device).
+5-quater. ⏳ **LA FRAGUA NECESITA COMFYUI EN LA MAC** (2026-08-20 · II). El
+   panel ya genera las láminas del model sheet solo (identidad con IP-Adapter
+   + ángulo con ControlNet OpenPose + lo que la referencia no puede ver), y su
+   cliente está verificado de punta a punta contra un ComfyUI de mentira
+   (49 ✓: catálogo, subida, encolado, socket, sondeo de respaldo, abortos,
+   errores del grafo y de ejecución) y contra la interfaz real. **Lo que falta
+   es de Zak y es una vez:** instalar ComfyUI, instalar desde su Manager
+   `ComfyUI_IPAdapter_plus` y un ControlNet de OpenPose, y arrancarlo con
+   `python main.py --enable-cors-header "https://redsolarviva.com"`. Sin eso
+   el panel lo dice en su ⚙ (con la línea exacta) y las láminas se siguen
+   colocando a mano. Detalle en [[proyecto_council_solar]].
 5-bis. ⏳ **MÁS ISLAS FLOTANTES** (Zak, 2026-08-19 · III: *"nuestro ecosistema va
    a ser de islas flotantes; ahorita solo debe estar una"*). El templo ya vive
    en la suya, en espacio profundo. Lo que falta es decidir QUÉ vive en la
