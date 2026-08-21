@@ -1246,9 +1246,11 @@ Aquí queda SOLO lo abierto:
    generando de verdad**: 37 s por lámina a 768×1152 con 10 pasos en MPS.
    Lo único que le queda a Zak es ARRANCARLO cuando quiera usarlo:
    `cd "admin/ComfyUI" && ./venv/bin/python main.py --enable-cors-header "https://redsolarviva.com"`
-   ⚠️ **`animagine-xl-3.1.safetensors` está TRUNCADO** (6,50 de 6,94 GB:
-   faltan 443 MB, la descarga se cortó) y ComfyUI lo rechaza; `sd_xl_base_1.0`
-   sí está completo. Volver a bajarlo, que para anime es el bueno.
+   ⚠️ **LO ÚNICO ABIERTO: `animagine-xl-3.1.safetensors` está TRUNCADO** (6,50
+   de 6,94 GB: faltan 443 MB, la descarga se cortó) y ComfyUI lo rechaza;
+   `sd_xl_base_1.0` sí está completo y con él se generó. Volver a bajarlo, que
+   para el anime de la casa es el bueno. Un safetensors truncado se caza
+   comparando el tamaño con `8 + len(cabecera) + max(data_offsets[1])`.
 5-bis. ⏳ **MÁS ISLAS FLOTANTES** (Zak, 2026-08-19 · III: *"nuestro ecosistema va
    a ser de islas flotantes; ahorita solo debe estar una"*). El templo ya vive
    en la suya, en espacio profundo. Lo que falta es decidir QUÉ vive en la
@@ -1519,7 +1521,7 @@ Android: primera versión en Prueba interna. Detalle en
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v44 (2026-08-19 · III)
+## 🜂 Protocolo de Cierre de Sesión · v45 (2026-08-21)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -2713,6 +2715,23 @@ aquí, el entorno que un código daba por hecho.
 
 ### Changelog del protocolo
 
+- **v45 (2026-08-21):** Paso 0-quinvicies-bis — un SIMULACRO prueba el
+  protocolo; solo el servicio REAL prueba el ACOPLAMIENTO. La Fragua pasó 49
+  comprobaciones contra un ComfyUI de mentira (catálogo, subida, encolado,
+  socket, sondeo de respaldo, abortos, errores del grafo y de ejecución) y, al
+  encenderse el ComfyUI de verdad, cayeron dos cosas que el simulacro no podía
+  enseñar porque su catálogo era de juguete: la elección automática emparejaba
+  un ControlNet de SD 1.5 con un modelo base SDXL (no falla al elegir: falla
+  dos minutos después con un error de tensores), y los motivos del servidor
+  llegaban en inglés y en jerga. **La regla: el simulacro se escribe para
+  ejercitar la MÁQUINA (tiempos, sockets, cancelaciones), y su catálogo se
+  llena con los NOMBRES REALES del entorno de destino en cuanto se conozcan;
+  hasta que el servicio real conteste una vez, la integración se reporta como
+  «probada contra un doble», nunca como terminada.** Corolario del 0-quater:
+  cuando el que falla es un servicio ajeno, sus mensajes son ruido en otro
+  idioma hasta que se traducen POR CAUSA.
+
+
 - **v44 (2026-08-19 · III):** Paso 0-quatertricies — si algo que NO tocaste
   empeoró, el sospechoso es lo que cambió a su ALREDEDOR. El Arquitecto pasó de
   dios de luz a piedra sin que nadie tocara su modelo: el cielo del templo pasó
@@ -2894,6 +2913,59 @@ aquí, el entorno que un código daba por hecho.
 
 ## 🜃 Historial de sesiones
 
+#### 2026-08-21 · 🜂 LA FRAGUA DE LÁMINAS: EL MODEL SHEET SE GENERA SOLO CONTRA EL COMFYUI DE LA MAC
+
+- ✅ **Resuelto:**
+  1. **LA FRAGUA**: desde la ficha de una entidad, ✦ genera la lámina que falte
+     en su ángulo, y «✦ model sheet» crea y forja las vistas que falten una por
+     una. La identidad la ancla la lámina marcada con ★ (IP-Adapter), el ángulo
+     lo impone un esqueleto que el panel DIBUJA (ControlNet OpenPose: nada de
+     archivos que mantener; el cuerpo se declara una vez en 3D y las vistas
+     salen de girarlo), y el texto de la lámina inyecta lo que la referencia no
+     puede ver (el correaje de la espalda). El núcleo traduce el prompt al
+     inglés antes de generar. La tarjeta dice el paso exacto y la imagen
+     aterriza sola. Colocar a mano (pegar/soltar/subir) sigue igual de vivo.
+  2. **PROBADA CONTRA EL COMFYUI REAL de Zak** (que instaló hoy en
+     `admin/ComfyUI`): **37 s por lámina** a 768×1152, 10 pasos, MPS. Dos
+     fallos que solo el servidor real podía enseñar: la autoselección tomaba el
+     ControlNet de SD 1.5 con un base SDXL (ahora empareja por FAMILIA y avisa
+     si se mezclan), y los errores llegaban en inglés y en jerga (ahora se
+     traducen POR CAUSA: modelo incompleto, familias, memoria, archivo ausente).
+  3. **LA BÓVEDA SE ENSANCHA Y SE ABRE ENTERA**: tirador en su borde (260-860,
+     recordado, doble clic la devuelve) y ⛶ para ocupar la pantalla, donde la
+     ficha se reparte en columnas y las láminas pasan de 220 a 443 px con
+     botones al doble.
+  4. **UN SOLO GUARDADO AL FORJAR**: mientras el núcleo dicta se escribe en
+     volátil. Medido con el núcleo real: **37 refrescos en pantalla → 1
+     escritura** a disco y a la bóveda (antes 37 y 37, que era el parpadeo del
+     pill entre «al día» y «guardando»).
+  5. **NADA CON CARGA SE BORRA DE UN TOQUE**: la tarjeta enumera lo que se
+     pierde («3 láminas · 1 con imagen · su esencia»); lo vacío conserva los dos
+     toques. Y «probar conexión» ACUSA: ✓ esmeralda con el número de modelos o
+     ✕ rojo nombrando el servidor que no contestó.
+  6. **LAS VISTAS DEPENDEN DE QUÉ SE FICHA**: un personaje se gira (frente ·
+     3/4 · perfil · espalda) y una locación se recorre (panorama · nivel calle ·
+     interior / ángulo B). Un lugar no recibe esqueleto, su hoja se pide como
+     locación (sin figura, sin fondo de estudio) y su prompt de texto lo escribe
+     el Director de Arte con la ley de la misma hora en todas sus láminas.
+- 📁 **Archivos:** (rsv-web/src/council/densificacion) **NUEVOS** `comfy.ts`
+  v1.1 · `comfy-grafo.ts` v1.2 · `pose.ts` v1.2 · `fragua.ts` v1.3 ·
+  `AjustesFragua.tsx` v1.1 · `Confirmacion.tsx`; `tipos.ts` v1.3 ·
+  `almacen.ts` v1.2 · `forja.ts` v1.3 · `forja-prompts.ts` v1.1 ·
+  `campos.tsx` v1.1 · `Boveda.tsx` v1.3 · `Lienzo.tsx` v1.1 ·
+  `PanelDensificacion.tsx` v1.2 · `estilos.ts` v1.2 (id `dz-css-v3`) ·
+  `hilo.ts` v1.1. (admin) `.gitignore` (ComfyUI fuera del repo).
+- ⏳ **Pendiente:** volver a descargar `animagine-xl-3.1.safetensors`, que está
+  truncado (6,50 de 6,94 GB) y ComfyUI lo rechaza; con `sd_xl_base_1.0` sí
+  genera.
+- 💡 **Decisiones importantes:** la Fragua es UN CAMINO MÁS, nunca una
+  condición (pegar a mano nunca deja de funcionar) · el hilo del núcleo tiene
+  DUEÑO porque ahora lo pelean tres (bucle, Forja de texto, Fragua de imagen) y
+  ComfyUI y Ollama comparten gráfica · los desplegables de modelos se llenan
+  con lo que el SERVIDOR dice tener, nunca tecleando nombres de archivo.
+- 🔧 **Patrones nuevos:** ver el changelog v45 (0-quinvicies-bis: un simulacro
+  prueba el protocolo, el servidor real prueba el ACOPLAMIENTO).
+
 #### 2026-08-20 · 🜂 EL PANEL DE DENSIFICACIÓN DE FOTÓN CERO: EL MONOLITO DEL TEMPLO ABRE EL ESTUDIO DE SERIES
 
 - ✅ **Resuelto:**
@@ -2970,77 +3042,16 @@ aquí, el entorno que un código daba por hecho.
   distingue mayúsculas, `forja.ts` y `Forja.tsx` son EL MISMO archivo para
   tsc: nombres de módulo distintos aunque el caso difiera.
 
-#### 2026-08-19 · III · 🜂 EL ARQUITECTO VUELA: LAS ALAS DE LUZ, LA SALIDA DEL DOMO Y EL TEMPLO EN UNA ISLA FLOTANTE EN EL ESPACIO PROFUNDO
+#### 2026-08-19 · III · EL ARQUITECTO VUELA Y EL TEMPLO VIVE EN UNA ISLA (comprimida)
 
-- ✅ **Resuelto:**
-  1. **LAS ALAS DE LUZ**, en el pedestal de al lado de la vara: puestas, el
-     suelo deja de ser obligatorio. W y S siguen la MIRADA (mirar arriba y
-     avanzar sube), las flechas suben y bajan a plomo, Shift cruza la sala y
-     la **Z** alza el vuelo y posa desde cualquier sitio. Un **suelo del vuelo**
-     de 0.9 m resuelve dos cosas de una: tomarlas se SIENTE (el cuerpo se eleva
-     solo, a una altura predecible) y volando a ras el cuerpo no se arrastra.
-     Al alzar el vuelo se suelta lo que se lleve en las manos.
-  2. **SE SALE DEL TEMPLO POR EL ÓCULO**, y no hizo falta programar una puerta:
-     el propio casquete estrecha el recinto de 9,4 m a 2,8 conforme se sube, y
-     ese embudo ES el camino. La cáscara del templo pasó a ser **lo único
-     prohibido** — no hay un "dentro" y un "fuera" guardados en ningún sitio;
-     el cuerpo (y la cámara) se apartan de la pared hacia el lado del que
-     venían, así que salir y volver a entrar funcionan solos.
-  3. **FUERA ES ESPACIO PROFUNDO Y EL TEMPLO VIVE EN UNA ISLA FLOTANTE**
-     (`scene/Isla.tsx`): tierra con orilla irregular y filo de oro, la roca que
-     se afina 22 m hasta una punta, raíces de luz colgando y esquirlas en
-     órbita. El cielo dejó de ser crepúsculo: noche fría, y estrellas TAMBIÉN
-     abajo, porque ahora se vuela por debajo. A pie la orilla es el fin del
-     mundo; volando se le da la vuelta a la isla por la sima. Las alas no se
-     sueltan sobre el vacío, y la pantalla lo dice.
-  4. **LA CÁMARA SE ABRE EN VUELO**: más lejos, casi centrada y baja, con el
-     retroceso enderezado hacia la horizontal, así que se ve el cuerpo entero y
-     por encima de la barra. A pie se queda exactamente como estaba.
-  5. **LAS ALAS SE ENCHUFAN EN EL CUERPO**: son hijas del hueso de la espalda
-     (por portal), así que heredan la pose del vuelo y dejaron de ser
-     atravesadas por la espalda. El hueso se elige por cercanía al medio de los
-     hombros. Y ALETEAN: cada ala en sentido contrario, fuerte al subir,
-     brazadas al posarse.
-  6. **EL ARQUITECTO VESTIDO DE LUZ.** En el espacio profundo su material PBR
-     se apagó y parecía piedra. Ahora su propia textura entra como emisiva
-     (cada trazo dorado brilla con su color), el filo se enciende con un
-     **Fresnel inyectado en su propio shader** —ni malla extra ni pelea con el
-     esqueleto— que pasa el umbral del Bloom y florece, y refleja el doble del
-     ambiente.
-  7. **LA TECLA L ESCONDE TAMBIÉN EL PANEL AZUL** de la conversación: era lo
-     único grande que se quedaba puesto al desnudar la sala.
-  8. **LOS NODOS SE QUEDAN DONDE LOS DEJAS.** `posicionesOrbes` SÍ se escribía
-     en el almacén y NO se volvía a leer al abrir, así que cada recarga los
-     devolvía a su sitio de catálogo (las reliquias no sufrían el defecto
-     porque su lectura sí existía). Demostrado contra la lógica vieja.
-- 📁 **Archivos:** (rsv-web/src/council) **`scene/Alas.tsx` NUEVO** ·
-  **`scene/Isla.tsx` NUEVO** · `scene/Caminata.tsx` v3.6 · `scene/AvatarGLB.tsx`
-  v3.4 · `scene/Avatar.tsx` v2.2 · `scene/Vara.tsx` v1.2 · `scene/CouncilScene.tsx`
-  v2.1 · `scene/Cupula.tsx` (exporta el óculo) · `scene/tocables.ts` v1.4 ·
-  `scene/shaders.ts` · `ui/HUD.tsx` v3.6 · `store.ts` · `types.ts` v3.9 ·
-  `config.ts` (la URL del avatar).
-- ⏳ **Pendiente:** ver el vuelo, la isla y el brillo con sesión real en su
-  navegador (todo se verificó con `?sinportal`).
-- 💡 **Decisiones importantes:**
-  - **UN PEDIDO DE MUNDO NO SE TOMA LITERAL.** Zak pidió "acercarnos a una mini
-    ciudad" y le entregué un skyline de rascacielos: *"qué basura hiciste de la
-    ciudad, te lo tomaste literal… le quitaste toda la magia, tiene que ser
-    espacio profundo"*. El ecosistema es de **islas flotantes en el espacio**, y
-    de momento SOLO UNA; las demás vienen después.
-  - **LOS BRAZOS DEL COUNCIL: APIS PROPIAS, NO GROK BOT** (consulta respondida,
-    detalle en Pendientes vivos).
-  - **El SDK de Python de Soniox no sirve para la latencia**: es una envoltura
-    de servidor de las mismas APIs, y el navegador ya habla directo con Soniox.
-- 🔧 **Patrones nuevos:** ver el changelog v44 (0-quatertricies: cuando algo que
-  NO tocaste empeora, el sospechoso es lo que cambió a su alrededor). Y dos
-  gotchas de three que viven en [[proyecto_council_solar]]: el orden de rotación
-  Y-X-Z (con X-Y-Z la inclinación se aplicaba sobre el eje del MUNDO y el cuerpo
-  se ponía de cabeza según a dónde mirara), y que **Meshy no exporta los nombres
-  de su biblioteca** (las pistas nuevas salen con identificador; se reparten por
-  orden, confirmado por la firma de movimiento medida en el binario).
-- 🧬 **Versión al cierre:** Council LIVE en `redsolarviva.com/consejo` ·
-  App Store 1.1.3 (1.1.4 en curso) · Android vc7 en producción. Los cinco repos
-  al día.
+- 💡 **Decisiones:** UN PEDIDO DE MUNDO NO SE TOMA LITERAL (el skyline de
+  rascacielos que le quitó la magia; el ecosistema es de islas flotantes en
+  espacio profundo, hoy solo una) · LOS BRAZOS DEL COUNCIL: APIs propias, no
+  Grok Bot · el SDK de Python de Soniox no sirve para la latencia.
+- 🔧 **Patrones:** changelog v44 (0-quatertricies: si algo que NO tocaste
+  empeoró, el sospechoso es lo que cambió a su alrededor). Las alas, la salida
+  por el óculo, la isla y los gotchas de three viven en
+  [[proyecto_council_solar]] y en el código.
 
 #### 2026-08-19 · II · EL ESPEJO COMO APP DE TELÉFONO + LA MATRIZ SE LEE SOLA (comprimida)
 
