@@ -36,3 +36,6 @@ supabase/.temp/
 # Logs
 *.log
 npm-debug.log*
+
+# ComfyUI vive aquí como programa (25 GB, su propio repo): NUNCA al nuestro
+ComfyUI/
