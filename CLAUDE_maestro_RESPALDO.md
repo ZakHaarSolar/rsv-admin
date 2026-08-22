@@ -1216,7 +1216,7 @@ Android: **pública en Google Play** (vc7). Detalle en
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v45 (2026-08-21)
+## 🜂 Protocolo de Cierre de Sesión · v46 (2026-08-22)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -2408,7 +2408,43 @@ Hermano del **0-undetricies** (una defensa construida para una condición que ya
 no existe se vuelve el bug): allí lo que caducó fue el motivo de un código;
 aquí, el entorno que un código daba por hecho.
 
+### Paso 0-quintricies — Un CONTRATO DE FORMA se impone con gramática, no con instrucciones
+
+Cuando le pidas a un modelo local que devuelva una forma exacta (claves de un
+JSON, índices, una lista cerrada), no basta con decírselo en el system prompt,
+ni en mayúsculas, ni con la plantilla literal al final. Un modelo de 27B con un
+encargo largo delante contesta con SU forma, y lo hace con contenido bueno: la
+respuesta parece correcta hasta que el validador la rechaza. La cura es que la
+forma no sea una petición sino una GRAMÁTICA: la salida estructurada de Ollama
+(`format: <esquema JSON>`) hace imposible inventar claves. La plantilla y las
+reglas se quedan (dicen QUÉ va en cada campo); la gramática es la que manda.
+
+**Y el corolario: un JSON cortado no es un JSON malo.** Con la forma impuesta,
+el fallo que queda es quedarse sin espacio (num_predict): el modelo escribe
+todo bien y se corta antes de la llave de cierre, y un lector estricto lo tira
+entero con un mensaje que no dice la causa. Se repara lo que llegó (cerrar la
+cadena y los corchetes abiertos), se acepta si lo obligatorio está, y si no,
+el mensaje dice «se cortó por falta de espacio», que es lo que pasó.
+
+**Por qué.** El 2026-08-22 el generador de locaciones pidió ocho claves
+exactas y qwen3.8:27b devolvió `location_name`, `concept_summary`,
+`visual_style{…}` y ningún prompt de render. Con la gramática, la misma idea
+devolvió el contrato exacto. Y la segunda generación de Zak se cortó en mitad
+de `lugar_canonico` por 1.400 tokens de tope: el panel decía «el núcleo no
+devolvió un objeto JSON» cuando lo que pasó fue que se quedó sin aire.
+
+Hermano del **0-duovicies** (dos órdenes contrarias: gana la pegada al dato):
+allí el prompt se contradecía; aquí el prompt era claro y aun así no alcanzó,
+porque una instrucción no es una restricción.
+
 ### Changelog del protocolo
+
+- **v46 (2026-08-22):** Paso 0-quintricies — un contrato de forma se impone
+  con gramática (salida estructurada de Ollama), no con instrucciones; y un
+  JSON cortado por espacio se repara y se explica en vez de tirarse. El
+  generador de locaciones pidió ocho claves exactas y el modelo devolvió las
+  suyas; con `format` devolvió el contrato; y el corte por `num_predict` se
+  leía como «no devolvió un objeto JSON».
 
 - **v45 (2026-08-21):** Paso 0-quinvicies-bis — un SIMULACRO prueba el
   protocolo; solo el servicio REAL prueba el ACOPLAMIENTO. La Fragua pasó 49
@@ -2608,6 +2644,61 @@ aquí, el entorno que un código daba por hecho.
 
 ## 🜃 Historial de sesiones
 
+#### 2026-08-22 · 🜂 LA TOMA SUENA Y SE MUEVE, LA TRAMA, EL GENERADOR DE LOCACIONES Y EL MODO CONSTRUCTOR
+
+- ✅ **Resuelto** (todo en `redsolarviva.com/council`, Panel de Densificación):
+  1. **Cada toma tiene video, voz y música propios**: el fotograma maestro
+     viaja ORIGINAL a R2 (sin recomprimir, hasta 25 MB) y se descarga con ⬇;
+     el video se sube/reproduce/reemplaza con su propia llave (el fotograma
+     no se toca); «voz y música» elige quién habla (el primer personaje que
+     entra a la toma queda preseleccionado), genera el diálogo con **Fish
+     Audio** (wav sin compresión, a R2) y guarda la música de la toma. Cada
+     fallo de voz se lee en la tarjeta, en español.
+  2. **La Tira es un reproductor**: encadena las tomas (video o fotograma por
+     su duración), suena voz y música, dos capas de video alternadas sin negro
+     entre clips, línea de tiempo con marcadores, bucle, y **🔇 video mudo**
+     (los clips de Grok callan; se recuerda). **⬇ paquete para DaVinci**: ZIP
+     hecho a mano con /tomas, /audio_voces, /musica, guion.md, LEEME y un EDL
+     CMX3600 (V · A1 voz · A2 música); validado con `unzip -t`.
+  3. **Esc cierra UNA capa por tecla** (pila `capas.ts`): visor → Tira →
+     ajustes → confirmación → Bóveda plena → pantalla completa → templo. El
+     panel entra a **pantalla completa** del navegador con ⛶.
+  4. **El visor es una galería**: flechas ← → entre las láminas del model
+     sheet (o los fotogramas/videos del episodio), miniaturas, contador,
+     precarga; las flechas mandan solo en la capa de arriba.
+  5. **La TRAMA es su propia pestaña** (premisa, conflicto, arco, temas, para
+     quién) y ahí viven los episodios con su trama, alta, estado y «→ al
+     lienzo»; viaja a los nodos del estudio y a la Forja.
+  6. **El generador asistido de locaciones** (✨ en Locaciones y en la ficha):
+     idea → referencias sugeridas por el núcleo / a mano (selector en grande
+     que se contornea, hasta 4) / desde cero → ficha entera + prompt de render
+     + negativo + lámina «panorama» lista para la Fragua + panel de
+     exportación rápida (copiar, miniaturas arrastrables a Nano Banana).
+     **Modo Constructor**: una semilla, el núcleo define 3-4 capas con 4
+     opciones, cascada que pliega cada capa al responder, y la síntesis
+     respeta las decisiones al pie de la letra. Verificado contra qwen3.8:27b.
+- 📁 **Archivos:** (rsv-web/src/council) `densificacion/` → nuevos `Tira.tsx`
+  v1.1, `exportar.ts`, `zip.ts`, `capas.ts` v1.1, `locacion-ia.ts` v1.1,
+  `GeneradorLocacion.tsx` v1.1; `tipos.ts` v1.6 · `almacen.ts` v1.3 ·
+  `Lienzo.tsx` v1.2 · `Boveda.tsx` v1.6 · `PanelDensificacion.tsx` v1.4 ·
+  `AjustesFragua.tsx` v1.2 · `Confirmacion.tsx` v1.1 · `estilos.ts` v1.6
+  (`dz-css-v7`) · `forja.ts` v1.5 · `forja-prompts.ts` v1.3; `ollama.ts` v2.1
+  (`formato`) · `deliberacion.ts` v2.20 · `types.ts` + `store.ts` (Serie gana
+  premisa/conflicto/arco/temas).
+- 🔌 **Edge functions deployed:** `council-gate` v2.1 (`densi-media`,
+  `densi-voz` con Fish Audio, fotograma original hasta 25 MB). Secret nuevo:
+  `FISH_AUDIO_API_KEY` (Zak lo pone en Supabase → Edge Functions → Secrets;
+  sin él, el botón de voz lo dice en pantalla).
+- 💡 **Decisiones importantes:** el archivo maestro ya NO guarda pendientes
+  del Council ni «decididos sin construir» ni «requieren mano de Zak» (Zak:
+  "si alguna vez vamos a querer construir algo, lo vamos a decir") · Android
+  está PÚBLICA · los videos de la Tira nacen mudos (la voz y la música son de
+  la casa) · un contrato de claves a un modelo local se IMPONE con gramática
+  (salida estructurada de Ollama), no con instrucciones · un JSON cortado por
+  espacio se repara y se explica, no se tira.
+- 🔧 **Patrones nuevos:** changelog v46 (0-quintricies). Detalle vivo en
+  [[proyecto_densificacion_foton_cero]].
+
 #### 2026-08-21 · 🜂 LA FRAGUA DE LÁMINAS: EL MODEL SHEET SE GENERA SOLO CONTRA EL COMFYUI DE LA MAC
 
 - ✅ **Resuelto:**
@@ -2661,110 +2752,21 @@ aquí, el entorno que un código daba por hecho.
 - 🔧 **Patrones nuevos:** ver el changelog v45 (0-quinvicies-bis: un simulacro
   prueba el protocolo, el servidor real prueba el ACOPLAMIENTO).
 
-#### 2026-08-20 · 🜂 EL PANEL DE DENSIFICACIÓN DE FOTÓN CERO: EL MONOLITO DEL TEMPLO ABRE EL ESTUDIO DE SERIES
+#### 2026-08-20 · EL PANEL DE DENSIFICACIÓN DE FOTÓN CERO (comprimida)
 
-- ✅ **Resuelto:**
-  1. **EL MONOLITO DE FOTÓN CERO vive en el templo** (bahía 6, libre de
-     portales): una losa de obsidiana con una grieta de luz cian que respira y
-     el glifo ◈ flotando. Es sólido al caminar, la mira lo nombra, y al tocarlo
-     la cámara hace un dolly hacia la grieta mientras un velo funde a negro;
-     al llegar, **el templo 3D se DESMONTA entero** (la gráfica queda libre
-     para el núcleo, como en el Modo Núcleo) y se abre el panel. El regreso
-     (Esc o «al templo») remonta el templo bajo otro velo. También se abre
-     desde la barra de estudios de Fotón Cero («◈ densificación») y por voz
-     («abre la densificación» / «abre el monolito»). Recargar dentro del panel
-     vuelve directo al panel.
-  2. **EL PANEL: tres columnas sobre obsidiana** (chunk perezoso de 78 KB que
-     solo baja al entrar). LA BÓVEDA DE ENTIDADES: personajes, objetos,
-     locaciones, mundo y estilo, cada uno con su ficha (esencia, creencias,
-     nivel de conciencia, cuerpo canónico, vestuario, voz) y su MODEL SHEET de
-     láminas (frente, perfil, espalda…), cada lámina con su prompt y su
-     imagen. Las pestañas «mundo» y «estilo» editan la serie REAL de la
-     Producción (biblia, ADN visual, sello): los nodos del estudio ven lo
-     mismo. Los personajes de la Producción se traen con un botón. EL LIENZO
-     DE SECUENCIAS: actos como filas (con propósito emocional y avance), tomas
-     como tarjetas de cine 16:9 con narrativa, diálogo, entidades presentes,
-     encuadre/cámara/luz/duración y los DOS prompts plegados (imagen para Nano
-     Banana Pro, movimiento para animar). El fotograma se pega con ⌘V, se
-     suelta encima o se sube; el ciclo se ve de reojo (◌ boceto → ◈ prompt →
-     ■ imagen → ▶ animada). LA TIRA proyecta el animatic (imágenes + narrativa
-     al ritmo de las duraciones) y el botón «guion» copia el episodio entero
-     en markdown. LA FORJA DEL CONSEJO: el núcleo local con TODO el contexto
-     cargado (sello + serie + fichas canónicas + toma anterior para
-     continuidad) forja el prompt de imagen, el de movimiento, la lámina de
-     una entidad o la secuencia entera de un acto, y el texto SE ESCRIBE EN
-     VIVO en su campo. Comparte el hilo único de Ollama con la ley del Taller.
-  3. **VERIFICADO con el núcleo real**: una forja de prompt de imagen contra
-     qwen3.8:27b aterrizó 965 caracteres de cine denso en el campo de la toma
-     y el estado subió solo a ◈. El viaje completo (dolly → desmonte → panel →
-     regreso) verificado en pantalla; persistencia local verificada.
-  4. **La bóveda remota del panel**: tres tablas nuevas (entidades, actos,
-     tomas) con escritura condicional por fecha y LÁPIDAS en la fila (multi
-     computadora sin pisarse), imágenes en R2 (fotograma + miniatura,
-     verificadas por bytes) vía council-gate v2.0 (desplegada y verificada
-     viva). Sin el SQL pegado el panel funciona local y el pill lo dice.
-  5. 🜂 **CAZADO Y REPARADO UN BUG GRAVE DE LA PRODUCCIÓN**: la función SQL
-     `council_guardar_registros` nunca aprendió los seis tipos de producción
-     (la migración 20260817 amplió la tabla pero NO el filtro de la función),
-     así que el sello, las series, los personajes, los episodios, los álbumes
-     y las canciones se DESCARTABAN EN SILENCIO al viajar: la Producción
-     entera de Fotón Cero vivía solo en el navegador. La migración nueva
-     arregla la función (y les da su tope real de 60.000 caracteres).
-- 📁 **Archivos:** (rsv-web/src/council) **`densificacion/` NUEVA** (tipos ·
-  hilo · almacen · forja-prompts · forja · estilos · campos · Velo ·
-  PanelDensificacion · Boveda · Lienzo · ConsolaForja) · **`scene/Monolito.tsx`
-  NUEVO** (objeto + cinemática) · CouncilApp v1.6 · CouncilScene v2.3 ·
-  Caminata v3.8 · store v2.19 · types v4.0 · useCouncil v1.1 · HUD v3.7 ·
-  intenciones v1.6 · sonido v1.2 · AdminGate v1.8. (admin)
-  `20260820_densificacion_foton_cero.sql`.
-- 🔌 **Edge functions deployed:** council-gate v2.0 (densi-leer ·
-  densi-guardar · densi-imagen · densi-imagen-borrar; R2 bajo Council/densi/).
-- ⏳ **Pendiente:** Zak pega el SQL (abajo en «Lo que tienes que hacer» de la
-  sala; sin él, panel solo local y la Producción sigue sin viajar) · device-QA
-  del monolito con gesto real (clic y espacio sostenido quedan fuera del
-  panel de vista, como siempre) y del velo (las transiciones CSS se congelan
-  en pestaña oculta).
-- 💡 **Decisiones importantes:** el panel NO duplica las series: edita la
-  Producción real (una sola fuente de verdad) y añade la capa visual que
-  faltaba · los prompts se forjan con las fichas canónicas REPETIDAS palabra
-  por palabra (la consistencia del personaje es esa repetición) · la imagen
-  nunca vive en el estado (R2 + miniatura; dataURL solo sin sesión) · el
-  panel desmonta templo Y HUD (pantalla limpia, gráfica libre).
-- 🔧 **Patrones nuevos:** un selector DERIVADO (array fresco) dentro de
-  useSyncExternalStore = bucle de renders infinito; el selector devuelve
-  referencias crudas del estado y el useMemo deriva (memoria
-  [[feedback_useSyncExternalStore_selector_derivado]]) · en disco que no
-  distingue mayúsculas, `forja.ts` y `Forja.tsx` son EL MISMO archivo para
-  tsc: nombres de módulo distintos aunque el caso difiera.
+- 💡 **Decisiones:** el panel NO duplica las series: edita la Producción real
+  (una sola fuente de verdad) y añade la capa visual · los prompts se forjan
+  con las fichas canónicas REPETIDAS palabra por palabra · la imagen nunca
+  vive en el estado (R2 + miniatura; dataURL solo sin sesión) · el panel
+  desmonta templo Y HUD · la función SQL `council_guardar_registros` aprendió
+  los seis tipos de producción (migración 20260820; antes la Producción se
+  descartaba en silencio al viajar).
+- 🔧 **Patrones:** un selector DERIVADO dentro de useSyncExternalStore = bucle
+  infinito ([[feedback_useSyncExternalStore_selector_derivado]]) · en disco
+  sin mayúsculas, `forja.ts` y `Forja.tsx` son el mismo módulo para tsc. El
+  monolito, el velo y las tablas viven en [[proyecto_council_solar]] y el
+  código.
 
-#### 2026-08-19 · III · EL ARQUITECTO VUELA Y EL TEMPLO VIVE EN UNA ISLA (comprimida)
-
-- 💡 **Decisiones:** UN PEDIDO DE MUNDO NO SE TOMA LITERAL (el skyline de
-  rascacielos que le quitó la magia; el ecosistema es de islas flotantes en
-  espacio profundo, hoy solo una) · LOS BRAZOS DEL COUNCIL: APIs propias, no
-  Grok Bot · el SDK de Python de Soniox no sirve para la latencia.
-- 🔧 **Patrones:** changelog v44 (0-quatertricies: si algo que NO tocaste
-  empeoró, el sospechoso es lo que cambió a su alrededor). Las alas, la salida
-  por el óculo, la isla y los gotchas de three viven en
-  [[proyecto_council_solar]] y en el código.
-
-#### 2026-08-19 · II · EL ESPEJO COMO APP DE TELÉFONO + LA MATRIZ SE LEE SOLA (comprimida)
-
-- 💡 **Decisiones:** LA APP MANDA SOBRE LA WEB (un cambio "desplegado a
-  Vercel" NO está en su app de escritorio; un cambio de producto se cierra con
-  web + app de macOS con su actualizador + iPhone) · MÚSICA: los SEIS álbumes,
-  no uno (el valor es que la app SUENE a él; sin enlace a Spotify dentro) · en
-  el teléfono "Tu plan" NO va a Stripe: abre la pestaña de adentro (reglas de
-  la tienda) · el despliegue al iPhone es UN comando en el repo
-  (`./al-iphone.sh`) · el carril profundo se cobra en dos tramos (un turno
-  caído no se cobra entero).
-- 🔧 **Patrones:** changelog v43 (0-duotricies: lo pedido para UNA superficie
-  no se aplica a las dos; 0-tertricies: la medida que decide el layout no
-  puede depender del layout que decide). Detalle vivo en
-  [[proyecto_escucha_automatica_matriz]] y el código.
-- 🧬 **Versión al cierre:** escritorio 1.1.18 · App Store 1.1.3 LIVE (1.1.4 en
-  curso) · Android vc7 en producción.
-
-*Las entradas anteriores (2026-04-18 → 2026-08-09) viven en*
+*Las entradas anteriores (2026-04-18 → 2026-08-19) viven en*
 `admin/CLAUDE_archivo_hasta_2026-08-04.md`. *No se cargan por sesión: lo
 durable de cada una ya está en las memorias y en el código.*
