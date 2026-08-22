@@ -1,3 +1,4 @@
+// Red Solar Viva · council-gate v2.1 — 🜂 LA TOMA SUENA Y SE MUEVE: { quiero: "densi-media", clase: "video"|"musica", archivo_base64 } sube el video (mp4/mov/webm, 30 MB) o la música (mp3/m4a/wav/ogg, 25 MB) de una toma a R2 con su PROPIA llave (Council/densi/…-video.ext); { quiero: "densi-voz", texto, voice_id, guardar } le pide a FISH AUDIO el diálogo con el timbre del personaje (wav sin compresión) y lo deja en R2 (guardar) o lo devuelve en crudo para oír un timbre; cada fallo de Fish se traduce POR CAUSA (fish_sin_llave · fish_llave_invalida · fish_sin_saldo · fish_voz_inexistente · fish_saturado…). El fotograma maestro (densi-imagen) acepta ahora el ORIGINAL hasta 25 MB. Secret nuevo: FISH_AUDIO_API_KEY (opcional FISH_AUDIO_MODEL, por defecto "s1").
 // Red Solar Viva · council-gate v2.0 — 🜂 EL PANEL DE DENSIFICACIÓN de Fotón Cero: { quiero: "densi-leer" } devuelve entidades/actos/tomas del Arquitecto (lápidas incluidas); { quiero: "densi-guardar", entidades?, actos?, tomas? } escribe por council_densi_guardar (condicional por fecha, migración 20260820); { quiero: "densi-imagen", imagen_base64, mini_base64? } verifica por bytes (png/jpg/webp/gif, 10 MB), sube fotograma y miniatura a R2 (Council/densi/…) y devuelve sus direcciones; { quiero: "densi-imagen-borrar", url } quita fotograma Y su miniatura del bucket.
 // Red Solar Viva · council-gate v1.9 — 🜂 BORRAR UN PLAYBOOK BORRA DE VERDAD: { quiero: "boveda-borrar-playbook", clave } quita su fila de council_playbooks Y todas sus rondas de council_deliberaciones (el archivo de versiones), para que al recargar no vuelva a aparecer. Antes el borrado vivía solo en el navegador y la bóveda lo resucitaba.
 // Red Solar Viva · council-gate v1.8 — 🜂 LA MÚSICA DEL TEMPLO: { quiero: "musica-subir", nombre, audio_base64 } verifica el audio por sus bytes (mp3, m4a, wav, ogg, hasta 25 MB), lo deja en R2 (Council/musica/…) y devuelve su dirección; { quiero: "musica-borrar", url } lo quita del bucket. Secrets R2_* (los mismos de upload-wallpaper).
@@ -59,7 +60,7 @@
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0"
 import { gateAdmin } from "../_shared/clerkAuth.ts"
-import { IMAGE_KINDS, verifyUpload, type UploadKind } from "../_shared/upload.ts"
+import { IMAGE_KINDS, VIDEO_KINDS, verifyUpload, type UploadKind } from "../_shared/upload.ts"
 
 const corsHeaders = {
     "Access-Control-Allow-Origin": "*",
@@ -680,8 +681,16 @@ async function musicaBorrar(body: { url?: unknown }): Promise<Response> {
    con el mismo verificador por bytes que la música. */
 
 const DENSI_PREFIJO = "Council/densi/"
-const DENSI_MAX_BYTES = 10 * 1024 * 1024
+/* 🜂 el fotograma maestro viaja ORIGINAL (un PNG de Nano Banana Pro a 2K
+   pesa 4-8 MB; a 4K puede rozar los 20): 25 MB de tope */
+const DENSI_MAX_BYTES = 25 * 1024 * 1024
 const DENSI_MINI_MAX_BYTES = 2 * 1024 * 1024
+const DENSI_VIDEO_MAX_BYTES = 30 * 1024 * 1024
+const DENSI_MUSICA_MAX_BYTES = 25 * 1024 * 1024
+const DENSI_MUSICA_KINDS: UploadKind[] = ["mp3", "m4a", "wav", "ogg", "mp4"]
+/* Fish Audio: una línea de diálogo, no un capítulo */
+const FISH_MAX_TEXTO = 1500
+const FISH_TIMEOUT_MS = 90000
 const DENSI_MAX_FILAS = 400
 const DENSI_MAX_FILA_CHARS = 60000
 const DENSI_MAX_LEER = 5000
@@ -774,6 +783,138 @@ async function densiImagen(body: { nombre?: unknown; imagen_base64?: unknown; mi
         }
     }
     return json({ ok: true, id, url, miniUrl, bytes: v.bytes.length, ext: v.ext, nombre: texto(body.nombre, 120) })
+}
+
+/* ── 🜂 El video y la música de una toma: con su PROPIA llave ──────────
+   El fotograma maestro y el video de la toma son dos objetos distintos en
+   el bucket: re-animar o reemplazar el video nunca toca el fotograma. Se
+   verifican por sus bytes, igual que todo lo que entra a R2. */
+async function densiMedia(body: { clase?: unknown; nombre?: unknown; archivo_base64?: unknown }): Promise<Response> {
+    const cfg = r2Config()
+    if ("faltan" in cfg) return json({ ok: false, error: "missing_secrets", detail: cfg.faltan.join(", ") }, 500)
+    const clase = body.clase === "video" ? "video" : body.clase === "musica" ? "musica" : null
+    if (!clase) return json({ ok: false, error: "clase_desconocida" }, 400)
+    const v = verifyUpload(String(body.archivo_base64 ?? ""), {
+        allow: clase === "video" ? VIDEO_KINDS : DENSI_MUSICA_KINDS,
+        maxBytes: clase === "video" ? DENSI_VIDEO_MAX_BYTES : DENSI_MUSICA_MAX_BYTES,
+    })
+    if (!v.ok) return json({ ok: false, error: v.error, detail: v.detail }, v.status)
+    /* un mp4 que pasó el filtro de música es audio en contenedor ISO */
+    const ext = clase === "musica" && v.ext === "mp4" ? "m4a" : v.ext
+    const mime = clase === "musica" && v.ext === "mp4" ? "audio/mp4" : v.mime
+    const id = crypto.randomUUID()
+    const key = `${DENSI_PREFIJO}${fechaHoy()}/${id}-${clase}.${ext}`
+    try {
+        const r = await r2Peticion(cfg, "PUT", key, v.bytes, mime)
+        if (!r.ok) {
+            const t = await r.text().catch(() => "")
+            console.error("[council-gate] densi-media r2 put", r.status, t.slice(0, 300))
+            return json({ ok: false, error: "r2_upload_failed", detail: `R2 ${r.status}` }, 502)
+        }
+    } catch (e) {
+        console.error("[council-gate] densi-media r2 put", String(e))
+        return json({ ok: false, error: "r2_upload_failed", detail: String((e as Error)?.message || e) }, 502)
+    }
+    const url = `${cfg.publicBaseUrl.replace(/\/+$/, "")}/${key.split("/").map((x) => encodeURIComponent(x)).join("/")}`
+    return json({ ok: true, id, url, bytes: v.bytes.length, ext, clase, nombre: texto(body.nombre, 120) })
+}
+
+/* ── 🜂 La voz: Fish Audio ─────────────────────────────────────────────
+   El diálogo de la toma se sintetiza con el timbre canónico del personaje
+   (su `reference_id` en Fish Audio) en WAV sin compresión, que es lo que
+   DaVinci quiere. La llave maestra vive aquí (FISH_AUDIO_API_KEY) y nunca
+   sale al navegador. Con `guardar`, el wav aterriza en R2 con su propia
+   llave; sin él (probar un timbre desde la Bóveda) vuelve en base64 y no
+   deja rastro en el bucket.
+   Cada fallo de Fish se traduce POR CAUSA: el panel lo pinta en español
+   (Paso 0-quater: un motivo que no se ve no existe). */
+const FISH_KEY = Deno.env.get("FISH_AUDIO_API_KEY") || ""
+const FISH_MODEL = Deno.env.get("FISH_AUDIO_MODEL") || "s1"
+
+function motivoFish(status: number, cuerpo: string): { error: string; detail?: string } {
+    const detalle = cuerpo.replace(/\s+/g, " ").trim().slice(0, 200)
+    if (status === 401 || status === 403) return { error: "fish_llave_invalida" }
+    if (status === 402) return { error: "fish_sin_saldo" }
+    if (status === 404 || /reference.*not found|not found.*reference|model.*not found/i.test(detalle))
+        return { error: "fish_voz_inexistente", detail: detalle }
+    if (status === 422 || status === 400) return { error: "fish_peticion_invalida", detail: detalle }
+    if (status === 429) return { error: "fish_limite" }
+    if (status === 503) return { error: "fish_saturado" }
+    return { error: `fish_${status}`, detail: detalle }
+}
+
+async function densiVoz(body: {
+    texto?: unknown
+    voice_id?: unknown
+    nombre?: unknown
+    guardar?: unknown
+}): Promise<Response> {
+    if (!FISH_KEY) return json({ ok: false, error: "fish_sin_llave" }, 500)
+    const frase = texto(body.texto, FISH_MAX_TEXTO).trim()
+    if (!frase) return json({ ok: false, error: "sin_texto" }, 400)
+    const voiceId = texto(body.voice_id, 120).trim()
+    if (!voiceId || !/^[a-z0-9_-]+$/i.test(voiceId)) return json({ ok: false, error: "sin_voz" }, 400)
+    const guardar = body.guardar === true
+
+    let audio: Uint8Array
+    try {
+        const r = await fetch("https://api.fish.audio/v1/tts", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${FISH_KEY}`,
+                "Content-Type": "application/json",
+                model: FISH_MODEL,
+            },
+            body: JSON.stringify({
+                text: frase,
+                reference_id: voiceId,
+                format: "wav",
+                sample_rate: 44100,
+                normalize: true,
+                latency: "normal",
+                chunk_length: 200,
+            }),
+            signal: AbortSignal.timeout(FISH_TIMEOUT_MS),
+        })
+        if (!r.ok) {
+            const t = await r.text().catch(() => "")
+            console.error("[council-gate] fish", r.status, t.slice(0, 300))
+            const m = motivoFish(r.status, t)
+            return json({ ok: false, ...m }, 502)
+        }
+        audio = new Uint8Array(await r.arrayBuffer())
+    } catch (e) {
+        const nombre = (e as Error)?.name || ""
+        console.error("[council-gate] fish fetch", nombre, String(e))
+        return json({ ok: false, error: nombre === "TimeoutError" || nombre === "AbortError" ? "fish_sin_respuesta" : "fish_unreachable" }, 502)
+    }
+    /* un WAV real empieza por RIFF…WAVE; menos de un kilobyte no es voz */
+    const esWav = audio.length > 44 && String.fromCharCode(...audio.subarray(0, 4)) === "RIFF" && String.fromCharCode(...audio.subarray(8, 12)) === "WAVE"
+    if (audio.length < 1024) return json({ ok: false, error: "fish_vacio" }, 502)
+    const mime = esWav ? "audio/wav" : "audio/mpeg"
+    const ext = esWav ? "wav" : "mp3"
+
+    if (!guardar) {
+        let bin = ""
+        for (let i = 0; i < audio.length; i += 0x8000) bin += String.fromCharCode(...audio.subarray(i, i + 0x8000))
+        return json({ ok: true, audio_base64: btoa(bin), mime, bytes: audio.length })
+    }
+    const cfg = r2Config()
+    if ("faltan" in cfg) return json({ ok: false, error: "missing_secrets", detail: cfg.faltan.join(", ") }, 500)
+    const id = crypto.randomUUID()
+    const key = `${DENSI_PREFIJO}${fechaHoy()}/${id}-voz.${ext}`
+    try {
+        const r = await r2Peticion(cfg, "PUT", key, audio, mime)
+        if (!r.ok) {
+            const t = await r.text().catch(() => "")
+            console.error("[council-gate] densi-voz r2 put", r.status, t.slice(0, 300))
+            return json({ ok: false, error: "r2_upload_failed", detail: `R2 ${r.status}` }, 502)
+        }
+    } catch (e) {
+        return json({ ok: false, error: "r2_upload_failed", detail: String((e as Error)?.message || e) }, 502)
+    }
+    const url = `${cfg.publicBaseUrl.replace(/\/+$/, "")}/${key.split("/").map((x) => encodeURIComponent(x)).join("/")}`
+    return json({ ok: true, id, url, bytes: audio.length, ext, nombre: texto(body.nombre, 120) })
 }
 
 async function densiImagenBorrar(body: { url?: unknown }): Promise<Response> {
@@ -986,6 +1127,10 @@ serve(async (req) => {
         tomas?: unknown
         imagen_base64?: unknown
         mini_base64?: unknown
+        clase?: unknown
+        archivo_base64?: unknown
+        voice_id?: unknown
+        guardar?: unknown
     } = {}
     try {
         body = await req.json()
@@ -1014,6 +1159,8 @@ serve(async (req) => {
     if (quiero === "densi-guardar") return densiGuardar(userId, body)
     if (quiero === "densi-imagen") return densiImagen(body)
     if (quiero === "densi-imagen-borrar") return densiImagenBorrar(body)
+    if (quiero === "densi-media") return densiMedia(body)
+    if (quiero === "densi-voz") return densiVoz(body)
 
     if (quiero !== "voz" && quiero !== "voz-salida") return json({ error: "quiero_desconocido" }, 400)
     if (!SONIOX_KEY) return json({ ok: false, error: "soniox_key_missing" }, 500)
