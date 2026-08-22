@@ -1,3 +1,4 @@
+// Red Solar Viva · council-gate v2.2 — 🜂 EL FOTOGRAMA POR API: { quiero: "densi-fotograma", prompt, modelo: "nb2"|"pro", tamano: "1K"|"2K", aspecto, referencias: [{datos_base64, mime, papel, nombre}] } le pide a GOOGLE (Nano Banana 2 = gemini-3.1-flash-image · Nano Banana Pro = gemini-3-pro-image) un fotograma 16:9 anclado en las láminas de los personajes y la locación de la toma (y, al ESCALAR, en el fotograma ya aprobado), y devuelve la imagen en crudo con su costo estimado; cada fallo se traduce POR CAUSA (gemini_sin_llave · gemini_llave_invalida · gemini_sin_saldo · gemini_limite · gemini_bloqueado · gemini_modelo_inexistente · gemini_saturado · gemini_sin_respuesta…). Usa el secret GEMINI_API_KEY que ya existe.
 // Red Solar Viva · council-gate v2.1 — 🜂 LA TOMA SUENA Y SE MUEVE: { quiero: "densi-media", clase: "video"|"musica", archivo_base64 } sube el video (mp4/mov/webm, 30 MB) o la música (mp3/m4a/wav/ogg, 25 MB) de una toma a R2 con su PROPIA llave (Council/densi/…-video.ext); { quiero: "densi-voz", texto, voice_id, guardar } le pide a FISH AUDIO el diálogo con el timbre del personaje (wav sin compresión) y lo deja en R2 (guardar) o lo devuelve en crudo para oír un timbre; cada fallo de Fish se traduce POR CAUSA (fish_sin_llave · fish_llave_invalida · fish_sin_saldo · fish_voz_inexistente · fish_saturado…). El fotograma maestro (densi-imagen) acepta ahora el ORIGINAL hasta 25 MB. Secret nuevo: FISH_AUDIO_API_KEY (opcional FISH_AUDIO_MODEL, por defecto "s1").
 // Red Solar Viva · council-gate v2.0 — 🜂 EL PANEL DE DENSIFICACIÓN de Fotón Cero: { quiero: "densi-leer" } devuelve entidades/actos/tomas del Arquitecto (lápidas incluidas); { quiero: "densi-guardar", entidades?, actos?, tomas? } escribe por council_densi_guardar (condicional por fecha, migración 20260820); { quiero: "densi-imagen", imagen_base64, mini_base64? } verifica por bytes (png/jpg/webp/gif, 10 MB), sube fotograma y miniatura a R2 (Council/densi/…) y devuelve sus direcciones; { quiero: "densi-imagen-borrar", url } quita fotograma Y su miniatura del bucket.
 // Red Solar Viva · council-gate v1.9 — 🜂 BORRAR UN PLAYBOOK BORRA DE VERDAD: { quiero: "boveda-borrar-playbook", clave } quita su fila de council_playbooks Y todas sus rondas de council_deliberaciones (el archivo de versiones), para que al recargar no vuelva a aparecer. Antes el borrado vivía solo en el navegador y la bóveda lo resucitaba.
@@ -917,6 +918,228 @@ async function densiVoz(body: {
     return json({ ok: true, id, url, bytes: audio.length, ext, nombre: texto(body.nombre, 120) })
 }
 
+/* ── 🜂 EL FOTOGRAMA POR API (Google · Nano Banana) ───────────────────────
+   Zak (2026-08-22): "que le mande los inputs… que utilice como referencia las
+   imágenes de Kael y del laboratorio que ya tenemos". Las láminas de los
+   personajes y de la locación viajan como IMÁGENES junto al prompt: la
+   identidad la fija la imagen, el texto solo dirige la toma. El navegador
+   manda las referencias ya reducidas (≤1536 px) en base64; aquí no se
+   descarga nada. La imagen vuelve en crudo y el cliente la sube como
+   fotograma maestro por el mismo camino que una pegada a mano.
+
+   Dos modelos: "nb2" (gemini-3.1-flash-image, el borrador barato) y "pro"
+   (gemini-3-pro-image, el final). En Pro, 1K y 2K cuestan lo mismo. */
+
+const GEMINI_KEY = Deno.env.get("GEMINI_API_KEY") || ""
+const GEMINI_TIMEOUT_MS = 120000
+const FOTOGRAMA_MAX_PROMPT = 6000
+const FOTOGRAMA_MAX_REFS = 6
+/* cada referencia reducida pesa ~0.3-1.5 MB; se acota por si llega entera */
+const FOTOGRAMA_REF_MAX_BYTES = 6 * 1024 * 1024
+
+const MODELOS_FOTOGRAMA: Record<string, string> = {
+    nb2: "gemini-3.1-flash-image",
+    pro: "gemini-3-pro-image",
+}
+/* precio por imagen de salida (USD), ai.google.dev/gemini-api/docs/pricing, 2026-08-22 */
+const COSTO_SALIDA_USD: Record<string, Record<string, number>> = {
+    nb2: { "512": 0.045, "1K": 0.067, "2K": 0.101, "4K": 0.151 },
+    pro: { "1K": 0.134, "2K": 0.134, "4K": 0.24 },
+}
+/* cada imagen de ENTRADA: 1120 tokens a $0.50/M (nb2) · 560 tokens a $2/M (pro) */
+const COSTO_ENTRADA_USD: Record<string, number> = { nb2: 0.00056, pro: 0.00112 }
+const ASPECTOS_VALIDOS = new Set(["16:9", "21:9", "1:1", "9:16", "4:3", "3:4", "3:2", "2:3", "4:5", "5:4"])
+
+function motivoGemini(status: number, cuerpo: string): { error: string; detail?: string } {
+    const detalle = cuerpo.replace(/\s+/g, " ").trim().slice(0, 240)
+    if (status === 400 && /API key not valid|API_KEY_INVALID/i.test(detalle)) return { error: "gemini_llave_invalida" }
+    if (status === 401 || status === 403) return { error: "gemini_llave_invalida", detail: detalle }
+    if (status === 404 || /not found|is not supported|NOT_FOUND/i.test(detalle)) return { error: "gemini_modelo_inexistente", detail: detalle }
+    if (status === 429) return { error: /quota|billing|exceeded/i.test(detalle) ? "gemini_sin_saldo" : "gemini_limite", detail: detalle }
+    if (status === 400 || status === 422) return { error: "gemini_peticion_invalida", detail: detalle }
+    if (status === 503 || status === 502 || status === 500) return { error: "gemini_saturado", detail: detalle }
+    return { error: `gemini_${status}`, detail: detalle }
+}
+
+interface RefFotograma {
+    datos: string
+    mime: string
+    papel: string
+    nombre: string
+}
+
+/* saca la imagen (base64 + mime) de cualquiera de las dos formas de respuesta */
+function imagenDeRespuesta(j: unknown): { datos: string; mime: string } | null {
+    const o = j as Record<string, unknown>
+    /* Interactions API */
+    const out = o?.output_image as { data?: string; mime_type?: string } | undefined
+    if (out?.data) return { datos: out.data, mime: out.mime_type || "image/png" }
+    const steps = o?.steps as Array<{ content?: Array<{ type?: string; data?: string; mime_type?: string }> }> | undefined
+    if (Array.isArray(steps))
+        for (const st of steps)
+            for (const c of st?.content ?? []) if (c?.type === "image" && c.data) return { datos: c.data, mime: c.mime_type || "image/png" }
+    /* generateContent */
+    const cands = o?.candidates as Array<{ content?: { parts?: Array<{ inlineData?: { data?: string; mimeType?: string } }> } }> | undefined
+    if (Array.isArray(cands))
+        for (const c of cands)
+            for (const p of c?.content?.parts ?? []) if (p?.inlineData?.data) return { datos: p.inlineData.data, mime: p.inlineData.mimeType || "image/png" }
+    return null
+}
+
+/* ¿la respuesta vino sin imagen porque el modelo la BLOQUEÓ? */
+function motivoBloqueo(j: unknown): string {
+    const o = j as Record<string, unknown>
+    const pf = o?.promptFeedback as { blockReason?: string } | undefined
+    if (pf?.blockReason) return pf.blockReason
+    const cands = o?.candidates as Array<{ finishReason?: string }> | undefined
+    const fr = cands?.[0]?.finishReason
+    if (fr && fr !== "STOP") return fr
+    const st = o?.status as string | undefined
+    if (st && /block|safety|prohibit/i.test(st)) return st
+    return ""
+}
+
+async function pedirAGoogle(
+    modelo: string,
+    prompt: string,
+    refs: RefFotograma[],
+    aspecto: string,
+    tamano: string
+): Promise<{ ok: true; datos: string; mime: string; via: string } | { ok: false; status: number; error: string; detail?: string }> {
+    const cab = { "x-goog-api-key": GEMINI_KEY, "Content-Type": "application/json" }
+    /* 1 · la Interactions API (la forma documentada hoy para los modelos de imagen) */
+    let bloqueo = ""
+    try {
+        const r = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
+            method: "POST",
+            headers: cab,
+            body: JSON.stringify({
+                model: modelo,
+                input: [
+                    { type: "text", text: prompt },
+                    ...refs.map((x) => ({ type: "image", mime_type: x.mime, data: x.datos })),
+                ],
+                response_format: { type: "image", mime_type: "image/png", aspect_ratio: aspecto, image_size: tamano },
+            }),
+            signal: AbortSignal.timeout(GEMINI_TIMEOUT_MS),
+        })
+        const t = await r.text().catch(() => "")
+        if (r.ok) {
+            let j: unknown = null
+            try {
+                j = JSON.parse(t)
+            } catch {
+                /* sin JSON: cae al otro camino */
+            }
+            const img = j ? imagenDeRespuesta(j) : null
+            if (img) return { ok: true, ...img, via: "interactions" }
+            bloqueo = j ? motivoBloqueo(j) : ""
+            if (bloqueo) return { ok: false, status: 502, error: "gemini_bloqueado", detail: bloqueo }
+        } else if (!(r.status === 404 || (r.status === 400 && /unknown name|invalid json payload|cannot find field/i.test(t)))) {
+            /* un error REAL (llave, saldo, modelo, saturación): no se reintenta por otro camino */
+            console.error("[council-gate] gemini interactions", r.status, t.slice(0, 300))
+            return { ok: false, status: 502, ...motivoGemini(r.status, t) }
+        } else console.error("[council-gate] gemini interactions (forma rechazada, se prueba generateContent)", r.status, t.slice(0, 200))
+    } catch (e) {
+        const nombre = (e as Error)?.name || ""
+        console.error("[council-gate] gemini interactions fetch", nombre, String(e))
+        if (nombre === "TimeoutError" || nombre === "AbortError") return { ok: false, status: 502, error: "gemini_sin_respuesta" }
+        return { ok: false, status: 502, error: "gemini_unreachable", detail: String((e as Error)?.message || e).slice(0, 200) }
+    }
+    /* 2 · generateContent clásico, con imageConfig */
+    try {
+        const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent`, {
+            method: "POST",
+            headers: cab,
+            body: JSON.stringify({
+                contents: [
+                    {
+                        role: "user",
+                        parts: [{ text: prompt }, ...refs.map((x) => ({ inlineData: { mimeType: x.mime, data: x.datos } }))],
+                    },
+                ],
+                generationConfig: { responseModalities: ["IMAGE"], imageConfig: { aspectRatio: aspecto, imageSize: tamano } },
+            }),
+            signal: AbortSignal.timeout(GEMINI_TIMEOUT_MS),
+        })
+        const t = await r.text().catch(() => "")
+        if (!r.ok) {
+            console.error("[council-gate] gemini generateContent", r.status, t.slice(0, 300))
+            return { ok: false, status: 502, ...motivoGemini(r.status, t) }
+        }
+        let j: unknown = null
+        try {
+            j = JSON.parse(t)
+        } catch {
+            return { ok: false, status: 502, error: "gemini_respuesta_ilegible" }
+        }
+        const img = imagenDeRespuesta(j)
+        if (img) return { ok: true, ...img, via: "generateContent" }
+        const b = motivoBloqueo(j)
+        return { ok: false, status: 502, error: b ? "gemini_bloqueado" : "gemini_vacio", detail: b || bloqueo || undefined }
+    } catch (e) {
+        const nombre = (e as Error)?.name || ""
+        console.error("[council-gate] gemini generateContent fetch", nombre, String(e))
+        if (nombre === "TimeoutError" || nombre === "AbortError") return { ok: false, status: 502, error: "gemini_sin_respuesta" }
+        return { ok: false, status: 502, error: "gemini_unreachable", detail: String((e as Error)?.message || e).slice(0, 200) }
+    }
+}
+
+async function densiFotograma(body: {
+    prompt?: unknown
+    modelo?: unknown
+    tamano?: unknown
+    aspecto?: unknown
+    referencias?: unknown
+    nombre?: unknown
+}): Promise<Response> {
+    if (!GEMINI_KEY) return json({ ok: false, error: "gemini_sin_llave" }, 500)
+    const prompt = texto(body.prompt, FOTOGRAMA_MAX_PROMPT).trim()
+    if (!prompt) return json({ ok: false, error: "sin_prompt" }, 400)
+    const claveModelo = body.modelo === "pro" ? "pro" : "nb2"
+    const modelo = MODELOS_FOTOGRAMA[claveModelo]
+    const tamano = body.tamano === "1K" || body.tamano === "2K" || body.tamano === "4K" ? (body.tamano as string) : "2K"
+    const aspecto = ASPECTOS_VALIDOS.has(String(body.aspecto)) ? String(body.aspecto) : "16:9"
+
+    /* las referencias: se verifican por sus bytes como todo lo que entra */
+    const refs: RefFotograma[] = []
+    const crudas = Array.isArray(body.referencias) ? body.referencias.slice(0, FOTOGRAMA_MAX_REFS) : []
+    for (const x of crudas) {
+        const o = (x && typeof x === "object" ? x : {}) as { datos_base64?: unknown; papel?: unknown; nombre?: unknown }
+        const v = verifyUpload(String(o.datos_base64 ?? ""), { allow: IMAGE_KINDS, maxBytes: FOTOGRAMA_REF_MAX_BYTES })
+        if (!v.ok) return json({ ok: false, error: "referencia_invalida", detail: `${texto(o.nombre, 60) || "referencia"}: ${v.error}` }, 400)
+        refs.push({
+            datos: String(o.datos_base64),
+            mime: v.mime,
+            papel: texto(o.papel, 20) || "referencia",
+            nombre: texto(o.nombre, 80),
+        })
+    }
+
+    const t0 = Date.now()
+    const r = await pedirAGoogle(modelo, prompt, refs, aspecto, tamano)
+    if (!r.ok) return json({ ok: false, error: r.error, detail: r.detail, modelo }, r.status)
+    /* menos de 10 KB no es un fotograma */
+    const largo = Math.floor((r.datos.length * 3) / 4)
+    if (largo < 10 * 1024) return json({ ok: false, error: "gemini_vacio", modelo }, 502)
+    const costo = (COSTO_SALIDA_USD[claveModelo][tamano] ?? 0) + refs.length * COSTO_ENTRADA_USD[claveModelo]
+    return json({
+        ok: true,
+        imagen_base64: r.datos,
+        mime: r.mime,
+        bytes: largo,
+        modelo,
+        clave: claveModelo,
+        tamano,
+        aspecto,
+        referencias: refs.length,
+        via: r.via,
+        costo_usd: Math.round(costo * 10000) / 10000,
+        ms: Date.now() - t0,
+        nombre: texto(body.nombre, 120),
+    })
+}
+
 async function densiImagenBorrar(body: { url?: unknown }): Promise<Response> {
     const cfg = r2Config()
     if ("faltan" in cfg) return json({ ok: false, error: "missing_secrets", detail: cfg.faltan.join(", ") }, 500)
@@ -1131,6 +1354,10 @@ serve(async (req) => {
         archivo_base64?: unknown
         voice_id?: unknown
         guardar?: unknown
+        prompt?: unknown
+        tamano?: unknown
+        aspecto?: unknown
+        referencias?: unknown
     } = {}
     try {
         body = await req.json()
@@ -1161,6 +1388,7 @@ serve(async (req) => {
     if (quiero === "densi-imagen-borrar") return densiImagenBorrar(body)
     if (quiero === "densi-media") return densiMedia(body)
     if (quiero === "densi-voz") return densiVoz(body)
+    if (quiero === "densi-fotograma") return densiFotograma(body)
 
     if (quiero !== "voz" && quiero !== "voz-salida") return json({ error: "quiero_desconocido" }, 400)
     if (!SONIOX_KEY) return json({ ok: false, error: "soniox_key_missing" }, 500)
