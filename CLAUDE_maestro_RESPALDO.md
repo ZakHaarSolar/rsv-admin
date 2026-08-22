@@ -2683,6 +2683,17 @@ porque una instrucción no es una restricción.
      «laboratorio», el núcleo propuso arquería de piedra clara con arcos
      ojivales enmarcando estantes de reactivos y vitrales verdes filtrando la
      luz sobre las mesas: el vocabulario del valle, aplicado al laboratorio.
+  8. **Higiene y desacoplamiento del generador**: una ficha creada y dejada en
+     blanco se descarta sola al salir (nadie quiere una «Locación» vacía en la
+     lista); las láminas de referencia se copian como **imagen** al
+     portapapeles (WebP → PNG) para pegarlas directo en Nano Banana, con el
+     enlace aparte; y un INTERIOR con referencias de exterior hereda solo
+     paleta, materiales y luz: el prompt abre declarando «Wide interior shot,
+     indoor environment», cierra prohibiendo arquitectura exterior dentro, y
+     el negativo suma los bloqueos de escala (castle, spires, distant towers,
+     out of scale elements). Verificado: el laboratorio de Kael con el Valle
+     como ancla salió con piedra clara, vitrales verdes y arcos ojivales, sin
+     una sola torre dentro.
 - 📁 **Archivos:** (rsv-web/src/council) `densificacion/` → nuevos `Tira.tsx`
   v1.1, `exportar.ts`, `zip.ts`, `capas.ts` v1.1, `locacion-ia.ts` v1.1,
   `GeneradorLocacion.tsx` v1.1; `tipos.ts` v1.6 · `almacen.ts` v1.3 ·
