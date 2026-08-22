@@ -2677,6 +2677,12 @@ porque una instrucción no es una restricción.
      **Modo Constructor**: una semilla, el núcleo define 3-4 capas con 4
      opciones, cascada que pliega cada capa al responder, y la síntesis
      respeta las decisiones al pie de la letra. Verificado contra qwen3.8:27b.
+  7. **Las referencias anclan TAMBIÉN la Fase 1**: lo que se elige antes de
+     «definir las capas» decide de qué están hechas las opciones (continuidad
+     espacial). Con el Valle de la Ciudad Solar anclado y la semilla
+     «laboratorio», el núcleo propuso arquería de piedra clara con arcos
+     ojivales enmarcando estantes de reactivos y vitrales verdes filtrando la
+     luz sobre las mesas: el vocabulario del valle, aplicado al laboratorio.
 - 📁 **Archivos:** (rsv-web/src/council) `densificacion/` → nuevos `Tira.tsx`
   v1.1, `exportar.ts`, `zip.ts`, `capas.ts` v1.1, `locacion-ia.ts` v1.1,
   `GeneradorLocacion.tsx` v1.1; `tipos.ts` v1.6 · `almacen.ts` v1.3 ·
