@@ -1,4 +1,4 @@
-// Red Solar Viva · revenuecat-webhook v1.4 — CICLO SEMANAL SIN CRISTALES (decisión 2026-08-02): el ciclo semanal de Sintonía (sintonia_solar_weekly) da el Escáner completo pero YA NO emite los 2 Cristales de Extracción — esos viven SOLO en el ciclo mensual. Cierra el arbitraje (1 semana = 2 Cristales = 621+ MXN de valor y cancelas). El fix es el gate: emitCristales corre solo si NO es el semanal (helper esCicloSemanal por substring, robusto). Cero migración SQL (la RPC emit_cristales_for_subscription no cambia; solo deja de llamarse para el semanal). Inmersión (cuasar) y Sintonía mensual siguen emitiendo igual.
+// Red Solar Viva · revenuecat-webhook v1.5 — TRANSFER re-liga stripe_customer_id al clerk destino (SIWA / $RCAnonymousID). v1.4 leftover: CICLO SEMANAL SIN CRISTALES — CICLO SEMANAL SIN CRISTALES (decisión 2026-08-02): el ciclo semanal de Sintonía (sintonia_solar_weekly) da el Escáner completo pero YA NO emite los 2 Cristales de Extracción — esos viven SOLO en el ciclo mensual. Cierra el arbitraje (1 semana = 2 Cristales = 621+ MXN de valor y cancelas). El fix es el gate: emitCristales corre solo si NO es el semanal (helper esCicloSemanal por substring, robusto). Cero migración SQL (la RPC emit_cristales_for_subscription no cambia; solo deja de llamarse para el semanal). Inmersión (cuasar) y Sintonía mensual siguen emitiendo igual.
 // Red Solar Viva · revenuecat-webhook v1.3 — AUDITORÍA 2026-07-24 · PARTE 2: las compras SANDBOX (TestFlight / license testers de Play) ya NO conceden membresía ni Cristales. Llegaban a este mismo endpoint con el mismo Authorization y eran indistinguibles de una compra real: escribían status=active con la membresía completa y emitían los 2 Cristales del mes. Interruptor para QA propio: secrets set REVENUECAT_ALLOW_SANDBOX=true + redeploy (y unset al terminar). El evento TEST del dashboard sigue pasando siempre. + PRODUCT_GROUP_MAP suma sintonia_solar_weekly (faltaba: solo funcionaba por el default legacy).
 // ════════════════════════════════════════════════════════════════════
 // Red Solar Viva — revenuecat-webhook (v1.1 — 2026-06-12)
@@ -368,9 +368,37 @@ async function handleTransfer(event: any) {
     console.log(
         `🔁 TRANSFER de [${fromIds.join(",")}] → [${toIds.join(",")}]`
     )
-    // No forzamos cambios duros: el evento de suscripción que sigue al
-    // transfer (RevenueCat reemite el estado al nuevo dueño) hace el
-    // upsert correcto. Acá solo dejamos rastro en logs.
+    const newClerkId = toIds.find(
+        (id) => typeof id === "string" && id.startsWith("user_")
+    )
+    if (!newClerkId || fromIds.length === 0) {
+        console.log("🔁 TRANSFER sin clerk destino o sin origen — solo log")
+        return
+    }
+    const profile = await getProfileByClerkId(newClerkId)
+    const userId = profile?.id ?? null
+    const email = (profile?.email || "").toLowerCase().trim() || null
+    const customerName = profile?.full_name || null
+    for (const fromId of fromIds) {
+        const { data, error } = await supabase
+            .from("subscriptions")
+            .update({
+                stripe_customer_id: `rc_${newClerkId}`,
+                user_id: userId,
+                email,
+                customer_name: customerName,
+            })
+            .eq("stripe_customer_id", `rc_${fromId}`)
+            .select("stripe_subscription_id")
+        if (error) {
+            console.error(`❌ TRANSFER update rc_${fromId}:`, error)
+            continue
+        }
+        const n = Array.isArray(data) ? data.length : 0
+        console.log(
+            `🔁 TRANSFER re-liga ${n} fila(s) rc_${fromId} → rc_${newClerkId} | user ${userId || "SIN PERFIL"}`
+        )
+    }
 }
 
 /* ====================== SERVIDOR ====================== */
