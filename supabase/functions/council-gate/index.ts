@@ -1,3 +1,4 @@
+// Red Solar Viva · council-gate v2.3 — 🜂 GOOGLE SOLO DEVUELVE JPEG por la Interactions API (medido el 2026-08-23 con su propia respuesta: «The value 'image/png' is not supported for 'response_format.mime_type'. Supported values: 'image/jpeg'»); se pide JPEG y el JPEG de Google es el original de la toma. Y la prueba de acoplamiento: { quiero: "densi-fotograma", prueba: true } pide un cuadro chico sin referencias para confirmar llave, modelo y camino en un clic.
 // Red Solar Viva · council-gate v2.2 — 🜂 EL FOTOGRAMA POR API: { quiero: "densi-fotograma", prompt, modelo: "nb2"|"pro", tamano: "1K"|"2K", aspecto, referencias: [{datos_base64, mime, papel, nombre}] } le pide a GOOGLE (Nano Banana 2 = gemini-3.1-flash-image · Nano Banana Pro = gemini-3-pro-image) un fotograma 16:9 anclado en las láminas de los personajes y la locación de la toma (y, al ESCALAR, en el fotograma ya aprobado), y devuelve la imagen en crudo con su costo estimado; cada fallo se traduce POR CAUSA (gemini_sin_llave · gemini_llave_invalida · gemini_sin_saldo · gemini_limite · gemini_bloqueado · gemini_modelo_inexistente · gemini_saturado · gemini_sin_respuesta…). Usa el secret GEMINI_API_KEY que ya existe.
 // Red Solar Viva · council-gate v2.1 — 🜂 LA TOMA SUENA Y SE MUEVE: { quiero: "densi-media", clase: "video"|"musica", archivo_base64 } sube el video (mp4/mov/webm, 30 MB) o la música (mp3/m4a/wav/ogg, 25 MB) de una toma a R2 con su PROPIA llave (Council/densi/…-video.ext); { quiero: "densi-voz", texto, voice_id, guardar } le pide a FISH AUDIO el diálogo con el timbre del personaje (wav sin compresión) y lo deja en R2 (guardar) o lo devuelve en crudo para oír un timbre; cada fallo de Fish se traduce POR CAUSA (fish_sin_llave · fish_llave_invalida · fish_sin_saldo · fish_voz_inexistente · fish_saturado…). El fotograma maestro (densi-imagen) acepta ahora el ORIGINAL hasta 25 MB. Secret nuevo: FISH_AUDIO_API_KEY (opcional FISH_AUDIO_MODEL, por defecto "s1").
 // Red Solar Viva · council-gate v2.0 — 🜂 EL PANEL DE DENSIFICACIÓN de Fotón Cero: { quiero: "densi-leer" } devuelve entidades/actos/tomas del Arquitecto (lápidas incluidas); { quiero: "densi-guardar", entidades?, actos?, tomas? } escribe por council_densi_guardar (condicional por fecha, migración 20260820); { quiero: "densi-imagen", imagen_base64, mini_base64? } verifica por bytes (png/jpg/webp/gif, 10 MB), sube fotograma y miniatura a R2 (Council/densi/…) y devuelve sus direcciones; { quiero: "densi-imagen-borrar", url } quita fotograma Y su miniatura del bucket.
@@ -1019,7 +1020,9 @@ async function pedirAGoogle(
                     { type: "text", text: prompt },
                     ...refs.map((x) => ({ type: "image", mime_type: x.mime, data: x.datos })),
                 ],
-                response_format: { type: "image", mime_type: "image/png", aspect_ratio: aspecto, image_size: tamano },
+                /* 🜂 JPEG: es lo único que esta forma acepta (2026-08-23, respuesta
+                   literal de Google). Lo que devuelve ES el original de la toma. */
+                response_format: { type: "image", mime_type: "image/jpeg", aspect_ratio: aspecto, image_size: tamano },
             }),
             signal: AbortSignal.timeout(GEMINI_TIMEOUT_MS),
         })
@@ -1092,18 +1095,23 @@ async function densiFotograma(body: {
     aspecto?: unknown
     referencias?: unknown
     nombre?: unknown
+    prueba?: unknown
 }): Promise<Response> {
     if (!GEMINI_KEY) return json({ ok: false, error: "gemini_sin_llave" }, 500)
     const prompt = texto(body.prompt, FOTOGRAMA_MAX_PROMPT).trim()
     if (!prompt) return json({ ok: false, error: "sin_prompt" }, 400)
     const claveModelo = body.modelo === "pro" ? "pro" : "nb2"
     const modelo = MODELOS_FOTOGRAMA[claveModelo]
-    const tamano = body.tamano === "1K" || body.tamano === "2K" || body.tamano === "4K" ? (body.tamano as string) : "2K"
+    /* la PRUEBA de acoplamiento: un cuadro chico, sin referencias, para saber
+       en un clic si la llave, el modelo y el camino responden */
+    const prueba = body.prueba === true
+    let tamano = body.tamano === "1K" || body.tamano === "2K" || body.tamano === "4K" ? (body.tamano as string) : "2K"
+    if (prueba) tamano = claveModelo === "nb2" ? "512" : "1K"
     const aspecto = ASPECTOS_VALIDOS.has(String(body.aspecto)) ? String(body.aspecto) : "16:9"
 
     /* las referencias: se verifican por sus bytes como todo lo que entra */
     const refs: RefFotograma[] = []
-    const crudas = Array.isArray(body.referencias) ? body.referencias.slice(0, FOTOGRAMA_MAX_REFS) : []
+    const crudas = !prueba && Array.isArray(body.referencias) ? body.referencias.slice(0, FOTOGRAMA_MAX_REFS) : []
     for (const x of crudas) {
         const o = (x && typeof x === "object" ? x : {}) as { datos_base64?: unknown; papel?: unknown; nombre?: unknown }
         const v = verifyUpload(String(o.datos_base64 ?? ""), { allow: IMAGE_KINDS, maxBytes: FOTOGRAMA_REF_MAX_BYTES })
@@ -1121,7 +1129,7 @@ async function densiFotograma(body: {
     if (!r.ok) return json({ ok: false, error: r.error, detail: r.detail, modelo }, r.status)
     /* menos de 10 KB no es un fotograma */
     const largo = Math.floor((r.datos.length * 3) / 4)
-    if (largo < 10 * 1024) return json({ ok: false, error: "gemini_vacio", modelo }, 502)
+    if (largo < (prueba ? 2 : 10) * 1024) return json({ ok: false, error: "gemini_vacio", modelo }, 502)
     const costo = (COSTO_SALIDA_USD[claveModelo][tamano] ?? 0) + refs.length * COSTO_ENTRADA_USD[claveModelo]
     return json({
         ok: true,
@@ -1358,6 +1366,7 @@ serve(async (req) => {
         tamano?: unknown
         aspecto?: unknown
         referencias?: unknown
+        prueba?: unknown
     } = {}
     try {
         body = await req.json()
