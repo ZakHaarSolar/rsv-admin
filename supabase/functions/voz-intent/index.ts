@@ -4,7 +4,8 @@
 // pensamiento: misma latencia sub-segundo, mismo JSON) y `reasoning_format:
 // "hidden"` (Groq exige parsed/hidden con JSON mode). El respaldo en OpenRouter
 // sigue en llama-3.3-70b-instruct: ahí no se retira. El carril de NAVEGACIÓN
-// (llama-3.1-8b-instant) no cambia. Sigue mandando el secreto VOZ_MODEL si está.
+// (navegación) ahora openai/gpt-oss-20b — Groq retiró llama-3.1-8b-instant el 16-ago-2026.
+// Sigue mandando el secreto VOZ_MODEL si está.
 // admin/supabase/functions/voz-intent/index.ts v1.10 — 🜂 FASE E · EL CONTEXTO
 // VIVO (Zak 2026-08-13): el cliente manda `contexto.capa_activa` +
 // `contexto.lista_visible` (la pila central de lib/vozContexto: la capa del
@@ -84,7 +85,7 @@ const LIMITE_GLOBAL = 20000
 /* Modelos por defecto: los más chicos y rápidos de cada proveedor. Clasificar
    una frase de 6 palabras contra 30 opciones no necesita un modelo grande, y
    uno grande añadiría medio segundo que aquí se nota. */
-const MODELO_GROQ_DEFAULT = "llama-3.1-8b-instant"
+const MODELO_GROQ_DEFAULT = "openai/gpt-oss-20b"
 const MODELO_OR_DEFAULT = "meta-llama/llama-3.1-8b-instruct"
 /* v1.2 — para ACCIONES (título + tiempo + intención) el 8b se quedaba corto
    (device-QA de Zak: metió "llamada/ponle de título" al título e ignoró
