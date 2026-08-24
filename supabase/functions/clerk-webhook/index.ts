@@ -132,9 +132,26 @@ serve(async (req: Request) => {
 
     const userData = evt.data
     const clerkUserId = userData.id
-    const email = (userData.email_addresses?.[0]?.email_address || "").toLowerCase().trim()
-    const fullName = [userData.first_name, userData.last_name].filter(Boolean).join(" ")
+    let email = (userData.email_addresses?.[0]?.email_address || "").toLowerCase().trim()
+    let fullName = [userData.first_name, userData.last_name].filter(Boolean).join(" ")
     const avatarUrl = userData.image_url || ""
+
+    /* SIWA a menudo manda user.updated con first/last vacíos y pisa un
+       nombre que ya teníamos ("H B" → ""). Si Clerk no trae nombre o
+       email, conservamos el de profiles. */
+    const { data: existing } = await supabase
+      .from("profiles")
+      .select("full_name, email")
+      .eq("clerk_user_id", clerkUserId)
+      .maybeSingle()
+    if (!fullName && existing?.full_name) {
+      fullName = String(existing.full_name)
+      console.log(`🔒 Conservo full_name "${fullName}" (Clerk vino vacío)`)
+    }
+    if (!email && existing?.email) {
+      email = String(existing.email).toLowerCase().trim()
+      console.log(`🔒 Conservo email (Clerk vino vacío)`)
+    }
 
     console.log(`📝 Intentando upsert: ${clerkUserId} | ${email} | Avatar: ${avatarUrl}`)
 
