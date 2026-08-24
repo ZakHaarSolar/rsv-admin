@@ -1,4 +1,4 @@
-// Red Solar Viva · revenuecat-webhook v1.5 — TRANSFER re-liga stripe_customer_id al clerk destino (SIWA / $RCAnonymousID). v1.4 leftover: CICLO SEMANAL SIN CRISTALES — CICLO SEMANAL SIN CRISTALES (decisión 2026-08-02): el ciclo semanal de Sintonía (sintonia_solar_weekly) da el Escáner completo pero YA NO emite los 2 Cristales de Extracción — esos viven SOLO en el ciclo mensual. Cierra el arbitraje (1 semana = 2 Cristales = 621+ MXN de valor y cancelas). El fix es el gate: emitCristales corre solo si NO es el semanal (helper esCicloSemanal por substring, robusto). Cero migración SQL (la RPC emit_cristales_for_subscription no cambia; solo deja de llamarse para el semanal). Inmersión (cuasar) y Sintonía mensual siguen emitiendo igual.
+// Red Solar Viva · revenuecat-webhook v1.6 — no pisa rc_user_* con $RCAnonymousID. v1.5 leftover — TRANSFER re-liga stripe_customer_id al clerk destino (SIWA / $RCAnonymousID). v1.4 leftover: CICLO SEMANAL SIN CRISTALES — CICLO SEMANAL SIN CRISTALES (decisión 2026-08-02): el ciclo semanal de Sintonía (sintonia_solar_weekly) da el Escáner completo pero YA NO emite los 2 Cristales de Extracción — esos viven SOLO en el ciclo mensual. Cierra el arbitraje (1 semana = 2 Cristales = 621+ MXN de valor y cancelas). El fix es el gate: emitCristales corre solo si NO es el semanal (helper esCicloSemanal por substring, robusto). Cero migración SQL (la RPC emit_cristales_for_subscription no cambia; solo deja de llamarse para el semanal). Inmersión (cuasar) y Sintonía mensual siguen emitiendo igual.
 // Red Solar Viva · revenuecat-webhook v1.3 — AUDITORÍA 2026-07-24 · PARTE 2: las compras SANDBOX (TestFlight / license testers de Play) ya NO conceden membresía ni Cristales. Llegaban a este mismo endpoint con el mismo Authorization y eran indistinguibles de una compra real: escribían status=active con la membresía completa y emitían los 2 Cristales del mes. Interruptor para QA propio: secrets set REVENUECAT_ALLOW_SANDBOX=true + redeploy (y unset al terminar). El evento TEST del dashboard sigue pasando siempre. + PRODUCT_GROUP_MAP suma sintonia_solar_weekly (faltaba: solo funcionaba por el default legacy).
 // ════════════════════════════════════════════════════════════════════
 // Red Solar Viva — revenuecat-webhook (v1.1 — 2026-06-12)
@@ -258,6 +258,30 @@ async function handleCodicePurchase(event: any) {
     }
 }
 
+
+function isClerkId(id: string | null | undefined): boolean {
+    return typeof id === "string" && id.startsWith("user_")
+}
+
+function isAnonymousRcId(id: string | null | undefined): boolean {
+    return typeof id === "string" && id.includes("$RCAnonymousID")
+}
+
+/* Prefiere Clerk. Nunca elijas anónimo si hay un user_ en el evento. */
+function pickClerkUserId(event: any): string {
+    const candidates: string[] = []
+    const push = (v: any) => {
+        if (typeof v === "string" && v.length > 0) candidates.push(v)
+    }
+    push(event.app_user_id)
+    push(event.original_app_user_id)
+    for (const a of event.aliases || []) push(a)
+    for (const a of event.transferred_to || []) push(a)
+    const clerk = candidates.find(isClerkId)
+    if (clerk) return clerk
+    return candidates[0] || ""
+}
+
 async function handleSubscriptionEvent(event: any) {
     const eventType = event.type as string
 
@@ -275,8 +299,7 @@ async function handleSubscriptionEvent(event: any) {
         return
     }
 
-    const clerkUserId: string =
-        event.app_user_id || event.original_app_user_id || ""
+    let clerkUserId: string = pickClerkUserId(event)
     const productId: string | null = event.product_id || null
     const groupName = detectGroupName(productId)
 
@@ -291,7 +314,7 @@ async function handleSubscriptionEvent(event: any) {
     let userId: string | null = null
     let email: string | null = null
     let customerName: string | null = null
-    if (clerkUserId) {
+    if (clerkUserId && isClerkId(clerkUserId)) {
         const profile = await getProfileByClerkId(clerkUserId)
         if (profile) {
             userId = profile.id
@@ -302,6 +325,10 @@ async function handleSubscriptionEvent(event: any) {
                 `⚠️ Sin perfil para app_user_id="${clerkUserId}" — escribo igual con user_id null`
             )
         }
+    } else if (clerkUserId) {
+        console.log(
+            `⚠️ app_user_id anónimo "${clerkUserId}" — no piso un rc_user_ existente`
+        )
     } else {
         console.log("⚠️ Evento sin app_user_id — no puedo resolver perfil")
     }
@@ -309,12 +336,35 @@ async function handleSubscriptionEvent(event: any) {
     const periodStart = msToISO(event.purchased_at_ms)
     const periodEnd = msToISO(event.expiration_at_ms)
 
+    const { data: existingRows } = await supabase
+        .from("subscriptions")
+        .select("stripe_customer_id, user_id, email, customer_name")
+        .eq("stripe_subscription_id", syntheticSubId)
+        .limit(1)
+    const existing = Array.isArray(existingRows) ? existingRows[0] : null
+    const existingCustomer = existing?.stripe_customer_id || ""
+    const keepClerkCustomer =
+        typeof existingCustomer === "string" &&
+        existingCustomer.startsWith("rc_user_") &&
+        isAnonymousRcId(clerkUserId)
+
+    let stripeCustomerId = `rc_${clerkUserId}`
+    if (keepClerkCustomer) {
+        stripeCustomerId = existingCustomer
+        userId = userId || existing.user_id || null
+        email = email || existing.email || null
+        customerName = customerName || existing.customer_name || null
+        console.log(
+            `🔒 Conservo ${existingCustomer}: evento anónimo no pisa Clerk`
+        )
+    }
+
     const { error } = await supabase.from("subscriptions").upsert(
         {
             user_id: userId,
             email: email,
             stripe_subscription_id: syntheticSubId,
-            stripe_customer_id: `rc_${clerkUserId}`,
+            stripe_customer_id: stripeCustomerId,
             status: status,
             current_period_start: periodStart,
             current_period_end: periodEnd,
