@@ -1,4 +1,12 @@
-// Red Solar Viva · oraculo-chat v1.46 — 🜂 EL PROFUNDO SE COBRA EN DOS
+// Red Solar Viva · oraculo-chat v1.47 — 🜂 LA HUELLA DEL BORRADO (Zak
+// 2026-08-24). Borrar un reflejo sigue borrándolo de verdad —el contenido se
+// va y no se guarda una sola palabra— pero antes de irse se anota el rastro
+// en `oraculo_borrados`: cuándo y cuánto. Sin eso el panel mostraba "32
+// enviados" y cero conversaciones, y no había forma de distinguir a alguien
+// que limpió su espejo de un bug de identidad que estuviera partiendo los
+// datos en dos. Se cuenta ANTES del DELETE, que es la única vez que se puede,
+// y si la cuenta falla el borrado sigue igual: la huella es para la casa, no
+// para el Tripulante. | v1.46 — 🜂 EL PROFUNDO SE COBRA EN DOS
 // TRAMOS (Zak 2026-08-19: "mi uso pasó de un reflejo a nueve reflejos usados,
 // y no me llegó nada"). Los ocho estaban bien contados —un profundo cuesta
 // unas diez veces más que un rápido— pero se reservaban ANTES de llamar al
@@ -1287,6 +1295,36 @@ Deno.serve(async (req: Request) => {
                 typeof body?.conversation_id === "string"
                     ? body.conversation_id
                     : ""
+            /* 🜂 v1.47 — LA HUELLA DEL BORRADO (Zak 2026-08-24). Lo que la
+               persona tira se va igual que siempre: acá NO se guarda una sola
+               palabra de su reflejo. Lo que queda es el rastro —cuándo y
+               cuánto— porque sin él el panel mostraba "32 enviados" y cero
+               conversaciones sin manera de saber si alguien había borrado o si
+               estábamos escribiendo bajo una identidad y leyendo bajo otra.
+               Se cuenta ANTES de borrar, que es la única vez que se puede. */
+            let huellaConv = 0
+            let huellaMsg = 0
+            try {
+                const q = sb
+                    .from("oraculo_conversations")
+                    .select("id", { count: "exact", head: true })
+                    .eq("clerk_user_id", clerkUserId)
+                const { count: cConv } = only
+                    ? await q.eq("id", only)
+                    : await q
+                huellaConv = cConv || 0
+                const qm = sb
+                    .from("oraculo_messages")
+                    .select("id", { count: "exact", head: true })
+                    .eq("clerk_user_id", clerkUserId)
+                const { count: cMsg } = only
+                    ? await qm.eq("conversation_id", only)
+                    : await qm
+                huellaMsg = cMsg || 0
+            } catch (_e) {
+                /* Si la cuenta falla, el borrado sigue: la huella es para
+                   nosotros, no para el Tripulante. */
+            }
             try {
                 if (only && (await ownsConversation(only))) {
                     await sb
@@ -1311,6 +1349,17 @@ Deno.serve(async (req: Request) => {
                 }
             } catch (_e) {
                 /* no-op */
+            }
+            if (huellaConv > 0 || huellaMsg > 0) {
+                try {
+                    await sb.from("oraculo_borrados").insert({
+                        clerk_user_id: clerkUserId,
+                        conversaciones: huellaConv,
+                        mensajes: huellaMsg,
+                    })
+                } catch (_e) {
+                    /* no-op */
+                }
             }
             return json({ ok: true, cleared: true })
         }
