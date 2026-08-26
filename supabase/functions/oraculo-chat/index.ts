@@ -1,4 +1,12 @@
-// Red Solar Viva · oraculo-chat v1.47 — 🜂 LA HUELLA DEL BORRADO (Zak
+// Red Solar Viva · oraculo-chat v1.48 — 🜂 BORRAR TODO TIENE QUE PEDIRSE, NO
+// CAERSE (Zak 2026-08-24: "no se le estarán borrando solitos"). `mode:"clear"`
+// sin conversation_id borraba el historial ENTERO del Tripulante, y ese caso
+// no era teórico: el cliente manda el id de la conversación en curso, que es
+// NULL mientras el servidor no se lo haya dado —un reflejo recién abierto, o
+// uno que se borra antes de que llegue la primera respuesta—. Tocar "Eliminar
+// este reflejo" ahí se llevaba todo, sin una advertencia. Ahora un `clear` sin
+// id no borra nada y lo dice (`motivo:"sin_id"`); el borrado total exige
+// `clear_all`, que nadie escribe por accidente. | v1.47 — 🜂 LA HUELLA DEL BORRADO (Zak
 // 2026-08-24). Borrar un reflejo sigue borrándolo de verdad —el contenido se
 // va y no se guarda una sola palabra— pero antes de irse se anota el rastro
 // en `oraculo_borrados`: cuándo y cuánto. Sin eso el panel mostraba "32
@@ -1288,13 +1296,28 @@ Deno.serve(async (req: Request) => {
         // Modo borrar: elimina la conversación + mensajes de ESTE usuario
         // (gateUser garantiza que es la suya). NO toca oraculo_usage → el
         // contador de cortesía de por-vida no se resetea (anti-bypass).
-        if (body?.mode === "clear") {
+        if (body?.mode === "clear" || body?.mode === "clear_all") {
             /* v1.10 — con conversation_id borra SOLO ese reflejo; sin él,
-               toda la conversación del Tripulante (comportamiento viejo). */
+               toda la conversación del Tripulante (comportamiento viejo).
+               ═══════════════════════════════════════════════════════════
+               🜂 v1.48 — BORRAR TODO TIENE QUE PEDIRSE, NO CAERSE (Zak
+               2026-08-24: "no se le estarán borrando solitos"). Ese
+               comportamiento viejo era una BOMBA: el cliente manda el id de
+               la conversación en curso, y esa conversación NO TIENE id
+               mientras el servidor no se lo haya dado (un reflejo recién
+               abierto, o uno que se borra antes de que llegue la primera
+               respuesta). Sin id, el borrado de UNA se convertía en el
+               borrado de TODAS, sin una sola advertencia. Desde acá, un
+               `clear` sin id no borra nada y lo dice; llevarse el historial
+               entero exige `clear_all`, que es una frase que nadie escribe
+               por accidente. */
             const only =
                 typeof body?.conversation_id === "string"
                     ? body.conversation_id
                     : ""
+            if (!only && body?.mode !== "clear_all") {
+                return json({ ok: true, cleared: false, motivo: "sin_id" })
+            }
             /* 🜂 v1.47 — LA HUELLA DEL BORRADO (Zak 2026-08-24). Lo que la
                persona tira se va igual que siempre: acá NO se guarda una sola
                palabra de su reflejo. Lo que queda es el rastro —cuándo y
