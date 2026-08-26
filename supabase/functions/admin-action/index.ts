@@ -1,4 +1,6 @@
-// Red Solar Viva · admin-action v1.53 — 🜂 EL AFINAMIENTO DE LA MATRIZ: rutea
+// Red Solar Viva · admin-action v1.54 — rutea admin_get_user_wallpapers (qué
+// fondos se llevó UN nodo, cuántas veces y cuándo; migración 20260825).
+// | v1.53 — 🜂 EL AFINAMIENTO DE LA MATRIZ: rutea
 // admin_espejo_afinamiento + admin_espejo_afinamiento_estado (Motor → "Voz" →
 // pestaña Matriz). Es el bucle de mejora del Espejo, hermano del de la voz,
 // pero un nivel más arriba: de estas marcas salen las LEYES del prompt.
@@ -293,6 +295,9 @@ const ADMIN_RPCS: Record<string, string | null> = {
     // (subida a R2 + INSERT); estas solo editan/borran/listan. La lectura pública
     // (get_wallpapers) NO va por gateway — es RPC anon directa.
     admin_get_wallpapers: "p_admin_clerk_id",
+    // Qué wallpapers descargó UN tripulante (Padrón → detalle del nodo; bajo
+    // demanda, solo al tocar "Ver wallpapers descargados").
+    admin_get_user_wallpapers: "p_admin_clerk_id",
     admin_upsert_wallpaper: "p_admin_clerk_id",
     admin_delete_wallpaper: "p_admin_clerk_id",
     // ── Biósfera (pistas acústicas de los Nodos Vegetales; capa de la Holoteca) ──
