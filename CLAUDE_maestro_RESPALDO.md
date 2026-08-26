@@ -1192,13 +1192,29 @@ Android: **pública en Google Play** (vc7). Detalle en
   `escaner-landing`). Mientras la raíz no sea repo, cada cierre de sala deja
   una copia en `admin/CLAUDE_maestro_RESPALDO.md` (que sí viaja). Si algún día
   se hace repo de la raíz, este bullet se va.
-- **Device-QA de la ESCUCHA AUTOMÁTICA de la Matriz** (LIVE en escritorio
-  desde el 2026-08-19): con la tecla V encendida, mandar un mensaje largo y
-  escuchar la cadena entera — que la voz arranque mucho antes que hoy, que las
-  uniones entre tramos no se oigan, y que tocar Detener o mandar otro mensaje
-  la corte limpio. El motor y la partición están probados con arnés (36 ✓) y el
-  botón dorado verificado en pantalla; lo que falta es OÍRLA, que exige sesión
-  y llamadas de pago. Detalle en [[proyecto_escucha_automatica_matriz]].
+- **Device-QA de la ESCUCHA AUTOMÁTICA, ahora en las DOS caras** (Matriz
+  desde 2026-08-19, Espejo original desde la 1.1.20): con V encendida, mandar
+  un mensaje largo y OÍR la cadena entera — que arranque pronto, que las
+  uniones entre tramos no se oigan, que Detener o un envío nuevo la corte
+  limpio, y que el dorado vaya pegado a lo que suena (si se adelanta, el
+  ajuste es un número). Arneses en verde; falta el oído, que exige sesión y
+  llamadas de pago. [[proyecto_escucha_automatica_matriz]]
+- **Pegar la migración `admin/supabase/migrations/20260825_wallpapers_por_nodo.sql`**
+  en el SQL Editor: sin ella, el botón "Ver wallpapers descargados" de la
+  ficha del nodo dice "no se pudo leer".
+- **Quitar los 2 satélites de Clerk que sobran** (Dashboard → Domains):
+  `app.escanervibracional.com` y `app.redsolarviva.com` ($10/mes cada uno).
+  Quitar de a uno y entrar a la web del Escáner entre uno y otro.
+  `escaner.redsolarviva.com` NO se toca (las apps publicadas lo usan).
+- **Consultas aterrizadas, sin construir:** (a) modo profundo en el teléfono
+  → propuesto botón "Ir más hondo" bajo cada respuesta (no interruptor:
+  gasto deliberado por reflejo, vista previa gratis del carril de pago);
+  (b) avisos de wallpapers nuevos → sello NUEVO + badge con marca local de
+  última visita + push por TANDA con deep link (nunca por wallpaper suelto);
+  (c) DeepSeek visión → no conectar mientras sea `exp`; si entra, solo el
+  camino de imágenes; (d) revisar el `50` que se guarda en pilares AÚN no
+  escaneados del primer ciclo (se vio en los scans del primer suscriptor:
+  propósito/vínculos en 50 antes de tocarse).
 - **Ver en el teléfono la tanda del 2026-08-19 · II:** la barra de reflejos con
   su buscador, el compositor abriéndose en dos renglones, las Rachas en filas
   parejas y la puerta de "Tu plan" para quien no tiene. Todo verificado midiendo
@@ -2644,145 +2660,78 @@ porque una instrucción no es una restricción.
 
 ## 🜃 Historial de sesiones
 
-#### 2026-08-22 · 🜂 LA TOMA SUENA Y SE MUEVE, LA TRAMA, EL GENERADOR DE LOCACIONES Y EL MODO CONSTRUCTOR
+#### 2026-08-25 · 🜂 SALA LARGA DEL ESCÁNER: ANDROID EN GOOGLE PLAY, LA ESCUCHA Y EL SEGUIMIENTO EN EL ESPEJO, Y EL PRIMER SUSCRIPTOR AUDITADO
 
-- ✅ **Resuelto** (todo en `redsolarviva.com/council`, Panel de Densificación):
-  1. **Cada toma tiene video, voz y música propios**: el fotograma maestro
-     viaja ORIGINAL a R2 (sin recomprimir, hasta 25 MB) y se descarga con ⬇;
-     el video se sube/reproduce/reemplaza con su propia llave (el fotograma
-     no se toca); «voz y música» elige quién habla (el primer personaje que
-     entra a la toma queda preseleccionado), genera el diálogo con **Fish
-     Audio** (wav sin compresión, a R2) y guarda la música de la toma. Cada
-     fallo de voz se lee en la tarjeta, en español.
-  2. **La Tira es un reproductor**: encadena las tomas (video o fotograma por
-     su duración), suena voz y música, dos capas de video alternadas sin negro
-     entre clips, línea de tiempo con marcadores, bucle, y **🔇 video mudo**
-     (los clips de Grok callan; se recuerda). **⬇ paquete para DaVinci**: ZIP
-     hecho a mano con /tomas, /audio_voces, /musica, guion.md, LEEME y un EDL
-     CMX3600 (V · A1 voz · A2 música); validado con `unzip -t`.
-  3. **Esc cierra UNA capa por tecla** (pila `capas.ts`): visor → Tira →
-     ajustes → confirmación → Bóveda plena → pantalla completa → templo. El
-     panel entra a **pantalla completa** del navegador con ⛶.
-  4. **El visor es una galería**: flechas ← → entre las láminas del model
-     sheet (o los fotogramas/videos del episodio), miniaturas, contador,
-     precarga; las flechas mandan solo en la capa de arriba.
-  5. **La TRAMA es su propia pestaña** (premisa, conflicto, arco, temas, para
-     quién) y ahí viven los episodios con su trama, alta, estado y «→ al
-     lienzo»; viaja a los nodos del estudio y a la Forja.
-  6. **El generador asistido de locaciones** (✨ en Locaciones y en la ficha):
-     idea → referencias sugeridas por el núcleo / a mano (selector en grande
-     que se contornea, hasta 4) / desde cero → ficha entera + prompt de render
-     + negativo + lámina «panorama» lista para la Fragua + panel de
-     exportación rápida (copiar, miniaturas arrastrables a Nano Banana).
-     **Modo Constructor**: una semilla, el núcleo define 3-4 capas con 4
-     opciones, cascada que pliega cada capa al responder, y la síntesis
-     respeta las decisiones al pie de la letra. Verificado contra qwen3.8:27b.
-  7. **Las referencias anclan TAMBIÉN la Fase 1**: lo que se elige antes de
-     «definir las capas» decide de qué están hechas las opciones (continuidad
-     espacial). Con el Valle de la Ciudad Solar anclado y la semilla
-     «laboratorio», el núcleo propuso arquería de piedra clara con arcos
-     ojivales enmarcando estantes de reactivos y vitrales verdes filtrando la
-     luz sobre las mesas: el vocabulario del valle, aplicado al laboratorio.
-  8. **Higiene y desacoplamiento del generador**: una ficha creada y dejada en
-     blanco se descarta sola al salir (nadie quiere una «Locación» vacía en la
-     lista); las láminas de referencia se copian como **imagen** al
-     portapapeles (WebP → PNG) para pegarlas directo en Nano Banana, con el
-     enlace aparte; y un INTERIOR con referencias de exterior hereda solo
-     paleta, materiales y luz: el prompt abre declarando «Wide interior shot,
-     indoor environment», cierra prohibiendo arquitectura exterior dentro, y
-     el negativo suma los bloqueos de escala (castle, spires, distant towers,
-     out of scale elements). Verificado: el laboratorio de Kael con el Valle
-     como ancla salió con piedra clara, vitrales verdes y arcos ojivales, sin
-     una sola torre dentro.
-- 📁 **Archivos:** (rsv-web/src/council) `densificacion/` → nuevos `Tira.tsx`
-  v1.1, `exportar.ts`, `zip.ts`, `capas.ts` v1.1, `locacion-ia.ts` v1.1,
-  `GeneradorLocacion.tsx` v1.1; `tipos.ts` v1.6 · `almacen.ts` v1.3 ·
-  `Lienzo.tsx` v1.2 · `Boveda.tsx` v1.6 · `PanelDensificacion.tsx` v1.4 ·
-  `AjustesFragua.tsx` v1.2 · `Confirmacion.tsx` v1.1 · `estilos.ts` v1.6
-  (`dz-css-v7`) · `forja.ts` v1.5 · `forja-prompts.ts` v1.3; `ollama.ts` v2.1
-  (`formato`) · `deliberacion.ts` v2.20 · `types.ts` + `store.ts` (Serie gana
-  premisa/conflicto/arco/temas).
-- 🔌 **Edge functions deployed:** `council-gate` v2.1 (`densi-media`,
-  `densi-voz` con Fish Audio, fotograma original hasta 25 MB). Secret nuevo:
-  `FISH_AUDIO_API_KEY` (Zak lo pone en Supabase → Edge Functions → Secrets;
-  sin él, el botón de voz lo dice en pantalla).
-- 💡 **Decisiones importantes:** el archivo maestro ya NO guarda pendientes
-  del Council ni «decididos sin construir» ni «requieren mano de Zak» (Zak:
-  "si alguna vez vamos a querer construir algo, lo vamos a decir") · Android
-  está PÚBLICA · los videos de la Tira nacen mudos (la voz y la música son de
-  la casa) · un contrato de claves a un modelo local se IMPONE con gramática
-  (salida estructurada de Ollama), no con instrucciones · un JSON cortado por
-  espacio se repara y se explica, no se tira.
-- 🔧 **Patrones nuevos:** changelog v46 (0-quintricies). Detalle vivo en
-  [[proyecto_densificacion_foton_cero]].
+- ✅ **Resuelto** (Espejo original de escritorio, salvo nota):
+  1. **La escucha automática y el seguimiento llegan al modo origen** con la
+     llave compartida de la Matriz (misma maquinaria de tramos precalentados;
+     arnés 16 ✓; la voz arranca al 25% de lo escrito). Teclas V y S, botón
+     cian de seguimiento, interruptor de escucha en la tarjeta de voces.
+  2. **En el teléfono, imagen/presencia/seguimiento son filas con interruptor
+     en el menú del sigilo** (no cierran el menú; mantener pulsada Presencia
+     la arma con voz). El compositor abre a todo el ancho desde la 2ª línea
+     también en computadora (vara fija, un solo salto, medido sin rebotes).
+  3. **Cmd+F busca dentro de la charla** (resalte nativo cian + dorado, salto
+     directo) y **"Ver atajos"** cuelga de "¿Qué es el Espejo?" con las cinco
+     teclas reales. El envío suena como botón (tic + arpegio). La bocina dice
+     la verdad mientras la voz vive (sello fuera del componente) y la frase
+     dorada volvió (la voz recibe el texto limpio). El orbe de comandos por
+     voz duerme TODA la Presencia (avisos firmados que se cuentan, no un
+     interruptor compartido).
+  4. **Android salió en Google Play**: correo de celebración en
+     `admin/correos/android-lanzamiento.*` (logo, CCO, texto plano) y la
+     landing `escanervibracional.com` apunta a la tienda ("Descárgala ahora").
+  5. **/fragmentos → /fotoncero** (el título sigue siendo Fragmentos del Sol)
+     y el episodio se abre solo con su título, sin sinopsis. La directriz del
+     Consejo Solar vive en el Slate (episodios completos 10-12 min, 16:9,
+     provocar un estado, y la vara: si no cabe en UNA frase, no está lista).
+  6. **Motor**: la ficha del nodo dice conversaciones VIVAS + huella de
+     borrados (cuándo y cuántos, jamás el contenido) y qué WALLPAPERS
+     descargó (tarjeta bajo demanda con miniaturas, cofre por página,
+     "Recargar" pide fresco).
+- 🐛 **Bug cazado por sospecha de Zak** ("¿no se le estarán borrando
+  solitos?"): `mode:"clear"` SIN conversation_id borraba el historial ENTERO
+  del Tripulante, y el caso existe siempre porque una conversación recién
+  abierta aún no tiene id. oraculo-chat v1.48 exige `clear_all` explícito y
+  el cliente ya ni viaja sin id. **El primer suscriptor NO fue víctima de
+  eso**: borró 6 veces de a 1 (98 mensajes), paga semanal, selló los 6
+  pilares al 100 en 25 min de madrugada → persona celosa de su privacidad
+  explorando la app, no un bot.
+- 📁 **Archivos:** escaner-app `EV_Oraculo` v6.17 · `EV_Rafaga` v5.31 ·
+  `NodoDeVoz` v2.5 · `espejo.es/en` v1.23 · **escritorio 1.1.27 LIVE**.
+  Code: `Domo` v5.9 · `FragmentosDelSol` v2.1 · `MI_Detail` v1.27.
+  rsv-web `salas.ts` v2.20 · landing `index.html` v1.2.
+- 🗄️ **SQL:** ✅ `20260824_huella_borrado_espejo` (Zak la corrió) ·
+  ⏳ `20260825_wallpapers_por_nodo` (falta pegarla; sin ella el botón de
+  wallpapers de la ficha dirá "no se pudo leer").
+- 🔌 **Edges:** `oraculo-chat` v1.48 (huella del borrado + clear_all) ·
+  `admin-action` v1.54 (`admin_get_user_wallpapers`).
+- 💡 **Decisiones:** DeepSeek `v4-flash-vision-exp` NO se conecta (5× el
+  costo de salida en TODO el texto y es experimental de 3 días; re-mirar al
+  salir de `exp`, y si entra, SOLO al camino de imágenes con Gemini de
+  respaldo) · lo borrado del Espejo NO se conserva ni temporalmente: solo la
+  huella · el modo profundo en el teléfono se propuso como botón "Ir más
+  hondo" BAJO la respuesta (no un interruptor); sin decidir · avisos de
+  wallpapers nuevos: sello NUEVO + badge por marca local + push por TANDA
+  reutilizando la infra existente; sin construir · dominios de Clerk: sobran
+  `app.escanervibracional.com` y `app.redsolarviva.com` ($20/mes);
+  `escaner.redsolarviva.com` se queda (lo usan las apps nativas).
+- 🔧 **Patrones nuevos:** changelog v47 (0-sextricies: la ausencia de alcance
+  nunca significa "todo").
 
-#### 2026-08-21 · 🜂 LA FRAGUA DE LÁMINAS: EL MODEL SHEET SE GENERA SOLO CONTRA EL COMFYUI DE LA MAC
+#### 2026-08-22 · EL COUNCIL: TOMAS CON VIDEO/VOZ/MÚSICA, LA TIRA, TRAMA, GENERADOR DE LOCACIONES Y LA FRAGUA (comprimida; incluye 08-20 y 08-21)
 
-- ✅ **Resuelto:**
-  1. **LA FRAGUA**: desde la ficha de una entidad, ✦ genera la lámina que falte
-     en su ángulo, y «✦ model sheet» crea y forja las vistas que falten una por
-     una. La identidad la ancla la lámina marcada con ★ (IP-Adapter), el ángulo
-     lo impone un esqueleto que el panel DIBUJA (ControlNet OpenPose: nada de
-     archivos que mantener; el cuerpo se declara una vez en 3D y las vistas
-     salen de girarlo), y el texto de la lámina inyecta lo que la referencia no
-     puede ver (el correaje de la espalda). El núcleo traduce el prompt al
-     inglés antes de generar. La tarjeta dice el paso exacto y la imagen
-     aterriza sola. Colocar a mano (pegar/soltar/subir) sigue igual de vivo.
-  2. **PROBADA CONTRA EL COMFYUI REAL de Zak** (que instaló hoy en
-     `admin/ComfyUI`): **37 s por lámina** a 768×1152, 10 pasos, MPS. Dos
-     fallos que solo el servidor real podía enseñar: la autoselección tomaba el
-     ControlNet de SD 1.5 con un base SDXL (ahora empareja por FAMILIA y avisa
-     si se mezclan), y los errores llegaban en inglés y en jerga (ahora se
-     traducen POR CAUSA: modelo incompleto, familias, memoria, archivo ausente).
-  3. **LA BÓVEDA SE ENSANCHA Y SE ABRE ENTERA**: tirador en su borde (260-860,
-     recordado, doble clic la devuelve) y ⛶ para ocupar la pantalla, donde la
-     ficha se reparte en columnas y las láminas pasan de 220 a 443 px con
-     botones al doble.
-  4. **UN SOLO GUARDADO AL FORJAR**: mientras el núcleo dicta se escribe en
-     volátil. Medido con el núcleo real: **37 refrescos en pantalla → 1
-     escritura** a disco y a la bóveda (antes 37 y 37, que era el parpadeo del
-     pill entre «al día» y «guardando»).
-  5. **NADA CON CARGA SE BORRA DE UN TOQUE**: la tarjeta enumera lo que se
-     pierde («3 láminas · 1 con imagen · su esencia»); lo vacío conserva los dos
-     toques. Y «probar conexión» ACUSA: ✓ esmeralda con el número de modelos o
-     ✕ rojo nombrando el servidor que no contestó.
-  6. **LAS VISTAS DEPENDEN DE QUÉ SE FICHA**: un personaje se gira (frente ·
-     3/4 · perfil · espalda) y una locación se recorre (panorama · nivel calle ·
-     interior / ángulo B). Un lugar no recibe esqueleto, su hoja se pide como
-     locación (sin figura, sin fondo de estudio) y su prompt de texto lo escribe
-     el Director de Arte con la ley de la misma hora en todas sus láminas.
-- 📁 **Archivos:** (rsv-web/src/council/densificacion) **NUEVOS** `comfy.ts`
-  v1.1 · `comfy-grafo.ts` v1.2 · `pose.ts` v1.2 · `fragua.ts` v1.3 ·
-  `AjustesFragua.tsx` v1.1 · `Confirmacion.tsx`; `tipos.ts` v1.3 ·
-  `almacen.ts` v1.2 · `forja.ts` v1.3 · `forja-prompts.ts` v1.1 ·
-  `campos.tsx` v1.1 · `Boveda.tsx` v1.3 · `Lienzo.tsx` v1.1 ·
-  `PanelDensificacion.tsx` v1.2 · `estilos.ts` v1.2 (id `dz-css-v3`) ·
-  `hilo.ts` v1.1. (admin) `.gitignore` (ComfyUI fuera del repo).
-- ⏳ **Pendiente:** volver a descargar `animagine-xl-3.1.safetensors`, que está
-  truncado (6,50 de 6,94 GB) y ComfyUI lo rechaza; con `sd_xl_base_1.0` sí
-  genera.
-- 💡 **Decisiones importantes:** la Fragua es UN CAMINO MÁS, nunca una
-  condición (pegar a mano nunca deja de funcionar) · el hilo del núcleo tiene
-  DUEÑO porque ahora lo pelean tres (bucle, Forja de texto, Fragua de imagen) y
-  ComfyUI y Ollama comparten gráfica · los desplegables de modelos se llenan
-  con lo que el SERVIDOR dice tener, nunca tecleando nombres de archivo.
-- 🔧 **Patrones nuevos:** ver el changelog v45 (0-quinvicies-bis: un simulacro
-  prueba el protocolo, el servidor real prueba el ACOPLAMIENTO).
-
-#### 2026-08-20 · EL PANEL DE DENSIFICACIÓN DE FOTÓN CERO (comprimida)
-
-- 💡 **Decisiones:** el panel NO duplica las series: edita la Producción real
-  (una sola fuente de verdad) y añade la capa visual · los prompts se forjan
-  con las fichas canónicas REPETIDAS palabra por palabra · la imagen nunca
-  vive en el estado (R2 + miniatura; dataURL solo sin sesión) · el panel
-  desmonta templo Y HUD · la función SQL `council_guardar_registros` aprendió
-  los seis tipos de producción (migración 20260820; antes la Producción se
-  descartaba en silencio al viajar).
-- 🔧 **Patrones:** un selector DERIVADO dentro de useSyncExternalStore = bucle
-  infinito ([[feedback_useSyncExternalStore_selector_derivado]]) · en disco
-  sin mayúsculas, `forja.ts` y `Forja.tsx` son el mismo módulo para tsc. El
-  monolito, el velo y las tablas viven en [[proyecto_council_solar]] y el
-  código.
+- 💡 **Decisiones:** el archivo maestro ya NO guarda pendientes del Council ·
+  los videos de la Tira nacen mudos (voz y música son de la casa) · un
+  contrato de claves a un modelo local se IMPONE con gramática (salida
+  estructurada de Ollama), no con instrucciones; un JSON cortado por espacio
+  se repara y se explica · la Fragua es UN CAMINO MÁS, nunca condición ·
+  los desplegables de modelos se llenan con lo que el SERVIDOR dice tener ·
+  el panel de Densificación edita la Producción real (una sola fuente).
+- 🔧 **Patrones:** simulacro vs servicio real (0-quinvicies-bis, v45) ·
+  selector derivado en useSyncExternalStore = bucle. Todo el detalle vive en
+  [[proyecto_densificacion_foton_cero]] · [[proyecto_council_solar]] y el
+  código (`rsv-web/src/council/`).
 
 *Las entradas anteriores (2026-04-18 → 2026-08-19) viven en*
 `admin/CLAUDE_archivo_hasta_2026-08-04.md`. *No se cargan por sesión: lo
