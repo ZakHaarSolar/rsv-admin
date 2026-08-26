@@ -1232,7 +1232,7 @@ Android: **pública en Google Play** (vc7). Detalle en
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v46 (2026-08-22)
+## 🜂 Protocolo de Cierre de Sesión · v47 (2026-08-25)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -2453,7 +2453,40 @@ Hermano del **0-duovicies** (dos órdenes contrarias: gana la pegada al dato):
 allí el prompt se contradecía; aquí el prompt era claro y aun así no alcanzó,
 porque una instrucción no es una restricción.
 
+### Paso 0-sextricies — En una orden destructiva, la AUSENCIA de alcance jamás significa "todo"
+
+Cuando una orden que borra acepta un alcance opcional ("borra ESTA conversación"),
+la tentación de diseño es que el parámetro ausente caiga al alcance máximo
+("sin id, borra todas"). Es una bomba, por dos razones que se juntan:
+
+1. **El caso "aún sin identificador" existe SIEMPRE.** Lo recién creado
+   todavía no tiene nombre: una conversación recién abierta no recibe su id
+   hasta que el servidor contesta. El cliente que "siempre manda el id" lo
+   manda vacío justo ahí, sin saberlo.
+2. **La ausencia no es una decisión.** Nadie ESCRIBIÓ "todo": se cayó un
+   campo. Leer un hueco como la orden más grande convierte un olvido en la
+   pérdida máxima.
+
+**Regla:** el alcance ausente cae al MÁS CHICO posible, o a un error que lo
+diga (`motivo:"sin_id"`) — nunca al más grande. "Todo" se pide con su propia
+palabra (`clear_all`), que nadie escribe por accidente. Y al auditar código
+ajeno o viejo, todo `if (!id) borrarTodo()` es un hallazgo, no un
+comportamiento heredado que se respeta.
+
+**Por qué.** El 2026-08-24 Zak preguntó "¿no se le estarán borrando solitos?"
+por su primer suscriptor (32 enviados, cero conversaciones). La causa
+inmediata resultó ser otra (borró a mano, de a una), pero la sospecha destapó
+que `mode:"clear"` sin id borraba el historial ENTERO, y que tocar "Eliminar
+este reflejo" en una conversación recién abierta caía exactamente ahí. El bug
+llevaba meses como "comportamiento viejo" documentado en un comentario.
+
 ### Changelog del protocolo
+
+- **v47 (2026-08-25):** Paso 0-sextricies — en una orden destructiva, la
+  ausencia de alcance jamás significa "todo": el alcance ausente cae al más
+  chico o a un error que lo diga, y "todo" exige su propia palabra
+  (`clear_all`). Lo recién creado aún no tiene nombre, así que el caso
+  "sin id" existe siempre; y una ausencia no es una decisión.
 
 - **v46 (2026-08-22):** Paso 0-quintricies — un contrato de forma se impone
   con gramática (salida estructurada de Ollama), no con instrucciones; y un
