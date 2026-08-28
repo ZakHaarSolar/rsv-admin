@@ -1,3 +1,10 @@
+// Red Solar Viva · oraculo-chat v1.50 — 🜂 EL PUENTE ENTRE REFLEJOS (Zak
+// 2026-08-27): quien abre un reflejo nuevo por cada pregunta nunca tenía
+// contexto — ni historial propio ni memoria destilada — y el modelo llegó a
+// inventarse la pregunta que un mensaje suelto contestaba. En el PRIMER turno
+// de un reflejo, si el anterior se movió hace menos de 6h, viajan sus últimos
+// 6 mensajes etiquetados como charla anterior, con orden de PREGUNTAR si lo
+// que llega no se sostiene solo.
 // Red Solar Viva · oraculo-chat v1.49 — 🜂 EL HISTORIAL ENTREGA LOS ÚLTIMOS
 // 120 MENSAJES, NO LOS PRIMEROS (Zak 2026-08-27). Una conversación larga se
 // congelaba en el mensaje 120 en cualquier aparato que no la hubiera escrito:
@@ -2046,8 +2053,74 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
             ? visionBlock + (cleanUserMessage ? `\n\n${cleanUserMessage}` : "")
             : cleanUserMessage
 
+        /* 🜂 v1.50 — EL PUENTE ENTRE REFLEJOS (Zak 2026-08-27, mirando al
+           nodo bae9b6). Hay quien no conversa: consulta. Abre un reflejo
+           nuevo por cada pregunta, así que su historial propio SIEMPRE está
+           vacío y la memoria destilada nunca lo alcanza (el destilador barre
+           charlas quietas 8h; él pregunta cada tres minutos). Resultado
+           medido en sus propios registros: mandó "Es laboral y en linea"
+           tres minutos después de cerrar otro reflejo, el modelo no tenía la
+           pregunta que eso contestaba, y en vez de preguntar SE LA INVENTÓ.
+
+           El puente cubre exactamente ese hueco y nada más:
+             · solo en el PRIMER turno de un reflejo (sin historial propio),
+             · solo si el reflejo anterior se movió hace menos de 6 horas
+               (más allá ya no es continuidad: es otro momento del día),
+             · solo sus últimos 6 mensajes,
+             · y ETIQUETADO como charla anterior, para que el modelo lo use
+               como antecedente y no lo confunda con este hilo.
+           Fuera de ese caso no viaja nada: quien abre un reflejo nuevo para
+           empezar limpio, sigue empezando limpio. Fail-open en cada paso. */
+        let puenteTurns: { role: string; content: string }[] = []
+        try {
+            if (priorTurns.length === 0) {
+                const idActual = String(body?.conversation_id || "").trim()
+                const { data: prev } = await sb
+                    .from("oraculo_conversations")
+                    .select("id, last_at")
+                    .eq("clerk_user_id", clerkUserId)
+                    .order("last_at", { ascending: false })
+                    .limit(2)
+                const anterior = (prev || []).find(
+                    (c: any) =>
+                        c?.id &&
+                        c.id !== idActual &&
+                        c.last_at &&
+                        Date.now() - new Date(c.last_at).getTime() <
+                            6 * 60 * 60 * 1000
+                )
+                if (anterior) {
+                    const { data: viejos } = await sb
+                        .from("oraculo_messages_plain")
+                        .select("role, content, created_at")
+                        .eq("clerk_user_id", clerkUserId)
+                        .eq("conversation_id", (anterior as any).id)
+                        .order("created_at", { ascending: false })
+                        .order("role", { ascending: true })
+                        .limit(6)
+                    const ordenados = (viejos || []).reverse()
+                    if (ordenados.length) {
+                        const enc = deviceLang === "en"
+                            ? "[EARLIER CONVERSATION, minutes ago and now closed. It is context so you do not lose the thread; the person just opened a NEW reflection. Use it only if what they write now clearly continues it. If what they send does not stand on its own and you cannot tell what it refers to, ASK before assuming.]"
+                            : "[CHARLA ANTERIOR, de hace un rato y ya cerrada. Es contexto para que no pierdas el hilo; la persona acaba de abrir un reflejo NUEVO. Úsalo solo si lo que escribe ahora claramente lo continúa. Si lo que manda no se sostiene solo y no puedes saber a qué se refiere, PREGUNTA antes de asumir.]"
+                        puenteTurns = [
+                            { role: "user", content: enc },
+                            ...ordenados.map((m: any) => ({
+                                role: m.role === "user" ? "user" : "assistant",
+                                content: inlineImgTagsForModel(
+                                    String(m.content),
+                                    deviceLang
+                                ).slice(0, 1200),
+                            })),
+                        ]
+                    }
+                }
+            }
+        } catch (_e) { puenteTurns = [] }
+
         const messages = [
             { role: "system", content: sysContent },
+            ...puenteTurns,
             ...priorTurns,
             { role: "user", content: modelUserContent },
             /* v1.23 — ANCLA FINAL del modo ilustrado: la identidad del sistema
