@@ -1,3 +1,8 @@
+// Red Solar Viva · oraculo-chat v1.49 — 🜂 EL HISTORIAL ENTREGA LOS ÚLTIMOS
+// 120 MENSAJES, NO LOS PRIMEROS (Zak 2026-08-27). Una conversación larga se
+// congelaba en el mensaje 120 en cualquier aparato que no la hubiera escrito:
+// mode:"history" pedía ascendente con limit, o sea la CABEZA, y la cola nunca
+// viajaba. Ahora se pide descendente y se voltea antes de responder.
 // Red Solar Viva · oraculo-chat v1.48 — 🜂 BORRAR TODO TIENE QUE PEDIRSE, NO
 // CAERSE (Zak 2026-08-24: "no se le estarán borrando solitos"). `mode:"clear"`
 // sin conversation_id borraba el historial ENTERO del Tripulante, y ese caso
@@ -1239,14 +1244,22 @@ Deno.serve(async (req: Request) => {
                     .from("oraculo_messages_plain")
                     .select("role, content, created_at")
                     .eq("clerk_user_id", clerkUserId)
-                    .order("created_at", { ascending: true })
-                    /* 🜂 v1.17 — DESEMPATE del par que ya está guardado con el
-                       MISMO created_at (ver el insert): 'user' > 'assistant'
-                       alfabéticamente, así que role DESC pone la pregunta
-                       antes que la respuesta. Los mensajes nuevos ya nacen con
-                       timestamps distintos; esto endereza todo el historial
-                       viejo sin migrar una sola fila. */
-                    .order("role", { ascending: false })
+                    /* 🜂 v1.49 — LOS ÚLTIMOS 120, NO LOS PRIMEROS (Zak
+                       2026-08-27: la PC se congelaba en un mensaje fijo
+                       mientras el celular seguía la charla; el Motor probaba
+                       que los mensajes SÍ estaban en la base). Con ascendente
+                       + limit, una conversación que pasa de 120 mensajes
+                       jamás entrega su cola: cada aparato veía solo lo que él
+                       mismo escribió. Se pide DESCENDENTE (la cola) y se
+                       voltea antes de responder, así el cliente recibe
+                       cronológico igual que siempre. Arnés: primeros-120
+                       pierde la cola; últimos-120 la trae, cronológica y con
+                       los pares empatados en orden. */
+                    .order("created_at", { ascending: false })
+                    /* Desempate del par VIEJO con MISMO created_at (v1.17):
+                       en el fetch descendente va 'assistant' antes que 'user'
+                       (role ASC) y el volteo los deja pregunta→respuesta. */
+                    .order("role", { ascending: true })
                     .limit(120)
                 const { data: msgs } = convId
                     ? await q.eq("conversation_id", convId)
@@ -1283,7 +1296,9 @@ Deno.serve(async (req: Request) => {
                         0,
                         FREE_ORACULO_LIMIT - priorSent
                     ),
-                    messages: (msgs || []).map((m: any) => ({
+                    /* v1.49: el fetch llega de más nuevo a más viejo; el
+                       volteo lo devuelve cronológico. */
+                    messages: (msgs || []).reverse().map((m: any) => ({
                         role: m.role,
                         content: m.content,
                     })),
