@@ -1220,12 +1220,13 @@ Android: **pública en Google Play** (vc7). Detalle en
   parejas y la puerta de "Tu plan" para quien no tiene. Todo verificado midiendo
   en pantalla de 375, pero ninguna de esas cuatro capas se pudo abrir con sesión
   real desde aquí (el gate de cuenta y el de Clerk lo impiden).
-- **Cuando el video musical de Donde Viven los Cielos esté publicado**, el
-  altar de zakcero.com lo estrena: hoy la pieza tótem dice "el primer video
-  musical de este cielo se está terminando" (línea `totem-estado` de
-  `zakcero/index.html`); se cambia por la obra con su link y, si Zak quiere,
-  un marco de video. Y si Zak pasa el link de su TikTok, se agrega a las
-  redes de la calle (solo quedaron las verificadas: YouTube/IG/X @zakcero).
+- **Cuando el primer video musical esté publicado** (su proyecto vive en
+  `~/Downloads/El Eco del Vacío/`), la sección El Universo de zakcero.com lo
+  estrena: hoy dice "está a punto de aterrizar". Si Zak pasa el link de su
+  TikTok, se suma a las redes (hoy solo las verificadas: YouTube/IG/X
+  @zakcero). Y el botón FIRMAR EL PACTO manda a cuerpodeluz555@gmail.com:
+  si Zak prefiere un correo de marca (por ejemplo aliados@zakcero.com), se
+  cambia en un minuto.
 - **Device-QA del escape del navegador de Instagram** desde un enlace REAL
   (mandarse el link por DM y abrirlo ahí). El código está probado; falta el
   caso real.
@@ -2702,17 +2703,24 @@ llevaba meses como "comportamiento viejo" documentado en un comentario.
 #### 2026-08-30 · NACE EL PLANETA ZAK'HAAR: zakcero.com ES LA CASA DEL CREADOR Y KAL'EL SE MUDÓ A somacero.com
 
 - ✅ **Resuelto:**
-  1. **zakcero.com es la página del creador** (carpeta+repo privado `zakcero`,
-     Vite sin dependencias, proyecto Vercel `zak-cero`): el encuentro (portada
-     de Donde Viven los Cielos + "El futuro no se espera. Se habita."), las dos
-     naves (Zak'Haar el artista · Zak Cero el humano), el altar con la pieza
-     tótem (los 12 cantos + aviso "el primer video musical se está terminando"
-     + crédito susurro de Fotón Cero), la discografía publicada con links de
-     Spotify verificados, el tocadiscos (Spotify + YouTube + reproductor del
-     álbum), la calle (texto humano + foto POV real de un reel, tarjeta
-     difuminada + redes verificadas), el norte y el mapa tipo índice de códice.
-     Estética: noche cálida #0C0A07, oro viejo #C9A45C, cian solo herramienta,
-     Marcellus + EB Garamond, marcos hairline, grano de lámina.
+  1. **zakcero.com es la página de ZAK CERO** (carpeta+repo privado `zakcero`,
+     Vite sin dependencias, proyecto Vercel `zak-cero`). ⚠️ La primera versión
+     del día (altar/calle, museo editorial sobrio) le pareció BASURA a Zak,
+     textual, y se tiró completa: la directriz de Grok era mala y el norte
+     cambió a **Zak Cero primero, videos musicales segundo, álbumes tercero,
+     sin nombrar dinámicas** (se nombra lo que hacemos, la filosofía, el moto,
+     el norte). La final es **CÓMIC HOLOGRÁFICO** (referencias de Zak:
+     feastables.com y es.dragon-ball-official.com): su caricatura en la selva
+     de portada, ZAK CERO en Titan One con sombras duras, stickers inclinados,
+     viñetas con sombra de color, banda marquee "DE LA ENTROPÍA A LA LUZ",
+     estrellas que respiran. Secciones: ¿Qué es Zak Cero? (3 viñetas con POV
+     real del rodaje) · La filosofía (el moto + 3 leyes: REAL PRIMERO,
+     DIGNIDAD SIEMPRE, LUZ AL FINAL) · Hacia dónde vamos (ruta 01 HOY → 02
+     DESPUÉS → 03 EL DESTINO, del ADN del Council) · El Universo (fotogramas
+     Ghibli del video musical en viñetas) · Los discos (4 covers a Spotify) ·
+     **EL PACTO SOLAR** (puerta de patrocinadores: panel ceremonial sobre el
+     salón de seres de luz, "quien firma ahora sale en toda la historia",
+     mailto a cuerpodeluz555@gmail.com) · pie con la casa.
   2. **La interfaz de Kal'El vive en somacero.com**: carpeta y repo renombrados
      a `kalel` (GitHub ZakHaarSolar/kalel), vinculada al proyecto Vercel
      `soma-cero` y desplegada. La portada de espera de Soma Cero quedó
@@ -2729,13 +2737,16 @@ llevaba meses como "comportamiento viejo" documentado en un comentario.
   Transmission One · Donde Viven los Cielos · Lumeria · Prisma; artista
   `6BSsXgmAnoie8tUgLtIbqb`); portadas oficiales en alta en
   `Nodos Solares Fractal Autosostenidos/Zak´Haar/Pineal Score/` y la de DVLC
-  en `~/Downloads/Donde Viven los Cielos portada 2.png` · TikTok NO se enlazó
-  (perfil imposible de verificar sin sesión; YouTube/IG/X `@zakcero` sí, y
-  el artista es `@zakhaarsolar` en YouTube) · `sakcero.com` no existe como
-  dominio: la cara humana vive DENTRO de zakcero.com · modo inspección de la
-  página: `?todo` (revela todo, apaga scroll suave) + `&ir=<id>` (aterriza
-  en una sección antes del primer pintado, para capturas con compositor
-  congelado).
+  en `~/Downloads/Donde Viven los Cielos portada 2.png` · **los fotogramas
+  Ghibli del video musical viven en `~/Downloads/El Eco del Vacío/`** (el
+  proyecto del video: subcarpetas Kael, Zoa, El Valle, Laboratorio) y sueltos
+  en Descargas; la caricatura de Zak en la selva es
+  `~/Downloads/Gemini_Generated_Image_irfuksirfuksirfu.jpeg` · TikTok NO se
+  enlazó (imposible verificar sin sesión; YouTube/IG/X `@zakcero` sí, y el
+  artista es `@zakhaarsolar` en YouTube) · `sakcero.com` no existe como
+  dominio · modo inspección de la página: `?todo` (revela todo, apaga scroll
+  suave) + `&ir=<id>` (aterriza en una sección antes del primer pintado,
+  para capturas con compositor congelado).
 - 🔧 **Patrones nuevos:** detalle completo en [[proyecto_planeta_zakhaar]].
 
 #### 2026-08-25 · 🜂 SALA LARGA DEL ESCÁNER: ANDROID EN GOOGLE PLAY, LA ESCUCHA Y EL SEGUIMIENTO EN EL ESPEJO, Y EL PRIMER SUSCRIPTOR AUDITADO
