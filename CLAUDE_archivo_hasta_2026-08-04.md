@@ -9266,3 +9266,8 @@ ARCHIVADO_DETALLE_FIN -->
   en CAPTURA y antes del chequeo de "estás escribiendo" · lo guardado local se
   NORMALIZA al leerlo, campo por campo.
 
+
+#### 2026-08-22 · EL COUNCIL: TOMAS CON VIDEO/VOZ/MÚSICA, LA TIRA, TRAMA, GENERADOR DE LOCACIONES Y LA FRAGUA (comprimida; incluye 08-20 y 08-21; archivada el 2026-08-30)
+
+- 💡 Decisiones: el archivo maestro ya NO guarda pendientes del Council · los videos de la Tira nacen mudos (voz y música son de la casa) · un contrato de claves a un modelo local se IMPONE con gramática (salida estructurada de Ollama), no con instrucciones; un JSON cortado por espacio se repara y se explica · la Fragua es UN CAMINO MÁS, nunca condición · los desplegables de modelos se llenan con lo que el SERVIDOR dice tener · el panel de Densificación edita la Producción real (una sola fuente).
+- 🔧 Patrones: simulacro vs servicio real (0-quinvicies-bis, v45) · selector derivado en useSyncExternalStore = bucle. Detalle en proyecto_densificacion_foton_cero · proyecto_council_solar y el código (rsv-web/src/council/).

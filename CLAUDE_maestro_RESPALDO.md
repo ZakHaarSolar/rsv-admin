@@ -1220,6 +1220,12 @@ Android: **pública en Google Play** (vc7). Detalle en
   parejas y la puerta de "Tu plan" para quien no tiene. Todo verificado midiendo
   en pantalla de 375, pero ninguna de esas cuatro capas se pudo abrir con sesión
   real desde aquí (el gate de cuenta y el de Clerk lo impiden).
+- **Cuando el video musical de Donde Viven los Cielos esté publicado**, el
+  altar de zakcero.com lo estrena: hoy la pieza tótem dice "el primer video
+  musical de este cielo se está terminando" (línea `totem-estado` de
+  `zakcero/index.html`); se cambia por la obra con su link y, si Zak quiere,
+  un marco de video. Y si Zak pasa el link de su TikTok, se agrega a las
+  redes de la calle (solo quedaron las verificadas: YouTube/IG/X @zakcero).
 - **Device-QA del escape del navegador de Instagram** desde un enlace REAL
   (mandarse el link por DM y abrirlo ahí). El código está probado; falta el
   caso real.
@@ -2693,6 +2699,45 @@ llevaba meses como "comportamiento viejo" documentado en un comentario.
 
 ## 🜃 Historial de sesiones
 
+#### 2026-08-30 · NACE EL PLANETA ZAK'HAAR: zakcero.com ES LA CASA DEL CREADOR Y KAL'EL SE MUDÓ A somacero.com
+
+- ✅ **Resuelto:**
+  1. **zakcero.com es la página del creador** (carpeta+repo privado `zakcero`,
+     Vite sin dependencias, proyecto Vercel `zak-cero`): el encuentro (portada
+     de Donde Viven los Cielos + "El futuro no se espera. Se habita."), las dos
+     naves (Zak'Haar el artista · Zak Cero el humano), el altar con la pieza
+     tótem (los 12 cantos + aviso "el primer video musical se está terminando"
+     + crédito susurro de Fotón Cero), la discografía publicada con links de
+     Spotify verificados, el tocadiscos (Spotify + YouTube + reproductor del
+     álbum), la calle (texto humano + foto POV real de un reel, tarjeta
+     difuminada + redes verificadas), el norte y el mapa tipo índice de códice.
+     Estética: noche cálida #0C0A07, oro viejo #C9A45C, cian solo herramienta,
+     Marcellus + EB Garamond, marcos hairline, grano de lámina.
+  2. **La interfaz de Kal'El vive en somacero.com**: carpeta y repo renombrados
+     a `kalel` (GitHub ZakHaarSolar/kalel), vinculada al proyecto Vercel
+     `soma-cero` y desplegada. La portada de espera de Soma Cero quedó
+     respaldada en `Soma Cero/portada-espera-somacero.html`.
+  3. **El planeta Zak'Haar orbita el sistema solar** (`Origen.tsx` v5.28):
+     anillo interior fase 0.5, hardcodeado sin perillas, panel "el planeta del
+     creador" con puerta a zakcero.com en pestaña nueva; tarjeta fija en el
+     Lente con ícono de disco (IconDiscoSolar); el ícono de Spotify salió del
+     pie de la casa (mudado al planeta). Verificado RENDERIZANDO en los tres
+     dominios con consola limpia y viewport fijado a 1440.
+- 📁 **Archivos:** `Code/Origen.tsx` v5.28 · `zakcero/` (proyecto nuevo) ·
+  `kalel/` (ex `zakcero/`) · `Code/.claude/launch.json` (server zakcero:5203).
+- 💡 **Decisiones:** los álbumes publicados en Spotify son 4 (Aura-Drift:
+  Transmission One · Donde Viven los Cielos · Lumeria · Prisma; artista
+  `6BSsXgmAnoie8tUgLtIbqb`); portadas oficiales en alta en
+  `Nodos Solares Fractal Autosostenidos/Zak´Haar/Pineal Score/` y la de DVLC
+  en `~/Downloads/Donde Viven los Cielos portada 2.png` · TikTok NO se enlazó
+  (perfil imposible de verificar sin sesión; YouTube/IG/X `@zakcero` sí, y
+  el artista es `@zakhaarsolar` en YouTube) · `sakcero.com` no existe como
+  dominio: la cara humana vive DENTRO de zakcero.com · modo inspección de la
+  página: `?todo` (revela todo, apaga scroll suave) + `&ir=<id>` (aterriza
+  en una sección antes del primer pintado, para capturas con compositor
+  congelado).
+- 🔧 **Patrones nuevos:** detalle completo en [[proyecto_planeta_zakhaar]].
+
 #### 2026-08-25 · 🜂 SALA LARGA DEL ESCÁNER: ANDROID EN GOOGLE PLAY, LA ESCUCHA Y EL SEGUIMIENTO EN EL ESPEJO, Y EL PRIMER SUSCRIPTOR AUDITADO
 
 - ✅ **Resuelto** (Espejo original de escritorio, salvo nota):
@@ -2752,20 +2797,6 @@ llevaba meses como "comportamiento viejo" documentado en un comentario.
 - 🔧 **Patrones nuevos:** changelog v47 (0-sextricies: la ausencia de alcance
   nunca significa "todo").
 
-#### 2026-08-22 · EL COUNCIL: TOMAS CON VIDEO/VOZ/MÚSICA, LA TIRA, TRAMA, GENERADOR DE LOCACIONES Y LA FRAGUA (comprimida; incluye 08-20 y 08-21)
-
-- 💡 **Decisiones:** el archivo maestro ya NO guarda pendientes del Council ·
-  los videos de la Tira nacen mudos (voz y música son de la casa) · un
-  contrato de claves a un modelo local se IMPONE con gramática (salida
-  estructurada de Ollama), no con instrucciones; un JSON cortado por espacio
-  se repara y se explica · la Fragua es UN CAMINO MÁS, nunca condición ·
-  los desplegables de modelos se llenan con lo que el SERVIDOR dice tener ·
-  el panel de Densificación edita la Producción real (una sola fuente).
-- 🔧 **Patrones:** simulacro vs servicio real (0-quinvicies-bis, v45) ·
-  selector derivado en useSyncExternalStore = bucle. Todo el detalle vive en
-  [[proyecto_densificacion_foton_cero]] · [[proyecto_council_solar]] y el
-  código (`rsv-web/src/council/`).
-
-*Las entradas anteriores (2026-04-18 → 2026-08-19) viven en*
+*Las entradas anteriores (2026-04-18 → 2026-08-22) viven en*
 `admin/CLAUDE_archivo_hasta_2026-08-04.md`. *No se cargan por sesión: lo
 durable de cada una ya está en las memorias y en el código.*
