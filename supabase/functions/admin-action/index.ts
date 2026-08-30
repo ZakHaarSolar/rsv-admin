@@ -1,4 +1,7 @@
-// Red Solar Viva · admin-action v1.54 — rutea admin_get_user_wallpapers (qué
+// Red Solar Viva · admin-action v1.55 — rutea admin_get_mensajes_aliados y
+// admin_set_mensaje_aliado_leido (Motor → "Aliados": los mensajes de marcas
+// que llegan del modal QUIERO SUMARME de zakcero.com; migración 20260830).
+// | v1.54 — rutea admin_get_user_wallpapers (qué
 // fondos se llevó UN nodo, cuántas veces y cuándo; migración 20260825).
 // | v1.53 — 🜂 EL AFINAMIENTO DE LA MATRIZ: rutea
 // admin_espejo_afinamiento + admin_espejo_afinamiento_estado (Motor → "Voz" →
@@ -313,6 +316,11 @@ const ADMIN_RPCS: Record<string, string | null> = {
     admin_upsert_crop_circle: "p_admin_clerk_id",
     admin_delete_crop_circle: "p_admin_clerk_id",
     admin_publish_crop_circle: "p_admin_clerk_id",
+    // ── Aliados (mensajes de marcas desde el modal de zakcero.com) ──
+    // El alta pública (enviar_mensaje_aliado) NO va por gateway: es RPC anon
+    // directa que solo INSERTA. Estas dos leen y marcan, solo para el Motor.
+    admin_get_mensajes_aliados: "p_admin_clerk_id",
+    admin_set_mensaje_aliado_leido: "p_admin_clerk_id",
     // ── Correos (padrón para avisos masivos + lista de espera de Android) ──
     // La lista unificada NUNCA sale por vía anon: el alta pública de la landing
     // (join_android_waitlist) solo INSERTA, no lee.
