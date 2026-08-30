@@ -1220,13 +1220,19 @@ Android: **pública en Google Play** (vc7). Detalle en
   parejas y la puerta de "Tu plan" para quien no tiene. Todo verificado midiendo
   en pantalla de 375, pero ninguna de esas cuatro capas se pudo abrir con sesión
   real desde aquí (el gate de cuenta y el de Clerk lo impiden).
-- **Cuando el primer video musical esté publicado** (su proyecto vive en
-  `~/Downloads/El Eco del Vacío/`), la sección El Universo de zakcero.com lo
-  estrena: hoy dice "está a punto de aterrizar". Si Zak pasa el link de su
-  TikTok, se suma a las redes (hoy solo las verificadas: YouTube/IG/X
-  @zakcero). Y el botón FIRMAR EL PACTO manda a cuerpodeluz555@gmail.com:
-  si Zak prefiere un correo de marca (por ejemplo aliados@zakcero.com), se
-  cambia en un minuto.
+- **La música de zakcero.com espera sus pistas en R2**: arrastrar los .mp3 al
+  bucket público de audiolibros (`pub-94bd1d71bb304c91ad7b8e146063f337`) en
+  `Musica/zakcero/<album>/<numero>.mp3` con los slugs
+  `donde-viven-los-cielos` (12) · `aura-drift` (10) · `lumeria` (9) ·
+  `prisma` (12), numerados 1.mp3, 2.mp3… en el orden de Spotify. Mientras un
+  álbum no esté, el reproductor avisa "Ese cielo aún no está en el aire".
+- **Cuando el primer video animado esté publicado** (el proyecto vive en
+  `~/Downloads/El Eco del Vacío/`): agregar `{id, titulo}` al
+  `CATALOGO_VIDEOS` de `Code/ZakCeroVideos.tsx` (estrena en
+  redsolarviva.com/zakcero) y la sección El Universo de zakcero.com deja de
+  decir "está a punto de aterrizar". El correo del modal de aliados es
+  cuerpodeluz555@gmail.com como fallback visible; si Zak prefiere un correo
+  de marca, se cambia en un minuto.
 - **Device-QA del escape del navegador de Instagram** desde un enlace REAL
   (mandarse el link por DM y abrirlo ahí). El código está probado; falta el
   caso real.
@@ -2487,7 +2493,41 @@ que `mode:"clear"` sin id borraba el historial ENTERO, y que tocar "Eliminar
 este reflejo" en una conversación recién abierta caía exactamente ahí. El bug
 llevaba meses como "comportamiento viejo" documentado en un comentario.
 
+### Paso 0-septtricies — Un BRIEF PRESTADO no es el norte del dueño
+
+Cuando el pedido llega con una estructura dictada por un tercero (otra IA, un
+template, un ejemplo admirado), esa estructura es un INSUMO, no el norte.
+Construir la primera versión completa encima de un guion prestado tiene un
+modo de fallo carísimo: la obra puede salir FIEL AL GUION y aun así ser
+basura para el dueño, porque el guion nunca pasó por su estómago. Y el
+fracaso no enseña nada del gusto real: solo enseña que el guion era ajeno.
+
+**Regla:** antes de construir sobre un brief heredado, se destila en UNA
+propuesta propia (estructura + decisiones clave en lenguaje del dueño) y se
+contrasta con él; sus respuestas, no el guion, son el norte. Si el dueño ya
+dijo "hazlo" sobre el guion ajeno, la propuesta va igual: cuesta un mensaje
+y ahorra una versión entera.
+
+**La señal de alarma:** notar que el texto que estás siguiendo argumenta con
+la voz de OTRO sistema ("no hagas X, haz Y") en vez de con decisiones del
+dueño. Ese documento opina; el dueño todavía no.
+
+**Por qué.** El 2026-08-30 zakcero.com v1 se construyó fiel al prompt maestro
+que Grok le había redactado a Zak (el altar, la calle, museo editorial
+sobrio). Zak lo tiró entero: "es una basura, fue mala directriz que te haya
+dicho la estructura que me dio Grok". La v2 nació de contrastar con ÉL
+(cuatro preguntas: portada, atmósfera, dinámicas, aliados) y sus respuestas
+reales (cómic dinámico, su caricatura, cero dinámicas, todo aterrizado)
+no se parecían en nada al guion prestado. La versión tirada costó una tarde;
+las preguntas costaron un mensaje.
+
 ### Changelog del protocolo
+
+- **v48 (2026-08-30):** Paso 0-septtricies — un BRIEF PRESTADO no es el
+  norte del dueño: la estructura dictada por un tercero (otra IA, un
+  template) se destila en una propuesta propia y se contrasta con el dueño
+  ANTES de construir la primera versión encima. zakcero.com v1 salió fiel
+  al prompt de Grok y Zak la tiró entera; la v2 nació de sus respuestas.
 
 - **v47 (2026-08-25):** Paso 0-sextricies — en una orden destructiva, la
   ausencia de alcance jamás significa "todo": el alcance ausente cae al más
@@ -2731,8 +2771,47 @@ llevaba meses como "comportamiento viejo" documentado en un comentario.
      Lente con ícono de disco (IconDiscoSolar); el ícono de Spotify salió del
      pie de la casa (mudado al planeta). Verificado RENDERIZANDO en los tres
      dominios con consola limpia y viewport fijado a 1440.
-- 📁 **Archivos:** `Code/Origen.tsx` v5.28 · `zakcero/` (proyecto nuevo) ·
-  `kalel/` (ex `zakcero/`) · `Code/.claude/launch.json` (server zakcero:5203).
+  2. **La segunda tanda del día** (pedida sobre la página ya aprobada):
+     (a) **EL DOCK SONORO** arriba a la derecha: botón MÚSICA (hover/click
+     abre el panel con las 4 tarjetitas de álbum, controles, EN ORDEN /
+     ALEATORIO y el tracklist completo por álbum: 12+10+9+12 títulos reales
+     verificados en Spotify), botón SFX (sonidos de cómic SINTETIZADOS con
+     WebAudio, cero archivos: click, hover sutil, abrir/cerrar, el encaje
+     del disco con arpegio), el cover del álbum sonando como chip con onda,
+     la tarjeta VUELA al dispositivo al elegirla, y TODO persiste en
+     localStorage `zc-audio`. Las pistas se sirven de R2:
+     `Musica/zakcero/<slug>/<n>.mp3` (bucket público de audiolibros); si el
+     archivo no existe aún, aviso legible "Ese cielo aún no está en el
+     aire". (b) **ANIMACIONES PREMIUM**: variantes rev-izq/der/fuerte/sello
+     + delays d1..d5 en TODA la página, badges flotando, todo
+     transform/opacity (barato en GPU) y con reduced-motion respetado.
+     (c) **"EL PACTO SOLAR" muere: ahora es "PATROCINA EL BIEN"** con botón
+     "QUIERO SUMARME" que abre un MODAL con formulario (nombre, marca,
+     correo, mensaje + honeypot); postea a la RPC anon
+     `enviar_mensaje_aliado` y aterriza en el **Motor → pestaña "Aliados"**
+     (MI_Aliados.tsx v1.0: no-leídos primero, responder por correo en un
+     toque, marcar leído). (d) **Vectores propios para las redes** en el
+     pie: YouTube coral, Instagram oro, TikTok cian (TikTok @zakcero entra
+     por instrucción directa de Zak). (e) El CTA del universo ya no manda a
+     YouTube: manda a la vitrina de la casa.
+  3. **El planeta en redsolarviva.com se llama ZAK CERO y ya no está
+     vacío**: abre `/zakcero` (alias `/zakhaar`), la capa nueva
+     `ZakCeroVideos.tsx` v1.0 con estética de la casa: cine antes del
+     estreno (la nave + "EL PRIMER VIDEO ANIMADO ESTÁ POR ATERRIZAR" con
+     pulso), la galería de los mundos, chips al canal @zakhaarsolar y a
+     zakcero.com. **Para estrenar un video: agregar `{id, titulo}` al
+     `CATALOGO_VIDEOS`** y aparece con thumbnail, se reproduce ahí mismo
+     (embed) y tiene botón "Abrir en YouTube". La tarjeta del Lente y el
+     panel del planeta entran ahí (Origen v5.29, Domo v5.11).
+- 📁 **Archivos:** `zakcero/` (index v3 + estilos v3 + main v3 + audio.ts
+  v1.0) · `Code/Origen.tsx` v5.29 · `Code/Domo.tsx` v5.11 ·
+  `Code/ZakCeroVideos.tsx` v1.0 (nuevo) · `Code/MotorDeIntervencion.tsx`
+  v5.0 · `Code/MI_Aliados.tsx` v1.0 (nuevo) · `kalel/` (ex `zakcero/`) ·
+  `Code/.claude/launch.json` (server zakcero:5203).
+- 🗄️ **SQL:** ⏳ `20260830_mensajes_aliados.sql` (falta pegarla: sin ella el
+  formulario de aliados responde con el fallback de Instagram/correo).
+- 🔌 **Edges:** `admin-action` v1.55 (admin_get_mensajes_aliados +
+  admin_set_mensaje_aliado_leido) DESPLEGADA.
 - 💡 **Decisiones:** los álbumes publicados en Spotify son 4 (Aura-Drift:
   Transmission One · Donde Viven los Cielos · Lumeria · Prisma; artista
   `6BSsXgmAnoie8tUgLtIbqb`); portadas oficiales en alta en
