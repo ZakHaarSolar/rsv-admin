@@ -1,4 +1,8 @@
-// Red Solar Viva · admin-action v1.55 — rutea admin_get_mensajes_aliados y
+// Red Solar Viva · admin-action v1.56 — rutea admin_get_unread_counts (el
+// faro de no-leídos del Motor: cuántos mensajes de Aliados y cuántos casos
+// de Soporte esperan a la casa, para los números rojos de las pestañas;
+// migración 20260830b).
+// | v1.55 — rutea admin_get_mensajes_aliados y
 // admin_set_mensaje_aliado_leido (Motor → "Aliados": los mensajes de marcas
 // que llegan del modal QUIERO SUMARME de zakcero.com; migración 20260830).
 // | v1.54 — rutea admin_get_user_wallpapers (qué
@@ -321,6 +325,9 @@ const ADMIN_RPCS: Record<string, string | null> = {
     // directa que solo INSERTA. Estas dos leen y marcan, solo para el Motor.
     admin_get_mensajes_aliados: "p_admin_clerk_id",
     admin_set_mensaje_aliado_leido: "p_admin_clerk_id",
+    // El faro de no-leídos: cuántos aliados y casos de soporte esperan
+    // (números rojos de las pestañas del Motor). Requiere 20260830b.
+    admin_get_unread_counts: "p_admin_clerk_id",
     // ── Correos (padrón para avisos masivos + lista de espera de Android) ──
     // La lista unificada NUNCA sale por vía anon: el alta pública de la landing
     // (join_android_waitlist) solo INSERTA, no lee.
