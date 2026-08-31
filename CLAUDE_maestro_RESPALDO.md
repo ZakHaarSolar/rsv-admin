@@ -1202,6 +1202,12 @@ Android: **pública en Google Play** (vc7). Detalle en
 - **Pegar la migración `admin/supabase/migrations/20260825_wallpapers_por_nodo.sql`**
   en el SQL Editor: sin ella, el botón "Ver wallpapers descargados" de la
   ficha del nodo dice "no se pudo leer".
+- **Pegar en el SQL Editor, en este orden:** (1)
+  `admin/supabase/migrations/20260830_mensajes_aliados.sql` (si aún no está:
+  sin ella el formulario de aliados de zakcero.com responde con el fallback
+  de Instagram/correo) y (2) `20260830b_unread_counts.sql` (el faro de
+  no-leídos: sin ella las pestañas Aliados/Soporte del Motor no muestran su
+  número rojo, todo lo demás sigue normal).
 - **Quitar los 2 satélites de Clerk que sobran** (Dashboard → Domains):
   `app.escanervibracional.com` y `app.redsolarviva.com` ($10/mes cada uno).
   Quitar de a uno y entrar a la web del Escáner entre uno y otro.
@@ -1220,19 +1226,26 @@ Android: **pública en Google Play** (vc7). Detalle en
   parejas y la puerta de "Tu plan" para quien no tiene. Todo verificado midiendo
   en pantalla de 375, pero ninguna de esas cuatro capas se pudo abrir con sesión
   real desde aquí (el gate de cuenta y el de Clerk lo impiden).
-- **La música de zakcero.com espera sus pistas en R2**: arrastrar los .mp3 al
-  bucket público de audiolibros (`pub-94bd1d71bb304c91ad7b8e146063f337`) en
-  `Musica/zakcero/<album>/<numero>.mp3` con los slugs
+- **La música de zakcero.com: las 43 pistas YA ESTÁN CONVERTIDAS y listas**
+  en `Red Solar Viva/Musica-R2/` (2026-08-31), con su `LEEME.txt`. Solo
+  falta que Zak arrastre las CUATRO carpetas a `Musica/zakcero/` en el
+  bucket público de audiolibros (`pub-94bd1d71bb304c91ad7b8e146063f337`):
   `donde-viven-los-cielos` (12) · `aura-drift` (10) · `lumeria` (9) ·
-  `prisma` (12), numerados 1.mp3, 2.mp3… en el orden de Spotify. Mientras un
-  álbum no esté, el reproductor avisa "Ese cielo aún no está en el aire".
-- **Cuando el primer video animado esté publicado** (el proyecto vive en
-  `~/Downloads/El Eco del Vacío/`): agregar `{id, titulo}` al
-  `CATALOGO_VIDEOS` de `Code/ZakCeroVideos.tsx` (estrena en
-  redsolarviva.com/zakcero) y la sección El Universo de zakcero.com deja de
-  decir "está a punto de aterrizar". El correo del modal de aliados es
-  cuerpodeluz555@gmail.com como fallback visible; si Zak prefiere un correo
-  de marca, se cambia en un minuto.
+  `prisma` (12). MP3 256 kbps, nombre = solo el número (1.mp3, 2.mp3…) para
+  no romper URLs, con el título real en la etiqueta interna. El orden se
+  verificó comparando la DURACIÓN de cada archivo contra la que publica
+  Spotify (las 43 cuadran) — eso valida sobre todo Lumeria y Prisma, cuyos
+  .wav no venían numerados. Fuente: `Nodos Solares Fractal
+  Autosostenidos/Zak´Haar/Pineal Score/<álbum>/`. Mientras un álbum no
+  esté, el reproductor avisa "Ese cielo aún no está en el aire".
+- **El Cine Cero está VIVO con El Eco del Vacío** (2026-08-30 · II; Zak
+  subió `Videos/zakcero/mv1.mp4` a R2 y verificado sirviendo en
+  producción). Videos futuros: una entrada en `VIDEOS` de
+  `zakcero/src/cine.ts`. 🜂 `Code/ZakCeroVideos.tsx` y su ruta /zakcero
+  quedaron ESCONDIDOS (nada enlaza ahí; el planeta abre zakcero.com): no
+  volver a colgarle videos. El correo del modal de aliados es
+  cuerpodeluz555@gmail.com como fallback visible; si Zak prefiere un
+  correo de marca, se cambia en un minuto.
 - **Device-QA del escape del navegador de Instagram** desde un enlace REAL
   (mandarse el link por DM y abrirlo ahí). El código está probado; falta el
   caso real.
