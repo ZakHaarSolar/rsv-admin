@@ -1202,6 +1202,16 @@ Android: **pública en Google Play** (vc7). Detalle en
 - **Pegar la migración `admin/supabase/migrations/20260825_wallpapers_por_nodo.sql`**
   en el SQL Editor: sin ella, el botón "Ver wallpapers descargados" de la
   ficha del nodo dice "no se pudo leer".
+- **Pegar `admin/supabase/migrations/20260831_contacto_rsv.sql`** en el SQL
+  Editor: abre el buzón del canal de contacto de redsolarviva.com (la antena
+  del pie). Mientras no esté, el formulario avisa en pantalla y da el correo
+  de respaldo; con ella, cada mensaje cae en Motor → Soporte con el sello
+  RED SOLAR VIVA y cuenta en el faro de no-leídos.
+- **La foto de Aqua´Riia (y la tuya) de la portada NO están en R2**: viven en
+  el repo, `rsv-web/public/framer/X1UbmzPqcx9kiJLxFfMmjmgy1nA.png` (Aqua) y
+  `FW4lwk3gc1bkE6FsLoI7g5OUWC8.png` (Zak'Haar). Para cambiarla: pásale a
+  Claude la imagen nueva (o su ruta en Descargas) y él la coloca con nombre
+  nuevo + perilla + deploy (mismo nombre = caché vieja, 0-sexvicies).
 - **Pegar en el SQL Editor, en este orden:** (1)
   `admin/supabase/migrations/20260830_mensajes_aliados.sql` (si aún no está:
   sin ella el formulario de aliados de zakcero.com responde con el fallback
@@ -1238,14 +1248,15 @@ Android: **pública en Google Play** (vc7). Detalle en
   .wav no venían numerados. Fuente: `Nodos Solares Fractal
   Autosostenidos/Zak´Haar/Pineal Score/<álbum>/`. Mientras un álbum no
   esté, el reproductor avisa "Ese cielo aún no está en el aire".
-- **El Cine Cero está VIVO con El Eco del Vacío** (2026-08-30 · II; Zak
-  subió `Videos/zakcero/mv1.mp4` a R2 y verificado sirviendo en
-  producción). Videos futuros: una entrada en `VIDEOS` de
-  `zakcero/src/cine.ts`. 🜂 `Code/ZakCeroVideos.tsx` y su ruta /zakcero
-  quedaron ESCONDIDOS (nada enlaza ahí; el planeta abre zakcero.com): no
-  volver a colgarle videos. El correo del modal de aliados es
-  cuerpodeluz555@gmail.com como fallback visible; si Zak prefiere un
-  correo de marca, se cambia en un minuto.
+- **El Cine Cero vive DENTRO de Mi Música** (2026-08-31): la entrada es
+  zakcero.com/musica → botón ENTRAR AL MODO CINE (o directo /musica#cine;
+  /videos redirige ahí). El estreno El Eco del Vacío sirve desde R2, y la
+  música de los álbumes también (Zak subió los mp3). Videos futuros: una
+  entrada en `VIDEOS` de `zakcero/src/cine.ts`. 🜂 /norte2 (mapa de
+  puertas) se DESCARTÓ y borró (decisión de Zak 2026-08-31): el norte es
+  /norte/, no volver a proponer el mapa. 🜂 `Code/ZakCeroVideos.tsx` y su
+  ruta /zakcero siguen ESCONDIDOS: no volver a colgarle videos. El correo
+  del modal de aliados es cuerpodeluz555@gmail.com como fallback visible.
 - **Device-QA del escape del navegador de Instagram** desde un enlace REAL
   (mandarse el link por DM y abrirlo ahí). El código está probado; falta el
   caso real.
@@ -1258,7 +1269,7 @@ Android: **pública en Google Play** (vc7). Detalle en
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v47 (2026-08-25)
+## 🜂 Protocolo de Cierre de Sesión · v48 (2026-08-30)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -2753,6 +2764,67 @@ las preguntas costaron un mensaje.
 
 ## 🜃 Historial de sesiones
 
+#### 2026-08-31 · II — SALA LARGA: DEL COUNCIL AL CANAL DE CONTACTO DE LA CASA
+
+- ✅ **Resuelto** (una sala que corrió del 22 al 31; todo desplegado y verificado en vivo):
+  1. **Panel de Densificación (Council):** el prompt de MOVIMIENTO dejó de
+     heredar el ADN visual (dos carriles estrictos; sin acción declarada se
+     compone un neutro sin tocar el núcleo; negativo I2V automático). El
+     generador de locaciones declara 16:9 SIEMPRE (regla + blindaje
+     `reforzarFormato`) y la Fragua hace las láminas de lugar apaisadas.
+     **Fotogramas por API** (`densi-fotograma` en council-gate v2.3, secret
+     GEMINI_API_KEY): «✦ NB2/Pro» con láminas de la toma como referencia,
+     escalera «⇧ a Pro» anclada al aprobado, gasto visible en cabecera y
+     «probar Google» en ⚙. El 502 del estreno era el mime (Interactions API
+     SOLO acepta JPEG; leído en los logs del servidor con el token de la
+     CLI). **La cámara manda** sobre las referencias y la locación viaja
+     RECORTADA a su centro en planos cerrados (45 %/35 %/70 %; ajuste
+     recorte·completa·sin). **Ancla a la toma anterior** (chip ⏮, cláusula de
+     continuidad, recortada al 60 % en cerrados). **Música de la Tira** por
+     tramos (Episodio.pistas: de toma N a M, segundo de entrada/salida,
+     volumen; manda sobre la música por toma; EDL pista A3 con origen).
+  2. **La tarjeta del Domo Cero se apagó para todos** (MOSTRAR_DOMO_CERO en
+     MI_Shared; cinco sitios, cero rastro en el bundle).
+  3. **redsolarviva.com:** la CONSTELACIÓN se reestructuró dos veces (la
+     final, a gusto de Zak: texto grande limpio SIN tarjetas, familia como
+     palabra de color, luz que NACE EN LA RAÍZ y sube hacia hoy, futuro como
+     rombo pulsante); CÓDICES es museo (halo, censo en dos líneas exactas,
+     esquinas holográficas, pedestal, placas Nº, ficha iluminada por su
+     portada) y la llamada al Escáner es un PORTAL con ignición. El
+     MANIFIESTO ganó letra limpia (peso 300) y LEER MÁS revela por TANDAS
+     (3 bloques, uno por clic). X e Instagram salieron de la portada.
+  4. **Nace el CANAL DE CONTACTO:** antena holográfica en el pie (arcos que
+     emiten, ignición al tocarla) → formulario nombre/correo/mensaje que
+     entra por Supabase (`submit_contacto_rsv`) DIRECTO al buzón de Soporte
+     del Motor, sellado RED SOLAR VIVA (cian); los casos de la app se leen
+     ESCÁNER VIBRACIONAL (dorado). Muere el webhook de Pipedream que tardaba
+     minutos (la lentitud que Zak padeció era su arranque en frío). El faro
+     de no-leídos ya cuenta el contacto solo (entra como `nuevo`).
+  5. **zakcero.com:** la joya de X (@zakcero) en la barra del hero y el pie,
+     estilo cómic de la casa (triple impresión + chispa).
+- 📁 **Archivos:** Code `Origen` v5.30 · `Codices` v6.1 · `MI_Soporte` v1.2 ·
+  `MI_Shared` v2.3 · shells de Simuladores; rsv-web `densificacion/*`
+  (movimiento v1.0 · fotograma v1.3 · Tira v1.2 · exportar v1.2 · almacen
+  v1.7 · tipos v1.9 · estilos dz-css-v11) · council `types` v4.1 · `store`
+  v2.20; zakcero index v7 · estilos v8.1.
+- 🔌 **Edges:** `council-gate` v2.3 (densi-fotograma: Google Nano Banana 2/Pro,
+  JPEG, prueba de acoplamiento; fallos por causa) DESPLEGADA.
+- 🗄️ **SQL:** ⏳ `20260831_contacto_rsv.sql` (falta pegarla: mientras tanto el
+  formulario de la web dice «el buzón aún no está abierto» con el correo de
+  respaldo a la vista).
+- 💡 **Decisiones:** las FOTOS de perfil de la portada NO viven en R2: son
+  archivos del repo (`rsv-web/public/framer/` — Zak'Haar
+  `FW4lwk3gc1bkE6FsLoI7g5OUWC8.png`, Aqua´Riia
+  `X1UbmzPqcx9kiJLxFfMmjmgy1nA.png`); para cambiarlas, archivo nuevo CON
+  NOMBRE NUEVO (caché, 0-sexvicies) + perilla + deploy · Nano Banana Pro
+  cuesta lo mismo a 1K que a 2K (nunca pedir 1K) · un episodio de 10-12 min
+  ronda $30-40 USD en fotogramas (NB2 borrador → Pro final) · las
+  referencias de imagen se leen con `cache:"reload"` (una respuesta cacheada
+  por un <img> sin Origin envenena el fetch CORS; medido contra R2).
+- 🔧 **Patrones nuevos:** en memorias — [[referencia_nano_banana_api]],
+  [[feedback_cache_img_envenena_fetch_cors]], y el detalle de la sala en
+  [[proyecto_densificacion_foton_cero]] y [[proyecto_arquitectura_marca_rsv]].
+
 #### 2026-08-30 · NACE EL PLANETA ZAK'HAAR: zakcero.com ES LA CASA DEL CREADOR Y KAL'EL SE MUDÓ A somacero.com
 
 - ✅ **Resuelto:**
@@ -2841,64 +2913,15 @@ las preguntas costaron un mensaje.
   para capturas con compositor congelado).
 - 🔧 **Patrones nuevos:** detalle completo en [[proyecto_planeta_zakhaar]].
 
-#### 2026-08-25 · 🜂 SALA LARGA DEL ESCÁNER: ANDROID EN GOOGLE PLAY, LA ESCUCHA Y EL SEGUIMIENTO EN EL ESPEJO, Y EL PRIMER SUSCRIPTOR AUDITADO
+#### 2026-08-25 (comprimida) — Android salió en Google Play · escucha automática y seguimiento en el Espejo original · primer suscriptor auditado
 
-- ✅ **Resuelto** (Espejo original de escritorio, salvo nota):
-  1. **La escucha automática y el seguimiento llegan al modo origen** con la
-     llave compartida de la Matriz (misma maquinaria de tramos precalentados;
-     arnés 16 ✓; la voz arranca al 25% de lo escrito). Teclas V y S, botón
-     cian de seguimiento, interruptor de escucha en la tarjeta de voces.
-  2. **En el teléfono, imagen/presencia/seguimiento son filas con interruptor
-     en el menú del sigilo** (no cierran el menú; mantener pulsada Presencia
-     la arma con voz). El compositor abre a todo el ancho desde la 2ª línea
-     también en computadora (vara fija, un solo salto, medido sin rebotes).
-  3. **Cmd+F busca dentro de la charla** (resalte nativo cian + dorado, salto
-     directo) y **"Ver atajos"** cuelga de "¿Qué es el Espejo?" con las cinco
-     teclas reales. El envío suena como botón (tic + arpegio). La bocina dice
-     la verdad mientras la voz vive (sello fuera del componente) y la frase
-     dorada volvió (la voz recibe el texto limpio). El orbe de comandos por
-     voz duerme TODA la Presencia (avisos firmados que se cuentan, no un
-     interruptor compartido).
-  4. **Android salió en Google Play**: correo de celebración en
-     `admin/correos/android-lanzamiento.*` (logo, CCO, texto plano) y la
-     landing `escanervibracional.com` apunta a la tienda ("Descárgala ahora").
-  5. **/fragmentos → /fotoncero** (el título sigue siendo Fragmentos del Sol)
-     y el episodio se abre solo con su título, sin sinopsis. La directriz del
-     Consejo Solar vive en el Slate (episodios completos 10-12 min, 16:9,
-     provocar un estado, y la vara: si no cabe en UNA frase, no está lista).
-  6. **Motor**: la ficha del nodo dice conversaciones VIVAS + huella de
-     borrados (cuándo y cuántos, jamás el contenido) y qué WALLPAPERS
-     descargó (tarjeta bajo demanda con miniaturas, cofre por página,
-     "Recargar" pide fresco).
-- 🐛 **Bug cazado por sospecha de Zak** ("¿no se le estarán borrando
-  solitos?"): `mode:"clear"` SIN conversation_id borraba el historial ENTERO
-  del Tripulante, y el caso existe siempre porque una conversación recién
-  abierta aún no tiene id. oraculo-chat v1.48 exige `clear_all` explícito y
-  el cliente ya ni viaja sin id. **El primer suscriptor NO fue víctima de
-  eso**: borró 6 veces de a 1 (98 mensajes), paga semanal, selló los 6
-  pilares al 100 en 25 min de madrugada → persona celosa de su privacidad
-  explorando la app, no un bot.
-- 📁 **Archivos:** escaner-app `EV_Oraculo` v6.17 · `EV_Rafaga` v5.31 ·
-  `NodoDeVoz` v2.5 · `espejo.es/en` v1.23 · **escritorio 1.1.27 LIVE**.
-  Code: `Domo` v5.9 · `FragmentosDelSol` v2.1 · `MI_Detail` v1.27.
-  rsv-web `salas.ts` v2.20 · landing `index.html` v1.2.
-- 🗄️ **SQL:** ✅ `20260824_huella_borrado_espejo` (Zak la corrió) ·
-  ⏳ `20260825_wallpapers_por_nodo` (falta pegarla; sin ella el botón de
-  wallpapers de la ficha dirá "no se pudo leer").
-- 🔌 **Edges:** `oraculo-chat` v1.48 (huella del borrado + clear_all) ·
-  `admin-action` v1.54 (`admin_get_user_wallpapers`).
-- 💡 **Decisiones:** DeepSeek `v4-flash-vision-exp` NO se conecta (5× el
-  costo de salida en TODO el texto y es experimental de 3 días; re-mirar al
-  salir de `exp`, y si entra, SOLO al camino de imágenes con Gemini de
-  respaldo) · lo borrado del Espejo NO se conserva ni temporalmente: solo la
-  huella · el modo profundo en el teléfono se propuso como botón "Ir más
-  hondo" BAJO la respuesta (no un interruptor); sin decidir · avisos de
-  wallpapers nuevos: sello NUEVO + badge por marca local + push por TANDA
-  reutilizando la infra existente; sin construir · dominios de Clerk: sobran
-  `app.escanervibracional.com` y `app.redsolarviva.com` ($20/mes);
-  `escaner.redsolarviva.com` se queda (lo usan las apps nativas).
-- 🔧 **Patrones nuevos:** changelog v47 (0-sextricies: la ausencia de alcance
-  nunca significa "todo").
+- 💡 **Decisiones que siguen vivas:** DeepSeek `v4-flash-vision-exp` NO se
+  conecta mientras sea `exp` (re-mirar al salir; solo camino de imágenes) ·
+  lo borrado del Espejo NO se conserva: solo la huella (cuándo y cuántos) ·
+  `mode:"clear"` exige `clear_all` explícito (0-sextricies) · el modo
+  profundo en el teléfono se propuso como botón «Ir más hondo» BAJO la
+  respuesta (sin construir) · avisos de wallpapers nuevos: sello + badge +
+  push por TANDA (sin construir). Escritorio 1.1.27 LIVE.
 
 *Las entradas anteriores (2026-04-18 → 2026-08-22) viven en*
 `admin/CLAUDE_archivo_hasta_2026-08-04.md`. *No se cargan por sesión: lo
