@@ -379,7 +379,10 @@ async function resolveIdentidad(event: any): Promise<IdentidadRc> {
     const clerkDirect = ids.find(isClerkId)
     if (clerkDirect) {
         const profile = await getProfileByClerkId(clerkDirect)
-        return identidadDePerfil(clerkDirect, profile)
+        if (profile) return identidadDePerfil(clerkDirect, profile)
+        console.log(
+            `⚠️ Clerk ${clerkDirect} no tiene perfil — sigo por email/filas`
+        )
     }
 
     const mail = emailFromEvent(event)
