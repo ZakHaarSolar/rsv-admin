@@ -1,4 +1,4 @@
-// Red Solar Viva · revenuecat-webhook v1.6 — no pisa rc_user_* con $RCAnonymousID. v1.5 leftover — TRANSFER re-liga stripe_customer_id al clerk destino (SIWA / $RCAnonymousID). v1.4 leftover: CICLO SEMANAL SIN CRISTALES — CICLO SEMANAL SIN CRISTALES (decisión 2026-08-02): el ciclo semanal de Sintonía (sintonia_solar_weekly) da el Escáner completo pero YA NO emite los 2 Cristales de Extracción — esos viven SOLO en el ciclo mensual. Cierra el arbitraje (1 semana = 2 Cristales = 621+ MXN de valor y cancelas). El fix es el gate: emitCristales corre solo si NO es el semanal (helper esCicloSemanal por substring, robusto). Cero migración SQL (la RPC emit_cristales_for_subscription no cambia; solo deja de llamarse para el semanal). Inmersión (cuasar) y Sintonía mensual siguen emitiendo igual.
+// Red Solar Viva · revenuecat-webhook v1.7 — TRANSFER anónimo→anónimo ya no deja pagando como Explorador. Si el evento no trae user_ de Clerk, se resuelve por alias, email ($email), transferred_from y filas rc_user_* ya ligadas. El alta de F22 (mensual 2026-09-15) se escribió en $RCAnonymousID:a5c216… sin user_id y el Motor no la veía. | v1.6 — no pisa rc_user_* con $RCAnonymousID. | v1.5 leftover — TRANSFER re-liga stripe_customer_id al clerk destino (SIWA / $RCAnonymousID). | v1.4 leftover: CICLO SEMANAL SIN CRISTALES (decisión 2026-08-02): el ciclo semanal de Sintonía (sintonia_solar_weekly) da el Escáner completo pero YA NO emite los 2 Cristales de Extracción — esos viven SOLO en el ciclo mensual.
 // Red Solar Viva · revenuecat-webhook v1.3 — AUDITORÍA 2026-07-24 · PARTE 2: las compras SANDBOX (TestFlight / license testers de Play) ya NO conceden membresía ni Cristales. Llegaban a este mismo endpoint con el mismo Authorization y eran indistinguibles de una compra real: escribían status=active con la membresía completa y emitían los 2 Cristales del mes. Interruptor para QA propio: secrets set REVENUECAT_ALLOW_SANDBOX=true + redeploy (y unset al terminar). El evento TEST del dashboard sigue pasando siempre. + PRODUCT_GROUP_MAP suma sintonia_solar_weekly (faltaba: solo funcionaba por el default legacy).
 // ════════════════════════════════════════════════════════════════════
 // Red Solar Viva — revenuecat-webhook (v1.1 — 2026-06-12)
@@ -267,19 +267,168 @@ function isAnonymousRcId(id: string | null | undefined): boolean {
     return typeof id === "string" && id.includes("$RCAnonymousID")
 }
 
-/* Prefiere Clerk. Nunca elijas anónimo si hay un user_ en el evento. */
-function pickClerkUserId(event: any): string {
-    const candidates: string[] = []
+function clerkFromCustomerId(cust: string | null | undefined): string | null {
+    if (typeof cust !== "string") return null
+    if (cust.startsWith("rc_user_")) return cust.slice(3)
+    return null
+}
+
+function collectEventIds(event: any): string[] {
+    const ids: string[] = []
     const push = (v: any) => {
-        if (typeof v === "string" && v.length > 0) candidates.push(v)
+        if (typeof v === "string" && v.length > 0 && !ids.includes(v)) {
+            ids.push(v)
+        }
     }
     push(event.app_user_id)
     push(event.original_app_user_id)
     for (const a of event.aliases || []) push(a)
+    for (const a of event.transferred_from || []) push(a)
     for (const a of event.transferred_to || []) push(a)
-    const clerk = candidates.find(isClerkId)
-    if (clerk) return clerk
-    return candidates[0] || ""
+    return ids
+}
+
+function emailFromEvent(event: any): string | null {
+    const attrs = event.subscriber_attributes || {}
+    const raw =
+        attrs.$email?.value ||
+        attrs.email?.value ||
+        event.email ||
+        null
+    if (typeof raw !== "string") return null
+    const e = raw.toLowerCase().trim()
+    return e || null
+}
+
+type IdentidadRc = {
+    clerkUserId: string
+    userId: string | null
+    email: string | null
+    customerName: string | null
+}
+
+function identidadVacia(): IdentidadRc {
+    return { clerkUserId: "", userId: null, email: null, customerName: null }
+}
+
+function identidadDePerfil(
+    clerkUserId: string,
+    profile: {
+        id?: string
+        email?: string | null
+        full_name?: string | null
+    } | null
+): IdentidadRc {
+    return {
+        clerkUserId,
+        userId: profile?.id ?? null,
+        email: (profile?.email || "").toLowerCase().trim() || null,
+        customerName: profile?.full_name || null,
+    }
+}
+
+async function getProfileByEmail(email: string) {
+    const { data } = await supabase
+        .from("profiles")
+        .select("id, email, full_name, clerk_user_id")
+        .ilike("email", email)
+        .limit(1)
+        .maybeSingle()
+    return data
+}
+
+async function identidadDesdeFilas(
+    keys: string[]
+): Promise<IdentidadRc | null> {
+    if (keys.length === 0) return null
+    const { data: rows } = await supabase
+        .from("subscriptions")
+        .select("stripe_customer_id, user_id, email, customer_name")
+        .in("stripe_customer_id", keys)
+    for (const row of rows || []) {
+        const clerk = clerkFromCustomerId(row.stripe_customer_id)
+        if (clerk && isClerkId(clerk)) {
+            const profile = await getProfileByClerkId(clerk)
+            return identidadDePerfil(clerk, profile)
+        }
+        if (row.user_id) {
+            const { data: p } = await supabase
+                .from("profiles")
+                .select("id, email, full_name, clerk_user_id")
+                .eq("id", row.user_id)
+                .maybeSingle()
+            if (p?.clerk_user_id && isClerkId(p.clerk_user_id)) {
+                return identidadDePerfil(p.clerk_user_id, p)
+            }
+        }
+        if (row.email) {
+            const p = await getProfileByEmail(String(row.email))
+            if (p?.clerk_user_id && isClerkId(p.clerk_user_id)) {
+                return identidadDePerfil(p.clerk_user_id, p)
+            }
+        }
+    }
+    return null
+}
+
+/* Prefiere Clerk. Si el evento solo trae $RCAnonymousID (reinstaló,
+   restauró, logIn tardío), busca la cuenta ya ligada: alias, email
+   de RevenueCat, transferred_from, filas rc_user_* / user_id. */
+async function resolveIdentidad(event: any): Promise<IdentidadRc> {
+    const ids = collectEventIds(event)
+    const clerkDirect = ids.find(isClerkId)
+    if (clerkDirect) {
+        const profile = await getProfileByClerkId(clerkDirect)
+        return identidadDePerfil(clerkDirect, profile)
+    }
+
+    const mail = emailFromEvent(event)
+    if (mail) {
+        const profile = await getProfileByEmail(mail)
+        if (profile?.clerk_user_id && isClerkId(profile.clerk_user_id)) {
+            console.log(
+                `🔗 Identidad por email ${mail} → ${profile.clerk_user_id}`
+            )
+            return identidadDePerfil(profile.clerk_user_id, profile)
+        }
+    }
+
+    const anonKeys = ids.filter(isAnonymousRcId).map((id) => `rc_${id}`)
+    const fromFilas = await identidadDesdeFilas(anonKeys)
+    if (fromFilas) {
+        console.log(
+            `🔗 Identidad por fila anónima → ${fromFilas.clerkUserId}`
+        )
+        return fromFilas
+    }
+
+    if (mail) {
+        const { data: byMail } = await supabase
+            .from("subscriptions")
+            .select("stripe_customer_id, user_id, email, customer_name")
+            .ilike("email", mail)
+            .order("current_period_end", { ascending: false, nullsFirst: false })
+            .limit(5)
+        const fromEmailRows = await identidadDesdeFilas(
+            (byMail || [])
+                .map((r) => String(r.stripe_customer_id || ""))
+                .filter(Boolean)
+        )
+        if (fromEmailRows) {
+            console.log(
+                `🔗 Identidad por email en subscriptions ${mail} → ${fromEmailRows.clerkUserId}`
+            )
+            return fromEmailRows
+        }
+    }
+
+    const leftover = ids[0] || ""
+    if (leftover) {
+        console.log(
+            `⚠️ app_user_id anónimo "${leftover}" — no pude resolver Clerk`
+        )
+    }
+    return { ...identidadVacia(), clerkUserId: leftover }
 }
 
 async function handleSubscriptionEvent(event: any) {
@@ -299,7 +448,8 @@ async function handleSubscriptionEvent(event: any) {
         return
     }
 
-    let clerkUserId: string = pickClerkUserId(event)
+    const identidad = await resolveIdentidad(event)
+    let clerkUserId: string = identidad.clerkUserId
     const productId: string | null = event.product_id || null
     const groupName = detectGroupName(productId)
 
@@ -310,27 +460,20 @@ async function handleSubscriptionEvent(event: any) {
         `${clerkUserId}_${productId}`
     const syntheticSubId = `rc_${originalTxId}`
 
-    // Resolver el perfil del Tripulante por clerk_user_id.
-    let userId: string | null = null
-    let email: string | null = null
-    let customerName: string | null = null
-    if (clerkUserId && isClerkId(clerkUserId)) {
+    let userId: string | null = identidad.userId
+    let email: string | null = identidad.email
+    let customerName: string | null = identidad.customerName
+    if (clerkUserId && isClerkId(clerkUserId) && !userId) {
         const profile = await getProfileByClerkId(clerkUserId)
         if (profile) {
             userId = profile.id
-            email = (profile.email || "").toLowerCase().trim() || null
-            customerName = profile.full_name || null
+            email = (profile.email || "").toLowerCase().trim() || email
+            customerName = profile.full_name || customerName
         } else {
             console.log(
                 `⚠️ Sin perfil para app_user_id="${clerkUserId}" — escribo igual con user_id null`
             )
         }
-    } else if (clerkUserId) {
-        console.log(
-            `⚠️ app_user_id anónimo "${clerkUserId}" — no piso un rc_user_ existente`
-        )
-    } else {
-        console.log("⚠️ Evento sin app_user_id — no puedo resolver perfil")
     }
 
     const periodStart = msToISO(event.purchased_at_ms)
@@ -393,6 +536,7 @@ async function handleSubscriptionEvent(event: any) {
     if (
         (eventType === "INITIAL_PURCHASE" || eventType === "RENEWAL") &&
         clerkUserId &&
+        isClerkId(clerkUserId) &&
         (groupName === "sintonia" || groupName === "cuasar") &&
         !esCicloSemanal(productId)
     ) {
@@ -418,36 +562,45 @@ async function handleTransfer(event: any) {
     console.log(
         `🔁 TRANSFER de [${fromIds.join(",")}] → [${toIds.join(",")}]`
     )
-    const newClerkId = toIds.find(
-        (id) => typeof id === "string" && id.startsWith("user_")
-    )
-    if (!newClerkId || fromIds.length === 0) {
-        console.log("🔁 TRANSFER sin clerk destino o sin origen — solo log")
+    const identidad = await resolveIdentidad(event)
+    const clerkId = identidad.clerkUserId
+    if (!isClerkId(clerkId)) {
+        console.log(
+            "🔁 TRANSFER sin Clerk resoluble (anónimo→anónimo huérfano) — solo log"
+        )
         return
     }
-    const profile = await getProfileByClerkId(newClerkId)
-    const userId = profile?.id ?? null
-    const email = (profile?.email || "").toLowerCase().trim() || null
-    const customerName = profile?.full_name || null
-    for (const fromId of fromIds) {
+    const profile = await getProfileByClerkId(clerkId)
+    const userId = profile?.id ?? identidad.userId
+    const email =
+        (profile?.email || "").toLowerCase().trim() || identidad.email
+    const customerName = profile?.full_name || identidad.customerName
+    const dest = `rc_${clerkId}`
+    const keys = [...fromIds, ...toIds]
+        .filter((id) => typeof id === "string" && id.length > 0)
+        .map((id) => `rc_${id}`)
+    for (const key of keys) {
+        if (key === dest) continue
         const { data, error } = await supabase
             .from("subscriptions")
             .update({
-                stripe_customer_id: `rc_${newClerkId}`,
+                stripe_customer_id: dest,
                 user_id: userId,
                 email,
                 customer_name: customerName,
             })
-            .eq("stripe_customer_id", `rc_${fromId}`)
+            .eq("stripe_customer_id", key)
             .select("stripe_subscription_id")
         if (error) {
-            console.error(`❌ TRANSFER update rc_${fromId}:`, error)
+            console.error(`❌ TRANSFER update ${key}:`, error)
             continue
         }
         const n = Array.isArray(data) ? data.length : 0
-        console.log(
-            `🔁 TRANSFER re-liga ${n} fila(s) rc_${fromId} → rc_${newClerkId} | user ${userId || "SIN PERFIL"}`
-        )
+        if (n > 0) {
+            console.log(
+                `🔁 TRANSFER re-liga ${n} fila(s) ${key} → ${dest} | user ${userId || "SIN PERFIL"}`
+            )
+        }
     }
 }
 
