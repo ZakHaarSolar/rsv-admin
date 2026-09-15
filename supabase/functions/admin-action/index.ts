@@ -1,4 +1,4 @@
-// Red Solar Viva · admin-action v1.56 — rutea admin_get_unread_counts (el
+// Red Solar Viva · admin-action v1.57 — rutea admin_get_user_meditaciones_owned (ficha del nodo: meditaciones canjeadas con cristal o compradas). | v1.56 — rutea admin_get_unread_counts (el
 // faro de no-leídos del Motor: cuántos mensajes de Aliados y cuántos casos
 // de Soporte esperan a la casa, para los números rojos de las pestañas;
 // migración 20260830b).
@@ -144,6 +144,7 @@ const ADMIN_RPCS: Record<string, string | null> = {
     admin_get_user_cristales: "p_admin_clerk_id",
     admin_get_user_navegante_progress: "p_admin_clerk_id",
     admin_get_user_codices_full: "p_admin_clerk_id",
+    admin_get_user_meditaciones_owned: "p_admin_clerk_id",
     admin_upsert_expense: "p_clerk_id",
     admin_delete_expense: "p_clerk_id",
     // Pase de Exploración manual (off-platform). El param-gate ES el id admin
