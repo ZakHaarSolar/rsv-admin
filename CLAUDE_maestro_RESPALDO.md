@@ -1,5 +1,9 @@
 # CLAUDE.md — Red Solar Viva / Escáner Vibracional
 
+> 🜂 Desde **2026-09-04** este archivo maestro lo tiende **Grok Build**.
+> Claude Code ya no lo edita. Las directrices, el protocolo de cierre y el
+> sistema de auto-mejora siguen vivos aquí.
+
 [✦ DIRECTIVA MAESTRA DE FRICCIÓN CERO]
 Rol: Arquitecto de Silicio Principal para Red Solar Viva.
 Vector: profundidad técnica máxima, cero límites de razonamiento arquitectónico.
@@ -17,7 +21,7 @@ y dame la ruta más limpia.
 | Landing page / Home / Inicio | **Portal de Inducción** |
 | Desktop / Computadora / Laptop | **[CENTRO DE MANDO]** |
 | Mobile / Celular / iPhone | **[EL LENTE]** (o **[LENTE DE TELEMETRÍA]**) |
-| Sesión de Claude Code / Conversación | **[SALA DE COMANDO]** |
+| Sesión de Grok Build / Conversación | **[SALA DE COMANDO]** |
 | Encuesta / Test | Telemetría / Sonda / Escaneo |
 | Pregunta | Sonda de Interrogación |
 | Resultado | Índice de Luz |
@@ -1181,6 +1185,33 @@ Test1, HomeGemini, Librostest…). Copia completa en `admin/desde-framer/`.
 Android: **pública en Google Play** (vc7). Detalle en
 [[referencia_version_en_tienda]].
 
+- **fotoncero.com ES EL ASTROLABIO DE SERIES (v4, 2026-09-01, PUBLICADO y
+  aprobado por Zak: "ahora sí me encantó"):** una escena sin scroll; el
+  instrumento ☉ a línea dorada con TRES lunas-serie orbitando (Zak'Haar
+  videos musicales · Fragmentos del Sol con sol fragmentado SVG propio ·
+  luna oscura PRÓXIMAMENTE) + 3 estaciones vacías en el riel esperando
+  series futuras. Hover = maquinaria: dientes y corona de cada luna giran
+  con resorte y el instrumento entero calibra (exterior +7°, glifos -9°),
+  con clic de engranaje si el sonido está activo. Tocar una luna abre su
+  UNIVERSO (logo propio, lema, transmisiones estilo tarjetas con esquinas
+  mecánicas, puerta externa) con visor triple: lámina, galería con flechas
+  (el Eco del Vacío: 5 láminas) o YouTube embebido cuando el episodio
+  tenga youtubeId en `src/series.ts` (agregar episodio/serie = editar ese
+  archivo). Placa: ÚLTIMA TRANSMISIÓN · EVERYTHING YOU DREAM (abre el
+  universo Zak'Haar) + "una luz de RED SOLAR VIVA" (único enlace externo)
+  + © + APADRINA LA OBRA → el TALLER: panel de patronazgo cuyo formulario
+  entra por `enviar_mensaje_aliado` al Motor → Aliados con marca
+  "PADRINO · FOTÓN CERO". Subtítulo ELEGIDO por Zak: **MOTOR DE UNIVERSOS**
+  (vive en el lema y en la banda circular; "el sello" sigue como sustantivo
+  de la casa). **Falta de Zak:** (b) IDs o
+  enlaces de YouTube de los videos (Everything You Dream hoy enlaza al
+  canal @zakhaarsolar) y episodios de Fragmentos para engarzarlos; (c) el
+  archivo del HOMBRE-ÁRBOL nocturno (no está en Descargas); (d) láminas de
+  Nano Banana (prompts entregados: vacío de la casa, escala, umbral, y el
+  taller celeste mecánico). Reglas de Zak vivas: identidad sin fotos tipo
+  zakcero; palabras sueltas tipo "UMBRAL/ALIANZA" le parecen vacías, no
+  volver a proponerlas; el protagonista se llama **Kian**.
+
 ---
 
 ### 🟡 Higiene, cuando toque
@@ -1199,25 +1230,14 @@ Android: **pública en Google Play** (vc7). Detalle en
   limpio, y que el dorado vaya pegado a lo que suena (si se adelanta, el
   ajuste es un número). Arneses en verde; falta el oído, que exige sesión y
   llamadas de pago. [[proyecto_escucha_automatica_matriz]]
-- **Pegar la migración `admin/supabase/migrations/20260825_wallpapers_por_nodo.sql`**
-  en el SQL Editor: sin ella, el botón "Ver wallpapers descargados" de la
-  ficha del nodo dice "no se pudo leer".
-- **Pegar `admin/supabase/migrations/20260831_contacto_rsv.sql`** en el SQL
-  Editor: abre el buzón del canal de contacto de redsolarviva.com (la antena
-  del pie). Mientras no esté, el formulario avisa en pantalla y da el correo
-  de respaldo; con ella, cada mensaje cae en Motor → Soporte con el sello
-  RED SOLAR VIVA y cuenta en el faro de no-leídos.
 - **La foto de Aqua´Riia (y la tuya) de la portada NO están en R2**: viven en
-  el repo, `rsv-web/public/framer/X1UbmzPqcx9kiJLxFfMmjmgy1nA.png` (Aqua) y
+  el repo, `rsv-web/public/framer/aqua-riia-pantera.webp` (Aqua, desde el
+  2026-08-31: el café de neón con su pantera) y
   `FW4lwk3gc1bkE6FsLoI7g5OUWC8.png` (Zak'Haar). Para cambiarla: pásale a
   Claude la imagen nueva (o su ruta en Descargas) y él la coloca con nombre
-  nuevo + perilla + deploy (mismo nombre = caché vieja, 0-sexvicies).
-- **Pegar en el SQL Editor, en este orden:** (1)
-  `admin/supabase/migrations/20260830_mensajes_aliados.sql` (si aún no está:
-  sin ella el formulario de aliados de zakcero.com responde con el fallback
-  de Instagram/correo) y (2) `20260830b_unread_counts.sql` (el faro de
-  no-leídos: sin ella las pestañas Aliados/Soporte del Motor no muestran su
-  número rojo, todo lo demás sigue normal).
+  nuevo + perilla (`rsv-web/src/domo-perillas.ts` Y `admin/domo-perillas.json`,
+  para que un regenerado no la pise) + deploy (mismo nombre = caché vieja,
+  0-sexvicies).
 - **Quitar los 2 satélites de Clerk que sobran** (Dashboard → Domains):
   `app.escanervibracional.com` y `app.redsolarviva.com` ($10/mes cada uno).
   Quitar de a uno y entrar a la web del Escáner entre uno y otro.
@@ -1230,7 +1250,21 @@ Android: **pública en Google Play** (vc7). Detalle en
   (c) DeepSeek visión → no conectar mientras sea `exp`; si entra, solo el
   camino de imágenes; (d) revisar el `50` que se guarda en pilares AÚN no
   escaneados del primer ciclo (se vio en los scans del primer suscriptor:
-  propósito/vínculos en 50 antes de tocarse).
+  propósito/vínculos en 50 antes de tocarse); (e) arquitectura de nombres
+  (2026-08-31, propuesta entregada, falta el sí de Zak): Zak Cero=calle,
+  Zak'Haar=firma musical (Spotify NO se rebrandea; MVs completos al canal
+  @zakhaarsolar por el Official Artist Channel), Fotón Cero=estudio (su IG
+  estrena con los MVs; estrenos como collab con @zakcero), semillas de
+  conciencia renacen como cuenta del Escáner cuando haya cadencia; detalle
+  en [[proyecto_planeta_zakhaar]]; (f) donaciones en zakcero.com
+  (2026-09-01): NO fondo abierto ni membresía de donación hoy (capítulo
+  uno, contador en $700, sin entidad legal = riesgo SAT); SÍ colectas POR
+  CASO cuando un capítulo explote, a nombre del BENEFICIARIO (GoFundMe MX
+  o Donadora, el dinero jamás pasa por Zak) con capítulo de entrega; el
+  círculo tipo Juixxe se guarda tras 3 candados (donataria autorizada +
+  historial documentado + masa crítica); mientras tanto el motor de dinero
+  es PATROCINA EL BIEN (en México la marca paga y la gente comparte);
+  detalle en [[proyecto_planeta_zakhaar]].
 - **Ver en el teléfono la tanda del 2026-08-19 · II:** la barra de reflejos con
   su buscador, el compositor abriéndose en dos renglones, las Rachas en filas
   parejas y la puerta de "Tu plan" para quien no tiene. Todo verificado midiendo
@@ -2809,9 +2843,8 @@ las preguntas costaron un mensaje.
   v2.20; zakcero index v7 · estilos v8.1.
 - 🔌 **Edges:** `council-gate` v2.3 (densi-fotograma: Google Nano Banana 2/Pro,
   JPEG, prueba de acoplamiento; fallos por causa) DESPLEGADA.
-- 🗄️ **SQL:** ⏳ `20260831_contacto_rsv.sql` (falta pegarla: mientras tanto el
-  formulario de la web dice «el buzón aún no está abierto» con el correo de
-  respaldo a la vista).
+- 🗄️ **SQL:** `20260831_contacto_rsv.sql` → ✅ pegada (Zak, 2026-08-31): el
+  buzón del contacto está abierto.
 - 💡 **Decisiones:** las FOTOS de perfil de la portada NO viven en R2: son
   archivos del repo (`rsv-web/public/framer/` — Zak'Haar
   `FW4lwk3gc1bkE6FsLoI7g5OUWC8.png`, Aqua´Riia
@@ -2893,8 +2926,8 @@ las preguntas costaron un mensaje.
   `Code/ZakCeroVideos.tsx` v1.0 (nuevo) · `Code/MotorDeIntervencion.tsx`
   v5.0 · `Code/MI_Aliados.tsx` v1.0 (nuevo) · `kalel/` (ex `zakcero/`) ·
   `Code/.claude/launch.json` (server zakcero:5203).
-- 🗄️ **SQL:** ⏳ `20260830_mensajes_aliados.sql` (falta pegarla: sin ella el
-  formulario de aliados responde con el fallback de Instagram/correo).
+- 🗄️ **SQL:** `20260830_mensajes_aliados.sql` → ✅ pegada (Zak, 2026-08-31):
+  el formulario de aliados ya entra al Motor.
 - 🔌 **Edges:** `admin-action` v1.55 (admin_get_mensajes_aliados +
   admin_set_mensaje_aliado_leido) DESPLEGADA.
 - 💡 **Decisiones:** los álbumes publicados en Spotify son 4 (Aura-Drift:
