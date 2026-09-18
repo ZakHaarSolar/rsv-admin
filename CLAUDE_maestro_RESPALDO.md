@@ -1179,50 +1179,19 @@ Test1, HomeGemini, Librostest…). Copia completa en `admin/desde-framer/`.
 > momento y se olvida ([[feedback_no_recordar_builds_ni_deploys]]). Lo ya
 > construido vive en el código; los patrones y decisiones, en las memorias.
 > La arqueología completa hasta el 2026-08-04 está en
-> `admin/CLAUDE_archivo_hasta_2026-08-04.md` (no se carga por sesión).
+> `admin/CLAUDE_archivo_hasta_2026-08-04.md`, y las salas del 25 y 30 de
+> agosto en `admin/CLAUDE_archivo_2026-08-25_a_2026-08-30.md` (no se cargan
+> por sesión).
 
 **Versión en circulación:** App Store **1.1.3 LIVE**, en curso **1.1.4**.
 Android: **pública en Google Play** (vc7). Detalle en
 [[referencia_version_en_tienda]].
 
-- **fotoncero.com ES EL ASTROLABIO DE SERIES (v4, 2026-09-01, PUBLICADO y
-  aprobado por Zak: "ahora sí me encantó"):** una escena sin scroll; el
-  instrumento ☉ a línea dorada con TRES lunas-serie orbitando (Zak'Haar
-  videos musicales · Fragmentos del Sol con sol fragmentado SVG propio ·
-  luna oscura PRÓXIMAMENTE) + 3 estaciones vacías en el riel esperando
-  series futuras. Hover = maquinaria: dientes y corona de cada luna giran
-  con resorte y el instrumento entero calibra (exterior +7°, glifos -9°),
-  con clic de engranaje si el sonido está activo. Tocar una luna abre su
-  UNIVERSO (logo propio, lema, transmisiones estilo tarjetas con esquinas
-  mecánicas, puerta externa) con visor triple: lámina, galería con flechas
-  (el Eco del Vacío: 5 láminas) o YouTube embebido cuando el episodio
-  tenga youtubeId en `src/series.ts` (agregar episodio/serie = editar ese
-  archivo). Placa: ÚLTIMA TRANSMISIÓN · EVERYTHING YOU DREAM (abre el
-  universo Zak'Haar) + "una luz de RED SOLAR VIVA" (único enlace externo)
-  + © + APADRINA LA OBRA → el TALLER: panel de patronazgo cuyo formulario
-  entra por `enviar_mensaje_aliado` al Motor → Aliados con marca
-  "PADRINO · FOTÓN CERO". Subtítulo ELEGIDO por Zak: **MOTOR DE UNIVERSOS**
-  (vive en el lema y en la banda circular; "el sello" sigue como sustantivo
-  de la casa). **Falta de Zak:** (b) IDs o
-  enlaces de YouTube de los videos (Everything You Dream hoy enlaza al
-  canal @zakhaarsolar) y episodios de Fragmentos para engarzarlos; (c) el
-  archivo del HOMBRE-ÁRBOL nocturno (no está en Descargas); (d) láminas de
-  Nano Banana (prompts entregados: vacío de la casa, escala, umbral, y el
-  taller celeste mecánico). Reglas de Zak vivas: identidad sin fotos tipo
-  zakcero; palabras sueltas tipo "UMBRAL/ALIANZA" le parecen vacías, no
-  volver a proponerlas; el protagonista se llama **Kian**.
 
 ---
 
 ### 🟡 Higiene, cuando toque
 
-- 🜂 **EL ARCHIVO MAESTRO ES LO ÚNICO SIN RED (2026-08-17).** `CLAUDE.md` vive
-  en la raíz de `Red Solar Viva/`, que NO es un repo, así que ningún `git push`
-  lo respalda. Los cinco proyectos SÍ tienen remoto privado en GitHub y hoy
-  están los cinco al día (`escaner-app`, `Code`, `admin`, `rsv-web`,
-  `escaner-landing`). Mientras la raíz no sea repo, cada cierre de sala deja
-  una copia en `admin/CLAUDE_maestro_RESPALDO.md` (que sí viaja). Si algún día
-  se hace repo de la raíz, este bullet se va.
 - **Device-QA de la ESCUCHA AUTOMÁTICA, ahora en las DOS caras** (Matriz
   desde 2026-08-19, Espejo original desde la 1.1.20): con V encendida, mandar
   un mensaje largo y OÍR la cadena entera — que arranque pronto, que las
@@ -1238,10 +1207,6 @@ Android: **pública en Google Play** (vc7). Detalle en
   nuevo + perilla (`rsv-web/src/domo-perillas.ts` Y `admin/domo-perillas.json`,
   para que un regenerado no la pise) + deploy (mismo nombre = caché vieja,
   0-sexvicies).
-- **Quitar los 2 satélites de Clerk que sobran** (Dashboard → Domains):
-  `app.escanervibracional.com` y `app.redsolarviva.com` ($10/mes cada uno).
-  Quitar de a uno y entrar a la web del Escáner entre uno y otro.
-  `escaner.redsolarviva.com` NO se toca (las apps publicadas lo usan).
 - **Consultas aterrizadas, sin construir:** (a) modo profundo en el teléfono
   → propuesto botón "Ir más hondo" bajo cada respuesta (no interruptor:
   gasto deliberado por reflejo, vista previa gratis del carril de pago);
@@ -1256,32 +1221,12 @@ Android: **pública en Google Play** (vc7). Detalle en
   @zakhaarsolar por el Official Artist Channel), Fotón Cero=estudio (su IG
   estrena con los MVs; estrenos como collab con @zakcero), semillas de
   conciencia renacen como cuenta del Escáner cuando haya cadencia; detalle
-  en [[proyecto_planeta_zakhaar]]; (f) donaciones en zakcero.com
-  (2026-09-01): NO fondo abierto ni membresía de donación hoy (capítulo
-  uno, contador en $700, sin entidad legal = riesgo SAT); SÍ colectas POR
-  CASO cuando un capítulo explote, a nombre del BENEFICIARIO (GoFundMe MX
-  o Donadora, el dinero jamás pasa por Zak) con capítulo de entrega; el
-  círculo tipo Juixxe se guarda tras 3 candados (donataria autorizada +
-  historial documentado + masa crítica); mientras tanto el motor de dinero
-  es PATROCINA EL BIEN (en México la marca paga y la gente comparte);
-  detalle en [[proyecto_planeta_zakhaar]].
+  en [[proyecto_planeta_zakhaar]].
 - **Ver en el teléfono la tanda del 2026-08-19 · II:** la barra de reflejos con
   su buscador, el compositor abriéndose en dos renglones, las Rachas en filas
   parejas y la puerta de "Tu plan" para quien no tiene. Todo verificado midiendo
   en pantalla de 375, pero ninguna de esas cuatro capas se pudo abrir con sesión
   real desde aquí (el gate de cuenta y el de Clerk lo impiden).
-- **La música de zakcero.com: las 43 pistas YA ESTÁN CONVERTIDAS y listas**
-  en `Red Solar Viva/Musica-R2/` (2026-08-31), con su `LEEME.txt`. Solo
-  falta que Zak arrastre las CUATRO carpetas a `Musica/zakcero/` en el
-  bucket público de audiolibros (`pub-94bd1d71bb304c91ad7b8e146063f337`):
-  `donde-viven-los-cielos` (12) · `aura-drift` (10) · `lumeria` (9) ·
-  `prisma` (12). MP3 256 kbps, nombre = solo el número (1.mp3, 2.mp3…) para
-  no romper URLs, con el título real en la etiqueta interna. El orden se
-  verificó comparando la DURACIÓN de cada archivo contra la que publica
-  Spotify (las 43 cuadran) — eso valida sobre todo Lumeria y Prisma, cuyos
-  .wav no venían numerados. Fuente: `Nodos Solares Fractal
-  Autosostenidos/Zak´Haar/Pineal Score/<álbum>/`. Mientras un álbum no
-  esté, el reproductor avisa "Ese cielo aún no está en el aire".
 - **El Cine Cero vive DENTRO de Mi Música** (2026-08-31): la entrada es
   zakcero.com/musica → botón ENTRAR AL MODO CINE (o directo /musica#cine;
   /videos redirige ahí). El estreno El Eco del Vacío sirve desde R2, y la
@@ -1298,12 +1243,10 @@ Android: **pública en Google Play** (vc7). Detalle en
   `Scripts/PDF Generator/pipeline_solar.py` (Deepgram, Gemini, R2 access +
   secret, Supabase service_role). Ya salieron del código pero siguen en el
   historial de git. Baja prioridad: el script no está en uso.
-- **App Transfer a "Red Solar Viva"** cuando exista la entidad legal (PFAE o
-  S.A. de C.V.) + D-U-N-S. Conserva reseñas, rankings y suscripciones.
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v48 (2026-08-30)
+## 🜂 Protocolo de Cierre de Sesión · v49 (2026-09-18)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -2579,7 +2522,28 @@ reales (cómic dinámico, su caricatura, cero dinámicas, todo aterrizado)
 no se parecían en nada al guion prestado. La versión tirada costó una tarde;
 las preguntas costaron un mensaje.
 
+### Paso 0-duodequadragies — La CUSTODIA del archivo no anula la orden de cierre
+
+Una nota de custodia en la cabecera («este archivo lo tiende otro») dice quién lo cuida en el
+día a día; no dice que una orden directa del dueño deje de valer. "Cerrar Sala de Comando" es
+el protocolo ENTERO, sobre ESTE archivo, siempre: registro de la sesión, limpieza, evolución y
+respaldo. Si la cabecera y la orden chocan, gana la orden, y la duda se dice en una línea ANTES
+de empezar, no después de reportar "cerrado".
+
+Y el Paso de APERTURA no es opcional: el `wc -c` va antes de la primera lectura de código. Esta
+sala abrió con el archivo en 172.000 caracteres y no lo pesó; el aviso llegó al final, cuando
+Zak pidió la lista para el barrido.
+
+**Por qué.** El 2026-09-18 la sala reportó "sala cerrada" habiendo actualizado solo memorias y
+documentos del proyecto: leí la nota de Grok Build como una prohibición y salté el protocolo.
+Zak: *"¿por qué NO CERRASTE sala de comando?"*. Un cierre a medias es peor que ninguno, porque
+se reporta como hecho.
+
 ### Changelog del protocolo
+
+- **v49 (2026-09-18):** Paso 0-duodequadragies — la custodia del archivo no anula la orden de
+  cierre: "Cerrar Sala de Comando" es el protocolo entero sobre este archivo aunque la cabecera
+  diga que lo tiende otro, y la duda se dice antes de empezar. Y el peso se toma al ABRIR.
 
 - **v48 (2026-08-30):** Paso 0-septtricies — un BRIEF PRESTADO no es el
   norte del dueño: la estructura dictada por un tercero (otra IA, un
@@ -2798,6 +2762,51 @@ las preguntas costaron un mensaje.
 
 ## 🜃 Historial de sesiones
 
+#### 2026-09-18 — TERRA CRISTAL, TRES SALAS SEGUIDAS: EL JUEGO YA SE SIENTE JUEGO
+
+- ✅ **Resuelto** (todo vivo en play.redsolarviva.com/terra-cristal/, verificado en el navegador):
+  1. **La escena de combate tiene fondo propio** (la vista a nivel del suelo que dejó Zak), con los dos
+     contrincantes plantados en la vereda y a escala; placas de vida y Plasma abajo en las esquinas con la
+     ventana de mensaje entre ellas y letra grande; golpes que se sienten (parón, onda de choque, chispas,
+     tirón de cámara, sacudón de quien recibe) con sonidos rehechos con cuerpo, más la embestida al lanzarse
+     y el cuerpo del que recibe.
+  2. **Controles**: flechas a las diagonales que pidió Zak; SOLO teclado (el ratón solo toca opciones y
+     pantalla completa), sin WASD, caminar de corrido con la flecha sostenida y más despacio con la zancada
+     pegada a los pies; la casilla donde se estaba parado vuelve a estar al alcance; S sin menú abre la
+     casita libre para ver la ficha completa de cualquiera (con la EXP que falta para subir).
+  3. **Interfaz a la Shining Force**: menús en cruz con íconos de dos cuadros y ventana de nombre; submenú
+     de MAGIA con nivel y MP; ficha compacta que se esconde al caminar y vuelve con un fundido; opciones con
+     volumen por canal (clic en el nombre apaga), M silencia todo, Esc cierra; rótulos sin tilde en
+     mayúsculas (la fuente las dibujaba en minúscula); la casita de objetivo redibujada a 4x y pintada bajo
+     los pies.
+  4. **Personajes**: el soldado blanco de First Wave es la Legión (quieto, caminar, ataque) y Elara estrenó
+     quieto, caminar y ataque (de una hoja PNG); el extractor lee hojas, toma un ciclo real de cada vídeo y
+     ya no corta cabezas.
+  5. **Reglas**: escala de nivel 1 (stats de 3 a 9) desde los prototipos, esquivas por agilidad, contraataque
+     al 15 %, dos Magias (ZIP y PULSO SOLAR, cada una con su animación), música por relevo sin traslape (la
+     parte intensa en el segundo 162.5). Todo escrito en `terra-cristal/Docs/REGLAS_DEL_JUEGO.md`.
+  6. **Arena**: props recortados por objeto y solo con lo que se levanta del suelo (el oro y el pasto ya no
+     tapan a nadie); la roca junto al puente cerrada, la vereda del puente abierta y la orilla lejana del
+     río fuera de juego.
+  7. Tres prompts de portada (`Docs/PROMPTS_PORTADA.md`) y el prompt del loader propio con sus tres láminas
+     (`Docs/PROMPTS_LOADER.md`).
+- 📁 **Archivos:** en `terra-cristal/` — `GridController` v4.1 · `BattleHud` v5.1 · `BattleCutscene` v3.1 ·
+  `ArenaAudio` v2.2 · `BattleMath` v2.0 · `Unit` v3.2 · `UnitData` v3.0 · `PlaceholderArt` v2.5 ·
+  `PersonajesImporter` v1.3 · `ArenaBuilder` v2.7 · `extraer_personaje.py` v1.4 · `separar_capas.py` v2.7 ·
+  `afinar_mask.py` v1.2 · `sintetizar_sfx.py` v1.2 · `dibujar_iconos.py` v1.0 (nuevo). Commits `22973e1`,
+  `a672d2b`, `be29abb` en `ZakHaarSolar/terra-cristal`.
+- ⏳ **Pendiente:** recibir golpe y KO de Elara y del soldado (Soldier B sin animar); "abajo hay una
+  terminación y luego rocas" por confirmar con el build nuevo; el loader propio de la web (prompt listo).
+- 💡 **Decisiones:** solo teclado en el juego · los prototipos son la fuente de verdad de stats, armas y
+  Magias · PROTOCOLO se dice MAGIA en la interfaz (los hechizos conservan su nombre) · la casita se pinta
+  bajo las unidades · el espejo de un personaje se decide por hacia dónde apunta el arma, no la máscara.
+- 🔧 **Patrones nuevos:** en [[proyecto_terra_cristal]]: fotografiar la escena de combate sin navegador por
+  su propia cámara (el HUD no sale en batch); una fuente que "tiene" el glifo puede dibujarlo mal, se
+  verifica renderizando; props por objeto y solo lo que se levanta del suelo; un ciclo de marcha real.
+- 🧬 **Versión del sistema:** Terra Cristal, build web del 2026-09-18 (VI).
+- 🔮 **Cómo arrancar la próxima Sala de Comando:** pegar el prompt de `terra-cristal/Docs/PROXIMA_SALA.md`
+  (el loader propio; las láminas de Nano Banana van en `Assets/WebGLTemplates/TerraCristal/loader/`).
+
 #### 2026-08-31 · II — SALA LARGA: DEL COUNCIL AL CANAL DE CONTACTO DE LA CASA
 
 - ✅ **Resuelto** (una sala que corrió del 22 al 31; todo desplegado y verificado en vivo):
@@ -2858,78 +2867,8 @@ las preguntas costaron un mensaje.
   [[feedback_cache_img_envenena_fetch_cors]], y el detalle de la sala en
   [[proyecto_densificacion_foton_cero]] y [[proyecto_arquitectura_marca_rsv]].
 
-#### 2026-08-30 · NACE EL PLANETA ZAK'HAAR: zakcero.com ES LA CASA DEL CREADOR Y KAL'EL SE MUDÓ A somacero.com
+#### 2026-08-30 (comprimida) — Nace el planeta Zak'Haar: zakcero.com es la casa del creador y Kal'El se mudó a somacero.com
 
-- ✅ **Resuelto:**
-  1. **zakcero.com es la página de ZAK CERO** (carpeta+repo privado `zakcero`,
-     Vite sin dependencias, proyecto Vercel `zak-cero`). ⚠️ La primera versión
-     del día (altar/calle, museo editorial sobrio) le pareció BASURA a Zak,
-     textual, y se tiró completa: la directriz de Grok era mala y el norte
-     cambió a **Zak Cero primero, videos musicales segundo, álbumes tercero,
-     sin nombrar dinámicas** (se nombra lo que hacemos, la filosofía, el moto,
-     el norte). La final es **CÓMIC HOLOGRÁFICO** (referencias de Zak:
-     feastables.com y es.dragon-ball-official.com): su caricatura en la selva
-     de portada, ZAK CERO en Titan One con sombras duras, stickers inclinados,
-     viñetas con sombra de color, banda marquee "DE LA ENTROPÍA A LA LUZ",
-     estrellas que respiran. Secciones: ¿Qué es Zak Cero? (3 viñetas con POV
-     real del rodaje) · La filosofía (el moto + 3 leyes: REAL PRIMERO,
-     DIGNIDAD SIEMPRE, LUZ AL FINAL) · Hacia dónde vamos (ruta 01 HOY → 02
-     DESPUÉS → 03 EL DESTINO, del ADN del Council) · El Universo (fotogramas
-     Ghibli del video musical en viñetas) · Los discos (4 covers a Spotify) ·
-     **EL PACTO SOLAR** (puerta de patrocinadores: panel ceremonial sobre el
-     salón de seres de luz, "quien firma ahora sale en toda la historia",
-     mailto a cuerpodeluz555@gmail.com) · pie con la casa.
-  2. **La interfaz de Kal'El vive en somacero.com**: carpeta y repo renombrados
-     a `kalel` (GitHub ZakHaarSolar/kalel), vinculada al proyecto Vercel
-     `soma-cero` y desplegada. La portada de espera de Soma Cero quedó
-     respaldada en `Soma Cero/portada-espera-somacero.html`.
-  3. **El planeta Zak'Haar orbita el sistema solar** (`Origen.tsx` v5.28):
-     anillo interior fase 0.5, hardcodeado sin perillas, panel "el planeta del
-     creador" con puerta a zakcero.com en pestaña nueva; tarjeta fija en el
-     Lente con ícono de disco (IconDiscoSolar); el ícono de Spotify salió del
-     pie de la casa (mudado al planeta). Verificado RENDERIZANDO en los tres
-     dominios con consola limpia y viewport fijado a 1440.
-  2. **La segunda tanda del día** (pedida sobre la página ya aprobada):
-     (a) **EL DOCK SONORO** arriba a la derecha: botón MÚSICA (hover/click
-     abre el panel con las 4 tarjetitas de álbum, controles, EN ORDEN /
-     ALEATORIO y el tracklist completo por álbum: 12+10+9+12 títulos reales
-     verificados en Spotify), botón SFX (sonidos de cómic SINTETIZADOS con
-     WebAudio, cero archivos: click, hover sutil, abrir/cerrar, el encaje
-     del disco con arpegio), el cover del álbum sonando como chip con onda,
-     la tarjeta VUELA al dispositivo al elegirla, y TODO persiste en
-     localStorage `zc-audio`. Las pistas se sirven de R2:
-     `Musica/zakcero/<slug>/<n>.mp3` (bucket público de audiolibros); si el
-     archivo no existe aún, aviso legible "Ese cielo aún no está en el
-     aire". (b) **ANIMACIONES PREMIUM**: variantes rev-izq/der/fuerte/sello
-     + delays d1..d5 en TODA la página, badges flotando, todo
-     transform/opacity (barato en GPU) y con reduced-motion respetado.
-     (c) **"EL PACTO SOLAR" muere: ahora es "PATROCINA EL BIEN"** con botón
-     "QUIERO SUMARME" que abre un MODAL con formulario (nombre, marca,
-     correo, mensaje + honeypot); postea a la RPC anon
-     `enviar_mensaje_aliado` y aterriza en el **Motor → pestaña "Aliados"**
-     (MI_Aliados.tsx v1.0: no-leídos primero, responder por correo en un
-     toque, marcar leído). (d) **Vectores propios para las redes** en el
-     pie: YouTube coral, Instagram oro, TikTok cian (TikTok @zakcero entra
-     por instrucción directa de Zak). (e) El CTA del universo ya no manda a
-     YouTube: manda a la vitrina de la casa.
-  3. **El planeta en redsolarviva.com se llama ZAK CERO y ya no está
-     vacío**: abre `/zakcero` (alias `/zakhaar`), la capa nueva
-     `ZakCeroVideos.tsx` v1.0 con estética de la casa: cine antes del
-     estreno (la nave + "EL PRIMER VIDEO ANIMADO ESTÁ POR ATERRIZAR" con
-     pulso), la galería de los mundos, chips al canal @zakhaarsolar y a
-     zakcero.com. **Para estrenar un video: agregar `{id, titulo}` al
-     `CATALOGO_VIDEOS`** y aparece con thumbnail, se reproduce ahí mismo
-     (embed) y tiene botón "Abrir en YouTube". La tarjeta del Lente y el
-     panel del planeta entran ahí (Origen v5.29, Domo v5.11).
-- 📁 **Archivos:** `zakcero/` (index v3 + estilos v3 + main v3 + audio.ts
-  v1.0) · `Code/Origen.tsx` v5.29 · `Code/Domo.tsx` v5.11 ·
-  `Code/ZakCeroVideos.tsx` v1.0 (nuevo) · `Code/MotorDeIntervencion.tsx`
-  v5.0 · `Code/MI_Aliados.tsx` v1.0 (nuevo) · `kalel/` (ex `zakcero/`) ·
-  `Code/.claude/launch.json` (server zakcero:5203).
-- 🗄️ **SQL:** `20260830_mensajes_aliados.sql` → ✅ pegada (Zak, 2026-08-31):
-  el formulario de aliados ya entra al Motor.
-- 🔌 **Edges:** `admin-action` v1.55 (admin_get_mensajes_aliados +
-  admin_set_mensaje_aliado_leido) DESPLEGADA.
 - 💡 **Decisiones:** los álbumes publicados en Spotify son 4 (Aura-Drift:
   Transmission One · Donde Viven los Cielos · Lumeria · Prisma; artista
   `6BSsXgmAnoie8tUgLtIbqb`); portadas oficiales en alta en
@@ -2945,16 +2884,6 @@ las preguntas costaron un mensaje.
   suave) + `&ir=<id>` (aterriza en una sección antes del primer pintado,
   para capturas con compositor congelado).
 - 🔧 **Patrones nuevos:** detalle completo en [[proyecto_planeta_zakhaar]].
-
-#### 2026-08-25 (comprimida) — Android salió en Google Play · escucha automática y seguimiento en el Espejo original · primer suscriptor auditado
-
-- 💡 **Decisiones que siguen vivas:** DeepSeek `v4-flash-vision-exp` NO se
-  conecta mientras sea `exp` (re-mirar al salir; solo camino de imágenes) ·
-  lo borrado del Espejo NO se conserva: solo la huella (cuándo y cuántos) ·
-  `mode:"clear"` exige `clear_all` explícito (0-sextricies) · el modo
-  profundo en el teléfono se propuso como botón «Ir más hondo» BAJO la
-  respuesta (sin construir) · avisos de wallpapers nuevos: sello + badge +
-  push por TANDA (sin construir). Escritorio 1.1.27 LIVE.
 
 *Las entradas anteriores (2026-04-18 → 2026-08-22) viven en*
 `admin/CLAUDE_archivo_hasta_2026-08-04.md`. *No se cargan por sesión: lo
