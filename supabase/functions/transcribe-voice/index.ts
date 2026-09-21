@@ -1,3 +1,6 @@
+// admin/supabase/functions/transcribe-voice/index.ts v1.1 — acepta scope:"grp"
+// para transcribir notas de voz de un GRUPO (grp_transcribe_voice_check /
+// grp_set_voice_transcript). Sin scope, el mensaje privado de siempre.
 // 2026-07-21 — MIGRACIÓN a gemini-3.6-flash: el modelo Flash primario pasa
 //   de gemini-3.5-flash / gemini-flash-latest a gemini-3.6-flash (GA, reemplaza
 //   a 3.5 Flash: misma entrada, salida ~17% más barata y más rápida). Los
@@ -133,10 +136,15 @@ serve(async (req: Request) => {
 
     const messageId = Number(body?.message_id)
     if (!Number.isFinite(messageId)) return json({ error: "bad_message_id" }, 400)
+    /* v1.1 — las notas de voz de los GRUPOS pasan por sus propias RPC (mismo
+       tope mensual, misma llave); el mensaje privado queda igual que siempre. */
+    const esGrupo = body?.scope === "grp"
+    const rpcCheck = esGrupo ? "grp_transcribe_voice_check" : "transcribe_voice_check"
+    const rpcSave = esGrupo ? "grp_set_voice_transcript" : "set_voice_transcript"
 
     // 1. Gate + datos (participante + miembro + cap + media_url descifrado).
     const { data: chk, error: chkErr } = await supabase.rpc(
-        "transcribe_voice_check",
+        rpcCheck,
         { p_clerk_user_id: gate.userId, p_message_id: messageId }
     )
     if (chkErr) return json({ error: chkErr.message }, 400)
@@ -207,7 +215,7 @@ serve(async (req: Request) => {
 
     // 4. Guarda cifrado + suma al cap.
     const { data: saved, error: saveErr } = await supabase.rpc(
-        "set_voice_transcript",
+        rpcSave,
         { p_clerk_user_id: gate.userId, p_message_id: messageId, p_text: text }
     )
     if (saveErr || (saved && saved.error)) {

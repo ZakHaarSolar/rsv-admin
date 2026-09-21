@@ -1,3 +1,7 @@
+// Red Solar Viva · user-action v1.49 — GRUPOS + NOTAS COMPARTIDAS: rutea las
+// 17 RPC de grupos (grp_*), el selector de invitar (rsv_get_my_contacts /
+// rsv_search_tripulantes) y las 6 de notas compartidas (bitacora_*). El id
+// verificado se inyecta como siempre. Requiere 20260921_grupos_notas_compartidas.
 // Red Solar Viva · user-action v1.48 — 🜂 AFINAMIENTO DEL ESPEJO: rutea
 // registrar_afinamiento_espejo, la marca de "esto no me representa" sobre un
 // reflejo con el ángulo correcto en las palabras de quien corrige. Cierra el
@@ -359,6 +363,39 @@ const USER_RPCS: Record<string, string> = {
     add_vision_photo: "p_clerk_user_id",
     delete_vision_photo: "p_clerk_user_id",
     reanchor_vision: "p_clerk_user_id",
+    // v1.49 — GRUPOS (hasta 10 tripulantes, se entra aceptando una
+    // invitación). Toda la autoridad vive en la RPC: miembro para leer y
+    // escribir, administrador para invitar/renombrar/quitar/eliminar.
+    grp_create: "p_clerk_user_id",
+    grp_invite: "p_clerk_user_id",
+    grp_get_my_invites: "p_clerk_user_id",
+    grp_respond_invite: "p_clerk_user_id",
+    grp_cancel_invite: "p_clerk_user_id",
+    grp_get_my_groups: "p_clerk_user_id",
+    grp_get_info: "p_clerk_user_id",
+    grp_get_messages: "p_clerk_user_id",
+    grp_send_message: "p_clerk_user_id",
+    grp_mark_read: "p_clerk_user_id",
+    grp_react_message: "p_clerk_user_id",
+    grp_update: "p_clerk_user_id",
+    grp_set_role: "p_clerk_user_id",
+    grp_remove_member: "p_clerk_user_id",
+    grp_leave: "p_clerk_user_id",
+    grp_set_mute: "p_clerk_user_id",
+    grp_delete: "p_clerk_user_id",
+    // v1.49 — el selector "Invitar": tus contactos + búsqueda por nombre
+    // (solo perfiles visibles). La invitación por correo exacto la resuelve
+    // la RPC de cada invitación.
+    rsv_get_my_contacts: "p_clerk_user_id",
+    rsv_search_tripulantes: "p_clerk_user_id",
+    // v1.49 — NOTAS COMPARTIDAS de la Bitácora (invitar, aceptar, ver quién
+    // más la tiene, quitar, cancelar, releer una nota viva).
+    bitacora_get_nota: "p_clerk_user_id",
+    bitacora_invite: "p_clerk_user_id",
+    bitacora_respond_invite: "p_clerk_user_id",
+    bitacora_get_sharing: "p_clerk_user_id",
+    bitacora_remove_member: "p_clerk_user_id",
+    bitacora_cancel_invite: "p_clerk_user_id",
 }
 
 serve(async (req: Request) => {

@@ -1,3 +1,6 @@
+// Red Solar Viva · send-push v1.3 — el aviso lleva thread-id cuando el
+// disparador lo manda (dm-<id> / grp-<id>): iOS apila los avisos de una misma
+// conversación. La vista previa del mensaje ya viene armada desde la base.
 // Red Solar Viva · send-push v1.2 — RAMA FCM (Android): los push_tokens se parten
 // por plataforma; los iOS van a APNs (igual que siempre) y los Android a FCM
 // HTTP v1 (service account de Firebase → access token OAuth2 cacheado ~50 min →
@@ -227,6 +230,11 @@ serve(async (req: Request) => {
                     sound: "default",
                     ...(typeof body?.badge === "number"
                         ? { badge: body.badge }
+                        : {}),
+                    /* v1.3 — iOS apila los avisos de UNA misma conversación
+                       (como WhatsApp) en vez de regarlos sueltos. */
+                    ...(data && typeof (data as any).thread_id === "string"
+                        ? { "thread-id": String((data as any).thread_id) }
                         : {}),
                 },
             })
