@@ -806,6 +806,34 @@ página: el maestro crece de a una línea por lección.
 
 ## 🜃 Historial de sesiones
 
+#### 2026-09-24 → 2026-09-25 — KAL'EL: SU PROPIA CARPETA, LA SOGA DE COLORES, CAMINOS CON MUROS Y EL SENDERO DE 16 ESTACIONES
+
+- ✅ **Resuelto** (todo vivo en somacero.com, verificado renderizando y con la consola limpia): la carpeta `kalel` carga
+  solo su contexto (el maestro excluido con `claudeMdExcludes`, medido con `/context`) · **La soga** con sellos del
+  color de su nivel, letrero de victoria a los 27 que invita a Caminos, sellos que brincan, suenan, se arrastran y se
+  ordenan, y letrero «Nivel X» · **Caminos** con un nivel por acierto, muros de piedra con puertas en zigzag y un sello
+  por nivel · **el Sendero**: mapa de 16 estaciones en 5 etapas y 4 ramas (Manos, Voz, Lectura, Teclado) con
+  prerrequisitos, pensado para que un niño que solo aprenda aquí termine escribiendo con las dos manos, leyendo
+  cuentos, pronunciando bien y dominando el trackpad. 13 estaciones nuevas: Burbujas, Dilo, Trazos, Letras, Sílabas,
+  Clics, Dedos, Palabras, Cuentos, Explorador, Escritorio, Tormenta y Carrera.
+- 📁 **Archivos:** en `kalel/` — `src/kit/` (juego, sonidos, voz, escucha, teclado, TecladoPantalla, almacen),
+  `src/contenido/` (letras, palabras, cuentos), `src/juegos/` (11 juegos), `src/estaciones.ts`, `src/Sendero.tsx`,
+  `KalEl.tsx` v2.0, `KalElSoga.tsx` v2.0, `KalElCaminos.tsx` v1.5, `KalElAlbum.tsx` v1.1, `CURRICULO.md`,
+  `CLAUDE.md` v2.1, `Docs/BITACORA.md`. Fuera de `kalel`: el servidor `kalel` en `.claude/launch.json` de la raíz.
+  Commits `867ea0f` → `5768fb7`.
+- ⏳ **Pendiente:** probar el micrófono (Dilo, Cuentos) y el trackpad (Explorador, Clics) de verdad en la computadora
+  de Kal'El, y afinar lo que salga de verlo jugar.
+- 💡 **Decisiones:** un solo Sendero con prerrequisitos (se abre al terminar lo que prepara; Ajustes tiene «Abrir
+  todas») · Mundos se gana tocando los 20 · la voz se compara por cómo suena en México (b=v, sin h, c/s/z, ll=y, pero
+  r≠rr) y siempre muestra lo que oyó; si el micrófono no entiende, aprueba el adulto manteniendo un botón · el teclado
+  se aprende de lo que escribe cada tecla; con teclado en inglés se saltan ñ y acentos · Kal'El estrena su propio
+  «Protocolo de cierre», como Terra Cristal.
+- 🔧 **Patrones nuevos:** marco común de juegos (niveles guardados, sellos, instrucción hablada, celebración y
+  victoria) · el «siguiente juego» se calcula al leerse, así el letrero ve la estación recién abierta · trabajo
+  repartido con base, ejemplo y avisos en vuelo (0-duoquadragies) · claves con prefijo (0-terquadragies).
+- 🧬 **Versión del sistema:** somacero.com con el Sendero de 16 estaciones · protocolo v54.
+- ↪ **El arranque de Kal'El** vive en `kalel/CLAUDE.md` (estado y pendientes) y `kalel/Docs/BITACORA.md`.
+
 #### 2026-09-21 · II → 2026-09-25 — ESCÁNER: SESIONES QUE DURAN AÑOS, GRUPOS Y NOTAS COMPARTIDAS, EL CHAT QUE AGUANTA EL GIRO, ANILLOS A LA MEDIDA, LA TIENDA QUE CELEBRA, EL INICIO DE SESIÓN WEB Y EL REEL
 
 - ✅ **Resuelto:** el «me sacó de la app» semanal era el plazo de 7 días que Clerk trae de fábrica; Zak lo subió a
@@ -853,29 +881,8 @@ página: el maestro crece de a una línea por lección.
 - 🧬 **Versión del sistema:** app de Mac 1.1.46 · protocolo v53 · web con `/oauth-callback` de vuelta · reel v1 · mensajería local
   primero ([[proyecto_mensajeria_instantanea]]).
 
-#### 2026-09-20 — TERRA CRISTAL: CADA ATAQUE CON SU ARTE, EL SALTO A DOMUS, SENTARSE Y UNA TANDA DE PULIDO
+#### 2026-09-20 — TERRA CRISTAL: CADA ATAQUE CON SU ARTE, EL SALTO A DOMUS, SENTARSE Y UNA TANDA DE PULIDO (comprimida)
 
-- ✅ **Resuelto** (todo vivo en play.redsolarviva.com/terra-cristal/, verificado renderizando y sin errores de consola):
-  el golpe de bastón de Elara y el Pulso Solar con sus animaciones nuevas, y el soldado de la Legión usando por fin
-  su estocada (su clip estaba amarrado a la Magia, que él nunca lanza) · el **SALTO A DOMUS**, la magia de retirada:
-  sello de vector, columna de luz y de vuelta a la base con lo ganado, los caídos siguen caídos y la arena queda
-  por ganar, que es lo que permite entrenar · **monedas** por enemigo · la batalla **se mira de cerca** (campo
-  entero solo al abrir, después la cámara va con quien actúa) · la **Cámara de Recarga** completa: 62 casillas, el
-  muro de cristal y el arco tapando de verdad y el vidrio dejando ver a través · **SENTARSE** con las tres
-  animaciones de Zak (bucle y dos entradas), tecla **D**, caminando sola al mueble · **la pantalla negra** al volver
-  de la base a una arena sin ganar · el **portal carga de una pieza** (negro con anillo y fundido), **botón de
-  sonido** que espera un gesto y **chasquido** al entrar · cabecera con solo el nombre del lugar · el alcance como
-  **mancha** y no cuadrícula · **girar en el sitio** contra un tope y **giro al llegar** (paso y flecha contraria) ·
-  el selector libre por todo el mapa pero dentro de la pintura · teclas **O** (asientos) y **P** · sin botones de
-  ATRÁS · **sonido de continuar** en todos los cuadros de diálogo.
-- 📁 **Archivos:** en `terra-cristal/` — `extraer_personaje.py` v1.8 · `oclusores.py` v2.0 · `separar_capas.py` v3.1 ·
-  `base01_mask.py` v1.3 · `dibujar_iconos.py` v1.6 · `sintetizar_sfx.py` v1.3 · `PlaceholderArt` v3.0 ·
-  `ArenaBuilder` v3.1 · `PersonajesImporter` v1.6 · `UnitData` v1.5 · `Unit` v3.8 · `BattleCutscene` v3.5 ·
-  `TurnManager` v2.9 · `CameraRig` v1.5 · `GridController` v5.0 · `BattleHud` v6.2 · `GameState` v1.1 ·
-  `index.html` del portal. Commits `a3ec2ab` → `45e3407` → el del botón de sonido.
-- ⏳ **Pendiente:** los seis sitios para sentarse (Zak los dicta con el selector, que dice su casilla) · tres
-  oclusores marcados ESCONDER (la curva del muro sobre la cabeza, una planta de la arena sobre las piernas, los
-  sofás donde el pie se encima) · el corrimiento de la caminata por casilla con ida y vuelta distintas.
 - 💡 **Decisiones:** las reglas de construcción de Terra Cristal viven en `terra-cristal/Docs/DIRECTRICES.md`, no
   aquí · un área navegable se prueba en las dos direcciones · si el pie no se puede esconder, esa casilla no existe ·
   nada se enseña a medio cargar · la música del portal no puede sonar sin un gesto (política del navegador): por eso
@@ -883,10 +890,11 @@ página: el maestro crece de a una línea por lección.
 - 🔧 **Patrones nuevos:** el instante del golpe y la punta del arma se MIDEN del vídeo y viajan en el manifest ·
   cada animación con su ancho y su pivote · el modo `regiones` de oclusores y el `cristal` con velo · una mancha de
   16 losetas según qué lados dan al borde.
-- 🧬 **Versión del sistema:** Terra Cristal, build web del 2026-09-20 (36 MB).
 - ↪ **El arranque de Terra Cristal** vive en `terra-cristal/Docs/PROXIMA_SALA.md` y en `terra-cristal/CLAUDE.md`
   (su 🔮 se retiró de aquí al entrar una sala más nueva; su trabajo sigue abierto allá).
+- 🗃️ **Completa** en `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 *Las entradas anteriores viven en* `admin/CLAUDE_archivo_hasta_2026-08-04.md` (2026-04-18 → 2026-08-22) *y en*
-`admin/CLAUDE_archivo_2026-08-30_a_2026-09-18.md` (2026-08-30 → 2026-09-18). *No se cargan por sesión: lo
+`admin/CLAUDE_archivo_2026-08-30_a_2026-09-18.md` (2026-08-30 → 2026-09-18), *y desde el 2026-09-20 en*
+`admin/CLAUDE_archivo_2026-09-20_en_adelante.md`. *No se cargan por sesión: lo
 durable de cada una ya está en las memorias y en el código.*
