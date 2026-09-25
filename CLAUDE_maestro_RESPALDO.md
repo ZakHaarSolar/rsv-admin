@@ -1224,12 +1224,6 @@ que necesita una decisión de Zak o una mano suya.
 - **Guardado real:** primero en el aparato y sincronizado con la cuenta del Escáner; un documento con versión y 3
   ranuras, que mañana sirve igual para Steam Cloud. Diseño en la Biblia §6. **Sin construir.**
 
-### 🔵 Escáner · lo que necesita tu mano
-
-- **Pegar `admin/supabase/migrations/20260921b_anillos_a_la_medida.sql`** en SQL Editor. Regresa a 100 el
-  multiplicador de anillos de Aurelia en su etapa 7 (con la medida nueva, el 200 que tenía los deja al doble).
-  Comprobado sin aplicar el 2026-09-25: `get_avatar_config` todavía devuelve `200` en esa etapa.
-
 ### 🟡 Higiene, cuando toque
 
 - **Arquitectura de nombres** (2026-08-31, propuesta entregada, falta el sí de Zak): Zak Cero=calle, Zak'Haar=firma
@@ -2844,14 +2838,18 @@ orden; aquí, la vigilancia.
   completa · el guion del iPhone compila aunque el teléfono esté bloqueado · **el inicio de sesión web con Google o
   Apple volvía a una página 404** desde el 5 de septiembre; arreglado, con una guardia en el guion de publicación, y
   Zak confirmó que entra · **reel promocional 9:16 de 28 s** con música y diseño sonoro propios (el Espejo y el
-  Decodificador de Alimentos de protagonistas, cierre «Descárgala gratis»).
+  Decodificador de Alimentos de protagonistas, cierre «Descárgala gratis») · **Mensajes abre al instante**: la
+  bandeja y cada chat salen de lo que el teléfono recuerda y el servidor actualiza encima, lo que envías aparece al
+  tocar (con reintento si no llega) y entrar a Comunidad hace una sola lectura (medido con 420 ms de servidor:
+  entrar 849→426 ms y 3 ms al reabrir la app, abrir un chat 872→441 ms y 15 ms precalentado, enviar 435→9 ms).
 - 📁 **Archivos:** en `escaner-app/` — `Grupos.tsx` v1.0 · `InvitarTripulante.tsx` v1.0 · `EV_BitacoraCompartir.tsx`
   v1.0 · `EV_Bitacora.tsx` v1.21 · `fusionNotas.ts` v1.1 · `PushSync.tsx` v1.6 · `Comunidad.tsx` v1.21 ·
   `Mensajes.tsx` v1.40 · `CamaraCristalizacion.tsx` v1.7 · `OrbitRings.tsx` v1.3 · `avatarFootprint.ts` v2.1 ·
   `sensory.ts` v2.19 · diccionarios `grupos`, `bitacora`, `comu`, `avatar` · `vercel.json` · `publicar-escritorio.sh` ·
-  `al-iphone.sh` · app de Mac **1.1.44**. El reel y su estudio: `Escaner Vibracional/Reel Promo/` (no es repo).
+  `al-iphone.sh` · `lib/chatStore.ts` v1.0 · `viewCache.ts` v1.1 · `Mensajes.tsx` v1.41 · `Comunidad.tsx` v1.22 ·
+  app de Mac **1.1.45**. El reel y su estudio: `Escaner Vibracional/Reel Promo/` (no es repo).
 - 🗄️ **Migraciones SQL:** `20260921_grupos_notas_compartidas.sql` (aplicada por Zak y verificada) ·
-  `20260921b_anillos_a_la_medida.sql` (**sin aplicar**, ver Pendientes vivos).
+  `20260921b_anillos_a_la_medida.sql` (aplicada por Zak el 2026-09-25 y verificada).
 - 🔌 **Edge functions deployed:** `send-push` v1.3 (vista previa del mensaje) · `transcribe-voice` v1.1 ·
   `user-action` v1.49 (grupos, notas compartidas, invitaciones). El puente temporal de fal.ai se usó para los efectos
   del reel y quedó **borrado** (responde 404).
@@ -2864,7 +2862,8 @@ orden; aquí, la vigilancia.
   (luz encerrada al 90 %) en vez de estimarse · estudio de video propio: WebGL para partículas y brillo, lienzo 2D
   para la tipografía, la música sintetizada en el navegador y tres Chrome sin ventana con la GPU del Mac
   (1680 cuadros en 15 s); ver [[proyecto_reel_promo_escaner]].
-- 🧬 **Versión del sistema:** app de Mac 1.1.44 · web con `/oauth-callback` de vuelta · reel v1.
+- 🧬 **Versión del sistema:** app de Mac 1.1.45 · web con `/oauth-callback` de vuelta · reel v1 · mensajería local
+  primero ([[proyecto_mensajeria_instantanea]]).
 
 #### 2026-09-20 — TERRA CRISTAL: CADA ATAQUE CON SU ARTE, EL SALTO A DOMUS, SENTARSE Y UNA TANDA DE PULIDO
 
