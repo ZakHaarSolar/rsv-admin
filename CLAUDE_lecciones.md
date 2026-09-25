@@ -162,6 +162,12 @@ sano: antes de tocarlo, medir `innerWidth`. Para observarlo hay que
 falsear `innerWidth/innerHeight` además de `document.hidden`. Discovered
 2026-07-28 · II con la ceremonia de impregnación.
 
+🜂 **Y el panel oculto también frena los `setTimeout` encadenados** (2026-09-25, sala de Kal'El). Una cuenta 3-2-1
+de Carrera se estiró tanto que el reloj del nivel se agotó antes de que la prueba alcanzara a escribir, y parecía un
+juego roto. Con la pestaña escondida Chrome aplaza los temporizadores que se encadenan. Las pruebas esperan
+SONDEANDO el DOM (hasta que aparezca la caja de texto, hasta que cambie el nivel), nunca con tiempos fijos, antes de
+concluir que algo «no avanza».
+
 ### Paso 0-quater — Un fallo que Zak no puede leer es un round-trip perdido
 
 **Antes de entregar algo para device-QA, preguntarse: si esto falla en su
@@ -1154,7 +1160,53 @@ la Mac no pasan por esa página. El arreglo fue una línea; la guardia en `publi
 Hermano del **0-undevicies** (tu automatización puede deshacer lo que hiciste): allí se codifica en la herramienta el
 orden; aquí, la vigilancia.
 
+### Paso 0-duoquadragies — Trabajo REPARTIDO entre ayudantes: la base y un ejemplo primero, y cada bug se avisa en vuelo
+
+Cuando un encargo grande se reparte entre varios ayudantes que trabajan a la vez, cada uno copia lo que tiene a la
+mano. Si el ejemplo trae un defecto o la base cambia a medio camino, el defecto se multiplica por el número de
+ayudantes y aparece al final, cuando ya nadie tiene el contexto.
+
+**Regla:**
+1. Antes de repartir se construye la base compartida y UN trabajo de referencia completo, y se prueba.
+2. Cada ayudante recibe un contrato por escrito que apunta a ese ejemplo, con archivos propios (nadie toca lo del
+   otro ni la base) y sin navegador ni publicación: el líder integra y prueba.
+3. Si el líder encuentra un bug en la referencia mientras ellos trabajan, se los avisa a TODOS en ese momento, antes
+   de que lo copien.
+4. El líder verifica en el navegador todo lo que los ayudantes no pudieron ver.
+
+**Por qué.** El 2026-09-25 el Sendero de Kal'El necesitaba 13 estaciones nuevas. Primero se hizo la base y Burbujas
+como referencia; luego tres ayudantes hicieron Trazos, Clics con Explorador, y Escritorio en paralelo. A media
+construcción la consola destapó que la referencia usaba claves numéricas que chocaban entre hermanos (ver
+0-terquadragies); el aviso llegó a los tres en vuelo y ninguno lo copió. Cada uno entregó pruebas de su lógica
+(Escritorio, 975 comprobaciones) y la sala cerró con el recorrido de las 16 estaciones en el navegador.
+
+Hermano del **0-septtricies** (un brief prestado no es el norte del dueño): aquí el brief lo escribe el líder, y su
+ejemplo es parte del brief.
+
+### Paso 0-terquadragies — Dos hermanos con la MISMA clave duplican nodos: toda clave lleva prefijo
+
+En React las claves se comparan entre los hermanos del mismo padre, aunque sean elementos distintos. Una cuenta
+3-2-1 con `key={cuenta}` junto a burbujas con `key={id}` numérico choca cuando las dos valen lo mismo. React no truena:
+duplica u omite nodos, y el síntoma parece de otra cosa (una cinta de texto que sale dos veces, un Enter que «no llega»).
+
+**Regla:** toda clave de un elemento que convive con otros hermanos con clave lleva un prefijo propio (`cuenta-3`,
+`b-17`, `e-17`), y nunca se esparce un objeto que traiga `key` (`<X {...props} />`). La consola de desarrollo se lee
+ANTES de culpar a la prueba: «Encountered two children with the same key» lo dice textual.
+
+**Por qué.** El 2026-09-25, probando Carrera, la cinta del texto salió duplicada y el envío parecía no funcionar. La
+consola decía «two children with the same key, 0»: la cuenta, al llegar a 0, compartía clave con la cinta. En
+Burbujas la misma trampa esperaba con las burbujas numeradas.
+
+Hermano del **0-sexies** (una verificación que falla acusa primero al código, no al arnés).
+
 ### Changelog del protocolo
+
+- **v54 (2026-09-25 · II):** dos lecciones de la sala de Kal'El y un ajuste. **0-duoquadragies**: al repartir trabajo
+  entre ayudantes, primero la base y un ejemplo completo, contrato por escrito, y todo bug hallado en el ejemplo se
+  avisa en vuelo. **0-terquadragies**: dos hermanos con la misma clave duplican nodos en React; toda clave lleva
+  prefijo. **0-ter** suma que el panel oculto también frena los `setTimeout` encadenados. Y el índice de proyectos del
+  maestro anota que abrir la carpeta no basta: cada proyecto excluye el maestro con `claudeMdExcludes` y trae su propio
+  «Protocolo de cierre» (Kal'El lo estrenó, siguiendo el de Terra Cristal).
 
 - **v53 (2026-09-25):** 🜂 **El protocolo se parte en dos** (decisión de Zak, tras varias salas
   intentando adelgazar el maestro sin lograrlo). Las 42 lecciones completas y este historial se mudan
