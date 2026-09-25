@@ -1171,6 +1171,24 @@ Test1, HomeGemini, Librostest…). Copia completa en `admin/desde-framer/`.
 
 ---
 
+## 🗂️ Los proyectos cargan su propio contexto
+
+🜂 **Decidido el 2026-09-20.** Este archivo se lee entero al abrir cualquier sala en `Red Solar Viva/`, y aquí
+conviven seis proyectos: abrir una sala de Terra Cristal cargaba también todo el Escáner. El arreglo es que cada
+proyecto guarde lo suyo en SU carpeta y que la sala se abra ahí dentro.
+
+| Proyecto | Su archivo | Cómo abrir la sala |
+|---|---|---|
+| **Terra Cristal** | `terra-cristal/CLAUDE.md` ✅ hecho | abrir la carpeta `terra-cristal` |
+| Escáner Vibracional (app) | `escaner-app/CLAUDE.md` — pendiente | abrir `escaner-app` |
+| Web (rsv-web) | `rsv-web/CLAUDE.md` — pendiente | abrir `rsv-web` |
+| Zak Cero | `zakcero/CLAUDE.md` — pendiente | abrir `zakcero` |
+
+Este archivo se queda como **índice del ecosistema**: quién es Zak, cómo se le habla, dónde vive cada proyecto,
+los destinos de publicación y el protocolo de cierre. Lo que sea de un solo proyecto baja a su carpeta.
+
+---
+
 ## Pendientes vivos
 
 > 🜂 **Qué entra aquí y qué NO.** Entra solo lo que sigue ABIERTO y necesita
@@ -1183,70 +1201,45 @@ Test1, HomeGemini, Librostest…). Copia completa en `admin/desde-framer/`.
 > agosto en `admin/CLAUDE_archivo_2026-08-25_a_2026-08-30.md` (no se cargan
 > por sesión).
 
-**Versión en circulación:** App Store **1.1.3 LIVE**, en curso **1.1.4**.
-Android: **pública en Google Play** (vc7). Detalle en
+**Versión en circulación:** App Store **1.1.4 LIVE**, en curso **1.1.5** (sin
+publicar). Android: **pública en Google Play** (vc7). Detalle en
 [[referencia_version_en_tienda]].
 
-
 ---
+
+### 🟢 Terra Cristal · lo que sigue abierto
+
+🜂 **Sus reglas de construcción, su hoja de ruta y su estado NO viven aquí**: están en `terra-cristal/CLAUDE.md`
+(el archivo que se carga al abrir una sala DENTRO de esa carpeta) y en `terra-cristal/Docs/`. Aquí solo queda lo
+que necesita una decisión de Zak o una mano suya.
+
+- **Sellado el 2026-09-20 · precio:** **249 MXN el juego completo** (unos 14.99 USD), compra única, con el modo en
+  línea incluido y sin suscripción. Sin precio de fundador (la idea era un descuento de lanzamiento para quien
+  comprara antes del estreno; se descarta: un solo precio, más limpio).
+- **Sellado el 2026-09-20 · Sintonía Solar NO incluye el juego.** Es una compra aparte. La suscripción ya da
+  bastante valor.
+- **Modo en línea:** factible y, por turnos, barato comparado con un juego de acción. Orden acordado: duelos contra
+  ecos (la tripulación de otro manejada por la máquina, sin servidores de partida) → duelos en vivo con el servidor
+  tirando los dados → plaza común → cooperativo. **Sin construir, falta decidir cuándo.**
+- **Guardado real:** primero en el aparato y sincronizado con la cuenta del Escáner; un documento con versión y 3
+  ranuras, que mañana sirve igual para Steam Cloud. Diseño en la Biblia §6. **Sin construir.**
+
+### 🔵 Escáner · lo que necesita tu mano
+
+- **Pegar `admin/supabase/migrations/20260921b_anillos_a_la_medida.sql`** en SQL Editor. Regresa a 100 el
+  multiplicador de anillos de Aurelia en su etapa 7 (con la medida nueva, el 200 que tenía los deja al doble).
+  Comprobado sin aplicar el 2026-09-25: `get_avatar_config` todavía devuelve `200` en esa etapa.
 
 ### 🟡 Higiene, cuando toque
 
-- **Device-QA de la ESCUCHA AUTOMÁTICA, ahora en las DOS caras** (Matriz
-  desde 2026-08-19, Espejo original desde la 1.1.20): con V encendida, mandar
-  un mensaje largo y OÍR la cadena entera — que arranque pronto, que las
-  uniones entre tramos no se oigan, que Detener o un envío nuevo la corte
-  limpio, y que el dorado vaya pegado a lo que suena (si se adelanta, el
-  ajuste es un número). Arneses en verde; falta el oído, que exige sesión y
-  llamadas de pago. [[proyecto_escucha_automatica_matriz]]
-- **La foto de Aqua´Riia (y la tuya) de la portada NO están en R2**: viven en
-  el repo, `rsv-web/public/framer/aqua-riia-pantera.webp` (Aqua, desde el
-  2026-08-31: el café de neón con su pantera) y
-  `FW4lwk3gc1bkE6FsLoI7g5OUWC8.png` (Zak'Haar). Para cambiarla: pásale a
-  Claude la imagen nueva (o su ruta en Descargas) y él la coloca con nombre
-  nuevo + perilla (`rsv-web/src/domo-perillas.ts` Y `admin/domo-perillas.json`,
-  para que un regenerado no la pise) + deploy (mismo nombre = caché vieja,
-  0-sexvicies).
-- **Consultas aterrizadas, sin construir:** (a) modo profundo en el teléfono
-  → propuesto botón "Ir más hondo" bajo cada respuesta (no interruptor:
-  gasto deliberado por reflejo, vista previa gratis del carril de pago);
-  (b) avisos de wallpapers nuevos → sello NUEVO + badge con marca local de
-  última visita + push por TANDA con deep link (nunca por wallpaper suelto);
-  (c) DeepSeek visión → no conectar mientras sea `exp`; si entra, solo el
-  camino de imágenes; (d) revisar el `50` que se guarda en pilares AÚN no
-  escaneados del primer ciclo (se vio en los scans del primer suscriptor:
-  propósito/vínculos en 50 antes de tocarse); (e) arquitectura de nombres
-  (2026-08-31, propuesta entregada, falta el sí de Zak): Zak Cero=calle,
-  Zak'Haar=firma musical (Spotify NO se rebrandea; MVs completos al canal
-  @zakhaarsolar por el Official Artist Channel), Fotón Cero=estudio (su IG
-  estrena con los MVs; estrenos como collab con @zakcero), semillas de
-  conciencia renacen como cuenta del Escáner cuando haya cadencia; detalle
-  en [[proyecto_planeta_zakhaar]].
-- **Ver en el teléfono la tanda del 2026-08-19 · II:** la barra de reflejos con
-  su buscador, el compositor abriéndose en dos renglones, las Rachas en filas
-  parejas y la puerta de "Tu plan" para quien no tiene. Todo verificado midiendo
-  en pantalla de 375, pero ninguna de esas cuatro capas se pudo abrir con sesión
-  real desde aquí (el gate de cuenta y el de Clerk lo impiden).
-- **El Cine Cero vive DENTRO de Mi Música** (2026-08-31): la entrada es
-  zakcero.com/musica → botón ENTRAR AL MODO CINE (o directo /musica#cine;
-  /videos redirige ahí). El estreno El Eco del Vacío sirve desde R2, y la
-  música de los álbumes también (Zak subió los mp3). Videos futuros: una
-  entrada en `VIDEOS` de `zakcero/src/cine.ts`. 🜂 /norte2 (mapa de
-  puertas) se DESCARTÓ y borró (decisión de Zak 2026-08-31): el norte es
-  /norte/, no volver a proponer el mapa. 🜂 `Code/ZakCeroVideos.tsx` y su
-  ruta /zakcero siguen ESCONDIDOS: no volver a colgarle videos. El correo
-  del modal de aliados es cuerpodeluz555@gmail.com como fallback visible.
-- **Device-QA del escape del navegador de Instagram** desde un enlace REAL
-  (mandarse el link por DM y abrirlo ahí). El código está probado; falta el
-  caso real.
-- **Rotar las 5 claves** que estuvieron hardcodeadas en
-  `Scripts/PDF Generator/pipeline_solar.py` (Deepgram, Gemini, R2 access +
-  secret, Supabase service_role). Ya salieron del código pero siguen en el
-  historial de git. Baja prioridad: el script no está en uso.
+- **Arquitectura de nombres** (2026-08-31, propuesta entregada, falta el sí de Zak): Zak Cero=calle, Zak'Haar=firma
+  musical (Spotify NO se rebrandea; MVs completos al canal @zakhaarsolar por el Official Artist Channel), Fotón
+  Cero=estudio (su IG estrena con los MVs; estrenos como collab con @zakcero), semillas de conciencia renacen como
+  cuenta del Escáner cuando haya cadencia; detalle en [[proyecto_planeta_zakhaar]].
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v49 (2026-09-18)
+## 🜂 Protocolo de Cierre de Sesión · v52 (2026-09-25)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -2539,7 +2532,82 @@ documentos del proyecto: leí la nota de Grok Build como una prohibición y salt
 Zak: *"¿por qué NO CERRASTE sala de comando?"*. Un cierre a medias es peor que ninguno, porque
 se reporta como hecho.
 
+### Paso 0-undequadragies — Una queja de "me pasó tres veces" se mide en el PEOR CASO, no en el promedio
+
+Cuando lo que se reporta es una EXPERIENCIA repetida ("me atacó tres veces seguidas", "se me borró dos veces",
+"siempre me toca al final"), la tentación es modelar el caso que uno imagina, arreglarlo y dar por cerrado. Pero
+esas quejas casi nunca describen el promedio: describen **la cola de la distribución**, el peor caso que el
+sistema permite. Un arreglo que corrige el caso imaginado puede ser correcto, medible y verde en el arnés, y aun
+así dejar la experiencia idéntica.
+
+**La sonda es una simulación del sistema completo midiendo el PEOR caso**, no la media: cuántos turnos ajenos
+como máximo pasan entre dos propios, cuántos reintentos como máximo, cuánto es lo más que puede tardar. Si el
+peor caso sigue siendo el que la persona describe, el arreglo no era el arreglo.
+
+**Y cuando la varianza es el problema, la cura suele ser quitar el azar de en medio**, no acotarlo: un orden que
+se sortea UNA vez y se repite garantiza lo que la persona espera ("si ya movió a los tres, me toca"), mientras que
+un sorteo por ronda con reglas encima solo estrecha la cola.
+
+**Por qué.** El 2026-09-19 Zak reportó que la Legión le atacaba con sus tres unidades y volvía a mover a las tres
+antes de tocarle. El primer arreglo fue "nadie actúa dos veces seguidas": correcto, medido (27 de 500 rondas antes,
+0 después) y sin efecto sobre lo que él veía, porque su queja no era una unidad repitiendo sino el hueco entre dos
+turnos suyos, que el sorteo por ronda dejaba llegar a SEIS. La cura real fue una vuelta estable.
+
+**Corolario de arneses, de la misma sala:** ningún arnés de navegador puede SOSTENER una tecla. `computer key` manda
+pulsación y soltada en el mismo milisegundo (medido con un espía de eventos: idéntico `performance.now()`), los
+eventos sintéticos de JS no mueven `isPressed`, y AppleScript no llega a la página. Todo lo que dependa de un
+estado sostenido (caminar, mantener, arrastrar) se prueba en el motor, inyectando el estado a mano.
+
+### Paso 0-quadragies — Un «NO SE PUEDE» heredado caduca: se comprueba contra la versión de hoy antes de repetirlo
+
+Una limitación de una herramienta ajena (una licencia, una API, un navegador) no es un hecho del mundo: es una foto
+de cuando se midió, y las herramientas cambian. Cuando un «no se puede» llega desde la memoria o desde una sala
+anterior, vale como PISTA. Antes de repetírselo al dueño como un hecho, o de diseñar un rodeo encima, se comprueba
+en un minuto contra la versión que está instalada hoy: el ajuste existe o no existe, la llamada responde o no.
+
+La señal de alarma es un rodeo elaborado para esquivar algo que nadie volvió a medir.
+
+**Por qué.** Durante dos salas le dije a Zak que el letrero «Made with Unity» no se podía quitar sin pagar Unity Pro,
+y hasta le propuse teñirle el fondo para disimularlo. Era cierto hace años. Desde Unity 6 se apaga con un ajuste
+también en la licencia gratuita: comprobarlo fue una línea, y el letrero desapareció. El rodeo habría quedado para
+siempre en el producto por una frase copiada de la memoria.
+
+Hermano del **0-duodevicies** (un «no hay nada» se confirma por otra vía): allí miente un vacío; aquí miente una
+negativa que fue verdad.
+
+### Paso 0-unquadragies — Un bug que vivió semanas en SILENCIO se cierra con su centinela, no solo con su arreglo
+
+Hay fallas que nadie de la casa puede ver: ocurren en un camino por el que quien publica nunca pasa (el regreso de
+Google a la web, un aparato que no usamos, un idioma que no hablamos). No se delatan solas; las descubre alguien de
+fuera, semanas después.
+
+**Regla:** al arreglar una falla así, el cierre incluye la comprobación que la habría cazado el día que nació, y va
+DENTRO de la herramienta que publica (el guion de despliegue, el arnés), no en la memoria de nadie. Si vuelve, la
+publicación se niega a pasar. Y el alcance de un cambio se prueba también en las superficies que NO eran su objetivo.
+
+**Por qué.** El 2026-09-24 Zak no podía entrar a la web: al volver de Google o Apple aterrizaba en un 404. Llevaba así
+desde el 5 de septiembre, cuando una regla del servidor, reescrita para el actualizador de la Mac, dejó fuera
+`/oauth-callback` al copiarla de otra lista. Diecinueve días sin que nadie lo viera, porque los teléfonos y la app de
+la Mac no pasan por esa página. El arreglo fue una línea; la guardia en `publicar-escritorio.sh` impide la segunda vez.
+
+Hermano del **0-undevicies** (tu automatización puede deshacer lo que hiciste): allí se codifica en la herramienta el
+orden; aquí, la vigilancia.
+
 ### Changelog del protocolo
+
+- **v52 (2026-09-25):** Paso 0-unquadragies — un bug que vivió semanas en silencio se cierra con su centinela dentro
+  de la herramienta que publica. El regreso del inicio de sesión web dio 404 diecinueve días porque el cambio era para
+  otra superficie y nadie de la casa pasa por esa página; el arreglo fue una línea y la guardia vive en el guion.
+
+- **v51 (2026-09-19 · II):** Paso 0-quadragies — un «no se puede» heredado caduca: se comprueba contra la versión de
+  hoy antes de repetirlo. Dos salas diciendo que el letrero de Unity exigía licencia de pago, con un rodeo ya
+  propuesto, cuando desde Unity 6 se apaga con un ajuste. Una limitación ajena es una foto de cuando se midió.
+
+- **v50 (2026-09-19):** Paso 0-undequadragies — una queja de "me pasó tres veces" se mide en el PEOR CASO, no en
+  el promedio; y cuando la varianza es el problema, se quita el azar en vez de acotarlo. El primer arreglo del turno
+  repetido ("nadie actúa dos veces seguidas") era correcto y medido, y no cambiaba nada de lo que Zak veía: su queja
+  era el hueco de hasta seis turnos ajenos que el sorteo por ronda permitía. Trae el corolario de que ningún arnés de
+  navegador puede sostener una tecla, así que lo que dependa de un estado sostenido se prueba en el motor.
 
 - **v49 (2026-09-18):** Paso 0-duodequadragies — la custodia del archivo no anula la orden de
   cierre: "Cerrar Sala de Comando" es el protocolo entero sobre este archivo aunque la cabecera
@@ -2762,129 +2830,76 @@ se reporta como hecho.
 
 ## 🜃 Historial de sesiones
 
-#### 2026-09-18 — TERRA CRISTAL, TRES SALAS SEGUIDAS: EL JUEGO YA SE SIENTE JUEGO
+#### 2026-09-21 · II → 2026-09-25 — ESCÁNER: SESIONES QUE DURAN AÑOS, GRUPOS Y NOTAS COMPARTIDAS, EL CHAT QUE AGUANTA EL GIRO, ANILLOS A LA MEDIDA, LA TIENDA QUE CELEBRA, EL INICIO DE SESIÓN WEB Y EL REEL
 
-- ✅ **Resuelto** (todo vivo en play.redsolarviva.com/terra-cristal/, verificado en el navegador):
-  1. **La escena de combate tiene fondo propio** (la vista a nivel del suelo que dejó Zak), con los dos
-     contrincantes plantados en la vereda y a escala; placas de vida y Plasma abajo en las esquinas con la
-     ventana de mensaje entre ellas y letra grande; golpes que se sienten (parón, onda de choque, chispas,
-     tirón de cámara, sacudón de quien recibe) con sonidos rehechos con cuerpo, más la embestida al lanzarse
-     y el cuerpo del que recibe.
-  2. **Controles**: flechas a las diagonales que pidió Zak; SOLO teclado (el ratón solo toca opciones y
-     pantalla completa), sin WASD, caminar de corrido con la flecha sostenida y más despacio con la zancada
-     pegada a los pies; la casilla donde se estaba parado vuelve a estar al alcance; S sin menú abre la
-     casita libre para ver la ficha completa de cualquiera (con la EXP que falta para subir).
-  3. **Interfaz a la Shining Force**: menús en cruz con íconos de dos cuadros y ventana de nombre; submenú
-     de MAGIA con nivel y MP; ficha compacta que se esconde al caminar y vuelve con un fundido; opciones con
-     volumen por canal (clic en el nombre apaga), M silencia todo, Esc cierra; rótulos sin tilde en
-     mayúsculas (la fuente las dibujaba en minúscula); la casita de objetivo redibujada a 4x y pintada bajo
-     los pies.
-  4. **Personajes**: el soldado blanco de First Wave es la Legión (quieto, caminar, ataque) y Elara estrenó
-     quieto, caminar y ataque (de una hoja PNG); el extractor lee hojas, toma un ciclo real de cada vídeo y
-     ya no corta cabezas.
-  5. **Reglas**: escala de nivel 1 (stats de 3 a 9) desde los prototipos, esquivas por agilidad, contraataque
-     al 15 %, dos Magias (ZIP y PULSO SOLAR, cada una con su animación), música por relevo sin traslape (la
-     parte intensa en el segundo 162.5). Todo escrito en `terra-cristal/Docs/REGLAS_DEL_JUEGO.md`.
-  6. **Arena**: props recortados por objeto y solo con lo que se levanta del suelo (el oro y el pasto ya no
-     tapan a nadie); la roca junto al puente cerrada, la vereda del puente abierta y la orilla lejana del
-     río fuera de juego.
-  7. Tres prompts de portada (`Docs/PROMPTS_PORTADA.md`) y el prompt del loader propio con sus tres láminas
-     (`Docs/PROMPTS_LOADER.md`).
-- 📁 **Archivos:** en `terra-cristal/` — `GridController` v4.1 · `BattleHud` v5.1 · `BattleCutscene` v3.1 ·
-  `ArenaAudio` v2.2 · `BattleMath` v2.0 · `Unit` v3.2 · `UnitData` v3.0 · `PlaceholderArt` v2.5 ·
-  `PersonajesImporter` v1.3 · `ArenaBuilder` v2.7 · `extraer_personaje.py` v1.4 · `separar_capas.py` v2.7 ·
-  `afinar_mask.py` v1.2 · `sintetizar_sfx.py` v1.2 · `dibujar_iconos.py` v1.0 (nuevo). Commits `22973e1`,
-  `a672d2b`, `be29abb` en `ZakHaarSolar/terra-cristal`.
-- ⏳ **Pendiente:** recibir golpe y KO de Elara y del soldado (Soldier B sin animar); "abajo hay una
-  terminación y luego rocas" por confirmar con el build nuevo; el loader propio de la web (prompt listo).
-- 💡 **Decisiones:** solo teclado en el juego · los prototipos son la fuente de verdad de stats, armas y
-  Magias · PROTOCOLO se dice MAGIA en la interfaz (los hechizos conservan su nombre) · la casita se pinta
-  bajo las unidades · el espejo de un personaje se decide por hacia dónde apunta el arma, no la máscara.
-- 🔧 **Patrones nuevos:** en [[proyecto_terra_cristal]]: fotografiar la escena de combate sin navegador por
-  su propia cámara (el HUD no sale en batch); una fuente que "tiene" el glifo puede dibujarlo mal, se
-  verifica renderizando; props por objeto y solo lo que se levanta del suelo; un ciclo de marcha real.
-- 🧬 **Versión del sistema:** Terra Cristal, build web del 2026-09-18 (VI).
-- 🔮 **Cómo arrancar la próxima Sala de Comando:** pegar el prompt de `terra-cristal/Docs/PROXIMA_SALA.md`
-  (el loader propio; las láminas de Nano Banana van en `Assets/WebGLTemplates/TerraCristal/loader/`).
+- ✅ **Resuelto:** el «me sacó de la app» semanal era el plazo de 7 días que Clerk trae de fábrica; Zak lo subió a
+  10 años con cierre por inactividad de 1 año (las sesiones viejas pidieron entrar una última vez) · **grupos de
+  hasta 10** como WhatsApp (nadie entra sin su sí, administradores, información del grupo) · **notas de la Bitácora
+  compartidas** (se entra aceptando, «está escribiendo…», fusión por párrafo, tope 10, no cuentan para el límite
+  gratis) · **avisos con vista previa** · **Enter salta de línea** en los chats (se envía con el botón o Cmd/Ctrl+Enter)
+  · una sola ventana para invitar (contactos, nombre entre perfiles visibles, correo exacto) · el cifrado de mensajes
+  privados y de Realidad Elegida **cifra de verdad** · **girar el teléfono no borra lo escrito** ni recarga la
+  conversación, y cada chat guarda su **borrador** aunque se salga · **anillos a la medida real** de Nova, Aurelia y
+  Prisma en cada media etapa · **la tienda suena** (pestaña, selección, equipar) y **comprar se celebra** a pantalla
+  completa · el guion del iPhone compila aunque el teléfono esté bloqueado · **el inicio de sesión web con Google o
+  Apple volvía a una página 404** desde el 5 de septiembre; arreglado, con una guardia en el guion de publicación, y
+  Zak confirmó que entra · **reel promocional 9:16 de 28 s** con música y diseño sonoro propios (el Espejo y el
+  Decodificador de Alimentos de protagonistas, cierre «Descárgala gratis»).
+- 📁 **Archivos:** en `escaner-app/` — `Grupos.tsx` v1.0 · `InvitarTripulante.tsx` v1.0 · `EV_BitacoraCompartir.tsx`
+  v1.0 · `EV_Bitacora.tsx` v1.21 · `fusionNotas.ts` v1.1 · `PushSync.tsx` v1.6 · `Comunidad.tsx` v1.21 ·
+  `Mensajes.tsx` v1.40 · `CamaraCristalizacion.tsx` v1.7 · `OrbitRings.tsx` v1.3 · `avatarFootprint.ts` v2.1 ·
+  `sensory.ts` v2.19 · diccionarios `grupos`, `bitacora`, `comu`, `avatar` · `vercel.json` · `publicar-escritorio.sh` ·
+  `al-iphone.sh` · app de Mac **1.1.44**. El reel y su estudio: `Escaner Vibracional/Reel Promo/` (no es repo).
+- 🗄️ **Migraciones SQL:** `20260921_grupos_notas_compartidas.sql` (aplicada por Zak y verificada) ·
+  `20260921b_anillos_a_la_medida.sql` (**sin aplicar**, ver Pendientes vivos).
+- 🔌 **Edge functions deployed:** `send-push` v1.3 (vista previa del mensaje) · `transcribe-voice` v1.1 ·
+  `user-action` v1.49 (grupos, notas compartidas, invitaciones). El puente temporal de fal.ai se usó para los efectos
+  del reel y quedó **borrado** (responde 404).
+- ⏳ **Pendiente:** medir igual el Aura, el Enjambre, el Sello y las Alas, que siguen con el tamaño estimado · escribir
+  a quienes no pudieron entrar a la web del 5 al 24 de septiembre (Clerk sabe quiénes lo intentaron).
+- 💡 **Decisiones:** sesión de 10 años + inactividad de 1 año · en los chats Enter es salto de línea · grupos y notas
+  compartidas con tope de 10 y siempre con aceptación · el reel se regenera con un comando
+  (`Reel Promo/estudio/renderizar.sh`, y `--musica` si cambia la música).
+- 🔧 **Patrones nuevos:** girar sin desmontar = un solo árbol con cajas que no pintan · el borde del avatar se mide
+  (luz encerrada al 90 %) en vez de estimarse · estudio de video propio: WebGL para partículas y brillo, lienzo 2D
+  para la tipografía, la música sintetizada en el navegador y tres Chrome sin ventana con la GPU del Mac
+  (1680 cuadros en 15 s); ver [[proyecto_reel_promo_escaner]].
+- 🧬 **Versión del sistema:** app de Mac 1.1.44 · web con `/oauth-callback` de vuelta · reel v1.
 
-#### 2026-08-31 · II — SALA LARGA: DEL COUNCIL AL CANAL DE CONTACTO DE LA CASA
+#### 2026-09-20 — TERRA CRISTAL: CADA ATAQUE CON SU ARTE, EL SALTO A DOMUS, SENTARSE Y UNA TANDA DE PULIDO
 
-- ✅ **Resuelto** (una sala que corrió del 22 al 31; todo desplegado y verificado en vivo):
-  1. **Panel de Densificación (Council):** el prompt de MOVIMIENTO dejó de
-     heredar el ADN visual (dos carriles estrictos; sin acción declarada se
-     compone un neutro sin tocar el núcleo; negativo I2V automático). El
-     generador de locaciones declara 16:9 SIEMPRE (regla + blindaje
-     `reforzarFormato`) y la Fragua hace las láminas de lugar apaisadas.
-     **Fotogramas por API** (`densi-fotograma` en council-gate v2.3, secret
-     GEMINI_API_KEY): «✦ NB2/Pro» con láminas de la toma como referencia,
-     escalera «⇧ a Pro» anclada al aprobado, gasto visible en cabecera y
-     «probar Google» en ⚙. El 502 del estreno era el mime (Interactions API
-     SOLO acepta JPEG; leído en los logs del servidor con el token de la
-     CLI). **La cámara manda** sobre las referencias y la locación viaja
-     RECORTADA a su centro en planos cerrados (45 %/35 %/70 %; ajuste
-     recorte·completa·sin). **Ancla a la toma anterior** (chip ⏮, cláusula de
-     continuidad, recortada al 60 % en cerrados). **Música de la Tira** por
-     tramos (Episodio.pistas: de toma N a M, segundo de entrada/salida,
-     volumen; manda sobre la música por toma; EDL pista A3 con origen).
-  2. **La tarjeta del Domo Cero se apagó para todos** (MOSTRAR_DOMO_CERO en
-     MI_Shared; cinco sitios, cero rastro en el bundle).
-  3. **redsolarviva.com:** la CONSTELACIÓN se reestructuró dos veces (la
-     final, a gusto de Zak: texto grande limpio SIN tarjetas, familia como
-     palabra de color, luz que NACE EN LA RAÍZ y sube hacia hoy, futuro como
-     rombo pulsante); CÓDICES es museo (halo, censo en dos líneas exactas,
-     esquinas holográficas, pedestal, placas Nº, ficha iluminada por su
-     portada) y la llamada al Escáner es un PORTAL con ignición. El
-     MANIFIESTO ganó letra limpia (peso 300) y LEER MÁS revela por TANDAS
-     (3 bloques, uno por clic). X e Instagram salieron de la portada.
-  4. **Nace el CANAL DE CONTACTO:** antena holográfica en el pie (arcos que
-     emiten, ignición al tocarla) → formulario nombre/correo/mensaje que
-     entra por Supabase (`submit_contacto_rsv`) DIRECTO al buzón de Soporte
-     del Motor, sellado RED SOLAR VIVA (cian); los casos de la app se leen
-     ESCÁNER VIBRACIONAL (dorado). Muere el webhook de Pipedream que tardaba
-     minutos (la lentitud que Zak padeció era su arranque en frío). El faro
-     de no-leídos ya cuenta el contacto solo (entra como `nuevo`).
-  5. **zakcero.com:** la joya de X (@zakcero) en la barra del hero y el pie,
-     estilo cómic de la casa (triple impresión + chispa).
-- 📁 **Archivos:** Code `Origen` v5.30 · `Codices` v6.1 · `MI_Soporte` v1.2 ·
-  `MI_Shared` v2.3 · shells de Simuladores; rsv-web `densificacion/*`
-  (movimiento v1.0 · fotograma v1.3 · Tira v1.2 · exportar v1.2 · almacen
-  v1.7 · tipos v1.9 · estilos dz-css-v11) · council `types` v4.1 · `store`
-  v2.20; zakcero index v7 · estilos v8.1.
-- 🔌 **Edges:** `council-gate` v2.3 (densi-fotograma: Google Nano Banana 2/Pro,
-  JPEG, prueba de acoplamiento; fallos por causa) DESPLEGADA.
-- 🗄️ **SQL:** `20260831_contacto_rsv.sql` → ✅ pegada (Zak, 2026-08-31): el
-  buzón del contacto está abierto.
-- 💡 **Decisiones:** las FOTOS de perfil de la portada NO viven en R2: son
-  archivos del repo (`rsv-web/public/framer/` — Zak'Haar
-  `FW4lwk3gc1bkE6FsLoI7g5OUWC8.png`, Aqua´Riia
-  `X1UbmzPqcx9kiJLxFfMmjmgy1nA.png`); para cambiarlas, archivo nuevo CON
-  NOMBRE NUEVO (caché, 0-sexvicies) + perilla + deploy · Nano Banana Pro
-  cuesta lo mismo a 1K que a 2K (nunca pedir 1K) · un episodio de 10-12 min
-  ronda $30-40 USD en fotogramas (NB2 borrador → Pro final) · las
-  referencias de imagen se leen con `cache:"reload"` (una respuesta cacheada
-  por un <img> sin Origin envenena el fetch CORS; medido contra R2).
-- 🔧 **Patrones nuevos:** en memorias — [[referencia_nano_banana_api]],
-  [[feedback_cache_img_envenena_fetch_cors]], y el detalle de la sala en
-  [[proyecto_densificacion_foton_cero]] y [[proyecto_arquitectura_marca_rsv]].
+- ✅ **Resuelto** (todo vivo en play.redsolarviva.com/terra-cristal/, verificado renderizando y sin errores de consola):
+  el golpe de bastón de Elara y el Pulso Solar con sus animaciones nuevas, y el soldado de la Legión usando por fin
+  su estocada (su clip estaba amarrado a la Magia, que él nunca lanza) · el **SALTO A DOMUS**, la magia de retirada:
+  sello de vector, columna de luz y de vuelta a la base con lo ganado, los caídos siguen caídos y la arena queda
+  por ganar, que es lo que permite entrenar · **monedas** por enemigo · la batalla **se mira de cerca** (campo
+  entero solo al abrir, después la cámara va con quien actúa) · la **Cámara de Recarga** completa: 62 casillas, el
+  muro de cristal y el arco tapando de verdad y el vidrio dejando ver a través · **SENTARSE** con las tres
+  animaciones de Zak (bucle y dos entradas), tecla **D**, caminando sola al mueble · **la pantalla negra** al volver
+  de la base a una arena sin ganar · el **portal carga de una pieza** (negro con anillo y fundido), **botón de
+  sonido** que espera un gesto y **chasquido** al entrar · cabecera con solo el nombre del lugar · el alcance como
+  **mancha** y no cuadrícula · **girar en el sitio** contra un tope y **giro al llegar** (paso y flecha contraria) ·
+  el selector libre por todo el mapa pero dentro de la pintura · teclas **O** (asientos) y **P** · sin botones de
+  ATRÁS · **sonido de continuar** en todos los cuadros de diálogo.
+- 📁 **Archivos:** en `terra-cristal/` — `extraer_personaje.py` v1.8 · `oclusores.py` v2.0 · `separar_capas.py` v3.1 ·
+  `base01_mask.py` v1.3 · `dibujar_iconos.py` v1.6 · `sintetizar_sfx.py` v1.3 · `PlaceholderArt` v3.0 ·
+  `ArenaBuilder` v3.1 · `PersonajesImporter` v1.6 · `UnitData` v1.5 · `Unit` v3.8 · `BattleCutscene` v3.5 ·
+  `TurnManager` v2.9 · `CameraRig` v1.5 · `GridController` v5.0 · `BattleHud` v6.2 · `GameState` v1.1 ·
+  `index.html` del portal. Commits `a3ec2ab` → `45e3407` → el del botón de sonido.
+- ⏳ **Pendiente:** los seis sitios para sentarse (Zak los dicta con el selector, que dice su casilla) · tres
+  oclusores marcados ESCONDER (la curva del muro sobre la cabeza, una planta de la arena sobre las piernas, los
+  sofás donde el pie se encima) · el corrimiento de la caminata por casilla con ida y vuelta distintas.
+- 💡 **Decisiones:** las reglas de construcción de Terra Cristal viven en `terra-cristal/Docs/DIRECTRICES.md`, no
+  aquí · un área navegable se prueba en las dos direcciones · si el pie no se puede esconder, esa casilla no existe ·
+  nada se enseña a medio cargar · la música del portal no puede sonar sin un gesto (política del navegador): por eso
+  el botón de bocina.
+- 🔧 **Patrones nuevos:** el instante del golpe y la punta del arma se MIDEN del vídeo y viajan en el manifest ·
+  cada animación con su ancho y su pivote · el modo `regiones` de oclusores y el `cristal` con velo · una mancha de
+  16 losetas según qué lados dan al borde.
+- 🧬 **Versión del sistema:** Terra Cristal, build web del 2026-09-20 (36 MB).
+- ↪ **El arranque de Terra Cristal** vive en `terra-cristal/Docs/PROXIMA_SALA.md` y en `terra-cristal/CLAUDE.md`
+  (su 🔮 se retiró de aquí al entrar una sala más nueva; su trabajo sigue abierto allá).
 
-#### 2026-08-30 (comprimida) — Nace el planeta Zak'Haar: zakcero.com es la casa del creador y Kal'El se mudó a somacero.com
-
-- 💡 **Decisiones:** los álbumes publicados en Spotify son 4 (Aura-Drift:
-  Transmission One · Donde Viven los Cielos · Lumeria · Prisma; artista
-  `6BSsXgmAnoie8tUgLtIbqb`); portadas oficiales en alta en
-  `Nodos Solares Fractal Autosostenidos/Zak´Haar/Pineal Score/` y la de DVLC
-  en `~/Downloads/Donde Viven los Cielos portada 2.png` · **los fotogramas
-  Ghibli del video musical viven en `~/Downloads/El Eco del Vacío/`** (el
-  proyecto del video: subcarpetas Kael, Zoa, El Valle, Laboratorio) y sueltos
-  en Descargas; la caricatura de Zak en la selva es
-  `~/Downloads/Gemini_Generated_Image_irfuksirfuksirfu.jpeg` · TikTok NO se
-  enlazó (imposible verificar sin sesión; YouTube/IG/X `@zakcero` sí, y el
-  artista es `@zakhaarsolar` en YouTube) · `sakcero.com` no existe como
-  dominio · modo inspección de la página: `?todo` (revela todo, apaga scroll
-  suave) + `&ir=<id>` (aterriza en una sección antes del primer pintado,
-  para capturas con compositor congelado).
-- 🔧 **Patrones nuevos:** detalle completo en [[proyecto_planeta_zakhaar]].
-
-*Las entradas anteriores (2026-04-18 → 2026-08-22) viven en*
-`admin/CLAUDE_archivo_hasta_2026-08-04.md`. *No se cargan por sesión: lo
+*Las entradas anteriores viven en* `admin/CLAUDE_archivo_hasta_2026-08-04.md` (2026-04-18 → 2026-08-22) *y en*
+`admin/CLAUDE_archivo_2026-08-30_a_2026-09-18.md` (2026-08-30 → 2026-09-18). *No se cargan por sesión: lo
 durable de cada una ya está en las memorias y en el código.*
