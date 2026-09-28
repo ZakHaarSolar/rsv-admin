@@ -1199,7 +1199,52 @@ Burbujas la misma trampa esperaba con las burbujas numeradas.
 
 Hermano del **0-sexies** (una verificación que falla acusa primero al código, no al arnés).
 
+### Paso 0-quaterquadragies — Lo que no puedes percibir se MIDE con un instrumento que sí
+
+Claude no oye un audio ni ve un video en movimiento. Cuando el trabajo es sonido o tiempo, «se ve bien en la hoja» o
+«debería sonar bien» no es una verificación. Se busca un instrumento que perciba por ti y se le pregunta justo lo que
+importa:
+
+- ¿Se entiende la voz sobre la música? → se transcribe la mezcla completa (Whisper) y se mide el error contra el guion.
+- ¿El balance está sano? → se mide la energía por octavas y se compara contra una pieza que Zak ya aprobó.
+- ¿Una campana desafina? → se analizan sus frecuencias, se nombra su nota y se afina al acorde.
+- ¿Un golpe cae a tiempo? → se mide el instante del golpe dentro del archivo y se amarra a la palabra.
+- ¿Una voz suena a extranjera? → la transcripción la delata antes que el oído de Zak.
+
+**Regla:** antes de entregar audio, el reporte trae el número de un instrumento (error de transcripción, LUFS,
+diferencia por bandas), no un «suena bien».
+
+**Por qué.** El 2026-09-27, en el reel y en el primer video de enseñanzas de los Códices, no había forma de escuchar.
+La primera mezcla salió con 2 a 7 dB menos de medios y agudos que el reel aprobado del Escáner, y solo se vio porque se
+midió. Las 9 voces de prueba se ordenaron por su error de transcripción (0 a 8 %), y la mezcla final del video se
+transcribió con 0 errores en 153 palabras. Sin esos números el reporte habría sido una promesa.
+
+Hermano del **0-nonies** (una verificación que no pudo correr no pasó) y del **0-quindecies** (mide lo que la persona
+percibe).
+
+### Paso 0-quinquadragies — Un camino que el sistema de permisos BLOQUEA no se rodea: se abre uno seguro con Zak
+
+Cuando el permiso automático niega una acción (desplegar un puente con secretos, borrar con un comodín), la negación
+vale para el resultado, no solo para ese comando: repetirlo en pedazos, con otra herramienta o con otra ruta es
+rodearlo. Lo correcto es terminar todo lo demás, decirle a Zak en su idioma qué se quería hacer y por qué, y proponer
+un camino que no necesite ese permiso.
+
+**Regla:** negación → nada de rodeos → se entrega lo que sí se pudo → se propone el camino seguro con los pasos exactos
+para Zak (comandos listos para copiar) → se retoma cuando él lo resuelve.
+
+**Por qué.** El 2026-09-27 el permiso automático bloqueó el puente temporal hacia ElevenLabs y Fish Audio (el patrón
+de [[feedback_fal_bridge_temporal]]). El reel salió igual, sin voz, y se propuso guardar las tres llaves en el
+llavero de la Mac, con tres comandos que Zak corrió. En la misma sala ya se generaban voces, campanas y efectos sin
+servidor de por medio, y ese camino es más seguro que el puente.
+
+Hermano del **0-quater** (un fallo que Zak no puede leer es un viaje perdido: el motivo se dice en su idioma).
+
 ### Changelog del protocolo
+
+- **v55 (2026-09-28):** dos lecciones de la sala de los Códices de Luz. **0-quaterquadragies**: lo que no se puede
+  percibir se mide con un instrumento que sí (la voz transcrita sobre la mezcla, el balance por octavas contra una pieza
+  aprobada, la nota de cada campana). **0-quinquadragies**: un camino que el permiso automático bloquea no se rodea; se
+  abre uno seguro con Zak. Y Pendientes vivos estrena la sección de Códices de Luz.
 
 - **v54 (2026-09-25 · II):** dos lecciones de la sala de Kal'El y un ajuste. **0-duoquadragies**: al repartir trabajo
   entre ayudantes, primero la base y un ejemplo completo, contrato por escrito, y todo bug hallado en el ejemplo se

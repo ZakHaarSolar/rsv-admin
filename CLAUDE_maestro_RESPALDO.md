@@ -513,6 +513,18 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   de la Mac en 404 hasta volver a correr `./publicar-escritorio.sh` (pasó dos veces el 2026-09-25). La cura es una
   línea en `escaner-app/vercel.json` (`"ignoreCommand": "exit 0"`): el guion quedaría como el único camino de
   publicación, que es lo que ya dice el Mapa de destinos.
+- **Escribir a quienes no pudieron entrar a la web del 5 al 24 de septiembre** (Clerk sabe quiénes lo intentaron;
+  venía de la sala del 21 al 25): falta que Zak decida el mensaje y si se manda.
+
+### 🟣 Códices de Luz · lo que necesita tu decisión
+
+- **Elegir el sello visual de los videos de enseñanzas** (propuesto el 2026-09-28): cinco láminas en
+  `Códices de Luz/Enseñanzas/Estilos visuales/` (1 Hilo de Luz · 2 Cristal Holográfico · 3 Códice Iluminado ·
+  4 Acuarela Cósmica · 5 Escáner del Alma). Zak lo dice en la próxima sala. El 1 y el 5 salen completos del estudio
+  con código; el 3 casi todo; el 2 y el 4 piden imágenes de fal.ai por escena y cuestan más.
+- **¿Los dos Cristales del mes se combinan libremente?** La sección «Suscripción RSV vigente» dice que sí (dos
+  Códices, dos Meditaciones o uno y uno); el código los separa en uno de Códice y uno de Meditación. Falta que Zak diga
+  cuál es la regla. El reel dice lo que es cierto en los dos casos («cada mes un Cristal abre un Códice completo»).
 
 ### 🟡 Higiene, cuando toque
 
@@ -523,7 +535,7 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v54 (2026-09-25 · II)
+## 🜂 Protocolo de Cierre de Sesión · v55 (2026-09-28)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -659,6 +671,8 @@ memorias.
 - **0-unquadragies** · Un bug que vivió semanas en silencio se cierra con su centinela dentro de la herramienta que publica.
 - **0-duoquadragies** · Trabajo repartido entre ayudantes: la base y un ejemplo completo primero, contrato por escrito, y todo bug del ejemplo se avisa en vuelo.
 - **0-terquadragies** · Dos hermanos con la misma clave duplican nodos (React): toda clave lleva prefijo; la consola se lee antes de culpar a la prueba.
+- **0-quaterquadragies** · Lo que no puedes percibir se mide con un instrumento que sí: la voz con un transcriptor, el balance contra una pieza aprobada, la nota con un análisis de frecuencias.
+- **0-quinquadragies** · Un camino que el sistema de permisos bloquea no se rodea: se abre uno seguro con Zak (las llaves en el llavero de la Mac).
 
 ### Paso 1 — Test de continuidad
 
@@ -800,11 +814,47 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v54 (2026-09-25 · II). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v55 (2026-09-28). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
+
+#### 2026-09-27 → 2026-09-28 · CÓDICES DE LUZ: EL REEL DE LOS LIBROS, LA PRIMERA ENSEÑANZA CON VOZ Y CINCO SELLOS VISUALES
+
+- ✅ **Resuelto:** **reel de los Códices** (38 s, 9:16): el gancho «Tienes en tus manos un objeto peligroso.», la tapa
+  que se abre en luz, seis frases reales con sus portadas de la app (Sintiencia ahora dice «Tu gozo es la finalidad de
+  la evolución.»), el anillo de los 11 en la Holoteca, «Lee las primeras páginas gratis», el Cristal que abre un Códice
+  completo (con tiempo para leerlo) y el cierre con el ícono; campanas y cuenco reales de fal.ai afinados nota por nota
+  · **primer video de enseñanzas**, «Nunca has tocado nada» (76 s, El Arquitecto): ilustración hecha con código, la voz
+  de CarterSutra y Charlotte como la materia, subtítulos palabra por palabra, efectos de fal.ai y una música que se
+  aparta de la voz · **las tres llaves** (fal.ai, ElevenLabs, Fish Audio) en el llavero de la Mac, leídas por `ia.py`
+  sin servidor de por medio · **cinco sellos visuales** propuestos para la serie.
+- 📁 **Archivos:** `Códices de Luz/Reel Promo/` (maestro, ligero, portada y `estudio/`: motor.js v1.0, shaders.js v1.0,
+  escenas.js v1.1, audio.js v1.2, renderizar.sh v1.1, ia.py v1.2, tono.py v1.0) · `Códices de Luz/Enseñanzas/01 Nunca
+  has tocado nada/` (video, ligero, portada, `Audiciones de voz/` y `estudio/`: guion.json, voz.py v1.0, escenas.js
+  v1.0, audio.js v2.0, shaders.js v1.1, renderizar.sh v2.0) · `Códices de Luz/Enseñanzas/Estilos visuales/` (5 láminas
+  y la tabla). Ninguno es repo. No se tocó código de la app.
+- ⏳ **Pendiente:** Zak elige el sello visual (Pendientes vivos) · después, el video 2 (propuesta: La Muerte no Existe,
+  «eres el jugador, no el personaje»).
+- 💡 **Decisiones:** la voz de la serie es **CarterSutra** (Zak, 2026-09-28) · los videos de enseñanzas no nombran el
+  libro y cierran con el ícono, «Escáner Vibracional» y «Códices de Luz» · las frases de los Códices en video son
+  expansivas, nunca de regaño · el texto se queda en pantalla lo suficiente para leerse y el reel puede llegar a 45 s ·
+  lo que se promete de los Códices se verificó en el código y en la base: 11 libros, primeras páginas gratis sin
+  membresía, Sintonía mensual con Cristal de Códice, audiolibro solo en La Voz de Gaia y El Agua que Recuerda, y la
+  compra suelta no se promete · las llaves viven en el llavero de la Mac; el puente en el servidor lo bloquea el
+  permiso automático.
+- 🔧 **Patrones nuevos:** la voz con marcas de tiempo por fal.ai (`fal-ai/elevenlabs/tts/multilingual-v2`, acepta ids
+  de la biblioteca) manda las escenas, los subtítulos y la música · lo que no se oye se mide (0-quaterquadragies) ·
+  campanas afinadas midiendo su nota (`tono.py`) · un golpe doble se corta para que cada golpe caiga en su palabra ·
+  libros en 3D con MSAA, portadas reales y cantos dorados · un objeto 3D que se desvanece va en su propio pase · la
+  lámina de estilo: misma escena, tipografía propia, subtítulo de muestra y la firma con la línea de pulso.
+- 🧬 **Versión del sistema:** reel de los Códices v3 · video de enseñanzas 01 · protocolo v55.
+- 🔮 **Cómo arrancar la próxima Sala de Comando:** 1) Zak dice el número del sello (láminas en `Códices de
+  Luz/Enseñanzas/Estilos visuales/`); 2) si es el 1 o el 5, sale completo del estudio con código; si es el 2, el 3 o el
+  4, primero se prueba una escena con imágenes de fal.ai y movimiento; 3) el sello se aplica copiando el estudio de
+  `01 Nunca has tocado nada` (guion.json nuevo → `python3 voz.py` → escenas → `./musica.sh` → `./renderizar.sh`);
+  4) video 2: La Muerte no Existe. Memorias: [[proyecto_videos_ensenanzas]] y [[feedback_videos_codices]].
 
 #### 2026-09-24 → 2026-09-25 — KAL'EL: SU PROPIA CARPETA, LA SOGA DE COLORES, CAMINOS CON MUROS Y EL SENDERO DE 16 ESTACIONES
 
@@ -834,43 +884,8 @@ página: el maestro crece de a una línea por lección.
 - 🧬 **Versión del sistema:** somacero.com con el Sendero de 16 estaciones · protocolo v54.
 - ↪ **El arranque de Kal'El** vive en `kalel/CLAUDE.md` (estado y pendientes) y `kalel/Docs/BITACORA.md`.
 
-#### 2026-09-21 · II → 2026-09-25 — ESCÁNER: SESIONES QUE DURAN AÑOS, GRUPOS Y NOTAS COMPARTIDAS, EL CHAT QUE AGUANTA EL GIRO, ANILLOS A LA MEDIDA, LA TIENDA QUE CELEBRA, EL INICIO DE SESIÓN WEB Y EL REEL
+#### 2026-09-21 · II → 2026-09-25 — ESCÁNER: SESIONES QUE DURAN AÑOS, GRUPOS Y NOTAS COMPARTIDAS, EL CHAT QUE AGUANTA EL GIRO, ANILLOS A LA MEDIDA, LA TIENDA QUE CELEBRA, EL INICIO DE SESIÓN WEB Y EL REEL (comprimida)
 
-- ✅ **Resuelto:** el «me sacó de la app» semanal era el plazo de 7 días que Clerk trae de fábrica; Zak lo subió a
-  10 años con cierre por inactividad de 1 año (las sesiones viejas pidieron entrar una última vez) · **grupos de
-  hasta 10** como WhatsApp (nadie entra sin su sí, administradores, información del grupo) · **notas de la Bitácora
-  compartidas** (se entra aceptando, «está escribiendo…», fusión por párrafo, tope 10, no cuentan para el límite
-  gratis) · **avisos con vista previa** · **Enter salta de línea** en los chats (se envía con el botón o Cmd/Ctrl+Enter)
-  · una sola ventana para invitar (contactos, nombre entre perfiles visibles, correo exacto) · el cifrado de mensajes
-  privados y de Realidad Elegida **cifra de verdad** · **girar el teléfono no borra lo escrito** ni recarga la
-  conversación, y cada chat guarda su **borrador** aunque se salga · **anillos a la medida real** de Nova, Aurelia y
-  Prisma en cada media etapa · **la tienda suena** (pestaña, selección, equipar) y **comprar se celebra** a pantalla
-  completa · el guion del iPhone compila aunque el teléfono esté bloqueado · **el inicio de sesión web con Google o
-  Apple volvía a una página 404** desde el 5 de septiembre; arreglado, con una guardia en el guion de publicación, y
-  Zak confirmó que entra · **reel promocional 9:16 de 28 s** con música y diseño sonoro propios (el Espejo y el
-  Decodificador de Alimentos de protagonistas, cierre «Descárgala gratis») · **Mensajes abre al instante**: la
-  bandeja y cada chat salen de lo que el teléfono recuerda y el servidor actualiza encima, lo que envías aparece al
-  tocar (con reintento si no llega) y entrar a Comunidad hace una sola lectura (medido con 420 ms de servidor:
-  entrar 849→426 ms y 3 ms al reabrir la app, abrir un chat 872→441 ms y 15 ms precalentado, enviar 435→9 ms) ·
-  **escribir ya no esconde el último mensaje** detrás de la caja (medir con altura automática recortaba el
-  desplazamiento: 65 de 92 teclas, hasta 61 px) · el reel sin la línea del túnel (el hash de seno amontonaba
-  partículas en un ángulo) y con el **ícono real de la app** en una tarjeta de tienda · **el archivo maestro se
-  partió**: de 167.000 a 51.000 caracteres (lecciones a `admin/CLAUDE_lecciones.md`, secciones viejas al archivo) ·
-  **el reel arranca directo**: el primer cuadro ya trae la pregunta legible, el pulso encendido y un golpe de sonido
-  (antes era negro medio segundo, y en los reels se decide en el primer cuadro).
-- 📁 **Archivos:** en `escaner-app/` — `Grupos.tsx` v1.0 · `InvitarTripulante.tsx` v1.0 · `EV_BitacoraCompartir.tsx`
-  v1.0 · `EV_Bitacora.tsx` v1.21 · `fusionNotas.ts` v1.1 · `PushSync.tsx` v1.6 · `Comunidad.tsx` v1.21 ·
-  `Mensajes.tsx` v1.40 · `CamaraCristalizacion.tsx` v1.7 · `OrbitRings.tsx` v1.3 · `avatarFootprint.ts` v2.1 ·
-  `sensory.ts` v2.19 · diccionarios `grupos`, `bitacora`, `comu`, `avatar` · `vercel.json` · `publicar-escritorio.sh` ·
-  `al-iphone.sh` · `lib/chatStore.ts` v1.0 · `viewCache.ts` v1.1 · `Mensajes.tsx` v1.42 · `Comunidad.tsx` v1.22 ·
-  app de Mac **1.1.46** · `escaner-app/CLAUDE.md` y `Code/CLAUDE.md` nuevos. El reel y su estudio: `Escaner Vibracional/Reel Promo/` (no es repo).
-- 🗄️ **Migraciones SQL:** `20260921_grupos_notas_compartidas.sql` (aplicada por Zak y verificada) ·
-  `20260921b_anillos_a_la_medida.sql` (aplicada por Zak el 2026-09-25 y verificada).
-- 🔌 **Edge functions deployed:** `send-push` v1.3 (vista previa del mensaje) · `transcribe-voice` v1.1 ·
-  `user-action` v1.49 (grupos, notas compartidas, invitaciones). El puente temporal de fal.ai se usó para los efectos
-  del reel y quedó **borrado** (responde 404).
-- ⏳ **Pendiente:** medir igual el Aura, el Enjambre, el Sello y las Alas, que siguen con el tamaño estimado · escribir
-  a quienes no pudieron entrar a la web del 5 al 24 de septiembre (Clerk sabe quiénes lo intentaron).
 - 💡 **Decisiones:** sesión de 10 años + inactividad de 1 año · en los chats Enter es salto de línea · grupos y notas
   compartidas con tope de 10 y siempre con aceptación · el reel se regenera con un comando
   (`Reel Promo/estudio/renderizar.sh`, y `--musica` si cambia la música).
@@ -878,20 +893,8 @@ página: el maestro crece de a una línea por lección.
   (luz encerrada al 90 %) en vez de estimarse · estudio de video propio: WebGL para partículas y brillo, lienzo 2D
   para la tipografía, la música sintetizada en el navegador y tres Chrome sin ventana con la GPU del Mac
   (1680 cuadros en 15 s); ver [[proyecto_reel_promo_escaner]].
-- 🧬 **Versión del sistema:** app de Mac 1.1.46 · protocolo v53 · web con `/oauth-callback` de vuelta · reel v1 · mensajería local
-  primero ([[proyecto_mensajeria_instantanea]]).
-
-#### 2026-09-20 — TERRA CRISTAL: CADA ATAQUE CON SU ARTE, EL SALTO A DOMUS, SENTARSE Y UNA TANDA DE PULIDO (comprimida)
-
-- 💡 **Decisiones:** las reglas de construcción de Terra Cristal viven en `terra-cristal/Docs/DIRECTRICES.md`, no
-  aquí · un área navegable se prueba en las dos direcciones · si el pie no se puede esconder, esa casilla no existe ·
-  nada se enseña a medio cargar · la música del portal no puede sonar sin un gesto (política del navegador): por eso
-  el botón de bocina.
-- 🔧 **Patrones nuevos:** el instante del golpe y la punta del arma se MIDEN del vídeo y viajan en el manifest ·
-  cada animación con su ancho y su pivote · el modo `regiones` de oclusores y el `cristal` con velo · una mancha de
-  16 losetas según qué lados dan al borde.
-- ↪ **El arranque de Terra Cristal** vive en `terra-cristal/Docs/PROXIMA_SALA.md` y en `terra-cristal/CLAUDE.md`
-  (su 🔮 se retiró de aquí al entrar una sala más nueva; su trabajo sigue abierto allá).
+- ⏳ **Sigue abierto:** medir igual el Aura, el Enjambre, el Sello y las Alas, que siguen con el tamaño estimado (el aviso
+  a quienes no pudieron entrar a la web pasó a Pendientes vivos).
 - 🗃️ **Completa** en `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 *Las entradas anteriores viven en* `admin/CLAUDE_archivo_hasta_2026-08-04.md` (2026-04-18 → 2026-08-22) *y en*
