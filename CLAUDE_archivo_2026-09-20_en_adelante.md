@@ -4,6 +4,34 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-09-24 → 2026-09-25 — KAL'EL: SU PROPIA CARPETA, LA SOGA DE COLORES, CAMINOS CON MUROS Y EL SENDERO DE 16 ESTACIONES
+
+- ✅ **Resuelto** (todo vivo en somacero.com, verificado renderizando y con la consola limpia): la carpeta `kalel` carga
+  solo su contexto (el maestro excluido con `claudeMdExcludes`, medido con `/context`) · **La soga** con sellos del
+  color de su nivel, letrero de victoria a los 27 que invita a Caminos, sellos que brincan, suenan, se arrastran y se
+  ordenan, y letrero «Nivel X» · **Caminos** con un nivel por acierto, muros de piedra con puertas en zigzag y un sello
+  por nivel · **el Sendero**: mapa de 16 estaciones en 5 etapas y 4 ramas (Manos, Voz, Lectura, Teclado) con
+  prerrequisitos, pensado para que un niño que solo aprenda aquí termine escribiendo con las dos manos, leyendo
+  cuentos, pronunciando bien y dominando el trackpad. 13 estaciones nuevas: Burbujas, Dilo, Trazos, Letras, Sílabas,
+  Clics, Dedos, Palabras, Cuentos, Explorador, Escritorio, Tormenta y Carrera.
+- 📁 **Archivos:** en `kalel/` — `src/kit/` (juego, sonidos, voz, escucha, teclado, TecladoPantalla, almacen),
+  `src/contenido/` (letras, palabras, cuentos), `src/juegos/` (11 juegos), `src/estaciones.ts`, `src/Sendero.tsx`,
+  `KalEl.tsx` v2.0, `KalElSoga.tsx` v2.0, `KalElCaminos.tsx` v1.5, `KalElAlbum.tsx` v1.1, `CURRICULO.md`,
+  `CLAUDE.md` v2.1, `Docs/BITACORA.md`. Fuera de `kalel`: el servidor `kalel` en `.claude/launch.json` de la raíz.
+  Commits `867ea0f` → `5768fb7`.
+- ⏳ **Pendiente:** probar el micrófono (Dilo, Cuentos) y el trackpad (Explorador, Clics) de verdad en la computadora
+  de Kal'El, y afinar lo que salga de verlo jugar.
+- 💡 **Decisiones:** un solo Sendero con prerrequisitos (se abre al terminar lo que prepara; Ajustes tiene «Abrir
+  todas») · Mundos se gana tocando los 20 · la voz se compara por cómo suena en México (b=v, sin h, c/s/z, ll=y, pero
+  r≠rr) y siempre muestra lo que oyó; si el micrófono no entiende, aprueba el adulto manteniendo un botón · el teclado
+  se aprende de lo que escribe cada tecla; con teclado en inglés se saltan ñ y acentos · Kal'El estrena su propio
+  «Protocolo de cierre», como Terra Cristal.
+- 🔧 **Patrones nuevos:** marco común de juegos (niveles guardados, sellos, instrucción hablada, celebración y
+  victoria) · el «siguiente juego» se calcula al leerse, así el letrero ve la estación recién abierta · trabajo
+  repartido con base, ejemplo y avisos en vuelo (0-duoquadragies) · claves con prefijo (0-terquadragies).
+- 🧬 **Versión del sistema:** somacero.com con el Sendero de 16 estaciones · protocolo v54.
+- ↪ **El arranque de Kal'El** vive en `kalel/CLAUDE.md` (estado y pendientes) y `kalel/Docs/BITACORA.md`.
+
 #### 2026-09-21 · II → 2026-09-25 — ESCÁNER: SESIONES QUE DURAN AÑOS, GRUPOS Y NOTAS COMPARTIDAS, EL CHAT QUE AGUANTA EL GIRO, ANILLOS A LA MEDIDA, LA TIENDA QUE CELEBRA, EL INICIO DE SESIÓN WEB Y EL REEL
 
 - ✅ **Resuelto:** el «me sacó de la app» semanal era el plazo de 7 días que Clerk trae de fábrica; Zak lo subió a

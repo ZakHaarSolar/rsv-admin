@@ -1239,7 +1239,66 @@ servidor de por medio, y ese camino es más seguro que el puente.
 
 Hermano del **0-quater** (un fallo que Zak no puede leer es un viaje perdido: el motivo se dice en su idioma).
 
+### Paso 0-sexquadragies — Cambiar el INTERMEDIARIO cambia el resultado aunque los parámetros sean los mismos
+
+Pasar un servicio de un intermediario a su fuente (fal.ai → ElevenLabs directo) parece un cambio de tubería y no lo es:
+cada intermediario decide qué parámetros respeta y cuáles ignora. fal.ai ignoraba el contexto (`previous_text` y
+`next_text`); la API directa sí lo usa, y con él lee mucho más pausado: la misma frase tardó 1.95 s sin contexto y
+2.97 s con contexto.
+
+**Regla:** al cambiar de proveedor, de ruta o de versión, se mide ANTES y DESPUÉS lo que la persona percibe (duración,
+ritmo, peso, calidad) con el mismo caso. Si el resultado cambia sin razón, se aísla parámetro por parámetro con una
+prueba corta antes de tocar la pieza entera. Y una ruta heredada («las voces van por fal.ai») se revisa contra lo que
+ya se paga y contra la razón original, que puede haber caducado.
+
+**Por qué.** El 2026-09-28 Zak pidió un narrador menos lento y preguntó por qué las voces iban por fal.ai si ya pagaba
+ElevenLabs. Al pasar las voces a directo con más velocidad (1.1 → 1.2), el video 03 salió MÁS LARGO (74 → 76.5 s). La
+prueba de tres frases cortas mostró que el culpable era el contexto; sin él, el mismo narrador quedó en 160 palabras
+por minuto y el video en 67.6 s. La ruta por fal.ai venía de una sala anterior («el plan no da mp3 de 192 kbps»), una
+razón que no importaba para una voz.
+
+Hermano del **0-quadragies** (un «no se puede» heredado caduca) y del **0-quaterquadragies** (lo que no se percibe se
+mide).
+
+### Paso 0-septquadragies — Lo que ILUMINA se suma: una luz mezclada con transparencia oscurece lo que es más claro
+
+Un halo pintado en una capa que se compone «encima» (con transparencia) tapa con su orilla semitransparente todo lo
+que es más brillante que él: sobre un fondo claro, la luz OSCURECE. Sobre fondos oscuros (el video 01) no se nota, por
+eso la misma función de halo pasó meses sin fallar.
+
+**Regla:** brillos, halos, destellos y estelas van en una capa que SOLO SUMA (mezcla aditiva), y su fuerza se calibra
+contra el fondo más claro de la pieza, no contra el más oscuro. En la acuarela la capa aditiva quedó al 0.42: a 1.0
+quemaba caras.
+
+**Por qué.** El 2026-09-28, en el video 02 (Acuarela Cósmica), las luces que suben por el hilo rojo salieron como
+bolitas grises y el brillo de la cara de la mamá manchaba el cuarto: la capa de dibujo se componía encima de una
+pintura pastel más clara que los halos.
+
+Hermano del **0-tricies** (un efecto afinado para un motor puede tumbar al otro: aquí, afinado para un fondo).
+
+### Paso 0-duodequinquagies — Un ENVOLTORIO que tira argumentos manda a la función a su otra rama
+
+`f: (t, v) => this.escHilo(t, v)` recibía `(t, v, cam)` y tiraba `cam`. La función, sin cámara, creía estar en la
+fase de pintar y repintaba la acuarela encima de su propio hilo. No hubo error: el hilo «no aparecía», y parecía un
+problema de color, de capas o del navegador.
+
+**Regla:** un envoltorio pasa TODOS los argumentos (`(...a) => f(...a)`), y una función con dos trabajos recibe la
+fase por nombre (`"nube"` o `"ui"`) en vez de adivinarla por la ausencia de un argumento opcional. Cuando algo
+dibujado «no aparece», antes de tocar colores se cuenta cuántas veces se llamó y con qué argumentos.
+
+**Por qué.** El 2026-09-28 el hilo rojo del video 02 no salía en ningún render. Envolver la llamada en el navegador
+y registrar sus argumentos mostró la segunda llamada sin cámara. El video 03 ya nació con la fase por nombre.
+
+Hermano del **0-sexies** (una verificación que falla acusa primero al código, no al arnés).
+
 ### Changelog del protocolo
+
+- **v56 (2026-09-28 · II):** tres lecciones de la sala de los videos 02 y 03 de los Códices. **0-sexquadragies**:
+  cambiar el intermediario cambia el resultado aunque los parámetros sean los mismos; se mide antes y después (la voz
+  directa con contexto leía 50 % más lento que por fal.ai). **0-septquadragies**: lo que ilumina se suma; un halo con
+  transparencia oscurece lo que es más claro que él. **0-duodequinquagies**: un envoltorio que tira argumentos manda a
+  la función a su otra rama. Y Pendientes vivos suelta la elección del sello visual (Zak eligió el Escáner del Alma).
+
 
 - **v55 (2026-09-28):** dos lecciones de la sala de los Códices de Luz. **0-quaterquadragies**: lo que no se puede
   percibir se mide con un instrumento que sí (la voz transcrita sobre la mezcla, el balance por octavas contra una pieza

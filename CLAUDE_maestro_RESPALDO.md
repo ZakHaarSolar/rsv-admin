@@ -518,10 +518,6 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 
 ### 🟣 Códices de Luz · lo que necesita tu decisión
 
-- **Elegir el sello visual de los videos de enseñanzas** (propuesto el 2026-09-28): cinco láminas en
-  `Códices de Luz/Enseñanzas/Estilos visuales/` (1 Hilo de Luz · 2 Cristal Holográfico · 3 Códice Iluminado ·
-  4 Acuarela Cósmica · 5 Escáner del Alma). Zak lo dice en la próxima sala. El 1 y el 5 salen completos del estudio
-  con código; el 3 casi todo; el 2 y el 4 piden imágenes de fal.ai por escena y cuestan más.
 - **¿Los dos Cristales del mes se combinan libremente?** La sección «Suscripción RSV vigente» dice que sí (dos
   Códices, dos Meditaciones o uno y uno); el código los separa en uno de Códice y uno de Meditación. Falta que Zak diga
   cuál es la regla. El reel dice lo que es cierto en los dos casos («cada mes un Cristal abre un Códice completo»).
@@ -535,7 +531,7 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v55 (2026-09-28)
+## 🜂 Protocolo de Cierre de Sesión · v56 (2026-09-28 · II)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -673,6 +669,9 @@ memorias.
 - **0-terquadragies** · Dos hermanos con la misma clave duplican nodos (React): toda clave lleva prefijo; la consola se lee antes de culpar a la prueba.
 - **0-quaterquadragies** · Lo que no puedes percibir se mide con un instrumento que sí: la voz con un transcriptor, el balance contra una pieza aprobada, la nota con un análisis de frecuencias.
 - **0-quinquadragies** · Un camino que el sistema de permisos bloquea no se rodea: se abre uno seguro con Zak (las llaves en el llavero de la Mac).
+- **0-sexquadragies** · Cambiar el intermediario cambia el resultado con los mismos parámetros: se mide antes y después (la voz directa con contexto leía 50 % más lento).
+- **0-septquadragies** · Lo que ilumina se suma: un halo con transparencia oscurece lo que es más claro que él.
+- **0-duodequinquagies** · Un envoltorio que tira argumentos manda a la función a su otra rama: pasa todo o nombra la fase.
 
 ### Paso 1 — Test de continuidad
 
@@ -814,11 +813,51 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v55 (2026-09-28). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v56 (2026-09-28 · II). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
+
+#### 2026-09-28 · II · CÓDICES DE LUZ: DOS VIDEOS PARA ELEGIR SELLO, EL ESCÁNER DEL ALMA SELLADO, VOCES DIRECTAS Y SUBTÍTULOS A SALVO DE INSTAGRAM
+
+- ✅ **Resuelto:** **video 02 «Nunca has perdido a nadie»** (La Muerte no Existe · el duelo como ilusión óptica, 65 s)
+  en Acuarela Cósmica: pinturas de fal.ai que se mueven despacio y entran como pigmento mojado, la mamá que se destapa
+  («Aquí estoy»), el ventilador cuyas aspas giran hasta desaparecer, el hilo rojo del pecho a quien se fue, la
+  despedida en el aeropuerto y la abuela de luz en la silla del principio · **video 03 «No llegaste por accidente»**
+  (Protocolo de Entrada, 67.6 s) en Escáner del Alma, todo con código: la Tierra en el anillo de glifos, la Sala de
+  Proyección, México en holograma, el «ACEPTO», el descenso a 7.83 Hz, la semilla, el océano en la taza, la brújula y
+  «¿por qué a mí?» que se descifra en «para esto vine» · **Zak eligió el Escáner del Alma** y selló al narrador · el 03
+  se rehízo con sus notas desde la vista previa de Instagram: subtítulos sin cuadro a media altura entre su sitio
+  anterior y la cuenta, las dos «s» de «consciencia» ya no pican, narrador más ágil y menos grave, lecturas que no se
+  enciman en los cambios de escena · voces, efectos y revisión ahora por ElevenLabs directo, con su plan.
+- 📁 **Archivos:** `Códices de Luz/Enseñanzas/02 Nunca has perdido a nadie/` (video, ligero, portada y `estudio/`:
+  escenas.js v1.0, shaders.js v2.0 con FS_PINTURA, motor.js v1.1, audio.js v3.0, imagenes.py v1.0, `img/` e `ia/`) ·
+  `03 No llegaste por accidente/` (video, ligero, portada, `Audiciones de voz/` y `estudio/`: escenas.js v1.2,
+  formas.js v1.0, shaders.js v3.0 con VS_NUBE y FS_NUBE, motor.js v1.2, audio.js v4.1, voz.py v2.0, ia.py v1.3,
+  escucha.py v1.0) · `Enseñanzas/Audiciones narrador/` (8 pruebas, ya no se usan) · `.claude/launch.json` (`estudio-02`
+  y `estudio-03`). Ninguno es repo. No se tocó código de la app.
+- ⏳ **Pendiente:** seguir la serie en el sello del Escáner en la próxima sala (ver el 🔮).
+- 💡 **Decisiones:** el sello de la serie es **Escáner del Alma**; la acuarela queda descartada · narrador
+  **CarterSutra sellado** como quedó en el 03 (velocidad 1.2 sin contexto, frases de peso a 1.02-1.1, −3.5 dB de graves)
+  · la voz del Escáner es **Cristina Campos** · las voces SIEMPRE por ElevenLabs directo, nunca por fal.ai (su plan
+  trae 10 000 créditos al mes que se renuevan cada 16 y no se pueden exceder; un video gasta ~1 000) · subtítulos solo
+  letra, sin cuadro, primer renglón en y 1570 de 1920 (la cuenta de Instagram cae en ~1788), renglones de hasta 760 px
+  y ningún adorno cruzando esa franja · fal.ai quedó sin saldo y con este sello no hace falta recargarlo.
+- 🔧 **Patrones nuevos:** nube de puntos en la GPU que se transforma de una forma en otra (`formas.js`) · control de
+  eses con el compresor de Chrome, midiendo su subida automática y compensándola · fundido simétrico para que dos
+  lecturas nunca coincidan · `escucha.py` transcribe el MP4 final y lo compara con el guion · en zsh `log` es un comando
+  interno: el registro del sistema es `/usr/bin/log show` · el AirDrop de Zak falla por tiempo agotado en el canal
+  directo con la Mac en 5 GHz a 160 MHz (probar desconectando la Mac del módem, o bajar el módem a 80 MHz).
+- 🧬 **Versión del sistema:** video de enseñanzas 03 v3 · protocolo v56.
+- 🔮 **Cómo arrancar la próxima Sala de Comando:** 1) elegir el Códice y la enseñanza del video 4 (quedan libres
+  «eres el jugador, no el personaje» de La Muerte no Existe y los demás libros); 2) copiar
+  `Códices de Luz/Enseñanzas/03 No llegaste por accidente/estudio/` a `NN Título/estudio/` y vaciar `voz/`, `previas/`,
+  `audio/` y `estado/`; 3) `guion.json` con N = CarterSutra (velocidad 1.2) y M = Cristina Campos → `python3 voz.py`
+  → escenas nuevas en `escenas.js` con las formas de `formas.js` → `python3 ia.py lote sonidos.json` → `./musica.sh` →
+  `./renderizar.sh` → `python3 escucha.py "../<Título>.mp4" --guion guion.json` (tiene que dar todas las palabras);
+  4) subtítulos, zona segura y control de eses ya vienen en la plantilla. Memorias: [[proyecto_videos_ensenanzas]] y
+  [[feedback_videos_codices]].
 
 #### 2026-09-27 → 2026-09-28 · CÓDICES DE LUZ: EL REEL DE LOS LIBROS, LA PRIMERA ENSEÑANZA CON VOZ Y CINCO SELLOS VISUALES
 
@@ -835,8 +874,8 @@ página: el maestro crece de a una línea por lección.
   has tocado nada/` (video, ligero, portada, `Audiciones de voz/` y `estudio/`: guion.json, voz.py v1.0, escenas.js
   v1.0, audio.js v2.0, shaders.js v1.1, renderizar.sh v2.0) · `Códices de Luz/Enseñanzas/Estilos visuales/` (5 láminas
   y la tabla). Ninguno es repo. No se tocó código de la app.
-- ⏳ **Pendiente:** Zak elige el sello visual (Pendientes vivos) · después, el video 2 (propuesta: La Muerte no Existe,
-  «eres el jugador, no el personaje»).
+- ⏳ **Pendiente:** ~~Zak elige el sello visual~~ → ✅ hecho el 2026-09-28 (Escáner del Alma); los videos 2 y 3
+  salieron en la sala siguiente.
 - 💡 **Decisiones:** la voz de la serie es **CarterSutra** (Zak, 2026-09-28) · los videos de enseñanzas no nombran el
   libro y cierran con el ícono, «Escáner Vibracional» y «Códices de Luz» · las frases de los Códices en video son
   expansivas, nunca de regaño · el texto se queda en pantalla lo suficiente para leerse y el reel puede llegar a 45 s ·
@@ -850,52 +889,6 @@ página: el maestro crece de a una línea por lección.
   libros en 3D con MSAA, portadas reales y cantos dorados · un objeto 3D que se desvanece va en su propio pase · la
   lámina de estilo: misma escena, tipografía propia, subtítulo de muestra y la firma con la línea de pulso.
 - 🧬 **Versión del sistema:** reel de los Códices v3 · video de enseñanzas 01 · protocolo v55.
-- 🔮 **Cómo arrancar la próxima Sala de Comando:** 1) Zak dice el número del sello (láminas en `Códices de
-  Luz/Enseñanzas/Estilos visuales/`); 2) si es el 1 o el 5, sale completo del estudio con código; si es el 2, el 3 o el
-  4, primero se prueba una escena con imágenes de fal.ai y movimiento; 3) el sello se aplica copiando el estudio de
-  `01 Nunca has tocado nada` (guion.json nuevo → `python3 voz.py` → escenas → `./musica.sh` → `./renderizar.sh`);
-  4) video 2: La Muerte no Existe. Memorias: [[proyecto_videos_ensenanzas]] y [[feedback_videos_codices]].
-
-#### 2026-09-24 → 2026-09-25 — KAL'EL: SU PROPIA CARPETA, LA SOGA DE COLORES, CAMINOS CON MUROS Y EL SENDERO DE 16 ESTACIONES
-
-- ✅ **Resuelto** (todo vivo en somacero.com, verificado renderizando y con la consola limpia): la carpeta `kalel` carga
-  solo su contexto (el maestro excluido con `claudeMdExcludes`, medido con `/context`) · **La soga** con sellos del
-  color de su nivel, letrero de victoria a los 27 que invita a Caminos, sellos que brincan, suenan, se arrastran y se
-  ordenan, y letrero «Nivel X» · **Caminos** con un nivel por acierto, muros de piedra con puertas en zigzag y un sello
-  por nivel · **el Sendero**: mapa de 16 estaciones en 5 etapas y 4 ramas (Manos, Voz, Lectura, Teclado) con
-  prerrequisitos, pensado para que un niño que solo aprenda aquí termine escribiendo con las dos manos, leyendo
-  cuentos, pronunciando bien y dominando el trackpad. 13 estaciones nuevas: Burbujas, Dilo, Trazos, Letras, Sílabas,
-  Clics, Dedos, Palabras, Cuentos, Explorador, Escritorio, Tormenta y Carrera.
-- 📁 **Archivos:** en `kalel/` — `src/kit/` (juego, sonidos, voz, escucha, teclado, TecladoPantalla, almacen),
-  `src/contenido/` (letras, palabras, cuentos), `src/juegos/` (11 juegos), `src/estaciones.ts`, `src/Sendero.tsx`,
-  `KalEl.tsx` v2.0, `KalElSoga.tsx` v2.0, `KalElCaminos.tsx` v1.5, `KalElAlbum.tsx` v1.1, `CURRICULO.md`,
-  `CLAUDE.md` v2.1, `Docs/BITACORA.md`. Fuera de `kalel`: el servidor `kalel` en `.claude/launch.json` de la raíz.
-  Commits `867ea0f` → `5768fb7`.
-- ⏳ **Pendiente:** probar el micrófono (Dilo, Cuentos) y el trackpad (Explorador, Clics) de verdad en la computadora
-  de Kal'El, y afinar lo que salga de verlo jugar.
-- 💡 **Decisiones:** un solo Sendero con prerrequisitos (se abre al terminar lo que prepara; Ajustes tiene «Abrir
-  todas») · Mundos se gana tocando los 20 · la voz se compara por cómo suena en México (b=v, sin h, c/s/z, ll=y, pero
-  r≠rr) y siempre muestra lo que oyó; si el micrófono no entiende, aprueba el adulto manteniendo un botón · el teclado
-  se aprende de lo que escribe cada tecla; con teclado en inglés se saltan ñ y acentos · Kal'El estrena su propio
-  «Protocolo de cierre», como Terra Cristal.
-- 🔧 **Patrones nuevos:** marco común de juegos (niveles guardados, sellos, instrucción hablada, celebración y
-  victoria) · el «siguiente juego» se calcula al leerse, así el letrero ve la estación recién abierta · trabajo
-  repartido con base, ejemplo y avisos en vuelo (0-duoquadragies) · claves con prefijo (0-terquadragies).
-- 🧬 **Versión del sistema:** somacero.com con el Sendero de 16 estaciones · protocolo v54.
-- ↪ **El arranque de Kal'El** vive en `kalel/CLAUDE.md` (estado y pendientes) y `kalel/Docs/BITACORA.md`.
-
-#### 2026-09-21 · II → 2026-09-25 — ESCÁNER: SESIONES QUE DURAN AÑOS, GRUPOS Y NOTAS COMPARTIDAS, EL CHAT QUE AGUANTA EL GIRO, ANILLOS A LA MEDIDA, LA TIENDA QUE CELEBRA, EL INICIO DE SESIÓN WEB Y EL REEL (comprimida)
-
-- 💡 **Decisiones:** sesión de 10 años + inactividad de 1 año · en los chats Enter es salto de línea · grupos y notas
-  compartidas con tope de 10 y siempre con aceptación · el reel se regenera con un comando
-  (`Reel Promo/estudio/renderizar.sh`, y `--musica` si cambia la música).
-- 🔧 **Patrones nuevos:** girar sin desmontar = un solo árbol con cajas que no pintan · el borde del avatar se mide
-  (luz encerrada al 90 %) en vez de estimarse · estudio de video propio: WebGL para partículas y brillo, lienzo 2D
-  para la tipografía, la música sintetizada en el navegador y tres Chrome sin ventana con la GPU del Mac
-  (1680 cuadros en 15 s); ver [[proyecto_reel_promo_escaner]].
-- ⏳ **Sigue abierto:** medir igual el Aura, el Enjambre, el Sello y las Alas, que siguen con el tamaño estimado (el aviso
-  a quienes no pudieron entrar a la web pasó a Pendientes vivos).
-- 🗃️ **Completa** en `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 *Las entradas anteriores viven en* `admin/CLAUDE_archivo_hasta_2026-08-04.md` (2026-04-18 → 2026-08-22) *y en*
 `admin/CLAUDE_archivo_2026-08-30_a_2026-09-18.md` (2026-08-30 → 2026-09-18), *y desde el 2026-09-20 en*
