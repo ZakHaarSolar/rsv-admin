@@ -521,6 +521,10 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 - **¿Los dos Cristales del mes se combinan libremente?** La sección «Suscripción RSV vigente» dice que sí (dos
   Códices, dos Meditaciones o uno y uno); el código los separa en uno de Códice y uno de Meditación. Falta que Zak diga
   cuál es la regla. El reel dice lo que es cierto en los dos casos («cada mes un Cristal abre un Códice completo»).
+- **¿Rehago la mezcla del 03 con sus cinco efectos a su velocidad?** El océano, el café que se sirve, el descenso, la
+  respiración y el primer aliento suenan al doble de largo y una octava abajo: `ia.py` los guardaba en mono siendo
+  estéreo (0-quinquagies). La herramienta ya está corregida y el 02 y el 04 salieron bien; rehacer la del 03 toma unos
+  4 minutos. Se preguntó el 2026-09-28 y sigue sin respuesta.
 
 ### 🟡 Higiene, cuando toque
 
@@ -531,7 +535,7 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v56 (2026-09-28 · II)
+## 🜂 Protocolo de Cierre de Sesión · v57 (2026-09-30)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -672,6 +676,9 @@ memorias.
 - **0-sexquadragies** · Cambiar el intermediario cambia el resultado con los mismos parámetros: se mide antes y después (la voz directa con contexto leía 50 % más lento).
 - **0-septquadragies** · Lo que ilumina se suma: un halo con transparencia oscurece lo que es más claro que él.
 - **0-duodequinquagies** · Un envoltorio que tira argumentos manda a la función a su otra rama: pasa todo o nombra la fase.
+- **0-undequinquagies** · Lo que tiene que sentirse humano no se dibuja con trazos: se esculpe con volumen, luz y sombra, y se revisa de cerca.
+- **0-quinquagies** · Un audio crudo no dice sus canales: se deducen de lo pedido (la duración) y se miden; si no, suena al doble de largo y una octava abajo.
+- **0-unquinquagies** · Tras un corte, cada salida se abre y se decodifica entera; se reanuda desde lo que sí quedó.
 
 ### Paso 1 — Test de continuidad
 
@@ -813,11 +820,55 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v56 (2026-09-28 · II). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v57 (2026-09-30). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
+
+#### 2026-09-28 · III → 2026-09-30 · CÓDICES DE LUZ: EL 02 EN EL SELLO DE LA CASA, EL 04 «NUNCA ESTÁS LEJOS», LA MAMÁ ESCULPIDA Y LA PALETA SIN FILO
+
+- ✅ **Resuelto:** **video 02 «Nunca has perdido a nadie» rehecho en Escáner del Alma** (65.7 s): la lente del bebé que
+  pierde el rostro de su mamá y lo recupera con «Aquí estoy», el ser amado que el universo envuelve (oculto, no
+  ausente), el ventilador cuyas aspas desaparecen y el estroboscopio que las encuentra, el alma que vibra fuera de rango
+  hasta «presencia 100 %», el hilo rojo con su simulación rota, la Terminal Tierra (el vuelo abordó, reencuentro
+  confirmado) y la visión del corazón con cuatro presencias; la versión acuarela quedó en su subcarpeta · **video 04
+  «Nunca estás lejos»** (Lenguaje Holográfico · Entrelazamiento y Ping, 70 s): el celular que vibra justo cuando
+  pensabas en alguien, CASUALIDAD que se descifra en CONEXIÓN, la carrera corazón contra celular, dos partículas que un
+  océano no separa, el cordón que atraviesa el planeta, el mapa que se dobla, el enlace dentro del pecho y la prueba de
+  campo con el ping · **la mamá del 02 esculpida de nuevo** (Zak: «se ve como un muñeco muy chafita»): rostro, cabello
+  en guedejas, torso y manos reales, con luz y sombra · **el 03 sin brillos agudos** (Zak: 3-4, 6-8, 18-19, 20-21 s y la
+  campana del 1:04): en la música lo agudo bajó de 8 a 13 dB en esos tramos; la misma paleta se aplicó al 02 y al 04
+  sin que se pidiera, con sus mezclas anteriores guardadas · verificado: 142/142 y 136/136 palabras, −14 LUFS, consola
+  limpia y cuadros de cada MP4 final.
+- 📁 **Archivos:** `Códices de Luz/Enseñanzas/02 Nunca has perdido a nadie/` (video, ligero, portada, `Versión
+  acuarela/` y `estudio/`: escenas.js v2.3, retrato.js v1.3, formas.js v1.2.1, motor.js v1.3, shaders.js v3.1,
+  audio.js v5.1, voz.py v2.1, ia.py v1.4, escucha.py v1.1) · `04 Nunca estás lejos/` (video, ligero, portada y
+  `estudio/`: escenas.js v1.0, formas.js v1.4, audio.js v1.1, `sonidos.json` con 4 efectos) · `03 …/estudio/audio.js`
+  v4.2 y sus dos videos con la mezcla nueva (imagen intacta) · mezclas anteriores en cada estudio (`audio_vX.js`,
+  `audio/final_vX.wav`) · `.claude/launch.json` (`estudio-04`, puerto 8830). Ninguno es repo.
+- ⏳ **Pendiente:** en Pendientes vivos, los cinco efectos del 03 que suenan al doble de largo; y el video 5 (ver el 🔮).
+- 💡 **Decisiones:** el #4 salió de Lenguaje Holográfico porque es el más compartible («pensaste en alguien y te
+  escribió») · en el 02 Cristina es el Escáner y también la voz de quien parece haberse ido (rótulos MAMÁ y SEÑAL en
+  oro) · la paleta de sonido de la serie va sin filo: campanas sin la grabación clara y una octava abajo de 700 Hz,
+  brillos grabados filtrados a ~4 kHz y a menos de la mitad, teclas graves, violines y subidas sin aire arriba de ~4 kHz
+  · una figura humana que carga emoción se esculpe, no se dibuja.
+- 🔧 **Patrones nuevos:** retrato esculpido en código (`retrato.js`: superficies de distancia con luz, oclusión y
+  borde; rasgos por densidad; cabello en guedejas de hebras paralelas; manos con falanges y nudillos) · máscara que
+  apaga una elipse de la nube (manos que tapan la cara) · vibración cuadro a cuadro que la banda del Escáner fija ·
+  desenfoque de giro al azar por punto · matrices libres (doblar media hoja, inclinar la Tierra) · rótulos sobre la
+  Tierra por latitud y longitud · `ia.py` v1.4 decide los canales del audio crudo por la duración pedida · tras un
+  corte, el video se rearma desde los cuadros que quedaron.
+- 🧬 **Versión del sistema:** videos de enseñanzas 01 a 04 · protocolo v57.
+- 🔮 **Cómo arrancar la próxima Sala de Comando:** 1) elegir la enseñanza del video 5 (libres: «eres el jugador, no el
+  personaje» de La Muerte no Existe y los libros sin video: El Agua que Recuerda, La Voz de Gaia, Sintiencia, La
+  Física de la Voluntad, Singularidad Orgánica, Cuerpo de Silicio, Terra Cristal; los textos salen de
+  `Códices de Luz/DOCs/*.docx`); 2) copiar `04 Nunca estás lejos/estudio/` a `05 Título/estudio/` (si hace falta una
+  persona con rostro, traer `retrato.js` del 02), vaciar `voz/ previas/ audio/ estado/ frames/`, cambiar los tres
+  `PUERTO=` a 884x y agregar `estudio-05` en launch.json; 3) guion → `python3 voz.py` → escenas →
+  `python3 ia.py lote sonidos.json` → `./musica.sh` y medir perfil y octavas contra el 03 → `PORTADA_T=x
+  ./renderizar.sh` → `python3 escucha.py` (100 %) → consola limpia y cuadros del MP4. Memorias:
+  [[proyecto_videos_ensenanzas]] y [[feedback_videos_codices]].
 
 #### 2026-09-28 · II · CÓDICES DE LUZ: DOS VIDEOS PARA ELEGIR SELLO, EL ESCÁNER DEL ALMA SELLADO, VOCES DIRECTAS Y SUBTÍTULOS A SALVO DE INSTAGRAM
 
@@ -837,7 +888,7 @@ página: el maestro crece de a una línea por lección.
   formas.js v1.0, shaders.js v3.0 con VS_NUBE y FS_NUBE, motor.js v1.2, audio.js v4.1, voz.py v2.0, ia.py v1.3,
   escucha.py v1.0) · `Enseñanzas/Audiciones narrador/` (8 pruebas, ya no se usan) · `.claude/launch.json` (`estudio-02`
   y `estudio-03`). Ninguno es repo. No se tocó código de la app.
-- ⏳ **Pendiente:** seguir la serie en el sello del Escáner en la próxima sala (ver el 🔮).
+- ⏳ **Pendiente:** ~~seguir la serie en el sello del Escáner~~ → ✅ hecho en la sala siguiente (el 02 rehecho y el 04).
 - 💡 **Decisiones:** el sello de la serie es **Escáner del Alma**; la acuarela queda descartada · narrador
   **CarterSutra sellado** como quedó en el 03 (velocidad 1.2 sin contexto, frases de peso a 1.02-1.1, −3.5 dB de graves)
   · la voz del Escáner es **Cristina Campos** · las voces SIEMPRE por ElevenLabs directo, nunca por fal.ai (su plan
@@ -850,45 +901,6 @@ página: el maestro crece de a una línea por lección.
   interno: el registro del sistema es `/usr/bin/log show` · el AirDrop de Zak falla por tiempo agotado en el canal
   directo con la Mac en 5 GHz a 160 MHz (probar desconectando la Mac del módem, o bajar el módem a 80 MHz).
 - 🧬 **Versión del sistema:** video de enseñanzas 03 v3 · protocolo v56.
-- 🔮 **Cómo arrancar la próxima Sala de Comando:** 1) elegir el Códice y la enseñanza del video 4 (quedan libres
-  «eres el jugador, no el personaje» de La Muerte no Existe y los demás libros); 2) copiar
-  `Códices de Luz/Enseñanzas/03 No llegaste por accidente/estudio/` a `NN Título/estudio/` y vaciar `voz/`, `previas/`,
-  `audio/` y `estado/`; 3) `guion.json` con N = CarterSutra (velocidad 1.2) y M = Cristina Campos → `python3 voz.py`
-  → escenas nuevas en `escenas.js` con las formas de `formas.js` → `python3 ia.py lote sonidos.json` → `./musica.sh` →
-  `./renderizar.sh` → `python3 escucha.py "../<Título>.mp4" --guion guion.json` (tiene que dar todas las palabras);
-  4) subtítulos, zona segura y control de eses ya vienen en la plantilla. Memorias: [[proyecto_videos_ensenanzas]] y
-  [[feedback_videos_codices]].
-
-#### 2026-09-27 → 2026-09-28 · CÓDICES DE LUZ: EL REEL DE LOS LIBROS, LA PRIMERA ENSEÑANZA CON VOZ Y CINCO SELLOS VISUALES
-
-- ✅ **Resuelto:** **reel de los Códices** (38 s, 9:16): el gancho «Tienes en tus manos un objeto peligroso.», la tapa
-  que se abre en luz, seis frases reales con sus portadas de la app (Sintiencia ahora dice «Tu gozo es la finalidad de
-  la evolución.»), el anillo de los 11 en la Holoteca, «Lee las primeras páginas gratis», el Cristal que abre un Códice
-  completo (con tiempo para leerlo) y el cierre con el ícono; campanas y cuenco reales de fal.ai afinados nota por nota
-  · **primer video de enseñanzas**, «Nunca has tocado nada» (76 s, El Arquitecto): ilustración hecha con código, la voz
-  de CarterSutra y Charlotte como la materia, subtítulos palabra por palabra, efectos de fal.ai y una música que se
-  aparta de la voz · **las tres llaves** (fal.ai, ElevenLabs, Fish Audio) en el llavero de la Mac, leídas por `ia.py`
-  sin servidor de por medio · **cinco sellos visuales** propuestos para la serie.
-- 📁 **Archivos:** `Códices de Luz/Reel Promo/` (maestro, ligero, portada y `estudio/`: motor.js v1.0, shaders.js v1.0,
-  escenas.js v1.1, audio.js v1.2, renderizar.sh v1.1, ia.py v1.2, tono.py v1.0) · `Códices de Luz/Enseñanzas/01 Nunca
-  has tocado nada/` (video, ligero, portada, `Audiciones de voz/` y `estudio/`: guion.json, voz.py v1.0, escenas.js
-  v1.0, audio.js v2.0, shaders.js v1.1, renderizar.sh v2.0) · `Códices de Luz/Enseñanzas/Estilos visuales/` (5 láminas
-  y la tabla). Ninguno es repo. No se tocó código de la app.
-- ⏳ **Pendiente:** ~~Zak elige el sello visual~~ → ✅ hecho el 2026-09-28 (Escáner del Alma); los videos 2 y 3
-  salieron en la sala siguiente.
-- 💡 **Decisiones:** la voz de la serie es **CarterSutra** (Zak, 2026-09-28) · los videos de enseñanzas no nombran el
-  libro y cierran con el ícono, «Escáner Vibracional» y «Códices de Luz» · las frases de los Códices en video son
-  expansivas, nunca de regaño · el texto se queda en pantalla lo suficiente para leerse y el reel puede llegar a 45 s ·
-  lo que se promete de los Códices se verificó en el código y en la base: 11 libros, primeras páginas gratis sin
-  membresía, Sintonía mensual con Cristal de Códice, audiolibro solo en La Voz de Gaia y El Agua que Recuerda, y la
-  compra suelta no se promete · las llaves viven en el llavero de la Mac; el puente en el servidor lo bloquea el
-  permiso automático.
-- 🔧 **Patrones nuevos:** la voz con marcas de tiempo por fal.ai (`fal-ai/elevenlabs/tts/multilingual-v2`, acepta ids
-  de la biblioteca) manda las escenas, los subtítulos y la música · lo que no se oye se mide (0-quaterquadragies) ·
-  campanas afinadas midiendo su nota (`tono.py`) · un golpe doble se corta para que cada golpe caiga en su palabra ·
-  libros en 3D con MSAA, portadas reales y cantos dorados · un objeto 3D que se desvanece va en su propio pase · la
-  lámina de estilo: misma escena, tipografía propia, subtítulo de muestra y la firma con la línea de pulso.
-- 🧬 **Versión del sistema:** reel de los Códices v3 · video de enseñanzas 01 · protocolo v55.
 
 *Las entradas anteriores viven en* `admin/CLAUDE_archivo_hasta_2026-08-04.md` (2026-04-18 → 2026-08-22) *y en*
 `admin/CLAUDE_archivo_2026-08-30_a_2026-09-18.md` (2026-08-30 → 2026-09-18), *y desde el 2026-09-20 en*
