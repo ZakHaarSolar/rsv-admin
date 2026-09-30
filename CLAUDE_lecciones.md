@@ -1291,7 +1291,55 @@ y registrar sus argumentos mostró la segunda llamada sin cámara. El video 03 y
 
 Hermano del **0-sexies** (una verificación que falla acusa primero al código, no al arnés).
 
+### Paso 0-undequinquagies — Lo que tiene que sentirse HUMANO no se dibuja con trazos: se esculpe
+
+Una cara hecha de líneas brillantes (ojos como aros, una sonrisa como arco, cejas como rayas) se lee como caricatura
+aunque el resto de la pieza sea fino, y en un video que cuenta algo tierno la caricatura rompe la emoción. Lo humano se
+esculpe: volumen (cráneo, pómulos, cuencas, nariz, labios, cuello, hombros que caen), luz (una principal que modela y un
+borde que solo marca la silueta de verdad) y sombra (oclusión en lo hundido). Los rasgos salen de la densidad (el iris
+oscuro porque casi no tiene puntos, el brillo del ojo, el labio que recibe luz), no de trazos. Y se revisa en
+acercamiento antes de darlo por bueno: a tamaño de pantalla todo parece bien.
+
+**Por qué.** El 2026-09-30 Zak vio a la mamá del video 02 y la llamó «un muñeco muy chafita»: busto de tubos, cara de
+emoji, manos de placa. La mamá esculpida (`retrato.js`) necesitó cuatro pasadas de acercamiento: la luz del borde
+encendía cada repisa horizontal (labios en rejilla, cejas de trazo) y el rostro salía masculino hasta angostar la
+mandíbula en V, llenar las mejillas y subir las comisuras.
+
+Hermano del **0-quindecies** (la métrica puede estar hecha a la medida del diseño viejo: mide lo que la persona percibe).
+
+### Paso 0-quinquagies — Un audio CRUDO no dice cuántos canales trae
+
+El PCM que devuelve una API no trae cabecera: la frecuencia, los bits y los canales los escribe quien lo guarda. Si la
+cabecera dice mono y el audio es estéreo, se oye al doble de largo y una octava abajo, y nadie lo nota porque «suena
+grave, de cine». **Regla:** los canales se deducen de lo que se pidió (la duración pedida contra los bytes recibidos) y
+se comprueban midiendo; nunca se asumen por el nombre del formato.
+
+**Por qué.** El 2026-09-28 los efectos de ElevenLabs del video 03 (océano, vertido, descenso, respiración, primer
+aliento) quedaron al doble de largo porque `ia.py` los guardaba con cabecera mono. Se descubrió al generar los del 04:
+1.4 s pedidos, 2.72 s entregados. `ia.py` v1.4 decide por la duración.
+
+Hermano del **0-nonies** (una verificación que no pudo correr no pasó) y del **0-quaterquadragies** (lo que no se
+percibe se mide).
+
+### Paso 0-unquinquagies — Tras un CORTE, cada salida se abre entera antes de darla por buena
+
+Cuando la sesión se corta a media obra (la Mac se bloqueó), el estado no se supone: cada archivo de salida se abre y se
+decodifica completo. Un MP4 a medias existe con su nombre correcto y solo pesa menos (le falta el índice y no abre); una
+mezcla puede seguir siendo la vieja. Se reanuda desde lo que sí quedó (los cuadros ya pintados), no desde cero.
+
+**Por qué.** El 2026-09-30, tras el bloqueo, el maestro del 02 estaba completo pero el ligero pesaba 27 MB en lugar de
+64 y no abría («moov atom not found»), y la mezcla del 03 nunca corrió. Con los 3,940 cuadros intactos, el 02 se rearmó
+en un minuto sin volver a pintar.
+
+Hermano del **0-nonies**.
+
 ### Changelog del protocolo
+
+- **v57 (2026-09-30):** tres lecciones de la sala del 02 rehecho y del 04 de los Códices. **0-undequinquagies**: lo que
+  tiene que sentirse humano no se dibuja con trazos, se esculpe con volumen, luz y sombra, y se revisa de cerca.
+  **0-quinquagies**: un audio crudo no dice cuántos canales trae; se deducen de lo pedido y se miden.
+  **0-unquinquagies**: tras un corte, cada salida se abre entera y se reanuda desde lo que sí quedó. Y Pendientes vivos
+  suma los cinco efectos del 03 que suenan al doble de largo.
 
 - **v56 (2026-09-28 · II):** tres lecciones de la sala de los videos 02 y 03 de los Códices. **0-sexquadragies**:
   cambiar el intermediario cambia el resultado aunque los parámetros sean los mismos; se mide antes y después (la voz

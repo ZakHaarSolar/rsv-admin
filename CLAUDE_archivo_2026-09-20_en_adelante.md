@@ -4,6 +4,37 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-09-27 → 2026-09-28 · CÓDICES DE LUZ: EL REEL DE LOS LIBROS, LA PRIMERA ENSEÑANZA CON VOZ Y CINCO SELLOS VISUALES
+
+- ✅ **Resuelto:** **reel de los Códices** (38 s, 9:16): el gancho «Tienes en tus manos un objeto peligroso.», la tapa
+  que se abre en luz, seis frases reales con sus portadas de la app (Sintiencia ahora dice «Tu gozo es la finalidad de
+  la evolución.»), el anillo de los 11 en la Holoteca, «Lee las primeras páginas gratis», el Cristal que abre un Códice
+  completo (con tiempo para leerlo) y el cierre con el ícono; campanas y cuenco reales de fal.ai afinados nota por nota
+  · **primer video de enseñanzas**, «Nunca has tocado nada» (76 s, El Arquitecto): ilustración hecha con código, la voz
+  de CarterSutra y Charlotte como la materia, subtítulos palabra por palabra, efectos de fal.ai y una música que se
+  aparta de la voz · **las tres llaves** (fal.ai, ElevenLabs, Fish Audio) en el llavero de la Mac, leídas por `ia.py`
+  sin servidor de por medio · **cinco sellos visuales** propuestos para la serie.
+- 📁 **Archivos:** `Códices de Luz/Reel Promo/` (maestro, ligero, portada y `estudio/`: motor.js v1.0, shaders.js v1.0,
+  escenas.js v1.1, audio.js v1.2, renderizar.sh v1.1, ia.py v1.2, tono.py v1.0) · `Códices de Luz/Enseñanzas/01 Nunca
+  has tocado nada/` (video, ligero, portada, `Audiciones de voz/` y `estudio/`: guion.json, voz.py v1.0, escenas.js
+  v1.0, audio.js v2.0, shaders.js v1.1, renderizar.sh v2.0) · `Códices de Luz/Enseñanzas/Estilos visuales/` (5 láminas
+  y la tabla). Ninguno es repo. No se tocó código de la app.
+- ⏳ **Pendiente:** ~~Zak elige el sello visual~~ → ✅ hecho el 2026-09-28 (Escáner del Alma); los videos 2 y 3
+  salieron en la sala siguiente.
+- 💡 **Decisiones:** la voz de la serie es **CarterSutra** (Zak, 2026-09-28) · los videos de enseñanzas no nombran el
+  libro y cierran con el ícono, «Escáner Vibracional» y «Códices de Luz» · las frases de los Códices en video son
+  expansivas, nunca de regaño · el texto se queda en pantalla lo suficiente para leerse y el reel puede llegar a 45 s ·
+  lo que se promete de los Códices se verificó en el código y en la base: 11 libros, primeras páginas gratis sin
+  membresía, Sintonía mensual con Cristal de Códice, audiolibro solo en La Voz de Gaia y El Agua que Recuerda, y la
+  compra suelta no se promete · las llaves viven en el llavero de la Mac; el puente en el servidor lo bloquea el
+  permiso automático.
+- 🔧 **Patrones nuevos:** la voz con marcas de tiempo por fal.ai (`fal-ai/elevenlabs/tts/multilingual-v2`, acepta ids
+  de la biblioteca) manda las escenas, los subtítulos y la música · lo que no se oye se mide (0-quaterquadragies) ·
+  campanas afinadas midiendo su nota (`tono.py`) · un golpe doble se corta para que cada golpe caiga en su palabra ·
+  libros en 3D con MSAA, portadas reales y cantos dorados · un objeto 3D que se desvanece va en su propio pase · la
+  lámina de estilo: misma escena, tipografía propia, subtítulo de muestra y la firma con la línea de pulso.
+- 🧬 **Versión del sistema:** reel de los Códices v3 · video de enseñanzas 01 · protocolo v55.
+
 #### 2026-09-24 → 2026-09-25 — KAL'EL: SU PROPIA CARPETA, LA SOGA DE COLORES, CAMINOS CON MUROS Y EL SENDERO DE 16 ESTACIONES
 
 - ✅ **Resuelto** (todo vivo en somacero.com, verificado renderizando y con la consola limpia): la carpeta `kalel` carga
