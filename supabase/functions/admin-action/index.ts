@@ -1,3 +1,4 @@
+// Red Solar Viva · admin-action v1.58 — rutea admin_campana_diario, admin_campana_set_gasto, admin_campana_set_pixel y admin_campana_estado (Motor → "Campaña": los anuncios de Meta que llevan a escanervibracional.com, cruzados con instalaciones, cuentas y suscripciones del día; migración 20261003_campana_anuncios). Si la migración de una acción todavía no está pegada, responde {error:"falta_migracion", migracion} en vez de un error críptico.
 // Red Solar Viva · admin-action v1.57 — rutea admin_get_user_meditaciones_owned (ficha del nodo: meditaciones canjeadas con cristal o compradas). | v1.56 — rutea admin_get_unread_counts (el
 // faro de no-leídos del Motor: cuántos mensajes de Aliados y cuántos casos
 // de Soporte esperan a la casa, para los números rojos de las pestañas;
@@ -329,6 +330,17 @@ const ADMIN_RPCS: Record<string, string | null> = {
     // El faro de no-leídos: cuántos aliados y casos de soporte esperan
     // (números rojos de las pestañas del Motor). Requiere 20260830b.
     admin_get_unread_counts: "p_admin_clerk_id",
+    // ── Campaña de anuncios (Motor → "Campaña") ──
+    // Lo que la landing escanervibracional.com registra (visitas y toques a
+    // las tiendas, con un id anónimo) cruzado por día con instalaciones,
+    // cuentas y suscripciones nuevas, + el gasto que Zak escribe a mano y el
+    // número del píxel de Meta. El registro público (record_campana_evento)
+    // y la lectura del píxel (get_campana_pixel) NO van por gateway: son RPC
+    // anon directas desde la landing. Requiere 20261003_campana_anuncios.
+    admin_campana_diario: "p_admin_clerk_id",
+    admin_campana_set_gasto: "p_admin_clerk_id",
+    admin_campana_set_pixel: "p_admin_clerk_id",
+    admin_campana_estado: "p_admin_clerk_id",
     // ── Correos (padrón para avisos masivos + lista de espera de Android) ──
     // La lista unificada NUNCA sale por vía anon: el alta pública de la landing
     // (join_android_waitlist) solo INSERTA, no lee.
@@ -509,6 +521,18 @@ const ADMIN_RPCS: Record<string, string | null> = {
     get_revenue_history: null,
 }
 
+// Acciones cuya RPC nace en una migración que se pega a mano en el SQL
+// Editor. Si todavía no está en la base (PostgREST no encuentra la función o
+// la tabla), la respuesta lo dice con el nombre de la migración, en vez de un
+// error críptico. No cambia nada para las demás acciones.
+const MIGRACION_DE: Record<string, string> = {
+    admin_campana_diario: "20261003_campana_anuncios",
+    admin_campana_set_gasto: "20261003_campana_anuncios",
+    admin_campana_set_pixel: "20261003_campana_anuncios",
+    admin_campana_estado: "20261003_campana_anuncios",
+}
+const FALTA_OBJETO = new Set(["PGRST202", "42883", "42P01"])
+
 serve(async (req: Request) => {
     if (req.method === "OPTIONS") {
         return new Response("ok", { headers: corsHeaders })
@@ -537,6 +561,18 @@ serve(async (req: Request) => {
     const { data, error } = await supabase.rpc(action, params)
     if (error) {
         console.error(`[admin-action] ${action} fail:`, error.message)
+        const migracion = MIGRACION_DE[action]
+        if (migracion && FALTA_OBJETO.has(String(error.code || ""))) {
+            return json(
+                {
+                    error: "falta_migracion",
+                    migracion,
+                    detalle: error.message,
+                    code: error.code,
+                },
+                400
+            )
+        }
         return json({ error: error.message, code: error.code }, 400)
     }
 
