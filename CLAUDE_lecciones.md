@@ -1333,7 +1333,39 @@ en un minuto sin volver a pintar.
 
 Hermano del **0-nonies**.
 
+### Paso 0-duoquinquagies — Un número de dinero se calcula con lo que LLEGA a la cuenta
+
+Cualquier cifra que sostenga una meta o una proyección (cuánto deja un suscriptor, cuánto puede costar una descarga,
+cuánto se gana al mes) parte de lo que de verdad deposita quien cobra, no del precio. En México el precio de la tienda
+INCLUYE el 16 % de IVA, y Apple y Google lo descuentan antes de su comisión: de 499 MXN llegan ~366 (499 / 1.16 × 0.85);
+por la web, ~413 tras IVA y Stripe. Un "neto" que solo restó la comisión infla todo lo que se construye encima.
+
+**Por qué.** El 2026-10-03 le di a Zak «de los 499 nos quedan unos 424» (solo la comisión del 15 %) para fijar la meta
+de costo por instalación; al armar la proyección de 6 meses salió el IVA y hubo que corregirlo frente a él. La meta de
+unos 20 pesos sobrevivió de suerte (la vida promedio supuesta lo compensaba); la proyección no habría sobrevivido.
+
+Hermano del **0-decies** (lo que se promete se enumera contra la fuente).
+
+### Paso 0-terquinquagies — Una tarea en segundo plano MUERE a los 30 minutos: lo largo va por tramos
+
+Lo que puede pasar de media hora (un render de Blender, una composición larga) no se lanza como una sola tarea en
+segundo plano: se parte en tramos (una toma por tarea), cada tramo escribe su avance en disco con nombres que no
+dependen del tramo (cuadros numerados por cuadro global) y el siguiente arranca desde el último que quedó. En zsh, una
+lista con valor por defecto (`${@:-a b c}`) no se separa en palabras: las listas van en arreglos.
+
+**Por qué.** El 2026-10-03 el render del comercial del Decodificador (798 cuadros, ~55 min) murió en el cuadro 545 por
+el tope; se reanudó desde el 546 sin perder nada porque cada cuadro ya estaba en disco con su número global. Antes, el
+primer intento ni arrancó: zsh pasó «gancho lata mango productos cierre» como una sola toma y Blender salió sin pintar.
+
+Hermano del **0-unquinquagies** (tras un corte, se reanuda desde lo que sí quedó).
+
 ### Changelog del protocolo
+
+- **v58 (2026-10-03):** dos lecciones de la sala de la publicidad (el comercial del Decodificador y la medición del
+  mismo día). **0-duoquinquagies**: un número de dinero se calcula con lo que llega a la cuenta; en México la tienda
+  descuenta el IVA antes de su comisión (499 → ~366). **0-terquinquagies**: una tarea en segundo plano muere a los 30
+  minutos; lo largo va por tramos que escriben su avance y se reanudan desde ahí. Y Pendientes vivos suma la elección
+  del primer anuncio y la mudanza de Pipedream.
 
 - **v57 (2026-09-30):** tres lecciones de la sala del 02 rehecho y del 04 de los Códices. **0-undequinquagies**: lo que
   tiene que sentirse humano no se dibuja con trazos, se esculpe con volumen, luz y sombra, y se revisa de cerca.

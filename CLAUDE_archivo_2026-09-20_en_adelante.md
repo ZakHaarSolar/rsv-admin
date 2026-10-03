@@ -4,6 +4,38 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-09-28 · II · CÓDICES DE LUZ: DOS VIDEOS PARA ELEGIR SELLO, EL ESCÁNER DEL ALMA SELLADO, VOCES DIRECTAS Y SUBTÍTULOS A SALVO DE INSTAGRAM
+
+- ✅ **Resuelto:** **video 02 «Nunca has perdido a nadie»** (La Muerte no Existe · el duelo como ilusión óptica, 65 s)
+  en Acuarela Cósmica: pinturas de fal.ai que se mueven despacio y entran como pigmento mojado, la mamá que se destapa
+  («Aquí estoy»), el ventilador cuyas aspas giran hasta desaparecer, el hilo rojo del pecho a quien se fue, la
+  despedida en el aeropuerto y la abuela de luz en la silla del principio · **video 03 «No llegaste por accidente»**
+  (Protocolo de Entrada, 67.6 s) en Escáner del Alma, todo con código: la Tierra en el anillo de glifos, la Sala de
+  Proyección, México en holograma, el «ACEPTO», el descenso a 7.83 Hz, la semilla, el océano en la taza, la brújula y
+  «¿por qué a mí?» que se descifra en «para esto vine» · **Zak eligió el Escáner del Alma** y selló al narrador · el 03
+  se rehízo con sus notas desde la vista previa de Instagram: subtítulos sin cuadro a media altura entre su sitio
+  anterior y la cuenta, las dos «s» de «consciencia» ya no pican, narrador más ágil y menos grave, lecturas que no se
+  enciman en los cambios de escena · voces, efectos y revisión ahora por ElevenLabs directo, con su plan.
+- 📁 **Archivos:** `Códices de Luz/Enseñanzas/02 Nunca has perdido a nadie/` (video, ligero, portada y `estudio/`:
+  escenas.js v1.0, shaders.js v2.0 con FS_PINTURA, motor.js v1.1, audio.js v3.0, imagenes.py v1.0, `img/` e `ia/`) ·
+  `03 No llegaste por accidente/` (video, ligero, portada, `Audiciones de voz/` y `estudio/`: escenas.js v1.2,
+  formas.js v1.0, shaders.js v3.0 con VS_NUBE y FS_NUBE, motor.js v1.2, audio.js v4.1, voz.py v2.0, ia.py v1.3,
+  escucha.py v1.0) · `Enseñanzas/Audiciones narrador/` (8 pruebas, ya no se usan) · `.claude/launch.json` (`estudio-02`
+  y `estudio-03`). Ninguno es repo. No se tocó código de la app.
+- ⏳ **Pendiente:** ~~seguir la serie en el sello del Escáner~~ → ✅ hecho en la sala siguiente (el 02 rehecho y el 04).
+- 💡 **Decisiones:** el sello de la serie es **Escáner del Alma**; la acuarela queda descartada · narrador
+  **CarterSutra sellado** como quedó en el 03 (velocidad 1.2 sin contexto, frases de peso a 1.02-1.1, −3.5 dB de graves)
+  · la voz del Escáner es **Cristina Campos** · las voces SIEMPRE por ElevenLabs directo, nunca por fal.ai (su plan
+  trae 10 000 créditos al mes que se renuevan cada 16 y no se pueden exceder; un video gasta ~1 000) · subtítulos solo
+  letra, sin cuadro, primer renglón en y 1570 de 1920 (la cuenta de Instagram cae en ~1788), renglones de hasta 760 px
+  y ningún adorno cruzando esa franja · fal.ai quedó sin saldo y con este sello no hace falta recargarlo.
+- 🔧 **Patrones nuevos:** nube de puntos en la GPU que se transforma de una forma en otra (`formas.js`) · control de
+  eses con el compresor de Chrome, midiendo su subida automática y compensándola · fundido simétrico para que dos
+  lecturas nunca coincidan · `escucha.py` transcribe el MP4 final y lo compara con el guion · en zsh `log` es un comando
+  interno: el registro del sistema es `/usr/bin/log show` · el AirDrop de Zak falla por tiempo agotado en el canal
+  directo con la Mac en 5 GHz a 160 MHz (probar desconectando la Mac del módem, o bajar el módem a 80 MHz).
+- 🧬 **Versión del sistema:** video de enseñanzas 03 v3 · protocolo v56.
+
 #### 2026-09-27 → 2026-09-28 · CÓDICES DE LUZ: EL REEL DE LOS LIBROS, LA PRIMERA ENSEÑANZA CON VOZ Y CINCO SELLOS VISUALES
 
 - ✅ **Resuelto:** **reel de los Códices** (38 s, 9:16): el gancho «Tienes en tus manos un objeto peligroso.», la tapa
