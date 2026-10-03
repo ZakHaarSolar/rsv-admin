@@ -4,6 +4,46 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-03 · PUBLICIDAD: EL COMERCIAL DEL DECODIFICADOR, EL REEL EN VERSIÓN ANUNCIO, LA MEDICIÓN DEL MISMO DÍA Y EL AVISO DE PIPEDREAM
+
+- ✅ **Resuelto:** **Pipedream** avisó que Workflows se apaga el 2027-03-31: mapa de los 3 flujos vivos y plan de
+  mudarlos a Supabase (ver Pendientes vivos) · **estrategia de anuncios**: un video a la vez, 100 MXN al día por 7
+  días, Grok lanza en Meta con prompts listos; sin anuncios de App Store (Zak: «no convierte tan bien») · **comercial
+  «¿Te da energía o te la quita?»** del Decodificador (24.8 s): 3D en Blender (lata con gotas, mango, shampoo,
+  limpiador, teléfono) con la pantalla de la app replicada fiel y **lecturas reales** (mismo prompt y modelo de
+  decode-matter): refresco 5 % saludable, mango 92 %, shampoo 15 %, limpiador 5 %; voz de Cristina, música de
+  ElevenLabs Music, clic de cámara en cada foto. Zak: «me encantó» · **el reel del Escáner en versión anuncio**
+  (textos en la franja que no tapa Instagram), aparte del original · **medición del mismo día**: la landing cuenta
+  visitas y toques a las tiendas por anuncio y carga el píxel de Meta sola; pestaña **Motor → Campaña** · comprobado
+  que con solo la foto de una fruta (sin texto) el Decodificador entra en modo visión y la reconoce · proyección de 6
+  meses dada a Zak, con el IVA corregido (499 → ~366 por suscriptor).
+- 📁 **Archivos:** `escaner-landing/index.html` v1.3 (fb90eb3) · `Code/MI_Campana.tsx` v1.0,
+  `MotorDeIntervencion.tsx` v5.2, `MI_Shared.tsx` v2.4, `Privacy.tsx` v1.7 (8466a41, en redsolarviva.com) · admin
+  (183a501). Sin repo: `Escaner Vibracional/Anuncio Decodificador/estudio/` (lecturas.mjs, vision_prueba.mjs,
+  etiquetas.js, blender/base.py y tomas.py v1.1, pantalla.js v1.1, final.js v1.1, musica_eleven.py, medir_musica.py,
+  mezclar.py v2.1, armar.sh v1.1, render_todo.sh) · `Escaner Vibracional/Reel Promo/Versión anuncio/estudio/` ·
+  entregables y prompts en `Escaner Vibracional/Publicidad/`.
+- 🗄️ **Migraciones SQL aplicadas:** `20261003_campana_anuncios.sql` (Zak la pegó y la marcó ✅): tablas
+  campana_eventos, campana_gasto y campana_ajustes, y sus RPC (record_campana_evento y get_campana_pixel para la
+  landing; admin_campana_* para el Motor).
+- 🔌 **Edge functions deployed:** admin-action v1.58 (rutea las 4 acciones de Campaña).
+- ⏳ **Pendiente:** el comercial del Espejo y elegir cuál se lanza primero (Pendientes vivos); el píxel y la prueba desde
+  Instagram (Pendientes vivos).
+- 💡 **Decisiones:** Decodificador antes que sueños («los que la han usado usan más el decodificador»); el Espejo es el
+  siguiente candidato porque puede atraer a más gente nueva · la música de los anuncios es real (ElevenLabs Music,
+  instrumental), no sintetizada en código · nada de momentos dramáticos largos · voces al mismo LUFS y sin eco · no
+  hizo falta tocar la app (una semana por video: lo que suba sobre la base es de ese video).
+- 🔧 **Patrones nuevos:** lecturas reales con el prompt de la función leído del código y el mismo modelo por
+  OpenRouter · pantalla de la app replicada en canvas y montada como secuencia en el teléfono 3D · Blender por tomas con
+  cuadros globales, reanudable por tramos · ElevenLabs Music: con `composition_plan` el texto de cada trozo SE CANTA;
+  `prompt` + `force_instrumental` y Scribe para confirmar que no canta · zonas que tapa un anuncio de Reels (arriba
+  14 %, abajo 35 %) · un velo oscuro llega hasta el borde. Detalle en [[feedback_anuncios_video]].
+- 🧬 **Versión del sistema:** App Store 1.1.6 LIVE · landing v1.3 · Motor v5.2 · admin-action v1.58 · protocolo v58.
+- 🔮 retirado el 2026-10-03: el comercial del Espejo (prompt en `Escaner Vibracional/Publicidad/Prompt próxima sala ·
+  Espejo.md`) y la elección del primer anuncio viven en Pendientes vivos; Grok ya no se usa.
+
+---
+
 #### 2026-09-28 · III → 2026-09-30 · CÓDICES DE LUZ: EL 02 EN EL SELLO DE LA CASA, EL 04 «NUNCA ESTÁS LEJOS», LA MAMÁ ESCULPIDA Y LA PALETA SIN FILO
 
 - ✅ **Resuelto:** **video 02 «Nunca has perdido a nadie» rehecho en Escáner del Alma** (65.7 s): la lente del bebé que
