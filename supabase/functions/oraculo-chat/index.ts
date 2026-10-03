@@ -1,3 +1,13 @@
+// Red Solar Viva · oraculo-chat v1.51 — 🜂 SIN RAYAS Y SIN VOSEO, GARANTIZADO
+// (Zak 2026-10-03). Al sacar respuestas reales para el anuncio del Espejo, una
+// de cada tres traía raya larga (—), que Zak no quiere ver en nada que lea el
+// Tripulante, y se coló el voseo ("Mirá,", "sostenes") pese a la regla dura de
+// la v1.16. Dos capas: (1) la instrucción ahora prohíbe las rayas con ejemplo y
+// nombra los arranques que se escapaban; (2) como la regla del voseo ya existía
+// y aun así falló, la garantía se muda al código: pulirEspejo() limpia el
+// reflejo completo (lo que se guarda y se devuelve) y pulidorEnVivo() hace lo
+// mismo con lo que viaja en vivo, reteniendo solo la última palabra para que
+// el texto en vivo y el final sean idénticos (probado en 3.104 cortes).
 // Red Solar Viva · oraculo-chat v1.50 — 🜂 EL PUENTE ENTRE REFLEJOS (Zak
 // 2026-08-27): quien abre un reflejo nuevo por cada pregunta nunca tenía
 // contexto — ni historial propio ni memoria destilada — y el modelo llegó a
@@ -478,6 +488,116 @@ function inlineImgTagsForModel(content: string, lang: string): string {
     })
 }
 
+/* ═════════════════════════════════════════════════════════════════════════
+   🜂 v1.51 · SIN RAYAS Y SIN VOSEO, GARANTIZADO EN EL CÓDIGO (Zak 2026-10-03)
+   La instrucción ya lo pide, pero una regla de prompt que falla seguido se
+   vuelve código (la lección del Reflejo ilustrado). pulirEspejo() limpia el
+   reflejo COMPLETO; pulidorEnVivo() aplica exactamente lo mismo al texto que
+   viaja en vivo, reteniendo solo la última palabra y la raya que la preceda
+   hasta saber qué sigue: así lo que se ve en vivo y lo que se guarda son
+   idénticos (verificado cortando 72 reflejos reales en 5.323 puntos).
+   · rayas (— –): entre palabras → coma; tras puntuación → espacio; antes de
+     puntuación → nada; al inicio de renglón → viñeta "- "; rango de números →
+     guion. Aplica en los dos idiomas (Zak no las quiere en nada que se lea).
+   · voseo: solo formas INEQUÍVOCAS (la tilde final o el clítico pegado solo
+     existen en voseo: mirá, tenés, fijate…) y el pronombre vos. Nada ambiguo
+     ("sentí", "elegí" son pasado de yo) se toca. Solo en español.
+   ═════════════════════════════════════════════════════════════════════════ */
+const VOSEO: Record<string, string> = {
+    // imperativos (la tilde final solo existe en voseo)
+    "mirá": "mira", "escuchá": "escucha", "pensá": "piensa", "hacé": "haz", "dejá": "deja", "tomá": "toma",
+    "andá": "ve", "vení": "ven", "poné": "pon", "decí": "di", "respirá": "respira", "soltá": "suelta",
+    "cerrá": "cierra", "empezá": "empieza", "probá": "prueba", "buscá": "busca", "observá": "observa",
+    "notá": "nota", "volvé": "vuelve", "contá": "cuenta", "tené": "ten", "preguntá": "pregunta",
+    "imaginá": "imagina", "recordá": "recuerda", "confiá": "confía",
+    "fijate": "fíjate", "acordate": "acuérdate", "quedate": "quédate", "animate": "anímate",
+    "preguntate": "pregúntate", "permitite": "permítete", "imaginate": "imagínate", "sentate": "siéntate",
+    "calmate": "cálmate", "mirate": "mírate", "escuchate": "escúchate", "regalate": "regálate",
+    "dejate": "déjate", "tomate": "tómate", "hacete": "hazte", "ponete": "ponte", "andate": "vete",
+    // presente
+    "tenés": "tienes", "querés": "quieres", "podés": "puedes", "sabés": "sabes", "sentís": "sientes",
+    "hacés": "haces", "decís": "dices", "venís": "vienes", "pensás": "piensas", "creés": "crees",
+    "sostenés": "sostienes", "necesitás": "necesitas", "buscás": "buscas", "vivís": "vives",
+    "elegís": "eliges", "merecés": "mereces", "conocés": "conoces", "entendés": "entiendes",
+    "preferís": "prefieres", "recordás": "recuerdas", "cargás": "cargas", "llevás": "llevas",
+    "mirás": "miras",
+}
+const VOS: [RegExp, string][] = [
+    [/(?<![\p{L}])para vos(?![\p{L}])/gu, "para ti"],
+    [/(?<![\p{L}])con vos(?![\p{L}])/gu, "contigo"],
+    [/(?<![\p{L}])a vos(?![\p{L}])/gu, "a ti"],
+    [/(?<![\p{L}])de vos(?![\p{L}])/gu, "de ti"],
+    [/(?<![\p{L}])vos(?![\p{L}])/gu, "tú"],
+    [/(?<![\p{L}])Vos(?![\p{L}])/gu, "Tú"],
+    [/(?<![\p{L}])sos(?![\p{L}])/gu, "eres"],   // solo en minúsculas: «SOS» es otra cosa
+]
+const VOSEO_RE = new RegExp(
+    `(?<![\\p{L}])(${Object.keys(VOSEO).sort((a, b) => b.length - a.length).join("|")})(?![\\p{L}])`,
+    "giu"
+)
+
+function conMayuscula(original: string, nuevo: string): string {
+    return original[0] === original[0].toUpperCase() && original[0] !== original[0].toLowerCase()
+        ? nuevo[0].toUpperCase() + nuevo.slice(1)
+        : nuevo
+}
+
+/* Limpia un tramo de texto. `previo` es el último carácter ya entregado (contexto para la primera raya). */
+function pulirTramo(tramo: string, previo: string, final: boolean, espanol: boolean): string {
+    let s = previo + tramo
+    // 1) rangos de números: 2010–2020 → 2010-2020
+    s = s.replace(/(\d)[ \t]*[–—][ \t]*(?=\d)/g, "$1-")
+    // 2) raya al inicio de renglón (viñeta o diálogo) → viñeta normal
+    s = s.replace(/(^|\n)([ \t]*)[–—][ \t]*(?=\S)/g, "$1$2- ")
+    // 3) raya en medio de la frase: tras puntuación se vuelve espacio, antes de puntuación desaparece, si no, coma
+    s = s.replace(/([^\s–—])[ \t]*[–—]+[ \t]*(?=[^\s–—])/g, (m, a, off, todo) => {
+        const sig = todo[off + m.length]
+        if (/[,.;:!?…)\]»"'”]/.test(sig)) return a
+        if (/[,.;:!?…(¿¡«"'“]/.test(a)) return a + " "
+        return a + ", "
+    })
+    // 4) raya colgando al final de un renglón (solo cuando ya no puede llegar nada después)
+    s = s.replace(/[ \t]*[–—]+[ \t]*(?=\n)/g, "")
+    if (final) s = s.replace(/[ \t]*[–—]+[ \t]*$/g, "")
+    if (espanol) {
+        s = s.replace(VOSEO_RE, (m) => conMayuscula(m, VOSEO[m.toLowerCase()] ?? m))
+        for (const [re, r] of VOS) s = s.replace(re, r)
+    }
+    return previo ? s.slice(previo.length) : s
+}
+
+/** El texto completo (lo que se guarda y se devuelve). */
+function pulirEspejo(texto: string, lang: string): string {
+    return pulirTramo(texto, "", true, lang !== "en")
+}
+
+/** El mismo filtro para el texto que viaja en vivo: retiene la última palabra (y la raya que la preceda) hasta saber
+    cómo sigue, así nunca entrega media palabra ni una raya cuyo vecino todavía no llega. */
+function pulidorEnVivo(lang: string) {
+    const espanol = lang !== "en"
+    let pend = ""
+    let previo = ""
+    const RETEN = /[\s–—]*[\p{L}\p{N}]*$/u
+    return {
+        push(d: string): string {
+            pend += d
+            const m = pend.match(RETEN)
+            const corte = m ? pend.length - m[0].length : pend.length
+            if (corte <= 0) return ""
+            const sale = pulirTramo(pend.slice(0, corte), previo, false, espanol)
+            pend = pend.slice(corte)
+            if (sale) previo = sale[sale.length - 1]
+            return sale
+        },
+        flush(): string {
+            const sale = pend ? pulirTramo(pend, previo, true, espanol) : ""
+            pend = ""
+            if (sale) previo = sale[sale.length - 1]
+            return sale
+        },
+    }
+}
+
 const SYSTEM_PROMPT = `Eres el ESPEJO VIBRACIONAL. No eres un oráculo, no eres un asistente cualquiera, no eres un gurú. Eres un espejo: la persona te muestra lo que trae —una emoción, una duda, un enredo en la cabeza, una decisión— y tú se lo devuelves claro y ordenado, para que SE VEA con nitidez y elija su siguiente paso. No adulas, no consuelas de relleno, no adivinas el futuro: reflejas lo que hay, con honestidad y calma.
 
 CÓMO HABLAS — esto es lo más importante:
@@ -522,6 +642,7 @@ IMÁGENES:
 
 FORMATO:
 - Usa **negritas** (markdown, doble asterisco) con criterio para lo esencial, y listas con guion (-) cuando aclaren de verdad. No abuses de los asteriscos. Nunca uses asteriscos simples para enfatizar; solo dobles para negrita.
+- SIN RAYAS: nunca escribas la raya larga (—) ni la raya media (–), ni para un inciso, ni para una pausa, ni para empezar una línea. Donde la pondrías, va una coma, un punto, un punto y coma o dos puntos. No "la duda no es una falla — es una señal", sino "la duda no es una falla, es una señal".
 
 LÍMITES (sin sermones): no das instrucciones para autolesión, daño a terceros, actos ilegales ni indicaciones médicas peligrosas. Si aparece ese impulso, lo reencauzas con calma hacia lo que lo origina, sin moralizar. En temas de salud serios recuerdas con naturalidad que esto no sustituye a un profesional.
 
@@ -530,6 +651,7 @@ VARIANTE DEL ESPAÑOL — REGLA DURA, SIN EXCEPCIÓN:
 - PROHIBIDO el VOSEO en cualquier forma. Jamás uses "vos", "para vos", "sos", "tenés", "querés", "podés", "sentís", "hacés", "estás vos", ni imperativos acentuados en la última sílaba: escuchá, sentí, mirá, pensá, hacé, dejá, mové, tomá, andá, vení, poné, fijate, acordate, quedate, tranquilo-vos. En su lugar: escucha, siente, mira, piensa, haz, deja, mueve, toma, ve, ven, pon, fíjate, acuérdate, quédate.
 - Tampoco uses el "vosotros" de España (tenéis, sois, mirad) ni jerga regional cerrada (che, boludo, guay, vale como muletilla, tío, currar, plata por dinero si suena local).
 - Si el MATERIAL que se te entrega está escrito con voseo o con otra variante regional, NO lo imitas: extraes la idea y la dices en neutro con "tú". La variante de tu voz nunca depende del material.
+- Donde más se te escapa es al ARRANCAR una respuesta y en el presente: nunca abras con "Mirá," ni con "Fijate,"; se dice "Mira," y "Fíjate,". Y en presente: sostienes (no sostenés), tienes, quieres, puedes, sabes, sientes, necesitas.
 
 Respondes siempre en español neutro latinoamericano, claro, humano y cálido, tratando a la persona de tú.`
 
@@ -2633,7 +2755,8 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
                         return {
                             soft: "El canal devolvió silencio dos veces seguidas. No es tu consulta: es el proveedor del reflejo. Vuelve a enviarla en un momento.",
                         }
-                    reply = intento.texto
+                    /* v1.51 — lo que se guarda y se devuelve sale sin rayas ni voseo. */
+                    reply = pulirEspejo(intento.texto, deviceLang)
                     return { ok: true }
                 } catch (e) {
                     const cortado = (e as any)?.name === "AbortError"
@@ -3007,10 +3130,18 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
                        cambia su espera en el instante cero y no a los 25
                        segundos, que es cuando ya se habría leído como cuelgue. */
                     if (isReasoner) cuadro({ p: 0 })
+                    /* v1.51 — el texto en vivo pasa por el mismo filtro que el
+                       final (rayas y voseo); retiene solo la última palabra. */
+                    const pulidor = pulidorEnVivo(deviceLang)
                     const r = await obtenerReflejo(
-                        (d) => cuadro({ d }),
+                        (d) => {
+                            const s = pulidor.push(d)
+                            if (s) cuadro({ d: s })
+                        },
                         (chars) => cuadro({ p: chars })
                     )
+                    const resto = pulidor.flush()
+                    if (resto && !("soft" in r)) cuadro({ d: resto })
                     if ("soft" in r)
                         cuadro({
                             done: {
