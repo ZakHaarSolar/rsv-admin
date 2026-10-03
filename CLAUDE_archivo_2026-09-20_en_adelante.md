@@ -4,6 +4,42 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-09-28 · III → 2026-09-30 · CÓDICES DE LUZ: EL 02 EN EL SELLO DE LA CASA, EL 04 «NUNCA ESTÁS LEJOS», LA MAMÁ ESCULPIDA Y LA PALETA SIN FILO
+
+- ✅ **Resuelto:** **video 02 «Nunca has perdido a nadie» rehecho en Escáner del Alma** (65.7 s): la lente del bebé que
+  pierde el rostro de su mamá y lo recupera con «Aquí estoy», el ser amado que el universo envuelve (oculto, no
+  ausente), el ventilador cuyas aspas desaparecen y el estroboscopio que las encuentra, el alma que vibra fuera de rango
+  hasta «presencia 100 %», el hilo rojo con su simulación rota, la Terminal Tierra (el vuelo abordó, reencuentro
+  confirmado) y la visión del corazón con cuatro presencias; la versión acuarela quedó en su subcarpeta · **video 04
+  «Nunca estás lejos»** (Lenguaje Holográfico · Entrelazamiento y Ping, 70 s): el celular que vibra justo cuando
+  pensabas en alguien, CASUALIDAD que se descifra en CONEXIÓN, la carrera corazón contra celular, dos partículas que un
+  océano no separa, el cordón que atraviesa el planeta, el mapa que se dobla, el enlace dentro del pecho y la prueba de
+  campo con el ping · **la mamá del 02 esculpida de nuevo** (Zak: «se ve como un muñeco muy chafita»): rostro, cabello
+  en guedejas, torso y manos reales, con luz y sombra · **el 03 sin brillos agudos** (Zak: 3-4, 6-8, 18-19, 20-21 s y la
+  campana del 1:04): en la música lo agudo bajó de 8 a 13 dB en esos tramos; la misma paleta se aplicó al 02 y al 04
+  sin que se pidiera, con sus mezclas anteriores guardadas · verificado: 142/142 y 136/136 palabras, −14 LUFS, consola
+  limpia y cuadros de cada MP4 final.
+- 📁 **Archivos:** `Códices de Luz/Enseñanzas/02 Nunca has perdido a nadie/` (video, ligero, portada, `Versión
+  acuarela/` y `estudio/`: escenas.js v2.3, retrato.js v1.3, formas.js v1.2.1, motor.js v1.3, shaders.js v3.1,
+  audio.js v5.1, voz.py v2.1, ia.py v1.4, escucha.py v1.1) · `04 Nunca estás lejos/` (video, ligero, portada y
+  `estudio/`: escenas.js v1.0, formas.js v1.4, audio.js v1.1, `sonidos.json` con 4 efectos) · `03 …/estudio/audio.js`
+  v4.2 y sus dos videos con la mezcla nueva (imagen intacta) · mezclas anteriores en cada estudio (`audio_vX.js`,
+  `audio/final_vX.wav`) · `.claude/launch.json` (`estudio-04`, puerto 8830). Ninguno es repo.
+- ⏳ **Pendiente:** en Pendientes vivos, los cinco efectos del 03 que suenan al doble de largo; y el video 5 (su plan vive en [[proyecto_videos_ensenanzas]]).
+- 💡 **Decisiones:** el #4 salió de Lenguaje Holográfico porque es el más compartible («pensaste en alguien y te
+  escribió») · en el 02 Cristina es el Escáner y también la voz de quien parece haberse ido (rótulos MAMÁ y SEÑAL en
+  oro) · la paleta de sonido de la serie va sin filo: campanas sin la grabación clara y una octava abajo de 700 Hz,
+  brillos grabados filtrados a ~4 kHz y a menos de la mitad, teclas graves, violines y subidas sin aire arriba de ~4 kHz
+  · una figura humana que carga emoción se esculpe, no se dibuja.
+- 🔧 **Patrones nuevos:** retrato esculpido en código (`retrato.js`: superficies de distancia con luz, oclusión y
+  borde; rasgos por densidad; cabello en guedejas de hebras paralelas; manos con falanges y nudillos) · máscara que
+  apaga una elipse de la nube (manos que tapan la cara) · vibración cuadro a cuadro que la banda del Escáner fija ·
+  desenfoque de giro al azar por punto · matrices libres (doblar media hoja, inclinar la Tierra) · rótulos sobre la
+  Tierra por latitud y longitud · `ia.py` v1.4 decide los canales del audio crudo por la duración pedida · tras un
+  corte, el video se rearma desde los cuadros que quedaron.
+- 🧬 **Versión del sistema:** videos de enseñanzas 01 a 04 · protocolo v57.
+- 🔮 retirado el 2026-10-03: el plan del video 5 vive en [[proyecto_videos_ensenanzas]].
+
 #### 2026-09-28 · II · CÓDICES DE LUZ: DOS VIDEOS PARA ELEGIR SELLO, EL ESCÁNER DEL ALMA SELLADO, VOCES DIRECTAS Y SUBTÍTULOS A SALVO DE INSTAGRAM
 
 - ✅ **Resuelto:** **video 02 «Nunca has perdido a nadie»** (La Muerte no Existe · el duelo como ilusión óptica, 65 s)

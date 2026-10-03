@@ -1359,7 +1359,42 @@ primer intento ni arrancó: zsh pasó «gancho lata mango productos cierre» com
 
 Hermano del **0-unquinquagies** (tras un corte, se reanuda desde lo que sí quedó).
 
+### Paso 0-quaterquinquagies · Lo que el lienzo dibuja sale de las reglas: si el dibujo miente, el usuario reporta un error que no existe
+
+Todo lo que en pantalla sugiere qué se puede hacer (un alcance, un objetivo, un estado "vivo" o "hecho") se calcula con
+las mismas reglas que deciden el resultado, nunca con una aproximación que "se parece". La prueba: armar el caso donde
+el dibujo y la regla no coinciden y preguntarse qué creería quien juega.
+
+**Por qué.** El 2026-10-03 Zak reportó que Navegante «no nos dejaba absorber» y que «me bajó el rango». Las reglas
+estaban bien: apuntaba a células ya integradas, que en Red Viva se quedaban en la Red con espinas de luz y se veían más
+vivas que las pendientes; y el abanico se dibujaba con una fórmula vieja, más corto que el alcance real, que además se
+encogía al fallar cuando la regla solo cierra el ángulo. El arreglo fue de dibujo: la integrada es un nudo claro, el
+abanico mide el alcance real con un arco al final y una mira marca la célula que el pulso absorbería.
+
+Hermano del **0-sexdecies** (lo que mide y lo que ocurre, el mismo objeto) y del **0-quindecies** (mide lo que la persona
+percibe).
+
+### Paso 0-quinquinquagies · Una copia del código en otra carpeta no es una función viva: antes de portar, lee a quien la monta
+
+Antes de planear trabajo sobre un archivo duplicado (portar una mejora, arreglarlo, "sincronizarlo"), se busca quién lo
+importa o lo monta y se lee su encabezado de versiones y la memoria: ahí viven las decisiones de producto. Si nadie lo
+monta, o el que lo montaba lo apagó a propósito, el archivo es huérfano y no se toca.
+
+**Por qué.** El 2026-10-03 encontré `escaner-app/.../NaveganteDeLaRed.tsx`, propuse llevar Red Viva a la app del
+Escáner y hasta armé la fusión de tres vías. Zak lo frenó: desde el 2026-09-17 el Escáner no lleva Navegante, y estaba
+escrito en el encabezado de `SimuladoresShell.tsx` v1.19 («NAVEGANTE SALE DEL ESCÁNER»), que leí después de proponer.
+
+Hermano del **0-duodevicies** (un «no hay nada» se confirma por otra vía) y del **0-quadragies** (un «no se puede»
+heredado caduca): las decisiones viejas también se verifican antes de construir encima o en contra.
+
 ### Changelog del protocolo
+
+- **v59 (2026-10-03):** dos lecciones de la sala de Ludus Cero y Navegante (Lúcido, Red Viva, el hub de casa de juegos
+  y los rumbos). **0-quaterquinquagies**: lo que el lienzo dibuja sale de las reglas; si el dibujo miente, el usuario
+  reporta un error que no existe. **0-quinquinquagies**: una copia del código en otra carpeta no es una función viva;
+  antes de portar, se lee a quien la monta. Y: Grok ya no se usa (Zak, 2026-10-03), Claude Code vuelve a tender el
+  maestro (encabezado y glosario al día); Navegante entra a la tabla de proyectos con su casa propia
+  (`Ludus Cero/Navegante/`).
 
 - **v58 (2026-10-03):** dos lecciones de la sala de la publicidad (el comercial del Decodificador y la medición del
   mismo día). **0-duoquinquagies**: un número de dinero se calcula con lo que llega a la cuenta; en México la tienda
