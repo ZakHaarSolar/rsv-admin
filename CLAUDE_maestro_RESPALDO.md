@@ -538,8 +538,8 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 ### 🟠 Ludus Cero · lo que necesita tu decisión
 
 - **Ludus Cero en celular.** En el teléfono, play.redsolarviva.com/simuladores muestra la página de simuladores del
-  Escáner (con su barra de Radar, Calibración, Holoteca…) y solo Navegante; los displays nuevos con Terra Cristal,
-  Lúcido y Navegante se ven en computadora y tableta. Falta decidir si en celular aparece Ludus Cero con sus juegos.
+  Escáner (con su barra de Radar, Calibración, Holoteca…) y solo Navegante; la Red que desciende con Terra Cristal,
+  Lúcido y Navegante se ve en computadora y tableta. Falta decidir si en celular aparece Ludus Cero con sus juegos.
 - **El aviso de pago de Navegante en la web dice 599 MXN/mes** y Sintonía Solar cuesta 499 (`Code/EV_Freemium.tsx`).
   Falta el sí de Zak para cambiarlo.
 
@@ -847,6 +847,31 @@ página: el maestro crece de a una línea por lección.
 
 ## 🜃 Historial de sesiones
 
+#### 2026-10-03 · III · TERRA CRISTAL PIXEL CON SU ARTE SELLADO Y LUDUS CERO EN LA RED QUE DESCIENDE
+
+- ✅ **Resuelto:** **Terra Cristal Pixel rehecho entero con el arte sellado** (ambiente pintado con luz de cine, la
+  tripulación y el Soldado en Ícono mínimo, el pelo de Elara como su Plasma) y con la pantalla que llena la ventana sin
+  marco (cada lugar con su orilla; el área de movimiento ya no se corta en los aliados); vivo en
+  play.redsolarviva.com/terra-cristal-pixel/ · **Ludus Cero estrena la Red que desciende** en
+  play.redsolarviva.com/simuladores: Zak eligió la propuesta 1 de una segunda ronda (lienzo con las dos rondas:
+  https://claude.ai/artifact/B7PRKfoMAPxCYU8FD6mW9F); los juegos cuelgan del sol con su portada entera y cada uno tiene
+  su estación (historia, Así se juega, JUGAR y un mosaico con su avance y sus mundos); la página baja con su propio
+  scroll. En redsolarviva.com/simuladores sale igual con Navegante solo.
+- 📁 **Archivos:** Code: `SimuladoresHub.tsx` v3.0 (1340009) · rsv-web: 15 visuales nuevos en `public/ludus/` (6f46c7b)
+  · terra-cristal-pixel: 8125111, c112acd y el cierre d8633cd (bitácora y PROXIMA_SALA).
+- ⏳ **Pendiente:** lo de Terra Cristal Pixel vive en `terra-cristal-pixel/Docs/PROXIMA_SALA.md` (siguiente: Arena 02 ·
+  Ruinas) · Ludus Cero en celular sigue en Pendientes vivos.
+- 💡 **Decisiones:** en las páginas de juegos el arte va ENTERO, nunca recortado (los círculos de la primera ronda «no
+  dejan apreciar la magnificencia») y la página puede bajar para mostrar visuales y sinopsis (scroll vertical) · Terra
+  Cristal al centro de la constelación · Navegante va en violeta en el hub.
+- 🔧 **Patrones nuevos:** una página larga dentro de una ruta de pantalla completa de Domo scrollea por dentro (100dvh,
+  como `/privacy`) · propuestas de diseño en un lienzo con una página por ronda, probadas con el motor del lienzo en
+  Chrome sin ventana · el hub con el host de Ludus en local: build en carpeta aparte, servidor propio y
+  `--host-resolver-rules` · antes de publicar rsv-web se busca el texto del Consejo sin commit en el `CouncilApp-*.js`
+  vivo. Detalle en [[proyecto_ludus_hub]] y [[proyecto_juego_pixel]].
+- 🧬 **Versión del sistema:** hub v3.0 · shell v4.0 · Terra Cristal Pixel (main v2.1, cine v1.1, mundo v1.1, cuerpo v3)
+  · protocolo v59.
+
 #### 2026-10-03 · II · LUDUS CERO: LÚCIDO NACE, NAVEGANTE EN RED VIVA, EL HUB DE CASA DE JUEGOS Y LOS RUMBOS
 
 - ✅ **Resuelto:** **juego pixel** (cinco propuestas vivas en https://claude.ai/artifact/UmATZhiD9nigZhy3LeUiiL): Zak
@@ -883,29 +908,6 @@ página: el maestro crece de a una línea por lección.
 
 #### 2026-10-03 · PUBLICIDAD: EL COMERCIAL DEL DECODIFICADOR, EL REEL EN VERSIÓN ANUNCIO, LA MEDICIÓN DEL MISMO DÍA Y EL AVISO DE PIPEDREAM
 
-- ✅ **Resuelto:** **Pipedream** avisó que Workflows se apaga el 2027-03-31: mapa de los 3 flujos vivos y plan de
-  mudarlos a Supabase (ver Pendientes vivos) · **estrategia de anuncios**: un video a la vez, 100 MXN al día por 7
-  días, Grok lanza en Meta con prompts listos; sin anuncios de App Store (Zak: «no convierte tan bien») · **comercial
-  «¿Te da energía o te la quita?»** del Decodificador (24.8 s): 3D en Blender (lata con gotas, mango, shampoo,
-  limpiador, teléfono) con la pantalla de la app replicada fiel y **lecturas reales** (mismo prompt y modelo de
-  decode-matter): refresco 5 % saludable, mango 92 %, shampoo 15 %, limpiador 5 %; voz de Cristina, música de
-  ElevenLabs Music, clic de cámara en cada foto. Zak: «me encantó» · **el reel del Escáner en versión anuncio**
-  (textos en la franja que no tapa Instagram), aparte del original · **medición del mismo día**: la landing cuenta
-  visitas y toques a las tiendas por anuncio y carga el píxel de Meta sola; pestaña **Motor → Campaña** · comprobado
-  que con solo la foto de una fruta (sin texto) el Decodificador entra en modo visión y la reconoce · proyección de 6
-  meses dada a Zak, con el IVA corregido (499 → ~366 por suscriptor).
-- 📁 **Archivos:** `escaner-landing/index.html` v1.3 (fb90eb3) · `Code/MI_Campana.tsx` v1.0,
-  `MotorDeIntervencion.tsx` v5.2, `MI_Shared.tsx` v2.4, `Privacy.tsx` v1.7 (8466a41, en redsolarviva.com) · admin
-  (183a501). Sin repo: `Escaner Vibracional/Anuncio Decodificador/estudio/` (lecturas.mjs, vision_prueba.mjs,
-  etiquetas.js, blender/base.py y tomas.py v1.1, pantalla.js v1.1, final.js v1.1, musica_eleven.py, medir_musica.py,
-  mezclar.py v2.1, armar.sh v1.1, render_todo.sh) · `Escaner Vibracional/Reel Promo/Versión anuncio/estudio/` ·
-  entregables y prompts en `Escaner Vibracional/Publicidad/`.
-- 🗄️ **Migraciones SQL aplicadas:** `20261003_campana_anuncios.sql` (Zak la pegó y la marcó ✅): tablas
-  campana_eventos, campana_gasto y campana_ajustes, y sus RPC (record_campana_evento y get_campana_pixel para la
-  landing; admin_campana_* para el Motor).
-- 🔌 **Edge functions deployed:** admin-action v1.58 (rutea las 4 acciones de Campaña).
-- ⏳ **Pendiente:** el comercial del Espejo y elegir cuál se lanza primero (Pendientes vivos); el píxel y la prueba desde
-  Instagram (Pendientes vivos).
 - 💡 **Decisiones:** Decodificador antes que sueños («los que la han usado usan más el decodificador»); el Espejo es el
   siguiente candidato porque puede atraer a más gente nueva · la música de los anuncios es real (ElevenLabs Music,
   instrumental), no sintetizada en código · nada de momentos dramáticos largos · voces al mismo LUFS y sin eco · no
@@ -915,9 +917,7 @@ página: el maestro crece de a una línea por lección.
   cuadros globales, reanudable por tramos · ElevenLabs Music: con `composition_plan` el texto de cada trozo SE CANTA;
   `prompt` + `force_instrumental` y Scribe para confirmar que no canta · zonas que tapa un anuncio de Reels (arriba
   14 %, abajo 35 %) · un velo oscuro llega hasta el borde. Detalle en [[feedback_anuncios_video]].
-- 🧬 **Versión del sistema:** App Store 1.1.6 LIVE · landing v1.3 · Motor v5.2 · admin-action v1.58 · protocolo v58.
-- 🔮 retirado el 2026-10-03: el comercial del Espejo (prompt en `Escaner Vibracional/Publicidad/Prompt próxima sala ·
-  Espejo.md`) y la elección del primer anuncio viven en Pendientes vivos; Grok ya no se usa.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 *Las entradas anteriores viven en* `admin/CLAUDE_archivo_hasta_2026-08-04.md` (2026-04-18 → 2026-08-22) *y en*
 `admin/CLAUDE_archivo_2026-08-30_a_2026-09-18.md` (2026-08-30 → 2026-09-18), *y desde el 2026-09-20 en*
