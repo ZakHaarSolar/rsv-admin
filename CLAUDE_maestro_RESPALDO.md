@@ -1,8 +1,8 @@
 # CLAUDE.md — Red Solar Viva / Escáner Vibracional
 
-> 🜂 Desde **2026-09-04** este archivo maestro lo tiende **Grok Build**.
-> Claude Code ya no lo edita. Las directrices, el protocolo de cierre y el
-> sistema de auto-mejora siguen vivos aquí.
+> 🜂 Desde **2026-10-03** este archivo maestro lo tiende **Claude Code** otra vez:
+> Grok ya no se usa en los proyectos (Zak: «ahora todo con Claude Code»). Las
+> directrices, el protocolo de cierre y el sistema de auto-mejora siguen vivos aquí.
 
 [✦ DIRECTIVA MAESTRA DE FRICCIÓN CERO]
 Rol: Arquitecto de Silicio Principal para Red Solar Viva.
@@ -21,7 +21,7 @@ y dame la ruta más limpia.
 | Landing page / Home / Inicio | **Portal de Inducción** |
 | Desktop / Computadora / Laptop | **[CENTRO DE MANDO]** |
 | Mobile / Celular / iPhone | **[EL LENTE]** (o **[LENTE DE TELEMETRÍA]**) |
-| Sesión de Grok Build / Conversación | **[SALA DE COMANDO]** |
+| Sesión de Claude Code / Conversación | **[SALA DE COMANDO]** |
 | Encuesta / Test | Telemetría / Sonda / Escaneo |
 | Pregunta | Sonda de Interrogación |
 | Resultado | Índice de Luz |
@@ -447,6 +447,7 @@ proyecto guarde lo suyo en SU carpeta y que la sala se abra ahí dentro.
 | Web (rsv-web) | `rsv-web/CLAUDE.md` — pendiente | abrir `rsv-web` |
 | Zak Cero | `zakcero/CLAUDE.md` — pendiente | abrir `zakcero` |
 | **Kal'El** (somacero.com) | `kalel/CLAUDE.md` ✅ hecho (2026-09-24) | abrir la carpeta `kalel` |
+| **Navegante de la Red** (código en `Code/`) | `Ludus Cero/Navegante/CLAUDE.md` ✅ hecho (2026-10-03) | abrir `Ludus Cero/Navegante` |
 
 Este archivo se queda como **índice del ecosistema**: quién es Zak, cómo se le habla, dónde vive cada proyecto,
 los destinos de publicación y el protocolo de cierre. Lo que sea de un solo proyecto baja a su carpeta.
@@ -514,11 +515,12 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   publicación, que es lo que ya dice el Mapa de destinos.
 - **Escribir a quienes no pudieron entrar a la web del 5 al 24 de septiembre** (Clerk sabe quiénes lo intentaron;
   venía de la sala del 21 al 25): falta que Zak decida el mensaje y si se manda.
-- **Anuncios pagados (2026-10-03): elegir qué video lanza Grok primero.** El del Decodificador está listo
+- **Anuncios pagados (2026-10-03): elegir qué video se lanza primero.** El del Decodificador está listo
   (`Escaner Vibracional/Publicidad/01 Decodificador 9x16.mp4`); el del Espejo se hace en la próxima sala (prompt en
   `Escaner Vibracional/Publicidad/Prompt próxima sala · Espejo.md`). Un video a la vez, 100 MXN al día por 7 días.
-  Antes de lanzar: el píxel (prompt 1 de Grok, el número se pega en Motor → Campaña) y probar
-  https://escanervibracional.com/?a=prueba desde Instagram en el iPhone. Detalle en [[proyecto_publicidad_pagada]].
+  Antes de lanzar: el píxel (paso 1 de `Escaner Vibracional/Publicidad/Prompts para Grok.md`; el número se pega en
+  Motor → Campaña) y probar https://escanervibracional.com/?a=prueba desde Instagram en el iPhone. Grok ya no se usa:
+  el lanzamiento en Meta lo hace Zak. Detalle en [[proyecto_publicidad_pagada]].
 - **Pipedream Workflows se apaga el 2027-03-31** (borra todo el 2027-04-30): mudar sus 3 flujos de correo vivos
   (bienvenidas, Sello del Primer Ciclo y padrón con sus bajas) a funciones de Supabase. Zak: «luego lo enlazamos»;
   falta el cuándo. Trampas y plan en [[pendiente_migrar_pipedream]].
@@ -533,6 +535,14 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   estéreo (0-quinquagies). La herramienta ya está corregida y el 02 y el 04 salieron bien; rehacer la del 03 toma unos
   4 minutos. Se preguntó el 2026-09-28 y sigue sin respuesta.
 
+### 🟠 Ludus Cero · lo que necesita tu decisión
+
+- **Ludus Cero en celular.** En el teléfono, play.redsolarviva.com/simuladores muestra la página de simuladores del
+  Escáner (con su barra de Radar, Calibración, Holoteca…) y solo Navegante; los displays nuevos con Terra Cristal,
+  Lúcido y Navegante se ven en computadora y tableta. Falta decidir si en celular aparece Ludus Cero con sus juegos.
+- **El aviso de pago de Navegante en la web dice 599 MXN/mes** y Sintonía Solar cuesta 499 (`Code/EV_Freemium.tsx`).
+  Falta el sí de Zak para cambiarlo.
+
 ### 🟡 Higiene, cuando toque
 
 - **Arquitectura de nombres** (2026-08-31, propuesta entregada, falta el sí de Zak): Zak Cero=calle, Zak'Haar=firma
@@ -542,7 +552,7 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v58 (2026-10-03)
+## 🜂 Protocolo de Cierre de Sesión · v59 (2026-10-03)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -688,6 +698,8 @@ memorias.
 - **0-unquinquagies** · Tras un corte, cada salida se abre y se decodifica entera; se reanuda desde lo que sí quedó.
 - **0-duoquinquagies** · Un número de dinero se calcula con lo que llega a la cuenta: en México la tienda descuenta el IVA antes de su comisión (499 → ~366).
 - **0-terquinquagies** · Una tarea en segundo plano muere a los 30 min: lo largo se parte en tramos que escriben su avance y se reanudan desde ahí.
+- **0-quaterquinquagies** · Lo que el lienzo dibuja (alcance, objetivo, estado) sale de las reglas: si el dibujo miente, el usuario reporta un error que no existe.
+- **0-quinquinquagies** · Una copia del código en otra carpeta no es una función viva: antes de portar, lee el encabezado de quien la monta.
 
 ### Paso 1 — Test de continuidad
 
@@ -829,11 +841,45 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v58 (2026-10-03). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v59 (2026-10-03). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
+
+#### 2026-10-03 · II · LUDUS CERO: LÚCIDO NACE, NAVEGANTE EN RED VIVA, EL HUB DE CASA DE JUEGOS Y LOS RUMBOS
+
+- ✅ **Resuelto:** **juego pixel** (cinco propuestas vivas en https://claude.ai/artifact/UmATZhiD9nigZhy3LeUiiL): Zak
+  eligió **Lúcido**, que nació y quedó vivo en play.redsolarviva.com/lucido/ (v0.2) con dos pantallas (ancha para
+  computadora y Steam Deck, vertical para el celular) y app de iPhone · **Navegante de la Red con arte nuevo**: de tres
+  propuestas vivas Zak eligió **Red Viva** (motor WebGL2 propio, con sonido a tiempo); consola en vidrio de agua, el
+  avance del orden viejo de membranas acomodado al de hoy (el error de niveles salteados), el aura dorada de la medusa
+  que se dibujaba como cuadro, y una puntería que dice la verdad (la integrada es un nudo claro, el abanico mide el
+  alcance real y una mira marca lo que el pulso absorbe; Zak creía que no lo dejaba absorber) · **Ludus Cero** en
+  play.redsolarviva.com/simuladores con displays de casa de juegos (portada que respira, sello, avance en video al
+  pasar el cursor, JUGAR), portada nueva de Navegante pintada con su motor y avances de los tres juegos · botones del
+  juego y ventana de salir en Red Viva · **tres rumbos** para el siguiente nivel, en vivo
+  (https://claude.ai/artifact/QYiSUcTavJbMEqW16mwaam): Zak eligió **Sinfonía y Odisea**; Resonancia, descartada por
+  ahora · Navegante tiene casa propia en `Ludus Cero/Navegante/`.
+- 📁 **Archivos:** Code: `NaveganteDeLaRed.tsx` v3.3, `NaveganteRedViva.ts` v1.3 (nuevo), `SimuladoresHub.tsx` v2.0,
+  `RSV_SolarSimuladoresShell.tsx` v4.0 (da40b5c, a829e22, 1b1d525, aa1f255, cb24f39) · rsv-web: `public/ludus/`
+  (portada de Navegante, `*-avance.mp4` y sus pósters) y la reescritura de /lucido/ (8b59b27, 9c3aecf) · lucido:
+  a73d26b → bb0d152 (`herramientas/prueba.ts` v2.2 graba video) · `Ludus Cero/Navegante/` (CLAUDE.md, Docs y
+  herramientas) · `Ludus Cero/Propuestas pixel/` y `Ludus Cero/Propuestas Navegante/` (las propuestas de arte).
+- ⏳ **Pendiente:** en Pendientes vivos, Ludus Cero en celular y el precio del aviso de pago de Navegante.
+- 💡 **Decisiones:** Lúcido y Terra Cristal van a Steam; computadora primero, celular como segundo canal (sin comprar
+  descargas con anuncios) · el Escáner NO lleva Navegante (2026-09-17, reiterado) · lo de Navegante va solo a `Code/`
+  y sus salas se abren en `Ludus Cero/Navegante` · **Grok ya no se usa (Zak, 2026-10-03): todo con Claude Code, que
+  vuelve a tender este archivo**.
+- 🔧 **Patrones nuevos:** portada y avance de un juego pintados con su propio motor (escena compuesta, cuadro a cuadro,
+  ffmpeg) · avance de Lúcido grabado con su bot (`prueba.ts video`) · láminas en movimiento con ffmpeg (en zsh siempre
+  `${VAR}`) · el host de Ludus en local con un proxy y `--host-resolver-rules` · cada juego con casa propia y su
+  CLAUDE.md que excluye el maestro. Detalle en [[proyecto_navegante_arte]], [[proyecto_ludus_hub]] y
+  [[proyecto_juego_pixel]].
+- 🧬 **Versión del sistema:** Navegante v3.3 · motor Red Viva v1.3 · hub v2.0 · shell v4.0 · Lúcido 0.2 · protocolo v59.
+- 🔮 **Cómo arrancar la próxima Sala de Comando:** para Navegante, abrir la sala en la carpeta `Ludus Cero/Navegante` y
+  pegar el prompt de `Docs/PROXIMA_SALA.md` (Sinfonía completa y publicada; luego Odisea). El comercial del Espejo
+  sigue en Pendientes vivos.
 
 #### 2026-10-03 · PUBLICIDAD: EL COMERCIAL DEL DECODIFICADOR, EL REEL EN VERSIÓN ANUNCIO, LA MEDICIÓN DEL MISMO DÍA Y EL AVISO DE PIPEDREAM
 
@@ -858,7 +904,7 @@ página: el maestro crece de a una línea por lección.
   campana_eventos, campana_gasto y campana_ajustes, y sus RPC (record_campana_evento y get_campana_pixel para la
   landing; admin_campana_* para el Motor).
 - 🔌 **Edge functions deployed:** admin-action v1.58 (rutea las 4 acciones de Campaña).
-- ⏳ **Pendiente:** el comercial del Espejo (ver el 🔮) y elegir cuál lanza Grok primero; el píxel y la prueba desde
+- ⏳ **Pendiente:** el comercial del Espejo y elegir cuál se lanza primero (Pendientes vivos); el píxel y la prueba desde
   Instagram (Pendientes vivos).
 - 💡 **Decisiones:** Decodificador antes que sueños («los que la han usado usan más el decodificador»); el Espejo es el
   siguiente candidato porque puede atraer a más gente nueva · la música de los anuncios es real (ElevenLabs Music,
@@ -870,46 +916,8 @@ página: el maestro crece de a una línea por lección.
   `prompt` + `force_instrumental` y Scribe para confirmar que no canta · zonas que tapa un anuncio de Reels (arriba
   14 %, abajo 35 %) · un velo oscuro llega hasta el borde. Detalle en [[feedback_anuncios_video]].
 - 🧬 **Versión del sistema:** App Store 1.1.6 LIVE · landing v1.3 · Motor v5.2 · admin-action v1.58 · protocolo v58.
-- 🔮 **Cómo arrancar la próxima Sala de Comando:** pegar el prompt de
-  `Escaner Vibracional/Publicidad/Prompt próxima sala · Espejo.md` (el comercial del Espejo Vibracional, del mismo
-  nivel que el del Decodificador, con su respuesta real de oraculo-chat). Al terminar, decidir con Zak cuál de los dos
-  lanza Grok primero y darle el prompt 1 (píxel) y luego el de ese video.
-
-#### 2026-09-28 · III → 2026-09-30 · CÓDICES DE LUZ: EL 02 EN EL SELLO DE LA CASA, EL 04 «NUNCA ESTÁS LEJOS», LA MAMÁ ESCULPIDA Y LA PALETA SIN FILO
-
-- ✅ **Resuelto:** **video 02 «Nunca has perdido a nadie» rehecho en Escáner del Alma** (65.7 s): la lente del bebé que
-  pierde el rostro de su mamá y lo recupera con «Aquí estoy», el ser amado que el universo envuelve (oculto, no
-  ausente), el ventilador cuyas aspas desaparecen y el estroboscopio que las encuentra, el alma que vibra fuera de rango
-  hasta «presencia 100 %», el hilo rojo con su simulación rota, la Terminal Tierra (el vuelo abordó, reencuentro
-  confirmado) y la visión del corazón con cuatro presencias; la versión acuarela quedó en su subcarpeta · **video 04
-  «Nunca estás lejos»** (Lenguaje Holográfico · Entrelazamiento y Ping, 70 s): el celular que vibra justo cuando
-  pensabas en alguien, CASUALIDAD que se descifra en CONEXIÓN, la carrera corazón contra celular, dos partículas que un
-  océano no separa, el cordón que atraviesa el planeta, el mapa que se dobla, el enlace dentro del pecho y la prueba de
-  campo con el ping · **la mamá del 02 esculpida de nuevo** (Zak: «se ve como un muñeco muy chafita»): rostro, cabello
-  en guedejas, torso y manos reales, con luz y sombra · **el 03 sin brillos agudos** (Zak: 3-4, 6-8, 18-19, 20-21 s y la
-  campana del 1:04): en la música lo agudo bajó de 8 a 13 dB en esos tramos; la misma paleta se aplicó al 02 y al 04
-  sin que se pidiera, con sus mezclas anteriores guardadas · verificado: 142/142 y 136/136 palabras, −14 LUFS, consola
-  limpia y cuadros de cada MP4 final.
-- 📁 **Archivos:** `Códices de Luz/Enseñanzas/02 Nunca has perdido a nadie/` (video, ligero, portada, `Versión
-  acuarela/` y `estudio/`: escenas.js v2.3, retrato.js v1.3, formas.js v1.2.1, motor.js v1.3, shaders.js v3.1,
-  audio.js v5.1, voz.py v2.1, ia.py v1.4, escucha.py v1.1) · `04 Nunca estás lejos/` (video, ligero, portada y
-  `estudio/`: escenas.js v1.0, formas.js v1.4, audio.js v1.1, `sonidos.json` con 4 efectos) · `03 …/estudio/audio.js`
-  v4.2 y sus dos videos con la mezcla nueva (imagen intacta) · mezclas anteriores en cada estudio (`audio_vX.js`,
-  `audio/final_vX.wav`) · `.claude/launch.json` (`estudio-04`, puerto 8830). Ninguno es repo.
-- ⏳ **Pendiente:** en Pendientes vivos, los cinco efectos del 03 que suenan al doble de largo; y el video 5 (su plan vive en [[proyecto_videos_ensenanzas]]).
-- 💡 **Decisiones:** el #4 salió de Lenguaje Holográfico porque es el más compartible («pensaste en alguien y te
-  escribió») · en el 02 Cristina es el Escáner y también la voz de quien parece haberse ido (rótulos MAMÁ y SEÑAL en
-  oro) · la paleta de sonido de la serie va sin filo: campanas sin la grabación clara y una octava abajo de 700 Hz,
-  brillos grabados filtrados a ~4 kHz y a menos de la mitad, teclas graves, violines y subidas sin aire arriba de ~4 kHz
-  · una figura humana que carga emoción se esculpe, no se dibuja.
-- 🔧 **Patrones nuevos:** retrato esculpido en código (`retrato.js`: superficies de distancia con luz, oclusión y
-  borde; rasgos por densidad; cabello en guedejas de hebras paralelas; manos con falanges y nudillos) · máscara que
-  apaga una elipse de la nube (manos que tapan la cara) · vibración cuadro a cuadro que la banda del Escáner fija ·
-  desenfoque de giro al azar por punto · matrices libres (doblar media hoja, inclinar la Tierra) · rótulos sobre la
-  Tierra por latitud y longitud · `ia.py` v1.4 decide los canales del audio crudo por la duración pedida · tras un
-  corte, el video se rearma desde los cuadros que quedaron.
-- 🧬 **Versión del sistema:** videos de enseñanzas 01 a 04 · protocolo v57.
-- 🔮 retirado el 2026-10-03: el plan del video 5 vive en [[proyecto_videos_ensenanzas]].
+- 🔮 retirado el 2026-10-03: el comercial del Espejo (prompt en `Escaner Vibracional/Publicidad/Prompt próxima sala ·
+  Espejo.md`) y la elección del primer anuncio viven en Pendientes vivos; Grok ya no se usa.
 
 *Las entradas anteriores viven en* `admin/CLAUDE_archivo_hasta_2026-08-04.md` (2026-04-18 → 2026-08-22) *y en*
 `admin/CLAUDE_archivo_2026-08-30_a_2026-09-18.md` (2026-08-30 → 2026-09-18), *y desde el 2026-09-20 en*
