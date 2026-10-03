@@ -471,9 +471,8 @@ toque al ecosistema.
 > agosto en `admin/CLAUDE_archivo_2026-08-25_a_2026-08-30.md` (no se cargan
 > por sesión).
 
-**Versión en circulación:** App Store **1.1.4 LIVE**, en curso **1.1.5** (sin
-publicar). Android: **pública en Google Play** (vc7). Detalle en
-[[referencia_version_en_tienda]].
+**Versión en circulación:** App Store **1.1.6 LIVE** (se saltó la 1.1.5). Android: **pública en Google Play**.
+Detalle en [[referencia_version_en_tienda]].
 
 ---
 
@@ -515,6 +514,14 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   publicación, que es lo que ya dice el Mapa de destinos.
 - **Escribir a quienes no pudieron entrar a la web del 5 al 24 de septiembre** (Clerk sabe quiénes lo intentaron;
   venía de la sala del 21 al 25): falta que Zak decida el mensaje y si se manda.
+- **Anuncios pagados (2026-10-03): elegir qué video lanza Grok primero.** El del Decodificador está listo
+  (`Escaner Vibracional/Publicidad/01 Decodificador 9x16.mp4`); el del Espejo se hace en la próxima sala (prompt en
+  `Escaner Vibracional/Publicidad/Prompt próxima sala · Espejo.md`). Un video a la vez, 100 MXN al día por 7 días.
+  Antes de lanzar: el píxel (prompt 1 de Grok, el número se pega en Motor → Campaña) y probar
+  https://escanervibracional.com/?a=prueba desde Instagram en el iPhone. Detalle en [[proyecto_publicidad_pagada]].
+- **Pipedream Workflows se apaga el 2027-03-31** (borra todo el 2027-04-30): mudar sus 3 flujos de correo vivos
+  (bienvenidas, Sello del Primer Ciclo y padrón con sus bajas) a funciones de Supabase. Zak: «luego lo enlazamos»;
+  falta el cuándo. Trampas y plan en [[pendiente_migrar_pipedream]].
 
 ### 🟣 Códices de Luz · lo que necesita tu decisión
 
@@ -535,7 +542,7 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v57 (2026-09-30)
+## 🜂 Protocolo de Cierre de Sesión · v58 (2026-10-03)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -679,6 +686,8 @@ memorias.
 - **0-undequinquagies** · Lo que tiene que sentirse humano no se dibuja con trazos: se esculpe con volumen, luz y sombra, y se revisa de cerca.
 - **0-quinquagies** · Un audio crudo no dice sus canales: se deducen de lo pedido (la duración) y se miden; si no, suena al doble de largo y una octava abajo.
 - **0-unquinquagies** · Tras un corte, cada salida se abre y se decodifica entera; se reanuda desde lo que sí quedó.
+- **0-duoquinquagies** · Un número de dinero se calcula con lo que llega a la cuenta: en México la tienda descuenta el IVA antes de su comisión (499 → ~366).
+- **0-terquinquagies** · Una tarea en segundo plano muere a los 30 min: lo largo se parte en tramos que escriben su avance y se reanudan desde ahí.
 
 ### Paso 1 — Test de continuidad
 
@@ -820,11 +829,51 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v57 (2026-09-30). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v58 (2026-10-03). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
+
+#### 2026-10-03 · PUBLICIDAD: EL COMERCIAL DEL DECODIFICADOR, EL REEL EN VERSIÓN ANUNCIO, LA MEDICIÓN DEL MISMO DÍA Y EL AVISO DE PIPEDREAM
+
+- ✅ **Resuelto:** **Pipedream** avisó que Workflows se apaga el 2027-03-31: mapa de los 3 flujos vivos y plan de
+  mudarlos a Supabase (ver Pendientes vivos) · **estrategia de anuncios**: un video a la vez, 100 MXN al día por 7
+  días, Grok lanza en Meta con prompts listos; sin anuncios de App Store (Zak: «no convierte tan bien») · **comercial
+  «¿Te da energía o te la quita?»** del Decodificador (24.8 s): 3D en Blender (lata con gotas, mango, shampoo,
+  limpiador, teléfono) con la pantalla de la app replicada fiel y **lecturas reales** (mismo prompt y modelo de
+  decode-matter): refresco 5 % saludable, mango 92 %, shampoo 15 %, limpiador 5 %; voz de Cristina, música de
+  ElevenLabs Music, clic de cámara en cada foto. Zak: «me encantó» · **el reel del Escáner en versión anuncio**
+  (textos en la franja que no tapa Instagram), aparte del original · **medición del mismo día**: la landing cuenta
+  visitas y toques a las tiendas por anuncio y carga el píxel de Meta sola; pestaña **Motor → Campaña** · comprobado
+  que con solo la foto de una fruta (sin texto) el Decodificador entra en modo visión y la reconoce · proyección de 6
+  meses dada a Zak, con el IVA corregido (499 → ~366 por suscriptor).
+- 📁 **Archivos:** `escaner-landing/index.html` v1.3 (fb90eb3) · `Code/MI_Campana.tsx` v1.0,
+  `MotorDeIntervencion.tsx` v5.2, `MI_Shared.tsx` v2.4, `Privacy.tsx` v1.7 (8466a41, en redsolarviva.com) · admin
+  (183a501). Sin repo: `Escaner Vibracional/Anuncio Decodificador/estudio/` (lecturas.mjs, vision_prueba.mjs,
+  etiquetas.js, blender/base.py y tomas.py v1.1, pantalla.js v1.1, final.js v1.1, musica_eleven.py, medir_musica.py,
+  mezclar.py v2.1, armar.sh v1.1, render_todo.sh) · `Escaner Vibracional/Reel Promo/Versión anuncio/estudio/` ·
+  entregables y prompts en `Escaner Vibracional/Publicidad/`.
+- 🗄️ **Migraciones SQL aplicadas:** `20261003_campana_anuncios.sql` (Zak la pegó y la marcó ✅): tablas
+  campana_eventos, campana_gasto y campana_ajustes, y sus RPC (record_campana_evento y get_campana_pixel para la
+  landing; admin_campana_* para el Motor).
+- 🔌 **Edge functions deployed:** admin-action v1.58 (rutea las 4 acciones de Campaña).
+- ⏳ **Pendiente:** el comercial del Espejo (ver el 🔮) y elegir cuál lanza Grok primero; el píxel y la prueba desde
+  Instagram (Pendientes vivos).
+- 💡 **Decisiones:** Decodificador antes que sueños («los que la han usado usan más el decodificador»); el Espejo es el
+  siguiente candidato porque puede atraer a más gente nueva · la música de los anuncios es real (ElevenLabs Music,
+  instrumental), no sintetizada en código · nada de momentos dramáticos largos · voces al mismo LUFS y sin eco · no
+  hizo falta tocar la app (una semana por video: lo que suba sobre la base es de ese video).
+- 🔧 **Patrones nuevos:** lecturas reales con el prompt de la función leído del código y el mismo modelo por
+  OpenRouter · pantalla de la app replicada en canvas y montada como secuencia en el teléfono 3D · Blender por tomas con
+  cuadros globales, reanudable por tramos · ElevenLabs Music: con `composition_plan` el texto de cada trozo SE CANTA;
+  `prompt` + `force_instrumental` y Scribe para confirmar que no canta · zonas que tapa un anuncio de Reels (arriba
+  14 %, abajo 35 %) · un velo oscuro llega hasta el borde. Detalle en [[feedback_anuncios_video]].
+- 🧬 **Versión del sistema:** App Store 1.1.6 LIVE · landing v1.3 · Motor v5.2 · admin-action v1.58 · protocolo v58.
+- 🔮 **Cómo arrancar la próxima Sala de Comando:** pegar el prompt de
+  `Escaner Vibracional/Publicidad/Prompt próxima sala · Espejo.md` (el comercial del Espejo Vibracional, del mismo
+  nivel que el del Decodificador, con su respuesta real de oraculo-chat). Al terminar, decidir con Zak cuál de los dos
+  lanza Grok primero y darle el prompt 1 (píxel) y luego el de ese video.
 
 #### 2026-09-28 · III → 2026-09-30 · CÓDICES DE LUZ: EL 02 EN EL SELLO DE LA CASA, EL 04 «NUNCA ESTÁS LEJOS», LA MAMÁ ESCULPIDA Y LA PALETA SIN FILO
 
@@ -847,7 +896,7 @@ página: el maestro crece de a una línea por lección.
   `estudio/`: escenas.js v1.0, formas.js v1.4, audio.js v1.1, `sonidos.json` con 4 efectos) · `03 …/estudio/audio.js`
   v4.2 y sus dos videos con la mezcla nueva (imagen intacta) · mezclas anteriores en cada estudio (`audio_vX.js`,
   `audio/final_vX.wav`) · `.claude/launch.json` (`estudio-04`, puerto 8830). Ninguno es repo.
-- ⏳ **Pendiente:** en Pendientes vivos, los cinco efectos del 03 que suenan al doble de largo; y el video 5 (ver el 🔮).
+- ⏳ **Pendiente:** en Pendientes vivos, los cinco efectos del 03 que suenan al doble de largo; y el video 5 (su plan vive en [[proyecto_videos_ensenanzas]]).
 - 💡 **Decisiones:** el #4 salió de Lenguaje Holográfico porque es el más compartible («pensaste en alguien y te
   escribió») · en el 02 Cristina es el Escáner y también la voz de quien parece haberse ido (rótulos MAMÁ y SEÑAL en
   oro) · la paleta de sonido de la serie va sin filo: campanas sin la grabación clara y una octava abajo de 700 Hz,
@@ -860,47 +909,7 @@ página: el maestro crece de a una línea por lección.
   Tierra por latitud y longitud · `ia.py` v1.4 decide los canales del audio crudo por la duración pedida · tras un
   corte, el video se rearma desde los cuadros que quedaron.
 - 🧬 **Versión del sistema:** videos de enseñanzas 01 a 04 · protocolo v57.
-- 🔮 **Cómo arrancar la próxima Sala de Comando:** 1) elegir la enseñanza del video 5 (libres: «eres el jugador, no el
-  personaje» de La Muerte no Existe y los libros sin video: El Agua que Recuerda, La Voz de Gaia, Sintiencia, La
-  Física de la Voluntad, Singularidad Orgánica, Cuerpo de Silicio, Terra Cristal; los textos salen de
-  `Códices de Luz/DOCs/*.docx`); 2) copiar `04 Nunca estás lejos/estudio/` a `05 Título/estudio/` (si hace falta una
-  persona con rostro, traer `retrato.js` del 02), vaciar `voz/ previas/ audio/ estado/ frames/`, cambiar los tres
-  `PUERTO=` a 884x y agregar `estudio-05` en launch.json; 3) guion → `python3 voz.py` → escenas →
-  `python3 ia.py lote sonidos.json` → `./musica.sh` y medir perfil y octavas contra el 03 → `PORTADA_T=x
-  ./renderizar.sh` → `python3 escucha.py` (100 %) → consola limpia y cuadros del MP4. Memorias:
-  [[proyecto_videos_ensenanzas]] y [[feedback_videos_codices]].
-
-#### 2026-09-28 · II · CÓDICES DE LUZ: DOS VIDEOS PARA ELEGIR SELLO, EL ESCÁNER DEL ALMA SELLADO, VOCES DIRECTAS Y SUBTÍTULOS A SALVO DE INSTAGRAM
-
-- ✅ **Resuelto:** **video 02 «Nunca has perdido a nadie»** (La Muerte no Existe · el duelo como ilusión óptica, 65 s)
-  en Acuarela Cósmica: pinturas de fal.ai que se mueven despacio y entran como pigmento mojado, la mamá que se destapa
-  («Aquí estoy»), el ventilador cuyas aspas giran hasta desaparecer, el hilo rojo del pecho a quien se fue, la
-  despedida en el aeropuerto y la abuela de luz en la silla del principio · **video 03 «No llegaste por accidente»**
-  (Protocolo de Entrada, 67.6 s) en Escáner del Alma, todo con código: la Tierra en el anillo de glifos, la Sala de
-  Proyección, México en holograma, el «ACEPTO», el descenso a 7.83 Hz, la semilla, el océano en la taza, la brújula y
-  «¿por qué a mí?» que se descifra en «para esto vine» · **Zak eligió el Escáner del Alma** y selló al narrador · el 03
-  se rehízo con sus notas desde la vista previa de Instagram: subtítulos sin cuadro a media altura entre su sitio
-  anterior y la cuenta, las dos «s» de «consciencia» ya no pican, narrador más ágil y menos grave, lecturas que no se
-  enciman en los cambios de escena · voces, efectos y revisión ahora por ElevenLabs directo, con su plan.
-- 📁 **Archivos:** `Códices de Luz/Enseñanzas/02 Nunca has perdido a nadie/` (video, ligero, portada y `estudio/`:
-  escenas.js v1.0, shaders.js v2.0 con FS_PINTURA, motor.js v1.1, audio.js v3.0, imagenes.py v1.0, `img/` e `ia/`) ·
-  `03 No llegaste por accidente/` (video, ligero, portada, `Audiciones de voz/` y `estudio/`: escenas.js v1.2,
-  formas.js v1.0, shaders.js v3.0 con VS_NUBE y FS_NUBE, motor.js v1.2, audio.js v4.1, voz.py v2.0, ia.py v1.3,
-  escucha.py v1.0) · `Enseñanzas/Audiciones narrador/` (8 pruebas, ya no se usan) · `.claude/launch.json` (`estudio-02`
-  y `estudio-03`). Ninguno es repo. No se tocó código de la app.
-- ⏳ **Pendiente:** ~~seguir la serie en el sello del Escáner~~ → ✅ hecho en la sala siguiente (el 02 rehecho y el 04).
-- 💡 **Decisiones:** el sello de la serie es **Escáner del Alma**; la acuarela queda descartada · narrador
-  **CarterSutra sellado** como quedó en el 03 (velocidad 1.2 sin contexto, frases de peso a 1.02-1.1, −3.5 dB de graves)
-  · la voz del Escáner es **Cristina Campos** · las voces SIEMPRE por ElevenLabs directo, nunca por fal.ai (su plan
-  trae 10 000 créditos al mes que se renuevan cada 16 y no se pueden exceder; un video gasta ~1 000) · subtítulos solo
-  letra, sin cuadro, primer renglón en y 1570 de 1920 (la cuenta de Instagram cae en ~1788), renglones de hasta 760 px
-  y ningún adorno cruzando esa franja · fal.ai quedó sin saldo y con este sello no hace falta recargarlo.
-- 🔧 **Patrones nuevos:** nube de puntos en la GPU que se transforma de una forma en otra (`formas.js`) · control de
-  eses con el compresor de Chrome, midiendo su subida automática y compensándola · fundido simétrico para que dos
-  lecturas nunca coincidan · `escucha.py` transcribe el MP4 final y lo compara con el guion · en zsh `log` es un comando
-  interno: el registro del sistema es `/usr/bin/log show` · el AirDrop de Zak falla por tiempo agotado en el canal
-  directo con la Mac en 5 GHz a 160 MHz (probar desconectando la Mac del módem, o bajar el módem a 80 MHz).
-- 🧬 **Versión del sistema:** video de enseñanzas 03 v3 · protocolo v56.
+- 🔮 retirado el 2026-10-03: el plan del video 5 vive en [[proyecto_videos_ensenanzas]].
 
 *Las entradas anteriores viven en* `admin/CLAUDE_archivo_hasta_2026-08-04.md` (2026-04-18 → 2026-08-22) *y en*
 `admin/CLAUDE_archivo_2026-08-30_a_2026-09-18.md` (2026-08-30 → 2026-09-18), *y desde el 2026-09-20 en*
