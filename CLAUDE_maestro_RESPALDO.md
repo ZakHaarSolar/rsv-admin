@@ -862,7 +862,7 @@ página: el maestro crece de a una línea por lección.
   ya no se salen de los nodos.
 - 📁 **Archivos:** `Ludus Cero/Navegante/Trailer/` (maestro para Steam, ligero 720p de 34 MB, portada) y su estudio
   `estudio/` (`CONTRATO.md`, `motor/parchar.mjs` v1.1, `comun.js` v1.2, `hud.js` v2.0, `tipo.js` v2.0, `letrero.js` v1.0,
-  `cuadro.js` v1.3, `render.mjs` v1.2, `mezclar.py` v1.8, `armar.sh` v1.1, 23 tomas en `tomas/`, la canción del juego en
+  `cuadro.js` v1.3, `render.mjs` v1.2, `mezclar.py` v1.9 (la tercera de cada nota sigue la armonía de su compás), `armar.sh` v1.1, 23 tomas en `tomas/`, la canción del juego en
   `sinfonia/`) · Navegante: `Docs/BITACORA.md` y `Docs/PROXIMA_SALA.md`.
 - ⏳ **Pendiente:** el MISMO error de los hilos vive en el juego (`FS_HILO` de `Code/NaveganteRedViva.ts`): diagnosticado
   y con su arreglo probado en `Ludus Cero/Navegante/Docs/PROXIMA_SALA.md`.
