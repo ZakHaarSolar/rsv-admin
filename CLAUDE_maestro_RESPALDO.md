@@ -521,6 +521,9 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   Clientes potenciales, Ventas y Tráfico, así que se lanza como promoción del Reel desde la app de Instagram
   (@escanervibracional, la hace Zak; pasos al final de `Prompts para Grok.md`) y el bot solo reporta. **Lanzada el 2026-10-04 desde instagram.com** (en la app de iOS Apple cobra ~30 % extra), en revisión de Meta. Las siguientes pruebas usan el MISMO público (sin «Meditaciones (filosofía)», que no es la práctica). Después: Decodificador o reel. Pasos en `Escaner Vibracional/Publicidad/Prompts para Grok.md`;
   detalle en [[proyecto_publicidad_pagada]].
+- **El sonido al enviar un mensaje suena también en el teléfono** (2026-10-04): Zak lo pidió para el chat sin decir
+  cara y quedó en las dos (en el iPhone llega con la siguiente versión de tienda). Si lo quiere solo en la computadora,
+  es una línea en `escaner-app/src/components/nucleo/Mensajes.tsx` (los `sensory("mensaje")` con `isDesktop`).
 - **Pipedream Workflows se apaga el 2027-03-31** (borra todo el 2027-04-30): mudar sus 3 flujos de correo vivos
   (bienvenidas, Sello del Primer Ciclo y padrón con sus bajas) a funciones de Supabase. Zak: «luego lo enlazamos»;
   falta el cuándo. Trampas y plan en [[pendiente_migrar_pipedream]].
@@ -556,7 +559,7 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v61 (2026-10-04)
+## 🜂 Protocolo de Cierre de Sesión · v62 (2026-10-04)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -707,6 +710,7 @@ memorias.
 - **0-sexquinquagies** · Lo que entrega un ayudante en segundo plano no se toca mientras trabaja: para probar sin él, una bandera o una copia, nunca mover su archivo.
 - **0-septquinquagies** · Lo que se iguala se mide donde suena: voces igualadas por archivo quedaron 1.6 dB distintas en la mezcla; se miden en su ventana y se corrigen ahí.
 - **0-duodesexagies** · Un navegador sin ventana también suena: toda prueba lo abre mudo y lo mata al salir, aunque falle.
+- **0-undesexagies** · Una prueba en la Mac de Zak no le quita el foco ni la pantalla: ventana fuera de pantalla y sin activar, o un navegador sin ventana.
 
 ### Paso 1 — Test de continuidad
 
@@ -848,11 +852,48 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v61 (2026-10-04). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v62 (2026-10-04). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
+
+#### 2026-10-04 · III · ESCRITORIO PASO A PASO: LA COMUNIDAD COMO HERRAMIENTA, ESCAPE QUE CIERRA Y EL LOGO QUE SUENA
+
+- ✅ **Resuelto:** **el logo de apertura suena en la app de la Mac** (al abrir en pantalla completa la ventana nace
+  oculta un instante; el sello espera a verse para sonar y contar su reloj) · **la Comunidad de la computadora es un
+  panel de trabajo**: cabecera con regreso, título y pestañas con contador; bandeja lateral con buscador e invitaciones;
+  chat a todo lo ancho en una columna de 820 px con separadores de día, burbujas planas y la caja como un solo campo;
+  Explorar con filtros en columna y tarjetas sobrias · **clic derecho** en un mensaje: Responder, Copiar y Eliminar
+  para mí (guardado en la base, en todos sus aparatos) · **responder deslizando con dos dedos** en el trackpad ·
+  **sonido al enviar** (texto, sticker, foto y nota de voz; también en el teléfono) · **sin autocorrección** en la app
+  de la Mac · **Escape** cierra lo de más arriba (menú, ficha, hojas, visor, stickers, respuesta) y al final la
+  Comunidad, y en la app de la Mac nunca la saca de pantalla completa. El celular conserva su forma.
+- 📁 **Archivos:** escaner-app (14375f5, 28291a7): `ComunidadEscritorio.tsx` v1.1 (nuevo), `Comunidad.tsx` v1.24,
+  `Mensajes.tsx` v1.44, `MiNucleo.tsx` v6.88, `RitualDeLlegada.tsx` v3.4, `EscanerVibracional.tsx` v13.137,
+  `sensory.ts` v2.20, `desktopTauri.ts` v1.6, `main.tsx` v1.3, `lib/pilaEscape.ts` v1.0 (nuevo), `comu.es/en.ts` v1.7 y
+  el banco de pruebas `banco/` (nuevo) · admin 02ff22b.
+- 🗄️ **Migraciones SQL aplicadas:** `20261004_chat_ocultar_para_mi.sql` (tabla `chat_mensajes_ocultos`,
+  `chat_ocultar_mensaje`, `chat_get_ocultos`); Zak la pegó y se verificó que existen y que solo el portón las usa.
+- 🔌 **Edge functions deployed:** `user-action` v1.50 (rutea las dos de arriba).
+- ⏳ **Pendiente:** si el sonido al enviar se queda también en el teléfono (en Pendientes vivos).
+- 💡 **Decisiones:** la experiencia de escritorio se transforma pantalla por pantalla con la gramática de
+  `ComunidadEscritorio.tsx` (hairlines, un solo acento para estado, sin degradados animados ni brackets, monogramas con
+  iniciales) y el celular conserva su forma · Eliminar es «para mí», como WhatsApp, y vive en la base · Escape nunca
+  saca la app de la Mac de pantalla completa (para salir quedan el botón verde y Control+Cmd+F) · mi burbuja en
+  escritorio: cian claro plano con tinta oscura.
+- 🔧 **Patrones nuevos:** banco de pruebas de escritorio con sesión y servidor falsos (`escaner-app/banco/`, servidor
+  `banco-escritorio`, `?capa=comunidad&rapido&claro&sinOcultar`) y `banco/captura.mjs` (fotos nítidas con Chrome sin
+  ventana, mudo) · pila de Escape (`lib/pilaEscape`): lo que se abre apila su cierre · en el motor de la Mac un Escape
+  que la página no atiende llega a la ventana nativa y la saca de pantalla completa (se marca atendido en captura) · la
+  ventana de la Mac nace oculta un instante: lo que se dispara al arrancar espera a verse · un gesto del trackpad (rueda
+  horizontal) mueve la burbuja directo en la página, sin renders. Detalle en [[proyecto_escritorio_paso_a_paso]] y
+  [[feedback_ventanas_de_prueba_mac]].
+- 🧬 **Versión del sistema:** app de la Mac 1.1.49 · iPhone con el código del día (instalado) · protocolo v62.
+- 🔮 **Cómo arrancar la próxima Sala de Comando:** abrir la sala en `escaner-app` y elegir con Zak la siguiente
+  pantalla de escritorio (Sendero de Luz, Holoteca o Mi Núcleo); llevarla a la gramática de `ComunidadEscritorio.tsx`,
+  con Escape que la cierre por la pila, y revisarla en el banco (`banco-escritorio`, `?capa=sendero`) a 1728, 1440,
+  1280 y 880 de ancho, oscuro y claro, antes de compilar.
 
 #### 2026-10-04 · II · NAVEGANTE: SINFONÍA, ODISEA, LA CONSTELACIÓN Y LUDUS CERO PREMIUM CON EL TRÁILER
 
@@ -874,7 +915,9 @@ página: el maestro crece de a una línea por lección.
   `lote-produccion.sh`).
 - 🗄️ **Migraciones SQL aplicadas:** `20261003_navegante_sinfonia.sql` (el mejor rango, precisión y puntos en
   `navegante_progress`); Zak la pegó y quedó marcada con ✅ (admin ae24d39).
-- ⏳ **Pendiente:** nada bloqueante. Ludus Cero en celular y el aviso de 599 siguen en Pendientes vivos.
+- ⏳ **Pendiente:** nada bloqueante. Su próxima sala se abre en `Ludus Cero/Navegante` con el encargo de
+  `Docs/PROXIMA_SALA.md` (jugar antes: cerrar la Membrana 1, volver a la constelación, entrar al guardián de la 5).
+  Ludus Cero en celular y el aviso de 599 siguen en Pendientes vivos.
 - 💡 **Decisiones:** Resonancia descartada por ahora · la Red no late en cada pulso · del tema en pantalla solo el
   nombre (a nadie le interesa si está en Do o en Re) · VOLVER no vive dentro de las membranas: la casa LUDUS CERO solo
   en la constelación · los guardianes no se regalan abiertos · el banner abre el juego y solo CONOCER baja · los
@@ -887,27 +930,9 @@ página: el maestro crece de a una línea por lección.
   [[proyecto_ludus_hub]].
 - 🧬 **Versión del sistema:** Navegante v3.7 (motor v1.7, música v1.2, Odisea v1.2, mapa v1.2) · hub v3.2 · shell v4.3
   · protocolo v61.
-- 🔮 **Cómo arrancar la próxima Sala de Comando:** jugar antes (cerrar la Membrana 1, volver a la constelación, entrar
-  al guardián de la 5), abrir la sala en `Ludus Cero/Navegante` y pegar el encargo de `Docs/PROXIMA_SALA.md` con lo que
-  Zak sienta.
 
 #### 2026-10-04 · TRÁILER DE NAVEGANTE PARA STEAM: 94 SEGUNDOS CON EL MOTOR REAL Y SU SEGUNDA PASADA
 
-- ✅ **Resuelto:** **tráiler horizontal de Navegante de la Red** (16:9, 94 s a 60 cuadros, estilo Steam) en
-  `Ludus Cero/Navegante/Trailer/`, pintado cuadro a cuadro con el motor real y la interfaz del juego: el abismo y la voz
-  de la Red, el latido que despierta la Red, SINTONIZA · INTEGRA · VIAJA, Sinfonía con PERFECTO y combo, el Código y sus
-  portales, el Super Jump en cámara lenta sobre la caída de la música, el Mapa, las cuatro regiones, los cuatro
-  guardianes, la evolución, la Red que despierta, el título y «Empieza gratis» · **segunda pasada con lo que pidió
-  Zak**: narrador más grave (Miguel), el Nodo Madre con otra voz (Regina), las 13 líneas al mismo volumen medido en su
-  lugar, la música que ya no se corta bajo la voz, letreros con la tipografía del logo y un sonido por letrero, la
-  canción REAL de la Membrana 2 en «Cada membrana es una canción», un cierre con broche de oro, y los hilos de la Red que
-  ya no se salen de los nodos.
-- 📁 **Archivos:** `Ludus Cero/Navegante/Trailer/` (maestro para Steam, ligero 720p de 34 MB, portada) y su estudio
-  `estudio/` (`CONTRATO.md`, `motor/parchar.mjs` v1.1, `comun.js` v1.2, `hud.js` v2.0, `tipo.js` v2.0, `letrero.js` v1.0,
-  `cuadro.js` v1.3, `render.mjs` v1.2, `mezclar.py` v1.9 (la tercera de cada nota sigue la armonía de su compás), `armar.sh` v1.1, 23 tomas en `tomas/`, la canción del juego en
-  `sinfonia/`) · Navegante: `Docs/BITACORA.md` y `Docs/PROXIMA_SALA.md`.
-- ⏳ **Pendiente:** ~~el MISMO error de los hilos vive en el juego (`FS_HILO` de `Code/NaveganteRedViva.ts`)~~
-  CERRADO en la · II (motor v1.6, `FS_ARISTA`: cada hilo nace y muere en el borde de sus células).
 - 💡 **Decisiones:** 16:9 1920×1080 a 60 (el formato de Steam) · la tarjeta final dice «Empieza gratis ·
   play.redsolarviva.com» (tutorial y Membrana 1 libres; si llega a Steam solo cambia `tomas/s23_final.js`) · narrador
   grave de tráiler y una voz distinta por personaje · los letreros llevan la tipografía del logo (Orbitron) y el
@@ -917,7 +942,7 @@ página: el maestro crece de a una línea por lección.
   ejemplo · música de ElevenLabs con un trozo por acto y su compás medido · la música se aparta solo en la banda de la
   voz (+6 dB) y las voces se igualan en su lugar · en ffmpeg 8 cada etapa va a su archivo. Detalle en
   [[proyecto_trailer_navegante]] y [[feedback_trailers_juego]].
-- 🧬 **Versión del sistema:** estudio del tráiler (arriba) · protocolo v60.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 #### 2026-10-03 · III · TERRA CRISTAL PIXEL CON SU ARTE SELLADO Y LUDUS CERO EN LA RED QUE DESCIENDE
 
@@ -929,19 +954,6 @@ página: el maestro crece de a una línea por lección.
   Chrome sin ventana · el hub con el host de Ludus en local: build en carpeta aparte, servidor propio y
   `--host-resolver-rules` · antes de publicar rsv-web se busca el texto del Consejo sin commit en el `CouncilApp-*.js`
   vivo. Detalle en [[proyecto_ludus_hub]] y [[proyecto_juego_pixel]].
-- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
-
-#### 2026-10-03 · II · LUDUS CERO: LÚCIDO NACE, NAVEGANTE EN RED VIVA, EL HUB DE CASA DE JUEGOS Y LOS RUMBOS
-
-- 💡 **Decisiones:** Lúcido y Terra Cristal van a Steam; computadora primero, celular como segundo canal (sin comprar
-  descargas con anuncios) · el Escáner NO lleva Navegante (2026-09-17, reiterado) · lo de Navegante va solo a `Code/`
-  y sus salas se abren en `Ludus Cero/Navegante` · **Grok ya no se usa (Zak, 2026-10-03): todo con Claude Code, que
-  vuelve a tender este archivo**.
-- 🔧 **Patrones nuevos:** portada y avance de un juego pintados con su propio motor (escena compuesta, cuadro a cuadro,
-  ffmpeg) · avance de Lúcido grabado con su bot (`prueba.ts video`) · láminas en movimiento con ffmpeg (en zsh siempre
-  `${VAR}`) · el host de Ludus en local con un proxy y `--host-resolver-rules` · cada juego con casa propia y su
-  CLAUDE.md que excluye el maestro. Detalle en [[proyecto_navegante_arte]], [[proyecto_ludus_hub]] y
-  [[proyecto_juego_pixel]].
 - *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 *Las entradas anteriores viven en* `admin/CLAUDE_archivo_hasta_2026-08-04.md` (2026-04-18 → 2026-08-22) *y en*
