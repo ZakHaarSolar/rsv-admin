@@ -545,6 +545,12 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   Lúcido y Navegante se ve en computadora y tableta. Falta decidir si en celular aparece Ludus Cero con sus juegos.
 - **El aviso de pago de Navegante en la web dice 599 MXN/mes** y Sintonía Solar cuesta 499 (`Code/EV_Freemium.tsx`).
   Falta el sí de Zak para cambiarlo.
+- **Consulta respondida el 2026-10-04 · el siguiente nivel de Navegante:** cinco propuestas jugables (la Inmersión,
+  tu canción, guardianes que cantan, tu arrecife y dos medusas) en https://claude.ai/artifact/34QN9ReoibLFmLwNWyDcnm,
+  con su probabilidad: éxito en Steam (1,000 reseñas) 6 % hoy y 18 % con las cinco más inglés, control, Steam Deck,
+  demo y lista de deseos; éxito global 1 % hoy y 4 % (base 2025: 3 % de los juegos llega a 1,000 reseñas y 1.5 % pasa
+  del millón bruto). El storyboard del universo tipo Spore está en https://claude.ai/artifact/Ws1SjUdADGemPZrUVYsmH8.
+  Falta que Zak elija cuáles y en qué orden.
 - **Consulta respondida el 2026-10-04 · sonidos con IA:** la cuenta de ElevenLabs de la API (plan de pago por uso)
   trae 10,000 créditos al mes que se renuevan el 16 (iban 8,456) y no cobra de más: al acabarse, se detiene. fal.ai
   está en cero. El sonido de ganar de Navegante se hizo con la síntesis del juego (en la tonalidad de cada canción,
@@ -907,16 +913,19 @@ página: el maestro crece de a una línea por lección.
   suena a «la Red integrada»** (síntesis propia, sin créditos) · **guardianes por pasos** · el Bosque de Corrientes
   orgánico · sin tonalidad ni tempo en pantalla · **Ludus Cero premium**: el banner abre el juego, JUGAR de vidrio con
   su orbe, filos finos, menos espacio arriba del título y la estación de Navegante con el tráiler (modo cine) y seis
-  tomas nuevas.
-- 📁 **Archivos:** Code (aa1337f, af3d758, 9b0c264, 8dca19c): `NaveganteDeLaRed.tsx` v3.7, `NaveganteRedViva.ts` v1.7,
+  tomas nuevas · **(la sala siguió tras el cierre)** la **tarjeta de victoria premium** · **cinco propuestas para el
+  siguiente nivel**, jugables con el motor y la música del juego y con sus probabilidades en Steam
+  (https://claude.ai/artifact/34QN9ReoibLFmLwNWyDcnm) · **el storyboard del universo** tipo Spore, con Navegante como
+  primera de cinco etapas (https://claude.ai/artifact/Ws1SjUdADGemPZrUVYsmH8).
+- 📁 **Archivos:** Code (aa1337f, af3d758, 9b0c264, 8dca19c, 55de5b5): `NaveganteDeLaRed.tsx` v3.8, `NaveganteRedViva.ts` v1.7,
   `NaveganteMusica.ts` v1.2, `NaveganteOdisea.ts` v1.2, `NaveganteMapa.tsx` v1.2, `SimuladoresHub.tsx` v3.2,
   `RSV_SolarSimuladoresShell.tsx` v4.3 · rsv-web 038c7a7 (el tráiler en 1080p y 720p, seis tomas) · `Ludus
   Cero/Navegante/` (CLAUDE.md, bitácora, próxima sala; herramientas nuevas `hub-ludus.mjs`, `estudio-red-viva.mjs` y
-  `lote-produccion.sh`).
+  `lote-produccion.sh`; las páginas `siguiente-nivel/` y `storyboard/`).
 - 🗄️ **Migraciones SQL aplicadas:** `20261003_navegante_sinfonia.sql` (el mejor rango, precisión y puntos en
   `navegante_progress`); Zak la pegó y quedó marcada con ✅ (admin ae24d39).
-- ⏳ **Pendiente:** nada bloqueante. Su próxima sala se abre en `Ludus Cero/Navegante` con el encargo de
-  `Docs/PROXIMA_SALA.md` (jugar antes: cerrar la Membrana 1, volver a la constelación, entrar al guardián de la 5).
+- ⏳ **Pendiente:** que Zak elija qué propuestas construir y si el storyboard es el rumbo (está en Pendientes vivos).
+  Su próxima sala se abre en `Ludus Cero/Navegante` con el encargo de `Docs/PROXIMA_SALA.md`.
   Ludus Cero en celular y el aviso de 599 siguen en Pendientes vivos.
 - 💡 **Decisiones:** Resonancia descartada por ahora · la Red no late en cada pulso · del tema en pantalla solo el
   nombre (a nadie le interesa si está en Do o en Re) · VOLVER no vive dentro de las membranas: la casa LUDUS CERO solo
@@ -928,7 +937,7 @@ página: el maestro crece de a una línea por lección.
   pintadas con el motor real (`estudio-red-viva.mjs`, 3840 como máximo) · un lote de bots contra producción en dos
   carriles · todo bot con `--mute-audio` y `process.on("exit")`. Detalle en [[proyecto_navegante_arte]] y
   [[proyecto_ludus_hub]].
-- 🧬 **Versión del sistema:** Navegante v3.7 (motor v1.7, música v1.2, Odisea v1.2, mapa v1.2) · hub v3.2 · shell v4.3
+- 🧬 **Versión del sistema:** Navegante v3.8 (motor v1.7, música v1.2, Odisea v1.2, mapa v1.2) · hub v3.2 · shell v4.3
   · protocolo v61.
 
 #### 2026-10-04 · TRÁILER DE NAVEGANTE PARA STEAM: 94 SEGUNDOS CON EL MOTOR REAL Y SU SEGUNDA PASADA

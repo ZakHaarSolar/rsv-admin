@@ -1421,7 +1421,8 @@ Hermano del **0-quaterquadragies** (lo que no puedes percibir se mide con un ins
 
 Toda prueba que abre un navegador sin ventana (Chrome por CDP, Playwright, el estudio de un video) lo abre MUDO
 (`--mute-audio`) y lo mata al salir, también cuando la prueba se cae (`process.on("exit")` con el `kill` del proceso,
-no solo la última línea del guion). Lo que se quiere medir del audio se captura dentro de la página (un AudioWorklet en
+no solo la última línea del guion) y cuando la detienen desde fuera: con un `kill`, Node sale sin correr "exit", así
+que cada herramienta lleva también `process.on("SIGTERM" | "SIGINT" | "SIGHUP", () => process.exit(1))`. Lo que se quiere medir del audio se captura dentro de la página (un AudioWorklet en
 el grafo), nunca por las bocinas. Antes de cerrar una sala que corrió bots: `pgrep -fl "Google Chrome.*headless"` y
 matar los huérfanos.
 
@@ -1460,12 +1461,13 @@ el recurso compartido siga siendo suyo): la Mac de Zak es el recurso compartido.
   herramientas que quedan para las siguientes salas de escritorio: el banco de pruebas (`escaner-app/banco/`, sesión y
   servidor falsos) y la pila de Escape (`lib/pilaEscape`).
 
-- **v61 (2026-10-04):** una lección de la sala de Navegante (Sinfonía, Odisea, la constelación y Ludus Cero
+- **v61 (2026-10-04, ampliada el mismo día):** una lección de la sala de Navegante (Sinfonía, Odisea, la constelación y Ludus Cero
   premium). **0-duodesexagies**: un navegador sin ventana también suena; toda prueba lo abre mudo y lo mata al salir,
   aunque falle. Y un refuerzo del **0-undecies**: el primer lote contra producción cazó dos cosas que en local pasaban,
   porque el hub local tenía un solo juego (con tres, CONOCER se quedaba corto) y el bot movía y tocaba en el mismo
   instante (una persona deja descansar el cursor, y ahí la casa se apagaba). La prueba se parece al real también en la
-  cantidad y en el tiempo.
+  cantidad y en el tiempo. Ampliada al seguir la sala: detener una prueba con `kill` dejaba su Chrome vivo ("exit" no
+  corre con señales); ahora todas lo matan también con SIGTERM, SIGINT y SIGHUP.
 
 - **v60 (2026-10-04):** dos lecciones de la sala del tráiler de Navegante para Steam. **0-sexquinquagies**: lo que
   entrega un ayudante en segundo plano no se toca mientras trabaja; para probar sin él, una bandera o una copia.
