@@ -4,6 +4,31 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-03 · III · TERRA CRISTAL PIXEL CON SU ARTE SELLADO Y LUDUS CERO EN LA RED QUE DESCIENDE
+
+- ✅ **Resuelto:** **Terra Cristal Pixel rehecho entero con el arte sellado** (ambiente pintado con luz de cine, la
+  tripulación y el Soldado en Ícono mínimo, el pelo de Elara como su Plasma) y con la pantalla que llena la ventana sin
+  marco (cada lugar con su orilla; el área de movimiento ya no se corta en los aliados); vivo en
+  play.redsolarviva.com/terra-cristal-pixel/ · **Ludus Cero estrena la Red que desciende** en
+  play.redsolarviva.com/simuladores: Zak eligió la propuesta 1 de una segunda ronda (lienzo con las dos rondas:
+  https://claude.ai/artifact/B7PRKfoMAPxCYU8FD6mW9F); los juegos cuelgan del sol con su portada entera y cada uno tiene
+  su estación (historia, Así se juega, JUGAR y un mosaico con su avance y sus mundos); la página baja con su propio
+  scroll. En redsolarviva.com/simuladores sale igual con Navegante solo.
+- 📁 **Archivos:** Code: `SimuladoresHub.tsx` v3.0 (1340009) · rsv-web: 15 visuales nuevos en `public/ludus/` (6f46c7b)
+  · terra-cristal-pixel: 8125111, c112acd y el cierre d8633cd (bitácora y PROXIMA_SALA).
+- ⏳ **Pendiente:** lo de Terra Cristal Pixel vive en `terra-cristal-pixel/Docs/PROXIMA_SALA.md` (siguiente: Arena 02 ·
+  Ruinas) · Ludus Cero en celular sigue en Pendientes vivos.
+- 💡 **Decisiones:** en las páginas de juegos el arte va ENTERO, nunca recortado (los círculos de la primera ronda «no
+  dejan apreciar la magnificencia») y la página puede bajar para mostrar visuales y sinopsis (scroll vertical) · Terra
+  Cristal al centro de la constelación · Navegante va en violeta en el hub.
+- 🔧 **Patrones nuevos:** una página larga dentro de una ruta de pantalla completa de Domo scrollea por dentro (100dvh,
+  como `/privacy`) · propuestas de diseño en un lienzo con una página por ronda, probadas con el motor del lienzo en
+  Chrome sin ventana · el hub con el host de Ludus en local: build en carpeta aparte, servidor propio y
+  `--host-resolver-rules` · antes de publicar rsv-web se busca el texto del Consejo sin commit en el `CouncilApp-*.js`
+  vivo. Detalle en [[proyecto_ludus_hub]] y [[proyecto_juego_pixel]].
+- 🧬 **Versión del sistema:** hub v3.0 · shell v4.0 · Terra Cristal Pixel (main v2.1, cine v1.1, mundo v1.1, cuerpo v3)
+  · protocolo v59.
+
 #### 2026-10-03 · II · LUDUS CERO: LÚCIDO NACE, NAVEGANTE EN RED VIVA, EL HUB DE CASA DE JUEGOS Y LOS RUMBOS
 
 - ✅ **Resuelto:** **juego pixel** (cinco propuestas vivas en https://claude.ai/artifact/UmATZhiD9nigZhy3LeUiiL): Zak

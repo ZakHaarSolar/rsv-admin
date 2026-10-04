@@ -1417,7 +1417,31 @@ quedaron en 0.00 dB. Y en el clímax la voz, aun pareja, se oía más chica: la 
 Hermano del **0-quaterquadragies** (lo que no puedes percibir se mide con un instrumento que sí) y del
 **0-quindecies** (la métrica puede estar hecha a la medida del diseño viejo: mide lo que la persona percibe).
 
+### Paso 0-duodesexagies · Un navegador sin ventana también suena
+
+Toda prueba que abre un navegador sin ventana (Chrome por CDP, Playwright, el estudio de un video) lo abre MUDO
+(`--mute-audio`) y lo mata al salir, también cuando la prueba se cae (`process.on("exit")` con el `kill` del proceso,
+no solo la última línea del guion). Lo que se quiere medir del audio se captura dentro de la página (un AudioWorklet en
+el grafo), nunca por las bocinas. Antes de cerrar una sala que corrió bots: `pgrep -fl "Google Chrome.*headless"` y
+matar los huérfanos.
+
+**Por qué.** El 2026-10-04, en la sala de Navegante, Zak oyó la música del juego mientras trabajaba en otras cosas y
+no podía bajar el volumen: un Chrome sin ventana de una prueba que se cayó a media corrida siguió vivo horas tocando el
+tema de una membrana. «Sin ventana» no quiere decir «sin sonido»: el navegador saca el audio por el aparato de Zak, y
+una prueba que falla deja vivo justo el proceso que nadie está mirando.
+
+Hermano del **0-tervicies** (un cierre comprueba que el recurso compartido siga siendo suyo) y del **0-undevicies**
+(tu propia automatización puede deshacer lo que acabas de hacer): lo que tus herramientas dejan corriendo también es
+tuyo.
+
 ### Changelog del protocolo
+
+- **v61 (2026-10-04):** una lección de la sala de Navegante (Sinfonía, Odisea, la constelación y Ludus Cero
+  premium). **0-duodesexagies**: un navegador sin ventana también suena; toda prueba lo abre mudo y lo mata al salir,
+  aunque falle. Y un refuerzo del **0-undecies**: el primer lote contra producción cazó dos cosas que en local pasaban,
+  porque el hub local tenía un solo juego (con tres, CONOCER se quedaba corto) y el bot movía y tocaba en el mismo
+  instante (una persona deja descansar el cursor, y ahí la casa se apagaba). La prueba se parece al real también en la
+  cantidad y en el tiempo.
 
 - **v60 (2026-10-04):** dos lecciones de la sala del tráiler de Navegante para Steam. **0-sexquinquagies**: lo que
   entrega un ayudante en segundo plano no se toca mientras trabaja; para probar sin él, una bandera o una copia.

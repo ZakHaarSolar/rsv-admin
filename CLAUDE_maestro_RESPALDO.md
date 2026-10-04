@@ -519,7 +519,7 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   el 2026-10-03; el segundo Espejo se descartó). Píxel 1639470941182641 activo en Motor → Campaña y dominio verificado.
   México 21-55, 100 MXN/día × 7, SOLO Instagram. En esta cuenta Ads Manager fuerza ubicaciones automáticas con
   Clientes potenciales, Ventas y Tráfico, así que se lanza como promoción del Reel desde la app de Instagram
-  (@zakcero, la hace Zak; pasos al final de `Prompts para Grok.md`) y el bot solo reporta. Al 2026-10-04 nada gastando. Después: Decodificador o reel. Pasos en `Escaner Vibracional/Publicidad/Prompts para Grok.md`;
+  (@escanervibracional, la hace Zak; pasos al final de `Prompts para Grok.md`) y el bot solo reporta. **Lanzada el 2026-10-04 desde instagram.com** (en la app de iOS Apple cobra ~30 % extra), en revisión de Meta. Las siguientes pruebas usan el MISMO público (sin «Meditaciones (filosofía)», que no es la práctica). Después: Decodificador o reel. Pasos en `Escaner Vibracional/Publicidad/Prompts para Grok.md`;
   detalle en [[proyecto_publicidad_pagada]].
 - **Pipedream Workflows se apaga el 2027-03-31** (borra todo el 2027-04-30): mudar sus 3 flujos de correo vivos
   (bienvenidas, Sello del Primer Ciclo y padrón con sus bajas) a funciones de Supabase. Zak: «luego lo enlazamos»;
@@ -542,17 +542,21 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   Lúcido y Navegante se ve en computadora y tableta. Falta decidir si en celular aparece Ludus Cero con sus juegos.
 - **El aviso de pago de Navegante en la web dice 599 MXN/mes** y Sintonía Solar cuesta 499 (`Code/EV_Freemium.tsx`).
   Falta el sí de Zak para cambiarlo.
+- **Consulta respondida el 2026-10-04 · sonidos con IA:** la cuenta de ElevenLabs de la API (plan de pago por uso)
+  trae 10,000 créditos al mes que se renuevan el 16 (iban 8,456) y no cobra de más: al acabarse, se detiene. fal.ai
+  está en cero. El sonido de ganar de Navegante se hizo con la síntesis del juego (en la tonalidad de cada canción,
+  sin créditos); ElevenLabs queda para voces y efectos sueltos.
 
 ### 🟡 Higiene, cuando toque
 
 - **Arquitectura de nombres** (2026-08-31, propuesta entregada, falta el sí de Zak): Zak Cero=calle, Zak'Haar=firma
   musical (Spotify NO se rebrandea; MVs completos al canal @zakhaarsolar por el Official Artist Channel), Fotón
-  Cero=estudio (su IG estrena con los MVs; estrenos como collab con @zakcero), semillas de conciencia renacen como
+  Cero=estudio (su IG estrena con los MVs; estrenos como collab con @escanervibracional), semillas de conciencia renacen como
   cuenta del Escáner cuando haya cadencia; detalle en [[proyecto_planeta_zakhaar]].
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v60 (2026-10-04)
+## 🜂 Protocolo de Cierre de Sesión · v61 (2026-10-04)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -702,6 +706,7 @@ memorias.
 - **0-quinquinquagies** · Una copia del código en otra carpeta no es una función viva: antes de portar, lee el encabezado de quien la monta.
 - **0-sexquinquagies** · Lo que entrega un ayudante en segundo plano no se toca mientras trabaja: para probar sin él, una bandera o una copia, nunca mover su archivo.
 - **0-septquinquagies** · Lo que se iguala se mide donde suena: voces igualadas por archivo quedaron 1.6 dB distintas en la mezcla; se miden en su ventana y se corrigen ahí.
+- **0-duodesexagies** · Un navegador sin ventana también suena: toda prueba lo abre mudo y lo mata al salir, aunque falle.
 
 ### Paso 1 — Test de continuidad
 
@@ -843,11 +848,48 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v60 (2026-10-04). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v61 (2026-10-04). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
+
+#### 2026-10-04 · II · NAVEGANTE: SINFONÍA, ODISEA, LA CONSTELACIÓN Y LUDUS CERO PREMIUM CON EL TRÁILER
+
+- ✅ **Resuelto:** **Sinfonía** (cada membrana es una canción: se dispara en el pulso, PERFECTO o BIEN, combo, capas que
+  entran, rango y mejor rango en la nube) y **Odisea** (el Mapa de la Red, cuatro regiones con su regla y su voz,
+  guardianes con barra de vida, una medusa que evoluciona) vivos en play.redsolarviva.com/simuladores · **la Red que se
+  deshace**: lo absorbido se suelta en hebras, los hilos van de borde a borde (el error que vio la sala del tráiler) y
+  la Red ya no late en cada pulso (por quien es sensible a los destellos) · **la constelación**: sin marco, se aleja
+  desde la membrana al volver y se acerca al entrar, controles que se apagan con el mouse quieto, bri-pip y rojo en lo
+  cerrado, una secuencia al elegir · **la casa LUDUS CERO** solo en la constelación, con su ventana nueva · **ganar
+  suena a «la Red integrada»** (síntesis propia, sin créditos) · **guardianes por pasos** · el Bosque de Corrientes
+  orgánico · sin tonalidad ni tempo en pantalla · **Ludus Cero premium**: el banner abre el juego, JUGAR de vidrio con
+  su orbe, filos finos, menos espacio arriba del título y la estación de Navegante con el tráiler (modo cine) y seis
+  tomas nuevas.
+- 📁 **Archivos:** Code (aa1337f, af3d758, 9b0c264, 8dca19c): `NaveganteDeLaRed.tsx` v3.7, `NaveganteRedViva.ts` v1.7,
+  `NaveganteMusica.ts` v1.2, `NaveganteOdisea.ts` v1.2, `NaveganteMapa.tsx` v1.2, `SimuladoresHub.tsx` v3.2,
+  `RSV_SolarSimuladoresShell.tsx` v4.3 · rsv-web 038c7a7 (el tráiler en 1080p y 720p, seis tomas) · `Ludus
+  Cero/Navegante/` (CLAUDE.md, bitácora, próxima sala; herramientas nuevas `hub-ludus.mjs`, `estudio-red-viva.mjs` y
+  `lote-produccion.sh`).
+- 🗄️ **Migraciones SQL aplicadas:** `20261003_navegante_sinfonia.sql` (el mejor rango, precisión y puntos en
+  `navegante_progress`); Zak la pegó y quedó marcada con ✅ (admin ae24d39).
+- ⏳ **Pendiente:** nada bloqueante. Ludus Cero en celular y el aviso de 599 siguen en Pendientes vivos.
+- 💡 **Decisiones:** Resonancia descartada por ahora · la Red no late en cada pulso · del tema en pantalla solo el
+  nombre (a nadie le interesa si está en Do o en Re) · VOLVER no vive dentro de las membranas: la casa LUDUS CERO solo
+  en la constelación · los guardianes no se regalan abiertos · el banner abre el juego y solo CONOCER baja · los
+  sonidos del juego salen de su propia síntesis, en la tonalidad de cada canción.
+- 🔧 **Patrones nuevos:** controles que se apagan con el mouse quieto, nunca bajo el cursor ni en pantallas táctiles ·
+  modo cine en un portal a `document.body` moviendo el mismo `<video>` (Domo crea su propio contexto de apilamiento) ·
+  un `scrollIntoView` suave que se corrige al detenerse (las fotos lazy de arriba lo empujan) · tomas para una página
+  pintadas con el motor real (`estudio-red-viva.mjs`, 3840 como máximo) · un lote de bots contra producción en dos
+  carriles · todo bot con `--mute-audio` y `process.on("exit")`. Detalle en [[proyecto_navegante_arte]] y
+  [[proyecto_ludus_hub]].
+- 🧬 **Versión del sistema:** Navegante v3.7 (motor v1.7, música v1.2, Odisea v1.2, mapa v1.2) · hub v3.2 · shell v4.3
+  · protocolo v61.
+- 🔮 **Cómo arrancar la próxima Sala de Comando:** jugar antes (cerrar la Membrana 1, volver a la constelación, entrar
+  al guardián de la 5), abrir la sala en `Ludus Cero/Navegante` y pegar el encargo de `Docs/PROXIMA_SALA.md` con lo que
+  Zak sienta.
 
 #### 2026-10-04 · TRÁILER DE NAVEGANTE PARA STEAM: 94 SEGUNDOS CON EL MOTOR REAL Y SU SEGUNDA PASADA
 
@@ -864,8 +906,8 @@ página: el maestro crece de a una línea por lección.
   `estudio/` (`CONTRATO.md`, `motor/parchar.mjs` v1.1, `comun.js` v1.2, `hud.js` v2.0, `tipo.js` v2.0, `letrero.js` v1.0,
   `cuadro.js` v1.3, `render.mjs` v1.2, `mezclar.py` v1.9 (la tercera de cada nota sigue la armonía de su compás), `armar.sh` v1.1, 23 tomas en `tomas/`, la canción del juego en
   `sinfonia/`) · Navegante: `Docs/BITACORA.md` y `Docs/PROXIMA_SALA.md`.
-- ⏳ **Pendiente:** el MISMO error de los hilos vive en el juego (`FS_HILO` de `Code/NaveganteRedViva.ts`): diagnosticado
-  y con su arreglo probado en `Ludus Cero/Navegante/Docs/PROXIMA_SALA.md`.
+- ⏳ **Pendiente:** ~~el MISMO error de los hilos vive en el juego (`FS_HILO` de `Code/NaveganteRedViva.ts`)~~
+  CERRADO en la · II (motor v1.6, `FS_ARISTA`: cada hilo nace y muere en el borde de sus células).
 - 💡 **Decisiones:** 16:9 1920×1080 a 60 (el formato de Steam) · la tarjeta final dice «Empieza gratis ·
   play.redsolarviva.com» (tutorial y Membrana 1 libres; si llega a Steam solo cambia `tomas/s23_final.js`) · narrador
   grave de tráiler y una voz distinta por personaje · los letreros llevan la tipografía del logo (Orbitron) y el
@@ -876,24 +918,9 @@ página: el maestro crece de a una línea por lección.
   voz (+6 dB) y las voces se igualan en su lugar · en ffmpeg 8 cada etapa va a su archivo. Detalle en
   [[proyecto_trailer_navegante]] y [[feedback_trailers_juego]].
 - 🧬 **Versión del sistema:** estudio del tráiler (arriba) · protocolo v60.
-- 🔮 **Cómo arrancar la próxima Sala de Comando:** abrir la sala en la carpeta `Ludus Cero/Navegante` y pegar el encargo
-  de `Docs/PROXIMA_SALA.md`: primero llevar al juego el arreglo de las puntas de los hilos (ya diagnosticado), luego lo
-  que Zak sienta al jugar.
 
 #### 2026-10-03 · III · TERRA CRISTAL PIXEL CON SU ARTE SELLADO Y LUDUS CERO EN LA RED QUE DESCIENDE
 
-- ✅ **Resuelto:** **Terra Cristal Pixel rehecho entero con el arte sellado** (ambiente pintado con luz de cine, la
-  tripulación y el Soldado en Ícono mínimo, el pelo de Elara como su Plasma) y con la pantalla que llena la ventana sin
-  marco (cada lugar con su orilla; el área de movimiento ya no se corta en los aliados); vivo en
-  play.redsolarviva.com/terra-cristal-pixel/ · **Ludus Cero estrena la Red que desciende** en
-  play.redsolarviva.com/simuladores: Zak eligió la propuesta 1 de una segunda ronda (lienzo con las dos rondas:
-  https://claude.ai/artifact/B7PRKfoMAPxCYU8FD6mW9F); los juegos cuelgan del sol con su portada entera y cada uno tiene
-  su estación (historia, Así se juega, JUGAR y un mosaico con su avance y sus mundos); la página baja con su propio
-  scroll. En redsolarviva.com/simuladores sale igual con Navegante solo.
-- 📁 **Archivos:** Code: `SimuladoresHub.tsx` v3.0 (1340009) · rsv-web: 15 visuales nuevos en `public/ludus/` (6f46c7b)
-  · terra-cristal-pixel: 8125111, c112acd y el cierre d8633cd (bitácora y PROXIMA_SALA).
-- ⏳ **Pendiente:** lo de Terra Cristal Pixel vive en `terra-cristal-pixel/Docs/PROXIMA_SALA.md` (siguiente: Arena 02 ·
-  Ruinas) · Ludus Cero en celular sigue en Pendientes vivos.
 - 💡 **Decisiones:** en las páginas de juegos el arte va ENTERO, nunca recortado (los círculos de la primera ronda «no
   dejan apreciar la magnificencia») y la página puede bajar para mostrar visuales y sinopsis (scroll vertical) · Terra
   Cristal al centro de la constelación · Navegante va en violeta en el hub.
@@ -902,8 +929,7 @@ página: el maestro crece de a una línea por lección.
   Chrome sin ventana · el hub con el host de Ludus en local: build en carpeta aparte, servidor propio y
   `--host-resolver-rules` · antes de publicar rsv-web se busca el texto del Consejo sin commit en el `CouncilApp-*.js`
   vivo. Detalle en [[proyecto_ludus_hub]] y [[proyecto_juego_pixel]].
-- 🧬 **Versión del sistema:** hub v3.0 · shell v4.0 · Terra Cristal Pixel (main v2.1, cine v1.1, mundo v1.1, cuerpo v3)
-  · protocolo v59.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 #### 2026-10-03 · II · LUDUS CERO: LÚCIDO NACE, NAVEGANTE EN RED VIVA, EL HUB DE CASA DE JUEGOS Y LOS RUMBOS
 
