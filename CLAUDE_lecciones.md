@@ -1453,7 +1453,56 @@ nada.
 Hermano del **0-duodesexagies** (un navegador sin ventana también suena) y del **0-tervicies** (un cierre comprueba que
 el recurso compartido siga siendo suyo): la Mac de Zak es el recurso compartido.
 
+### Paso 0-sexagies · Un defecto que no se explica se caza apagando una pieza a la vez
+
+Cuando una imagen (o un sonido, o un número) sale con un defecto cuya causa no es obvia, no se teoriza ni se "arregla"
+lo primero que parece culpable: se pinta el MISMO cuadro con una pieza apagada a la vez (la sombra, la oclusión, una
+pasada, una capa) y se comparan lado a lado. La culpable es la pieza cuya ausencia borra el defecto. Dos o tres
+fotos bastan, y la causa se anuncia después de esa prueba, no antes.
+
+**Por qué.** El 2026-10-04, en la sala de Lúcido, el arte HD de los personajes salió con vetas como de madera en la
+piel y la tela. Primero corregí las distancias estiradas (un defecto real, pero otro) y las vetas siguieron. Dos fotos
+de prueba, una sin sombra ni oclusión y otra solo con oclusión, encontraron la causa en dos minutos: la sombra suave
+sobre elipses aproximadas. Se quitó la sombra proyectada y el estilo de ilustración quedó más limpio.
+
+Hermano del **0-vicies-semel** (la causa se anuncia después de probarla) y del **0-sexies** (una verificación que
+falla acusa primero al código).
+
+### Paso 0-unsexagies · Una caché cuya clave no dice de quién es el dato mezcla dueños
+
+Toda caché lleva en la clave al dueño del dato, o cada dueño tiene su propio cajón (un `WeakMap` por objeto). Una clave
+hecha solo de la forma (tamaño, posición, rectángulo) devuelve el dato de otro en cuanto dos dueños comparten forma, y
+el error parece de dibujo, no de memoria.
+
+**Por qué.** El 2026-10-04, en la página de propuestas de Lúcido, las celdas «Quieto» y «Observa» de Temictli
+mostraban a Teyolia: la caché de cuadros usaba como clave el ancho del atlas y el rectángulo del cuadro, iguales para
+los cuatro personajes. Quien se pintaba primero se quedaba con la celda de los demás.
+
+Hermano del **0-terquadragies** (dos hermanos con la misma clave duplican nodos): una clave que no distingue dueños
+mezcla dueños.
+
+### Paso 0-duosexagies · Una propuesta se fotografía junto a «hoy» antes de enseñarla
+
+En una página que compara propuestas contra lo que ya existe, «hoy» se pinta con el motor real (nunca una imitación) y
+cada propuesta se fotografía a su lado, en el mismo instante y a la misma escala, antes de enseñarla. Si alguna se ve
+peor que hoy, no se entrega así: se mejora hasta que gane, o la página lo dice.
+
+**Por qué.** El 2026-10-04, las primeras fotos de los niveles de pixel de Lúcido mostraron que «hoy», pintado con el
+motor del juego, tenía más contraste y más carácter que las propuestas nuevas (luz plana, fuego chiquito, todo morado).
+Habría sido una página que le daba la razón a lo que Zak quería dejar atrás. Una pasada al arte de la sala (losas con
+bisel, muro de sillares con greca, braseros con fuego grande, agua con destellos y luz de color que sobrevive al gris)
+volteó la comparación.
+
+Hermano del **0-quindecies** (la métrica puede estar hecha a la medida de lo viejo) y del **0-undecies** (el dato de
+prueba se parece al real en la dimensión que importa).
+
 ### Changelog del protocolo
+
+- **v63 (2026-10-04):** tres lecciones de la sala de Lúcido (sin marco, pasos propios y la página que selló luz de
+  cine y a Tonalli). **0-sexagies**: un defecto que no se explica se caza apagando una pieza a la vez. **0-unsexagies**:
+  una caché cuya clave no dice de quién es el dato mezcla dueños. **0-duosexagies**: una propuesta se fotografía junto a
+  «hoy», pintado con el motor real, antes de enseñarla. Y la regla del 🔮 con varios proyectos: al ceder el 🔮 a la
+  sala más reciente, el arranque de la sala anterior se mueve a su memoria y en su entrada queda la seña de dónde vive.
 
 - **v62 (2026-10-04):** una lección de la sala de escritorio paso a paso (la Comunidad como herramienta, Escape que
   cierra y el logo que suena en la Mac). **0-undesexagies**: una prueba en la Mac de Zak no le quita el foco ni la

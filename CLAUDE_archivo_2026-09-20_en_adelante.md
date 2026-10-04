@@ -4,6 +4,45 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-04 · II · NAVEGANTE: SINFONÍA, ODISEA, LA CONSTELACIÓN Y LUDUS CERO PREMIUM CON EL TRÁILER
+
+- ✅ **Resuelto:** **Sinfonía** (cada membrana es una canción: se dispara en el pulso, PERFECTO o BIEN, combo, capas que
+  entran, rango y mejor rango en la nube) y **Odisea** (el Mapa de la Red, cuatro regiones con su regla y su voz,
+  guardianes con barra de vida, una medusa que evoluciona) vivos en play.redsolarviva.com/simuladores · **la Red que se
+  deshace**: lo absorbido se suelta en hebras, los hilos van de borde a borde (el error que vio la sala del tráiler) y
+  la Red ya no late en cada pulso (por quien es sensible a los destellos) · **la constelación**: sin marco, se aleja
+  desde la membrana al volver y se acerca al entrar, controles que se apagan con el mouse quieto, bri-pip y rojo en lo
+  cerrado, una secuencia al elegir · **la casa LUDUS CERO** solo en la constelación, con su ventana nueva · **ganar
+  suena a «la Red integrada»** (síntesis propia, sin créditos) · **guardianes por pasos** · el Bosque de Corrientes
+  orgánico · sin tonalidad ni tempo en pantalla · **Ludus Cero premium**: el banner abre el juego, JUGAR de vidrio con
+  su orbe, filos finos, menos espacio arriba del título y la estación de Navegante con el tráiler (modo cine) y seis
+  tomas nuevas · **(la sala siguió tras el cierre)** la **tarjeta de victoria premium** · **cinco propuestas para el
+  siguiente nivel**, jugables con el motor y la música del juego y con sus probabilidades en Steam
+  (https://claude.ai/artifact/34QN9ReoibLFmLwNWyDcnm) · **el storyboard del universo** tipo Spore, con Navegante como
+  primera de cinco etapas (https://claude.ai/artifact/Ws1SjUdADGemPZrUVYsmH8).
+- 📁 **Archivos:** Code (aa1337f, af3d758, 9b0c264, 8dca19c, 55de5b5): `NaveganteDeLaRed.tsx` v3.8, `NaveganteRedViva.ts` v1.7,
+  `NaveganteMusica.ts` v1.2, `NaveganteOdisea.ts` v1.2, `NaveganteMapa.tsx` v1.2, `SimuladoresHub.tsx` v3.2,
+  `RSV_SolarSimuladoresShell.tsx` v4.3 · rsv-web 038c7a7 (el tráiler en 1080p y 720p, seis tomas) · `Ludus
+  Cero/Navegante/` (CLAUDE.md, bitácora, próxima sala; herramientas nuevas `hub-ludus.mjs`, `estudio-red-viva.mjs` y
+  `lote-produccion.sh`; las páginas `siguiente-nivel/` y `storyboard/`).
+- 🗄️ **Migraciones SQL aplicadas:** `20261003_navegante_sinfonia.sql` (el mejor rango, precisión y puntos en
+  `navegante_progress`); Zak la pegó y quedó marcada con ✅ (admin ae24d39).
+- ⏳ **Pendiente:** que Zak elija qué propuestas construir y si el storyboard es el rumbo (está en Pendientes vivos).
+  Su próxima sala se abre en `Ludus Cero/Navegante` con el encargo de `Docs/PROXIMA_SALA.md`.
+  Ludus Cero en celular y el aviso de 599 siguen en Pendientes vivos.
+- 💡 **Decisiones:** Resonancia descartada por ahora · la Red no late en cada pulso · del tema en pantalla solo el
+  nombre (a nadie le interesa si está en Do o en Re) · VOLVER no vive dentro de las membranas: la casa LUDUS CERO solo
+  en la constelación · los guardianes no se regalan abiertos · el banner abre el juego y solo CONOCER baja · los
+  sonidos del juego salen de su propia síntesis, en la tonalidad de cada canción.
+- 🔧 **Patrones nuevos:** controles que se apagan con el mouse quieto, nunca bajo el cursor ni en pantallas táctiles ·
+  modo cine en un portal a `document.body` moviendo el mismo `<video>` (Domo crea su propio contexto de apilamiento) ·
+  un `scrollIntoView` suave que se corrige al detenerse (las fotos lazy de arriba lo empujan) · tomas para una página
+  pintadas con el motor real (`estudio-red-viva.mjs`, 3840 como máximo) · un lote de bots contra producción en dos
+  carriles · todo bot con `--mute-audio` y `process.on("exit")`. Detalle en [[proyecto_navegante_arte]] y
+  [[proyecto_ludus_hub]].
+- 🧬 **Versión del sistema:** Navegante v3.8 (motor v1.7, música v1.2, Odisea v1.2, mapa v1.2) · hub v3.2 · shell v4.3
+  · protocolo v61.
+
 #### 2026-10-04 · TRÁILER DE NAVEGANTE PARA STEAM: 94 SEGUNDOS CON EL MOTOR REAL Y SU SEGUNDA PASADA
 
 - ✅ **Resuelto:** **tráiler horizontal de Navegante de la Red** (16:9, 94 s a 60 cuadros, estilo Steam) en
