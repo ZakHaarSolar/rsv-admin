@@ -515,12 +515,12 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   publicación, que es lo que ya dice el Mapa de destinos.
 - **Escribir a quienes no pudieron entrar a la web del 5 al 24 de septiembre** (Clerk sabe quiénes lo intentaron;
   venía de la sala del 21 al 25): falta que Zak decida el mensaje y si se manda.
-- **Anuncios pagados (2026-10-03): elegir qué video se lanza primero.** El del Decodificador está listo
-  (`Escaner Vibracional/Publicidad/01 Decodificador 9x16.mp4`); el del Espejo se hace en la próxima sala (prompt en
-  `Escaner Vibracional/Publicidad/Prompt próxima sala · Espejo.md`). Un video a la vez, 100 MXN al día por 7 días.
-  Antes de lanzar: el píxel (paso 1 de `Escaner Vibracional/Publicidad/Prompts para Grok.md`; el número se pega en
-  Motor → Campaña) y probar https://escanervibracional.com/?a=prueba desde Instagram en el iPhone. Grok ya no se usa:
-  el lanzamiento en Meta lo hace Zak. Detalle en [[proyecto_publicidad_pagada]].
+- **Anuncios pagados: el Espejo de la noche sale primero** (`Escaner Vibracional/Publicidad/03 Espejo 9x16.mp4`, decidido
+  el 2026-10-03; el segundo Espejo se descartó). Píxel 1639470941182641 activo en Motor → Campaña y dominio verificado.
+  México 21-55, 100 MXN/día × 7, SOLO Instagram. En esta cuenta Ads Manager fuerza ubicaciones automáticas con
+  Clientes potenciales, Ventas y Tráfico, así que se lanza como promoción del Reel desde la app de Instagram
+  (@zakcero, la hace Zak; pasos al final de `Prompts para Grok.md`) y el bot solo reporta. Al 2026-10-04 nada gastando. Después: Decodificador o reel. Pasos en `Escaner Vibracional/Publicidad/Prompts para Grok.md`;
+  detalle en [[proyecto_publicidad_pagada]].
 - **Pipedream Workflows se apaga el 2027-03-31** (borra todo el 2027-04-30): mudar sus 3 flujos de correo vivos
   (bienvenidas, Sello del Primer Ciclo y padrón con sus bajas) a funciones de Supabase. Zak: «luego lo enlazamos»;
   falta el cuándo. Trampas y plan en [[pendiente_migrar_pipedream]].
@@ -552,7 +552,7 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v59 (2026-10-03)
+## 🜂 Protocolo de Cierre de Sesión · v60 (2026-10-04)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -700,6 +700,8 @@ memorias.
 - **0-terquinquagies** · Una tarea en segundo plano muere a los 30 min: lo largo se parte en tramos que escriben su avance y se reanudan desde ahí.
 - **0-quaterquinquagies** · Lo que el lienzo dibuja (alcance, objetivo, estado) sale de las reglas: si el dibujo miente, el usuario reporta un error que no existe.
 - **0-quinquinquagies** · Una copia del código en otra carpeta no es una función viva: antes de portar, lee el encabezado de quien la monta.
+- **0-sexquinquagies** · Lo que entrega un ayudante en segundo plano no se toca mientras trabaja: para probar sin él, una bandera o una copia, nunca mover su archivo.
+- **0-septquinquagies** · Lo que se iguala se mide donde suena: voces igualadas por archivo quedaron 1.6 dB distintas en la mezcla; se miden en su ventana y se corrigen ahí.
 
 ### Paso 1 — Test de continuidad
 
@@ -841,11 +843,42 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v59 (2026-10-03). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v60 (2026-10-04). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
+
+#### 2026-10-04 · TRÁILER DE NAVEGANTE PARA STEAM: 94 SEGUNDOS CON EL MOTOR REAL Y SU SEGUNDA PASADA
+
+- ✅ **Resuelto:** **tráiler horizontal de Navegante de la Red** (16:9, 94 s a 60 cuadros, estilo Steam) en
+  `Ludus Cero/Navegante/Trailer/`, pintado cuadro a cuadro con el motor real y la interfaz del juego: el abismo y la voz
+  de la Red, el latido que despierta la Red, SINTONIZA · INTEGRA · VIAJA, Sinfonía con PERFECTO y combo, el Código y sus
+  portales, el Super Jump en cámara lenta sobre la caída de la música, el Mapa, las cuatro regiones, los cuatro
+  guardianes, la evolución, la Red que despierta, el título y «Empieza gratis» · **segunda pasada con lo que pidió
+  Zak**: narrador más grave (Miguel), el Nodo Madre con otra voz (Regina), las 13 líneas al mismo volumen medido en su
+  lugar, la música que ya no se corta bajo la voz, letreros con la tipografía del logo y un sonido por letrero, la
+  canción REAL de la Membrana 2 en «Cada membrana es una canción», un cierre con broche de oro, y los hilos de la Red que
+  ya no se salen de los nodos.
+- 📁 **Archivos:** `Ludus Cero/Navegante/Trailer/` (maestro para Steam, ligero 720p de 34 MB, portada) y su estudio
+  `estudio/` (`CONTRATO.md`, `motor/parchar.mjs` v1.1, `comun.js` v1.2, `hud.js` v2.0, `tipo.js` v2.0, `letrero.js` v1.0,
+  `cuadro.js` v1.3, `render.mjs` v1.2, `mezclar.py` v1.8, `armar.sh` v1.1, 23 tomas en `tomas/`, la canción del juego en
+  `sinfonia/`) · Navegante: `Docs/BITACORA.md` y `Docs/PROXIMA_SALA.md`.
+- ⏳ **Pendiente:** el MISMO error de los hilos vive en el juego (`FS_HILO` de `Code/NaveganteRedViva.ts`): diagnosticado
+  y con su arreglo probado en `Ludus Cero/Navegante/Docs/PROXIMA_SALA.md`.
+- 💡 **Decisiones:** 16:9 1920×1080 a 60 (el formato de Steam) · la tarjeta final dice «Empieza gratis ·
+  play.redsolarviva.com» (tutorial y Membrana 1 libres; si llega a Steam solo cambia `tomas/s23_final.js`) · narrador
+  grave de tráiler y una voz distinta por personaje · los letreros llevan la tipografía del logo (Orbitron) y el
+  filamento de la Red · donde la voz habla de la música del juego, suena la del juego.
+- 🔧 **Patrones nuevos:** tráiler pintado con el motor del juego (copia parchada con cámara, render por CDP en paralelo
+  y una bitácora de eventos que pone cada sonido en su cuadro) · ayudantes por grupo de tomas con contrato y una toma de
+  ejemplo · música de ElevenLabs con un trozo por acto y su compás medido · la música se aparta solo en la banda de la
+  voz (+6 dB) y las voces se igualan en su lugar · en ffmpeg 8 cada etapa va a su archivo. Detalle en
+  [[proyecto_trailer_navegante]] y [[feedback_trailers_juego]].
+- 🧬 **Versión del sistema:** estudio del tráiler (arriba) · protocolo v60.
+- 🔮 **Cómo arrancar la próxima Sala de Comando:** abrir la sala en la carpeta `Ludus Cero/Navegante` y pegar el encargo
+  de `Docs/PROXIMA_SALA.md`: primero llevar al juego el arreglo de las puntas de los hilos (ya diagnosticado), luego lo
+  que Zak sienta al jugar.
 
 #### 2026-10-03 · III · TERRA CRISTAL PIXEL CON SU ARTE SELLADO Y LUDUS CERO EN LA RED QUE DESCIENDE
 
@@ -874,24 +907,6 @@ página: el maestro crece de a una línea por lección.
 
 #### 2026-10-03 · II · LUDUS CERO: LÚCIDO NACE, NAVEGANTE EN RED VIVA, EL HUB DE CASA DE JUEGOS Y LOS RUMBOS
 
-- ✅ **Resuelto:** **juego pixel** (cinco propuestas vivas en https://claude.ai/artifact/UmATZhiD9nigZhy3LeUiiL): Zak
-  eligió **Lúcido**, que nació y quedó vivo en play.redsolarviva.com/lucido/ (v0.2) con dos pantallas (ancha para
-  computadora y Steam Deck, vertical para el celular) y app de iPhone · **Navegante de la Red con arte nuevo**: de tres
-  propuestas vivas Zak eligió **Red Viva** (motor WebGL2 propio, con sonido a tiempo); consola en vidrio de agua, el
-  avance del orden viejo de membranas acomodado al de hoy (el error de niveles salteados), el aura dorada de la medusa
-  que se dibujaba como cuadro, y una puntería que dice la verdad (la integrada es un nudo claro, el abanico mide el
-  alcance real y una mira marca lo que el pulso absorbe; Zak creía que no lo dejaba absorber) · **Ludus Cero** en
-  play.redsolarviva.com/simuladores con displays de casa de juegos (portada que respira, sello, avance en video al
-  pasar el cursor, JUGAR), portada nueva de Navegante pintada con su motor y avances de los tres juegos · botones del
-  juego y ventana de salir en Red Viva · **tres rumbos** para el siguiente nivel, en vivo
-  (https://claude.ai/artifact/QYiSUcTavJbMEqW16mwaam): Zak eligió **Sinfonía y Odisea**; Resonancia, descartada por
-  ahora · Navegante tiene casa propia en `Ludus Cero/Navegante/`.
-- 📁 **Archivos:** Code: `NaveganteDeLaRed.tsx` v3.3, `NaveganteRedViva.ts` v1.3 (nuevo), `SimuladoresHub.tsx` v2.0,
-  `RSV_SolarSimuladoresShell.tsx` v4.0 (da40b5c, a829e22, 1b1d525, aa1f255, cb24f39) · rsv-web: `public/ludus/`
-  (portada de Navegante, `*-avance.mp4` y sus pósters) y la reescritura de /lucido/ (8b59b27, 9c3aecf) · lucido:
-  a73d26b → bb0d152 (`herramientas/prueba.ts` v2.2 graba video) · `Ludus Cero/Navegante/` (CLAUDE.md, Docs y
-  herramientas) · `Ludus Cero/Propuestas pixel/` y `Ludus Cero/Propuestas Navegante/` (las propuestas de arte).
-- ⏳ **Pendiente:** en Pendientes vivos, Ludus Cero en celular y el precio del aviso de pago de Navegante.
 - 💡 **Decisiones:** Lúcido y Terra Cristal van a Steam; computadora primero, celular como segundo canal (sin comprar
   descargas con anuncios) · el Escáner NO lleva Navegante (2026-09-17, reiterado) · lo de Navegante va solo a `Code/`
   y sus salas se abren en `Ludus Cero/Navegante` · **Grok ya no se usa (Zak, 2026-10-03): todo con Claude Code, que
@@ -901,22 +916,6 @@ página: el maestro crece de a una línea por lección.
   `${VAR}`) · el host de Ludus en local con un proxy y `--host-resolver-rules` · cada juego con casa propia y su
   CLAUDE.md que excluye el maestro. Detalle en [[proyecto_navegante_arte]], [[proyecto_ludus_hub]] y
   [[proyecto_juego_pixel]].
-- 🧬 **Versión del sistema:** Navegante v3.3 · motor Red Viva v1.3 · hub v2.0 · shell v4.0 · Lúcido 0.2 · protocolo v59.
-- 🔮 **Cómo arrancar la próxima Sala de Comando:** para Navegante, abrir la sala en la carpeta `Ludus Cero/Navegante` y
-  pegar el prompt de `Docs/PROXIMA_SALA.md` (Sinfonía completa y publicada; luego Odisea). El comercial del Espejo
-  sigue en Pendientes vivos.
-
-#### 2026-10-03 · PUBLICIDAD: EL COMERCIAL DEL DECODIFICADOR, EL REEL EN VERSIÓN ANUNCIO, LA MEDICIÓN DEL MISMO DÍA Y EL AVISO DE PIPEDREAM
-
-- 💡 **Decisiones:** Decodificador antes que sueños («los que la han usado usan más el decodificador»); el Espejo es el
-  siguiente candidato porque puede atraer a más gente nueva · la música de los anuncios es real (ElevenLabs Music,
-  instrumental), no sintetizada en código · nada de momentos dramáticos largos · voces al mismo LUFS y sin eco · no
-  hizo falta tocar la app (una semana por video: lo que suba sobre la base es de ese video).
-- 🔧 **Patrones nuevos:** lecturas reales con el prompt de la función leído del código y el mismo modelo por
-  OpenRouter · pantalla de la app replicada en canvas y montada como secuencia en el teléfono 3D · Blender por tomas con
-  cuadros globales, reanudable por tramos · ElevenLabs Music: con `composition_plan` el texto de cada trozo SE CANTA;
-  `prompt` + `force_instrumental` y Scribe para confirmar que no canta · zonas que tapa un anuncio de Reels (arriba
-  14 %, abajo 35 %) · un velo oscuro llega hasta el borde. Detalle en [[feedback_anuncios_video]].
 - *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 *Las entradas anteriores viven en* `admin/CLAUDE_archivo_hasta_2026-08-04.md` (2026-04-18 → 2026-08-22) *y en*

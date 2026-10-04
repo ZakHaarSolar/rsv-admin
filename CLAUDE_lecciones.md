@@ -1387,7 +1387,42 @@ escrito en el encabezado de `SimuladoresShell.tsx` v1.19 («NAVEGANTE SALE DEL E
 Hermano del **0-duodevicies** (un «no hay nada» se confirma por otra vía) y del **0-quadragies** (un «no se puede»
 heredado caduca): las decisiones viejas también se verifican antes de construir encima o en contra.
 
+### Paso 0-sexquinquagies · Lo que entrega un ayudante en segundo plano no se toca mientras trabaja
+
+Mientras un ayudante (agente en segundo plano, workflow) escribe y verifica en una carpeta, sus archivos son suyos: no se
+mueven, no se renombran ni se borran, ni siquiera para una prueba rápida. Para probar «sin» su entrega se usa una
+bandera en tu herramienta (`--sin-sinfonia`) o una copia en otra ruta; si de todos modos tocaste algo, se restaura y se
+le avisa en vuelo (SendMessage) antes de que su verificación falle o regenere a ciegas.
+
+**Por qué.** El 2026-10-04, en el tráiler de Navegante, renombré `sinfonia/sinfonia_s07.wav` (la canción del juego que
+el ayudante acababa de escribir) para correr la mezcla sin ella; el ayudante seguía midiendo esa misma carpeta. Hubo que
+regresar el archivo y avisarle. Un mv de dos segundos puede tirar una verificación de veinte minutos o, peor, dejar
+una entrega que «pasó» sobre un archivo que ya no estaba.
+
+Hermano del **0-duoquadragies** (trabajo repartido: contrato por escrito y avisos en vuelo) y del **0-undevicies** (tu
+propia automatización puede deshacer lo que acabas de publicar).
+
+### Paso 0-septquinquagies · Lo que se iguala se mide donde suena
+
+Igualar el volumen por archivo no lo iguala en la mezcla: el silencio de cola, las respiraciones y la ventana de medida
+cambian el número. Lo que el usuario oye es cada línea en su lugar, así que se mide ahí (EBU R128 en la ventana de la
+línea dentro del video) y se corrige ahí, en dos pasadas, hasta que el rango quede en décimas. Igual con lo que la
+rodea: si la música compite distinto en cada parte, la voz se deja a un margen fijo de lo que la tapa (la banda donde se
+entienden las palabras), no a un volumen fijo.
+
+**Por qué.** El 2026-10-04 Zak pidió «asegúrate que todas las voces estén al mismo nivel». Normalizadas por archivo, las
+13 líneas medían igual en su archivo y quedaban 1.6 dB distintas en el tráiler; medidas y corregidas en su ventana
+quedaron en 0.00 dB. Y en el clímax la voz, aun pareja, se oía más chica: la música le ganaba 8 dB en su banda.
+
+Hermano del **0-quaterquadragies** (lo que no puedes percibir se mide con un instrumento que sí) y del
+**0-quindecies** (la métrica puede estar hecha a la medida del diseño viejo: mide lo que la persona percibe).
+
 ### Changelog del protocolo
+
+- **v60 (2026-10-04):** dos lecciones de la sala del tráiler de Navegante para Steam. **0-sexquinquagies**: lo que
+  entrega un ayudante en segundo plano no se toca mientras trabaja; para probar sin él, una bandera o una copia.
+  **0-septquinquagies**: lo que se iguala se mide donde suena; las voces se igualan en su ventana del video y quedan a un
+  margen fijo de lo que las tapa. Y la próxima sala de Navegante arranca con el arreglo de las puntas de los hilos.
 
 - **v59 (2026-10-03):** dos lecciones de la sala de Ludus Cero y Navegante (Lúcido, Red Viva, el hub de casa de juegos
   y los rumbos). **0-quaterquinquagies**: lo que el lienzo dibuja sale de las reglas; si el dibujo miente, el usuario

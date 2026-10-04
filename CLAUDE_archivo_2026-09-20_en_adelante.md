@@ -4,6 +4,37 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-03 · II · LUDUS CERO: LÚCIDO NACE, NAVEGANTE EN RED VIVA, EL HUB DE CASA DE JUEGOS Y LOS RUMBOS
+
+- ✅ **Resuelto:** **juego pixel** (cinco propuestas vivas en https://claude.ai/artifact/UmATZhiD9nigZhy3LeUiiL): Zak
+  eligió **Lúcido**, que nació y quedó vivo en play.redsolarviva.com/lucido/ (v0.2) con dos pantallas (ancha para
+  computadora y Steam Deck, vertical para el celular) y app de iPhone · **Navegante de la Red con arte nuevo**: de tres
+  propuestas vivas Zak eligió **Red Viva** (motor WebGL2 propio, con sonido a tiempo); consola en vidrio de agua, el
+  avance del orden viejo de membranas acomodado al de hoy (el error de niveles salteados), el aura dorada de la medusa
+  que se dibujaba como cuadro, y una puntería que dice la verdad (la integrada es un nudo claro, el abanico mide el
+  alcance real y una mira marca lo que el pulso absorbe; Zak creía que no lo dejaba absorber) · **Ludus Cero** en
+  play.redsolarviva.com/simuladores con displays de casa de juegos (portada que respira, sello, avance en video al
+  pasar el cursor, JUGAR), portada nueva de Navegante pintada con su motor y avances de los tres juegos · botones del
+  juego y ventana de salir en Red Viva · **tres rumbos** para el siguiente nivel, en vivo
+  (https://claude.ai/artifact/QYiSUcTavJbMEqW16mwaam): Zak eligió **Sinfonía y Odisea**; Resonancia, descartada por
+  ahora · Navegante tiene casa propia en `Ludus Cero/Navegante/`.
+- 📁 **Archivos:** Code: `NaveganteDeLaRed.tsx` v3.3, `NaveganteRedViva.ts` v1.3 (nuevo), `SimuladoresHub.tsx` v2.0,
+  `RSV_SolarSimuladoresShell.tsx` v4.0 (da40b5c, a829e22, 1b1d525, aa1f255, cb24f39) · rsv-web: `public/ludus/`
+  (portada de Navegante, `*-avance.mp4` y sus pósters) y la reescritura de /lucido/ (8b59b27, 9c3aecf) · lucido:
+  a73d26b → bb0d152 (`herramientas/prueba.ts` v2.2 graba video) · `Ludus Cero/Navegante/` (CLAUDE.md, Docs y
+  herramientas) · `Ludus Cero/Propuestas pixel/` y `Ludus Cero/Propuestas Navegante/` (las propuestas de arte).
+- ⏳ **Pendiente:** en Pendientes vivos, Ludus Cero en celular y el precio del aviso de pago de Navegante.
+- 💡 **Decisiones:** Lúcido y Terra Cristal van a Steam; computadora primero, celular como segundo canal (sin comprar
+  descargas con anuncios) · el Escáner NO lleva Navegante (2026-09-17, reiterado) · lo de Navegante va solo a `Code/`
+  y sus salas se abren en `Ludus Cero/Navegante` · **Grok ya no se usa (Zak, 2026-10-03): todo con Claude Code, que
+  vuelve a tender este archivo**.
+- 🔧 **Patrones nuevos:** portada y avance de un juego pintados con su propio motor (escena compuesta, cuadro a cuadro,
+  ffmpeg) · avance de Lúcido grabado con su bot (`prueba.ts video`) · láminas en movimiento con ffmpeg (en zsh siempre
+  `${VAR}`) · el host de Ludus en local con un proxy y `--host-resolver-rules` · cada juego con casa propia y su
+  CLAUDE.md que excluye el maestro. Detalle en [[proyecto_navegante_arte]], [[proyecto_ludus_hub]] y
+  [[proyecto_juego_pixel]].
+- 🧬 **Versión del sistema:** Navegante v3.3 · motor Red Viva v1.3 · hub v2.0 · shell v4.0 · Lúcido 0.2 · protocolo v59.
+
 #### 2026-10-03 · PUBLICIDAD: EL COMERCIAL DEL DECODIFICADOR, EL REEL EN VERSIÓN ANUNCIO, LA MEDICIÓN DEL MISMO DÍA Y EL AVISO DE PIPEDREAM
 
 - ✅ **Resuelto:** **Pipedream** avisó que Workflows se apaga el 2027-03-31: mapa de los 3 flujos vivos y plan de
