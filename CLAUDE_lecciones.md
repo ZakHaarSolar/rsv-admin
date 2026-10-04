@@ -1434,7 +1434,31 @@ Hermano del **0-tervicies** (un cierre comprueba que el recurso compartido siga 
 (tu propia automatización puede deshacer lo que acabas de hacer): lo que tus herramientas dejan corriendo también es
 tuyo.
 
+### Paso 0-undesexagies · Una prueba en la Mac de Zak no le quita el foco ni la pantalla
+
+Zak trabaja en su Mac mientras la sala corre. Ninguna prueba puede volverse la ventana activa ni ocupar su pantalla:
+una ventana nativa de prueba (WKWebView en Swift, un .app) se crea FUERA de la pantalla y sin activar la app
+(`setActivationPolicy(.prohibited)` o `.accessory`, nunca `activate(ignoringOtherApps:)` ni `makeKeyAndOrderFront`), y
+los eventos se le mandan directo a esa ventana (`sendEvent`). Si basta un navegador, se usa uno sin ventana
+(`banco/captura.mjs`). Nada de pantalla completa en pruebas: cambia de escritorio a Zak. Si de verdad algo tiene que
+aparecer en su pantalla, se avisa antes.
+
+**Por qué.** El 2026-10-04, para medir por qué el logo no sonaba en la app de la Mac, corrí sondas en Swift que se
+activaban y traían su ventana al frente. Zak estaba escribiendo: sus teclas caían en una ventana sin campo de texto y
+la Mac respondía con el «bonk» de error, varias veces, sin que él supiera de dónde venía. La segunda tanda de la misma
+sala (Escape y pantalla completa) se hizo con la ventana fuera de pantalla y sin activar, y midió lo mismo sin tocarle
+nada.
+
+Hermano del **0-duodesexagies** (un navegador sin ventana también suena) y del **0-tervicies** (un cierre comprueba que
+el recurso compartido siga siendo suyo): la Mac de Zak es el recurso compartido.
+
 ### Changelog del protocolo
+
+- **v62 (2026-10-04):** una lección de la sala de escritorio paso a paso (la Comunidad como herramienta, Escape que
+  cierra y el logo que suena en la Mac). **0-undesexagies**: una prueba en la Mac de Zak no le quita el foco ni la
+  pantalla; las ventanas de prueba nacen fuera de pantalla y sin activar, o se usa un navegador sin ventana. Y dos
+  herramientas que quedan para las siguientes salas de escritorio: el banco de pruebas (`escaner-app/banco/`, sesión y
+  servidor falsos) y la pila de Escape (`lib/pilaEscape`).
 
 - **v61 (2026-10-04):** una lección de la sala de Navegante (Sinfonía, Odisea, la constelación y Ludus Cero
   premium). **0-duodesexagies**: un navegador sin ventana también suena; toda prueba lo abre mudo y lo mata al salir,

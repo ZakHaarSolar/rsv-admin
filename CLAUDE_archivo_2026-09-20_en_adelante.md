@@ -4,6 +4,34 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-04 · TRÁILER DE NAVEGANTE PARA STEAM: 94 SEGUNDOS CON EL MOTOR REAL Y SU SEGUNDA PASADA
+
+- ✅ **Resuelto:** **tráiler horizontal de Navegante de la Red** (16:9, 94 s a 60 cuadros, estilo Steam) en
+  `Ludus Cero/Navegante/Trailer/`, pintado cuadro a cuadro con el motor real y la interfaz del juego: el abismo y la voz
+  de la Red, el latido que despierta la Red, SINTONIZA · INTEGRA · VIAJA, Sinfonía con PERFECTO y combo, el Código y sus
+  portales, el Super Jump en cámara lenta sobre la caída de la música, el Mapa, las cuatro regiones, los cuatro
+  guardianes, la evolución, la Red que despierta, el título y «Empieza gratis» · **segunda pasada con lo que pidió
+  Zak**: narrador más grave (Miguel), el Nodo Madre con otra voz (Regina), las 13 líneas al mismo volumen medido en su
+  lugar, la música que ya no se corta bajo la voz, letreros con la tipografía del logo y un sonido por letrero, la
+  canción REAL de la Membrana 2 en «Cada membrana es una canción», un cierre con broche de oro, y los hilos de la Red que
+  ya no se salen de los nodos.
+- 📁 **Archivos:** `Ludus Cero/Navegante/Trailer/` (maestro para Steam, ligero 720p de 34 MB, portada) y su estudio
+  `estudio/` (`CONTRATO.md`, `motor/parchar.mjs` v1.1, `comun.js` v1.2, `hud.js` v2.0, `tipo.js` v2.0, `letrero.js` v1.0,
+  `cuadro.js` v1.3, `render.mjs` v1.2, `mezclar.py` v1.9 (la tercera de cada nota sigue la armonía de su compás), `armar.sh` v1.1, 23 tomas en `tomas/`, la canción del juego en
+  `sinfonia/`) · Navegante: `Docs/BITACORA.md` y `Docs/PROXIMA_SALA.md`.
+- ⏳ **Pendiente:** ~~el MISMO error de los hilos vive en el juego (`FS_HILO` de `Code/NaveganteRedViva.ts`)~~
+  CERRADO en la · II (motor v1.6, `FS_ARISTA`: cada hilo nace y muere en el borde de sus células).
+- 💡 **Decisiones:** 16:9 1920×1080 a 60 (el formato de Steam) · la tarjeta final dice «Empieza gratis ·
+  play.redsolarviva.com» (tutorial y Membrana 1 libres; si llega a Steam solo cambia `tomas/s23_final.js`) · narrador
+  grave de tráiler y una voz distinta por personaje · los letreros llevan la tipografía del logo (Orbitron) y el
+  filamento de la Red · donde la voz habla de la música del juego, suena la del juego.
+- 🔧 **Patrones nuevos:** tráiler pintado con el motor del juego (copia parchada con cámara, render por CDP en paralelo
+  y una bitácora de eventos que pone cada sonido en su cuadro) · ayudantes por grupo de tomas con contrato y una toma de
+  ejemplo · música de ElevenLabs con un trozo por acto y su compás medido · la música se aparta solo en la banda de la
+  voz (+6 dB) y las voces se igualan en su lugar · en ffmpeg 8 cada etapa va a su archivo. Detalle en
+  [[proyecto_trailer_navegante]] y [[feedback_trailers_juego]].
+- 🧬 **Versión del sistema:** estudio del tráiler (arriba) · protocolo v60.
+
 #### 2026-10-03 · III · TERRA CRISTAL PIXEL CON SU ARTE SELLADO Y LUDUS CERO EN LA RED QUE DESCIENDE
 
 - ✅ **Resuelto:** **Terra Cristal Pixel rehecho entero con el arte sellado** (ambiente pintado con luz de cine, la
