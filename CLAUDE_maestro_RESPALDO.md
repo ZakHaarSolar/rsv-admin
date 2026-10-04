@@ -448,6 +448,7 @@ proyecto guarde lo suyo en SU carpeta y que la sala se abra ahí dentro.
 | Zak Cero | `zakcero/CLAUDE.md` — pendiente | abrir `zakcero` |
 | **Kal'El** (somacero.com) | `kalel/CLAUDE.md` ✅ hecho (2026-09-24) | abrir la carpeta `kalel` |
 | **Navegante de la Red** (código en `Code/`) | `Ludus Cero/Navegante/CLAUDE.md` ✅ hecho (2026-10-03) | abrir `Ludus Cero/Navegante` |
+| **Lúcido** (play.redsolarviva.com/lucido) | `lucido/CLAUDE.md` ✅ hecho (2026-10-03) | abrir la carpeta `lucido` |
 
 Este archivo se queda como **índice del ecosistema**: quién es Zak, cómo se le habla, dónde vive cada proyecto,
 los destinos de publicación y el protocolo de cierre. Lo que sea de un solo proyecto baja a su carpeta.
@@ -565,7 +566,7 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v62 (2026-10-04)
+## 🜂 Protocolo de Cierre de Sesión · v63 (2026-10-04)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -717,6 +718,9 @@ memorias.
 - **0-septquinquagies** · Lo que se iguala se mide donde suena: voces igualadas por archivo quedaron 1.6 dB distintas en la mezcla; se miden en su ventana y se corrigen ahí.
 - **0-duodesexagies** · Un navegador sin ventana también suena: toda prueba lo abre mudo y lo mata al salir, aunque falle.
 - **0-undesexagies** · Una prueba en la Mac de Zak no le quita el foco ni la pantalla: ventana fuera de pantalla y sin activar, o un navegador sin ventana.
+- **0-sexagies** · Un defecto que no se explica se caza apagando una pieza a la vez y comparando, antes de teorizar.
+- **0-unsexagies** · Una caché cuya clave no dice de quién es el dato mezcla dueños: la clave lleva al dueño, o cada dueño su cajón.
+- **0-duosexagies** · Una propuesta se fotografía junto a «hoy» (pintado con el motor real) antes de enseñarla: si pierde, se mejora antes de entregar.
 
 ### Paso 1 — Test de continuidad
 
@@ -858,11 +862,37 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v62 (2026-10-04). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v63 (2026-10-04). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
+
+#### 2026-10-04 · IV · LÚCIDO: SIN MARCO, PASOS PROPIOS Y LA PÁGINA QUE SELLÓ LUZ DE CINE Y A TONALLI
+
+- ✅ **Resuelto:** **Lúcido llena la pantalla sin marco** (elige su tamaño en pixeles con la proporción de la ventana,
+  se reacomoda en vivo al entrar a pantalla completa y el primer gesto en computadora la pone) · **pasos propios** al
+  caminar (talón, planta y polvo; medidos abajo de las campanas) · **la tercera sala ya no brinca** (cada sala trae una
+  sola cosa nueva, medido con el bot) · **el túnel se mueve a los cuatro lados** · **el protagonista es hombre** en las
+  cuatro edades (el viejo con barba y bastón) · **la página de propuestas** (`lucido/propuestas/`): la sala en cinco
+  niveles de pixel y cuatro candidatos esculpidos en volumen, con ocho vistas, caminata en cuatro direcciones y arte HD
+  · respuesta a Zak: a qué se parece Lúcido, cinco propuestas para Steam y sus porcentajes
+  (`lucido/Docs/PROPUESTAS_STEAM.md`).
+- 📁 **Archivos:** lucido (3c6a376, aa527ce): `main.ts` v2.2, `escenas.ts` v2.2, `vida.ts` v2.3, `audio.ts` v1.1,
+  `reglas.ts` v2.2, `arte.ts` v1.1, `textos.ts` v2.2, `base.ts` v1.1, `lienzo.ts` v1.1, `prueba.ts` v2.3 (modo
+  dificultad) y `propuestas/` (nueva) · publicado en Vercel (`index-TbrOwI-l.js`).
+- 💡 **Decisiones (Zak):** nivel 3 «luz de cine» (640 x 360 con la luz a resolución completa, la receta de Terra
+  Cristal) · Tonalli de protagonista · selector con Tonalli, Teyolia y Temictli, Ollin fuera · el arte HD fue solo para
+  verlo · cuatro direcciones · orden: el nivel 3 y los personajes, la propuesta 3 y luego la 1 (las épocas, que le
+  encantaron); después la 2, la 4 y la 5 · las salas de Lúcido se abren en la carpeta `lucido`.
+- 🔧 **Patrones nuevos:** personajes esculpidos con campos de distancia que dan a la vez el pixel de cada nivel (contorno
+  del color de cada parte y línea donde algo pasa por delante), las ocho vistas, la caminata y el arte HD · un
+  comparador honesto pinta «hoy» con el motor real · la curva de dificultad se mide por sala con el bot
+  (`prueba.ts dificultad`) · el volumen de un sonido nuevo se mide contra lo aprobado con OfflineAudioContext · fotos por
+  sección (una página completa con muchos lienzos de WebGL se atora). Detalle en [[proyecto_juego_pixel]].
+- 🧬 **Versión del sistema:** Lúcido 0.2 (sin marco, pasos) · protocolo v63.
+- 🔮 **Cómo arrancar la próxima Sala de Comando de Lúcido:** abrir la carpeta `lucido` y pegar el prompt de
+  `lucido/Docs/PROXIMA_SALA.md`.
 
 #### 2026-10-04 · III · ESCRITORIO PASO A PASO: LA COMUNIDAD COMO HERRAMIENTA, ESCAPE QUE CIERRA Y EL LOGO QUE SUENA
 
@@ -896,37 +926,11 @@ página: el maestro crece de a una línea por lección.
   horizontal) mueve la burbuja directo en la página, sin renders. Detalle en [[proyecto_escritorio_paso_a_paso]] y
   [[feedback_ventanas_de_prueba_mac]].
 - 🧬 **Versión del sistema:** app de la Mac 1.1.49 · iPhone con el código del día (instalado) · protocolo v62.
-- 🔮 **Cómo arrancar la próxima Sala de Comando:** abrir la sala en `escaner-app` y elegir con Zak la siguiente
-  pantalla de escritorio (Sendero de Luz, Holoteca o Mi Núcleo); llevarla a la gramática de `ComunidadEscritorio.tsx`,
-  con Escape que la cierre por la pila, y revisarla en el banco (`banco-escritorio`, `?capa=sendero`) a 1728, 1440,
-  1280 y 880 de ancho, oscuro y claro, antes de compilar.
+- 🧭 **Su arranque** (la siguiente pantalla de escritorio, el banco y los anchos a revisar) vive en
+  [[proyecto_escritorio_paso_a_paso]]: se movió ahí al cerrar la sala de Lúcido, porque solo la sala más reciente lleva 🔮.
 
 #### 2026-10-04 · II · NAVEGANTE: SINFONÍA, ODISEA, LA CONSTELACIÓN Y LUDUS CERO PREMIUM CON EL TRÁILER
 
-- ✅ **Resuelto:** **Sinfonía** (cada membrana es una canción: se dispara en el pulso, PERFECTO o BIEN, combo, capas que
-  entran, rango y mejor rango en la nube) y **Odisea** (el Mapa de la Red, cuatro regiones con su regla y su voz,
-  guardianes con barra de vida, una medusa que evoluciona) vivos en play.redsolarviva.com/simuladores · **la Red que se
-  deshace**: lo absorbido se suelta en hebras, los hilos van de borde a borde (el error que vio la sala del tráiler) y
-  la Red ya no late en cada pulso (por quien es sensible a los destellos) · **la constelación**: sin marco, se aleja
-  desde la membrana al volver y se acerca al entrar, controles que se apagan con el mouse quieto, bri-pip y rojo en lo
-  cerrado, una secuencia al elegir · **la casa LUDUS CERO** solo en la constelación, con su ventana nueva · **ganar
-  suena a «la Red integrada»** (síntesis propia, sin créditos) · **guardianes por pasos** · el Bosque de Corrientes
-  orgánico · sin tonalidad ni tempo en pantalla · **Ludus Cero premium**: el banner abre el juego, JUGAR de vidrio con
-  su orbe, filos finos, menos espacio arriba del título y la estación de Navegante con el tráiler (modo cine) y seis
-  tomas nuevas · **(la sala siguió tras el cierre)** la **tarjeta de victoria premium** · **cinco propuestas para el
-  siguiente nivel**, jugables con el motor y la música del juego y con sus probabilidades en Steam
-  (https://claude.ai/artifact/34QN9ReoibLFmLwNWyDcnm) · **el storyboard del universo** tipo Spore, con Navegante como
-  primera de cinco etapas (https://claude.ai/artifact/Ws1SjUdADGemPZrUVYsmH8).
-- 📁 **Archivos:** Code (aa1337f, af3d758, 9b0c264, 8dca19c, 55de5b5): `NaveganteDeLaRed.tsx` v3.8, `NaveganteRedViva.ts` v1.7,
-  `NaveganteMusica.ts` v1.2, `NaveganteOdisea.ts` v1.2, `NaveganteMapa.tsx` v1.2, `SimuladoresHub.tsx` v3.2,
-  `RSV_SolarSimuladoresShell.tsx` v4.3 · rsv-web 038c7a7 (el tráiler en 1080p y 720p, seis tomas) · `Ludus
-  Cero/Navegante/` (CLAUDE.md, bitácora, próxima sala; herramientas nuevas `hub-ludus.mjs`, `estudio-red-viva.mjs` y
-  `lote-produccion.sh`; las páginas `siguiente-nivel/` y `storyboard/`).
-- 🗄️ **Migraciones SQL aplicadas:** `20261003_navegante_sinfonia.sql` (el mejor rango, precisión y puntos en
-  `navegante_progress`); Zak la pegó y quedó marcada con ✅ (admin ae24d39).
-- ⏳ **Pendiente:** que Zak elija qué propuestas construir y si el storyboard es el rumbo (está en Pendientes vivos).
-  Su próxima sala se abre en `Ludus Cero/Navegante` con el encargo de `Docs/PROXIMA_SALA.md`.
-  Ludus Cero en celular y el aviso de 599 siguen en Pendientes vivos.
 - 💡 **Decisiones:** Resonancia descartada por ahora · la Red no late en cada pulso · del tema en pantalla solo el
   nombre (a nadie le interesa si está en Do o en Re) · VOLVER no vive dentro de las membranas: la casa LUDUS CERO solo
   en la constelación · los guardianes no se regalan abiertos · el banner abre el juego y solo CONOCER baja · los
@@ -937,8 +941,7 @@ página: el maestro crece de a una línea por lección.
   pintadas con el motor real (`estudio-red-viva.mjs`, 3840 como máximo) · un lote de bots contra producción en dos
   carriles · todo bot con `--mute-audio` y `process.on("exit")`. Detalle en [[proyecto_navegante_arte]] y
   [[proyecto_ludus_hub]].
-- 🧬 **Versión del sistema:** Navegante v3.8 (motor v1.7, música v1.2, Odisea v1.2, mapa v1.2) · hub v3.2 · shell v4.3
-  · protocolo v61.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 #### 2026-10-04 · TRÁILER DE NAVEGANTE PARA STEAM: 94 SEGUNDOS CON EL MOTOR REAL Y SU SEGUNDA PASADA
 
