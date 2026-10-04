@@ -1,3 +1,8 @@
+// Red Solar Viva · user-action v1.50 — ELIMINAR PARA MÍ en el chat de la Comunidad:
+// rutea chat_ocultar_mensaje (esconde un mensaje solo para quien lo pide; valida
+// participante o miembro) y chat_get_ocultos (la lista que la app filtra al
+// pintar). El id verificado se inyecta como siempre. Requiere
+// 20261004_chat_ocultar_para_mi.
 // Red Solar Viva · user-action v1.49 — GRUPOS + NOTAS COMPARTIDAS: rutea las
 // 17 RPC de grupos (grp_*), el selector de invitar (rsv_get_my_contacts /
 // rsv_search_tripulantes) y las 6 de notas compartidas (bitacora_*). El id
@@ -240,6 +245,11 @@ const USER_RPCS: Record<string, string> = {
     // Corazón del chat (doble toque, reversible): valida participante + que el
     // mensaje sea DEL OTRO server-side; el id del que reacciona lo inyecta el gateway.
     dm_react_message: "p_clerk_user_id",
+    // v1.50 — ELIMINAR PARA MÍ (clic derecho en la computadora): esconde un
+    // mensaje solo para quien lo pide, en dm o en grupo (p_tipo 'dm' | 'grp',
+    // p_message_id en params). La RPC valida participante / miembro.
+    chat_ocultar_mensaje: "p_clerk_user_id",
+    chat_get_ocultos: "p_clerk_user_id",
     // Stickers (Parte 3): catálogo member-aware de paquetes de marca. Los packs
     // premium se desbloquean con Sintonía/Inmersión (locked=true si no es miembro);
     // el muro real lo aplica dm_send_message server-side. id inyectado por el gateway.
