@@ -1,3 +1,8 @@
+// Red Solar Viva · user-action v1.51 — TERRA CRISTAL (Ludus Cero): rutea la partida del
+// juego (get_terra_cristal_partida / save_terra_cristal_partida / clear_terra_cristal_partida).
+// UNA partida por cuenta: el documento del juego (avatar sellado, fotones, lo ganado);
+// el juego guarda primero en el aparato y copia aquí con sesión. El id verificado se
+// inyecta como siempre. Requiere 20261006_terra_cristal_partida.
 // Red Solar Viva · user-action v1.50 — ELIMINAR PARA MÍ en el chat de la Comunidad:
 // rutea chat_ocultar_mensaje (esconde un mensaje solo para quien lo pide; valida
 // participante o miembro) y chat_get_ocultos (la lista que la app filtra al
@@ -189,6 +194,10 @@ const USER_RPCS: Record<string, string> = {
     get_navegante_progress: "p_clerk_id",
     save_navegante_level: "p_clerk_id",
     clear_navegante_progress: "p_clerk_id",
+    // v1.51 — Terra Cristal (Ludus Cero): la partida del juego, UNA por cuenta.
+    get_terra_cristal_partida: "p_clerk_id",
+    save_terra_cristal_partida: "p_clerk_id",
+    clear_terra_cristal_partida: "p_clerk_id",
     // Barrido profundo 2026-06-13: citas 1:1 propias. get_citas_1to1_de_tripulante
     // filtraba por clerk_user_id O email AMBOS forjables → cualquiera con la anon
     // key leía el zoom_join_url + zoom_password + email + intención de otro.
