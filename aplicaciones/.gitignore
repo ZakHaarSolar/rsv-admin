@@ -1,0 +1,2 @@
+# El entorno de Python del generador de CV se reinstala con pip (reportlab, pypdf)
+.venv/
