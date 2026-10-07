@@ -39,7 +39,7 @@ First name: Diego
 Last name: Soto
 Full name: Diego Soto
 Role / title: Founder & CEO
-Work email: zak@redsolarviva.com (if the field is already filled from my Console account, keep what is there and tell me which address it shows)
+Work email: zakhaar@redsolarviva.com (if the field is already filled from my Console account, keep what is there and tell me which address it shows)
 Secondary or personal email (only if a separate optional field asks for one): zakhaarsol@pm.me
 Company name: Red Solar Viva
 Product name: Escáner Vibracional
