@@ -441,7 +441,7 @@ proyecto guarde lo suyo en SU carpeta y que la sala se abra ahí dentro.
 
 | Proyecto | Su archivo | Cómo abrir la sala |
 |---|---|---|
-| **Terra Cristal** | `terra-cristal/CLAUDE.md` ✅ hecho | abrir la carpeta `terra-cristal` |
+| **Terra Cristal Pixel 3** (el juego desde el 2026-10-05; el de Unity, Pixel y Pixel 2, descartados sin borrar) | `terra-cristal-pixel3/CLAUDE.md` ✅ hecho | abrir `terra-cristal-pixel3` (o `terra-cristal`, donde vive la memoria) |
 | Escáner Vibracional (app) | `escaner-app/CLAUDE.md` ✅ hecho (2026-09-25) | abrir `escaner-app` |
 | Web (código en `Code/`) | `Code/CLAUDE.md` ✅ hecho (2026-09-25) | abrir `Code` |
 | Web (rsv-web) | `rsv-web/CLAUDE.md` — pendiente | abrir `rsv-web` |
@@ -449,6 +449,7 @@ proyecto guarde lo suyo en SU carpeta y que la sala se abra ahí dentro.
 | **Kal'El** (somacero.com) | `kalel/CLAUDE.md` ✅ hecho (2026-09-24) | abrir la carpeta `kalel` |
 | **Navegante de la Red** (código en `Code/`) | `Ludus Cero/Navegante/CLAUDE.md` ✅ hecho (2026-10-03) | abrir `Ludus Cero/Navegante` |
 | **Lúcido** (play.redsolarviva.com/lucido) | `Ludus Cero/lucido/CLAUDE.md` ✅ hecho (2026-10-03) | abrir `Ludus Cero/lucido` |
+| **Fotón Cero** (fotoncero.com, la sala de proyección del estudio) | `fotoncero/CLAUDE.md` ✅ hecho (2026-10-07) | abrir `fotoncero` |
 
 Este archivo se queda como **índice del ecosistema**: quién es Zak, cómo se le habla, dónde vive cada proyecto,
 los destinos de publicación y el protocolo de cierre. Lo que sea de un solo proyecto baja a su carpeta.
@@ -484,6 +485,9 @@ Detalle en [[referencia_version_en_tienda]].
 (el archivo que se carga al abrir una sala DENTRO de esa carpeta) y en `terra-cristal/Docs/`. Aquí solo queda lo
 que necesita una decisión de Zak o una mano suya.
 
+- **Sellado el 2026-10-05 · el juego es Terra Cristal Pixel 3** (`terra-cristal-pixel3/`, play.redsolarviva.com/terra-cristal-pixel3/):
+  Zak: «ahora sí hemos encontrado el norte de arte» (Shining Force 2 con el acabado de la C). El de Unity, Pixel y Pixel 2
+  quedan descartados, sin borrarlos. Su estado y el prompt de la próxima sala: `terra-cristal-pixel3/Docs/PROXIMA_SALA.md`.
 - **Sellado el 2026-09-20 · precio:** **249 MXN el juego completo** (unos 14.99 USD), compra única, con el modo en
   línea incluido y sin suscripción. Sin precio de fundador (la idea era un descuento de lanzamiento para quien
   comprara antes del estreno; se descarta: un solo precio, más limpio).
@@ -494,6 +498,10 @@ que necesita una decisión de Zak o una mano suya.
   tirando los dados → plaza común → cooperativo. **Sin construir, falta decidir cuándo.**
 - **Guardado real:** primero en el aparato y sincronizado con la cuenta del Escáner; un documento con versión y 3
   ranuras, que mañana sirve igual para Steam Cloud. Diseño en la Biblia §6. **Sin construir.**
+- **Consulta respondida el 2026-10-05 · qué hace posible el arte en código** (estilo Shining Force): 15 propuestas
+  (dos miradas Clásico y Cristal, sonido FM de Mega Drive en código, equipo visible, transición gradual, terreno que
+  recuerda, mapas enormes, editor con Steam Workshop…), su orden y sus porcentajes en `terra-cristal/Docs/PROPUESTAS_STEAM.md`.
+  Falta que Zak elija cuáles.
 
 ### 🟢 Kal'El · lo que sigue abierto
 
@@ -509,6 +517,14 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 
 ### 🔵 Escáner · lo que necesita tu decisión
 
+- **Enviar la solicitud a Claude for Startups** (textos y prompt para Grok entregados el 2026-10-07, en
+  `admin/aplicaciones/2026-10 Claude for Startups/aplicacion.md`). La solicitud vive en Claude Console y exige un correo
+  del mismo dominio que el sitio: escanervibracional.com no tiene correo, así que se aplica como Red Solar Viva con
+  redsolarviva.com y una dirección @redsolarviva.com. Falta que Zak confirme esa dirección, el equipo de 2 y la fundación
+  2025, entre a Console con ella y dé el SUBMIT. ⚠️ Nada de Console por el bot de Grok: entrar con zakhaarsol@pm.me
+  desde su navegador remoto creó una cuenta nueva que quedó congelada al instante (2026-10-07, revisión pedida).
+  Zak entra y llena el formulario desde su propio Chrome. Da 1,000 USD en créditos (caducan a los 6 meses), un año de Team y
+  ofertas de socios (ElevenLabs incluida).
 - **Que subir cambios del Escáner a GitHub no publique la web por su cuenta** (propuesta del 2026-09-25, falta el
   sí de Zak). Hoy cada push, aunque solo toque documentos, dispara un despliegue automático que deja el instalador
   de la Mac en 404 hasta volver a correr `./publicar-escritorio.sh` (pasó dos veces el 2026-09-25). La cura es una
@@ -546,6 +562,10 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   Lúcido y Navegante se ve en computadora y tableta. Falta decidir si en celular aparece Ludus Cero con sus juegos.
 - **El aviso de pago de Navegante en la web dice 599 MXN/mes** y Sintonía Solar cuesta 499 (`Code/EV_Freemium.tsx`).
   Falta el sí de Zak para cambiarlo.
+- **Consulta respondida el 2026-10-05 · el juego con más probabilidad de éxito global:** SONORA (cartas donde tu mano es
+  una canción) quedó DESCARTADA por Zak («feo y aburrido»). Segunda propuesta: TERRA VIVA, mundo abierto en pixel para
+  explorar, construir y pelear en cooperativo en línea, en el universo de Terra Cristal (`Ludus Cero/PROPUESTA_GANADORA.md`).
+  Falta su sí.
 - **Consulta respondida el 2026-10-04 · el siguiente nivel de Navegante:** cinco propuestas jugables (la Inmersión,
   tu canción, guardianes que cantan, tu arrecife y dos medusas) en https://claude.ai/artifact/34QN9ReoibLFmLwNWyDcnm,
   con su probabilidad: éxito en Steam (1,000 reseñas) 6 % hoy y 18 % con las cinco más inglés, control, Steam Deck,
@@ -557,6 +577,19 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   está en cero. El sonido de ganar de Navegante se hizo con la síntesis del juego (en la tonalidad de cada canción,
   sin créditos); ElevenLabs queda para voces y efectos sueltos.
 
+### 🟤 Fotón Cero · lo que necesita tu mano
+
+🜂 **Su estado y su bitácora viven en `fotoncero/CLAUDE.md` y `fotoncero/Docs/BITACORA.md`.** Aquí solo lo que necesita
+la mano de Zak:
+
+- **Consulta respondida el 2026-10-07 · por qué Everything You Dream suena opaco:** el video que salió de DaVinci lleva en
+  los dos lados el canal IZQUIERDO de la canción, 3 dB más bajo (la pista o el clip están en mono); el derecho nunca
+  entra, y los efectos de la nave suenan al nivel de la música (0:18, 0:35, 0:45 a 0:58, 1:31, 2:19). fotoncero.com ya
+  suena con el master estéreo (versión 2). **Falta re-exportar para YouTube:** Clip Attributes → Audio → Stereo con
+  Embedded Channel 1 y 2 (también sobre el clip en la línea de tiempo), Change Track Type To → Stereo, revisar que L y R
+  se muevan distinto, efectos 4 a 6 dB abajo con un corte bajo 80 Hz; en Deliver, Linear PCM 24 bits o AAC 320, 48 kHz,
+  Bus 1 (Stereo) y video a 20,000 Kb/s. Ese archivo entra a la sala como versión 3.
+
 ### 🟡 Higiene, cuando toque
 
 - **Arquitectura de nombres** (2026-08-31, propuesta entregada, falta el sí de Zak): Zak Cero=calle, Zak'Haar=firma
@@ -566,7 +599,7 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v63 (2026-10-04)
+## 🜂 Protocolo de Cierre de Sesión · v64 (2026-10-07)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -721,6 +754,9 @@ memorias.
 - **0-sexagies** · Un defecto que no se explica se caza apagando una pieza a la vez y comparando, antes de teorizar.
 - **0-unsexagies** · Una caché cuya clave no dice de quién es el dato mezcla dueños: la clave lleva al dueño, o cada dueño su cajón.
 - **0-duosexagies** · Una propuesta se fotografía junto a «hoy» (pintado con el motor real) antes de enseñarla: si pierde, se mejora antes de entregar.
+- **0-tersexagies** · Un audio que suena distinto a su original se alinea contra él y se resuelve su mezcla por canales: los números dicen qué pasó y dejan repararlo sin re-exportar.
+- **0-quatersexagies** · Nunca máscara ni filtro sobre un video: en una tarjeta gráfica real parpadea en negro y el Chrome sin ventana no lo ve; los videos aparecen hasta su primer cuadro.
+- **0-quinsexagies** · Un bucle de video se cierra con el mismo estado: si la toma viaja, ida y vuelta (y más lento), nunca un fundido; empieza después de la transición anterior.
 
 ### Paso 1 — Test de continuidad
 
@@ -862,11 +898,53 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v63 (2026-10-04). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v64 (2026-10-07). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
+
+#### 2026-10-07 · FOTÓN CERO: SU SALA PROPIA, EL INSTRUMENTO QUE SUENA Y EL AUDIO QUE VOLVIÓ AL ESTÉREO
+
+- ✅ **Resuelto:** **fotoncero.com proyecta sus cinco obras en su sala propia**, desde R2 y sin YouTube (ignición con el
+  sello, la pantalla se abre desde una línea de luz, luz ambiente, miniaturas en la línea del tiempo, calidad que baja
+  sola, retomar y la siguiente con cuenta regresiva): **Everything You Dream** y **Harmonía · Códigos Aurora** en videos
+  musicales; **No vine aquí**, **Diálogo con el Reflejo Estelar** y **Sol que Respira** en Fragmentos del Sol; «El Eco
+  del Vacío» salió y la tercera luna queda oscura (PRÓXIMAMENTE) · cada obra y cada serie con su dirección, su tarjeta
+  para redes y sus datos de video para buscadores · **la portada es el astrolabio grande con «Desciende»** (sin placas)
+  y abajo esperan el estreno en visor de cámara, el índice, el motor de universos con una nota por anillo, la casa y las
+  dos puertas del taller (alianza y padrino, que escriben a Motor → Aliados) · **todo respira**: las lunas son bucles de
+  video (el sol de ida y vuelta, sin temblor), cada serie tiene su cielo y las ondas de Zak'Haar bailan con el espectro
+  real de la canción · **sonidos de ElevenLabs afinados en La 432** (engranes en las lunas, cristal al pasar, campana al
+  abrir una serie, soplo al cerrar, chispas al descender) con un solo interruptor que nace encendido · sin barra de
+  desplazamiento · **la página de videos musicales ya no parpadea en negro** · **Everything You Dream suena en estéreo**
+  en la web (versión 2) · Red Solar Viva: sin pestaña Fotón Cero, el planeta abre fotoncero.com, `/fotoncero`,
+  `/fragmentos` y `/fragmentosdelsol` redirigen, y **los planetas de Origen solo abren su tarjeta cuando la mano frena**.
+- 📁 **Archivos:** fotoncero (f45cedb a 572b9b4 y el del cierre): `index.html` v5.2, `main.ts` v5.2, `estilos.css` v5.2,
+  `sala.ts` v1.0, `sala.css` v1.1, `series.ts` v2.1, `descenso.ts` v1.1, `ondas.ts` v1.0, `sfx.ts` v1.0,
+  `vite.config.ts` v2.2, `herramientas/nueva-transmision.sh` v1.1, y `CLAUDE.md`, `.claude/settings.json` y
+  `Docs/BITACORA.md` (nuevos) · Code (9b24e05): `Origen.tsx` v5.31, `Domo.tsx` v5.12, `NavegadorEstacion.tsx` v4.26 ·
+  rsv-web (92ba610): `vercel.json` · admin: `CLAUDE_lecciones.md` (tres lecciones y protocolo v64).
+- 🔌 **Edge functions deployed:** `fotoncero-subida`, puente TEMPORAL que solo firmaba subidas a `FotonCero/` en R2;
+  desplegado y borrado dos veces (404 verificado). En R2 quedó `FotonCero/prueba/portada.jpg`, inofensivo.
+- ⏳ **Pendiente:** el re-export en estéreo de Everything You Dream (Pendientes vivos · Fotón Cero).
+- 💡 **Decisiones:** Fotón Cero vive en su propia casa y Red Solar Viva solo la señala · los videos van desde R2 en tres
+  calidades y una obra que cambia sube con nombre nuevo (`-vN`), para que la caché nunca sirva la vieja · sin
+  descripciones de episodio · la portada sin placas: manda el astrolabio · el sonido nace encendido y la sala de
+  proyección calla por dentro · las salas de Fotón Cero se abren en la carpeta `fotoncero`.
+- 🔧 **Patrones nuevos:** nunca máscara ni filtro CSS sobre un `<video>` (Chrome con tarjeta gráfica lo pinta por bloques
+  y parpadea en negro; el Chrome sin ventana no lo ve): penumbras como capa encima y el video aparece hasta pintar su
+  primer cuadro · bucles de ida y vuelta y más lentos cuando la toma se desplaza, arrancando después de la transición
+  anterior · la matriz de canales de un audio se mide por mínimos cuadrados contra el master alineado · efectos
+  decodificados fuera de línea (sin avisos) que despiertan con el primer gesto, afinados con análisis de frecuencias ·
+  intención antes de abrir una tarjeta (el cursor frena: 12 px por 100 ms o 420 ms quieto) · puente temporal de subida
+  a R2 que solo firma un prefijo y se borra al terminar · con `cleanUrls` el respaldo de la SPA va a `/index`. Lecciones
+  0-tersexagies, 0-quatersexagies y 0-quinsexagies; detalle en [[proyecto_foton_cero_sala]] y [[feedback_todo_vivo]].
+- 🧬 **Versión del sistema:** fotoncero.com con su sala propia, cinco obras y su sonido · protocolo v64.
+- 🔮 **Cómo arrancar la próxima Sala de Comando de Fotón Cero:** abrir la carpeta `fotoncero` (su `CLAUDE.md` se carga
+  solo) y leer `Docs/BITACORA.md`. Cuando Zak traiga el re-export de Everything You Dream: medir que el canal izquierdo
+  y el derecho sean distintos (correlación menor a 0.99), pasarlo por `herramientas/nueva-transmision.sh`, subir las
+  tres calidades a R2 con el sufijo `-v3` y poner `version: 3` en `src/series.ts`.
 
 #### 2026-10-04 · IV · LÚCIDO: SIN MARCO, PASOS PROPIOS Y LA PÁGINA QUE SELLÓ LUZ DE CINE Y A TONALLI
 
@@ -891,28 +969,11 @@ página: el maestro crece de a una línea por lección.
   (`prueba.ts dificultad`) · el volumen de un sonido nuevo se mide contra lo aprobado con OfflineAudioContext · fotos por
   sección (una página completa con muchos lienzos de WebGL se atora). Detalle en [[proyecto_juego_pixel]].
 - 🧬 **Versión del sistema:** Lúcido 0.2 (sin marco, pasos) · protocolo v63.
-- 🔮 **Cómo arrancar la próxima Sala de Comando de Lúcido:** abrir la carpeta `Ludus Cero/lucido` y pegar el prompt
-  de su `Docs/PROXIMA_SALA.md`.
+- 🧭 **Su arranque** vive en `Ludus Cero/lucido/Docs/PROXIMA_SALA.md` (abrir la carpeta `Ludus Cero/lucido` y pegar su
+  prompt); salió de aquí al cerrar la sala de Fotón Cero, porque solo la sala más reciente lleva 🔮.
 
 #### 2026-10-04 · III · ESCRITORIO PASO A PASO: LA COMUNIDAD COMO HERRAMIENTA, ESCAPE QUE CIERRA Y EL LOGO QUE SUENA
 
-- ✅ **Resuelto:** **el logo de apertura suena en la app de la Mac** (al abrir en pantalla completa la ventana nace
-  oculta un instante; el sello espera a verse para sonar y contar su reloj) · **la Comunidad de la computadora es un
-  panel de trabajo**: cabecera con regreso, título y pestañas con contador; bandeja lateral con buscador e invitaciones;
-  chat a todo lo ancho en una columna de 820 px con separadores de día, burbujas planas y la caja como un solo campo;
-  Explorar con filtros en columna y tarjetas sobrias · **clic derecho** en un mensaje: Responder, Copiar y Eliminar
-  para mí (guardado en la base, en todos sus aparatos) · **responder deslizando con dos dedos** en el trackpad ·
-  **sonido al enviar** (texto, sticker, foto y nota de voz; también en el teléfono) · **sin autocorrección** en la app
-  de la Mac · **Escape** cierra lo de más arriba (menú, ficha, hojas, visor, stickers, respuesta) y al final la
-  Comunidad, y en la app de la Mac nunca la saca de pantalla completa. El celular conserva su forma.
-- 📁 **Archivos:** escaner-app (14375f5, 28291a7): `ComunidadEscritorio.tsx` v1.1 (nuevo), `Comunidad.tsx` v1.24,
-  `Mensajes.tsx` v1.44, `MiNucleo.tsx` v6.88, `RitualDeLlegada.tsx` v3.4, `EscanerVibracional.tsx` v13.137,
-  `sensory.ts` v2.20, `desktopTauri.ts` v1.6, `main.tsx` v1.3, `lib/pilaEscape.ts` v1.0 (nuevo), `comu.es/en.ts` v1.7 y
-  el banco de pruebas `banco/` (nuevo) · admin 02ff22b.
-- 🗄️ **Migraciones SQL aplicadas:** `20261004_chat_ocultar_para_mi.sql` (tabla `chat_mensajes_ocultos`,
-  `chat_ocultar_mensaje`, `chat_get_ocultos`); Zak la pegó y se verificó que existen y que solo el portón las usa.
-- 🔌 **Edge functions deployed:** `user-action` v1.50 (rutea las dos de arriba).
-- ⏳ **Pendiente:** si el sonido al enviar se queda también en el teléfono (en Pendientes vivos).
 - 💡 **Decisiones:** la experiencia de escritorio se transforma pantalla por pantalla con la gramática de
   `ComunidadEscritorio.tsx` (hairlines, un solo acento para estado, sin degradados animados ni brackets, monogramas con
   iniciales) y el celular conserva su forma · Eliminar es «para mí», como WhatsApp, y vive en la base · Escape nunca
@@ -925,9 +986,7 @@ página: el maestro crece de a una línea por lección.
   ventana de la Mac nace oculta un instante: lo que se dispara al arrancar espera a verse · un gesto del trackpad (rueda
   horizontal) mueve la burbuja directo en la página, sin renders. Detalle en [[proyecto_escritorio_paso_a_paso]] y
   [[feedback_ventanas_de_prueba_mac]].
-- 🧬 **Versión del sistema:** app de la Mac 1.1.49 · iPhone con el código del día (instalado) · protocolo v62.
-- 🧭 **Su arranque** (la siguiente pantalla de escritorio, el banco y los anchos a revisar) vive en
-  [[proyecto_escritorio_paso_a_paso]]: se movió ahí al cerrar la sala de Lúcido, porque solo la sala más reciente lleva 🔮.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 #### 2026-10-04 · II · NAVEGANTE: SINFONÍA, ODISEA, LA CONSTELACIÓN Y LUDUS CERO PREMIUM CON EL TRÁILER
 
@@ -954,18 +1013,6 @@ página: el maestro crece de a una línea por lección.
   ejemplo · música de ElevenLabs con un trozo por acto y su compás medido · la música se aparta solo en la banda de la
   voz (+6 dB) y las voces se igualan en su lugar · en ffmpeg 8 cada etapa va a su archivo. Detalle en
   [[proyecto_trailer_navegante]] y [[feedback_trailers_juego]].
-- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
-
-#### 2026-10-03 · III · TERRA CRISTAL PIXEL CON SU ARTE SELLADO Y LUDUS CERO EN LA RED QUE DESCIENDE
-
-- 💡 **Decisiones:** en las páginas de juegos el arte va ENTERO, nunca recortado (los círculos de la primera ronda «no
-  dejan apreciar la magnificencia») y la página puede bajar para mostrar visuales y sinopsis (scroll vertical) · Terra
-  Cristal al centro de la constelación · Navegante va en violeta en el hub.
-- 🔧 **Patrones nuevos:** una página larga dentro de una ruta de pantalla completa de Domo scrollea por dentro (100dvh,
-  como `/privacy`) · propuestas de diseño en un lienzo con una página por ronda, probadas con el motor del lienzo en
-  Chrome sin ventana · el hub con el host de Ludus en local: build en carpeta aparte, servidor propio y
-  `--host-resolver-rules` · antes de publicar rsv-web se busca el texto del Consejo sin commit en el `CouncilApp-*.js`
-  vivo. Detalle en [[proyecto_ludus_hub]] y [[proyecto_juego_pixel]].
 - *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 *Las entradas anteriores viven en* `admin/CLAUDE_archivo_hasta_2026-08-04.md` (2026-04-18 → 2026-08-22) *y en*

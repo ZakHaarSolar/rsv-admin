@@ -1496,7 +1496,57 @@ volteó la comparación.
 Hermano del **0-quindecies** (la métrica puede estar hecha a la medida de lo viejo) y del **0-undecies** (el dato de
 prueba se parece al real en la dimensión que importa).
 
+### Paso 0-tersexagies · Un audio que suena distinto a su original se alinea contra él y se resuelve su mezcla
+
+Cuando una exportación (un video, una mezcla, un audio de anuncio) suena distinta a su fuente, no se adivina por el oído
+ni por bandas sueltas: se alinea contra la fuente (correlación de envolventes, luego al cuadro de muestra) y, en tramos
+limpios, se resuelve por mínimos cuadrados cada canal de salida como `a·izquierdo + b·derecho` del original. Los números
+exactos dicen qué pasó (un 0.708 es la ley de paneo de −3 dB; un cero es un canal perdido) y el residuo aísla lo que se
+agregó (efectos, otra pista). Con eso se repara sin volver a exportar: la fuente correcta más el residuo extraído.
+
+**Por qué.** El 2026-10-07 Everything You Dream sonaba opaco en fotoncero.com. Por bandas parecía un ecualizador (3 dB
+menos y más graves); la matriz de canales dijo la verdad en un minuto: los dos lados eran 0.708 × el canal IZQUIERDO del
+master (residuo de −48 a −68 dB sin efectos), el derecho nunca entraba y los efectos de la nave sonaban al nivel de la
+música. La web se reparó con el master estéreo más los efectos extraídos (0.999 contra el master en cada canal) mientras
+Zak re-exporta desde DaVinci.
+
+Hermano del **0-quaterquadragies** (lo que no se percibe se mide con un instrumento) y del **0-quinquagies** (un audio
+crudo no dice sus canales).
+
+### Paso 0-quatersexagies · Un video con máscara o filtro parpadea en una tarjeta gráfica real, y el Chrome sin ventana no lo ve
+
+Nunca `mask-image` ni `filter` sobre un `<video>`: los desvanecidos, las penumbras y los brillos van como capas encima, y
+un video se muestra hasta que pintó su primer cuadro (`requestVideoFrameCallback`). Cuando Zak reporta un defecto visual
+que la prueba sin ventana no reproduce, el primer sospechoso es la composición por tarjeta gráfica: el render que
+verifica (software) no es el que falla (Metal).
+
+**Por qué.** El 2026-10-07 la página de videos musicales de fotoncero.com se ponía negra por bloques y parpadeaba al
+pasar el cursor, solo en el Chrome de Zak; las capturas sin ventana salían perfectas. El cielo de la cabecera era un
+video con máscara y desenfoque a la vez, y las tarjetas se volvían opacas antes de tener imagen.
+
+Hermano del **0-nonies** (una verificación que no pudo correr no pasó) y del **0-tricies** (un efecto afinado para un
+motor puede tumbar al otro).
+
+### Paso 0-quinsexagies · Un bucle de video se cierra con el mismo estado, no con un fundido
+
+Antes de hacer bucle con una toma: (1) se mide dónde termina la transición de la toma anterior (diferencia entre
+cuadros) y el tramo empieza después; (2) se mide si la toma se desplaza: si viaja, fundir el final con el principio
+encima dos estados distintos y se lee como temblor, así que el bucle va de ida y vuelta, y más lento si la textura
+hierve; (3) se comprueba con números: el salto en la unión no supera el cambio típico entre cuadros.
+
+**Por qué.** El 2026-10-07 la luna de Fragmentos del Sol «temblaba»: el bucle arrancaba 0.34 s dentro del fundido de la
+toma anterior y su segundo de fundido mezclaba un sol ya desplazado. De ida y vuelta al 60 % de velocidad quedó con
+40 % menos cambio entre cuadros y una unión de 6.05 contra 9.94.
+
+Hermano del **0-quindecies** (mide lo que la persona percibe) y del **0-sexagies** (un defecto se caza pieza por pieza).
+
 ### Changelog del protocolo
+
+- **v64 (2026-10-07):** tres lecciones de la sala de Fotón Cero (la sala propia, el instrumento que suena y el audio que
+  volvió al estéreo). **0-tersexagies**: un audio que suena distinto a su original se alinea contra él y se resuelve su
+  mezcla por canales. **0-quatersexagies**: un video con máscara o filtro parpadea en una tarjeta gráfica real y el Chrome
+  sin ventana no lo ve. **0-quinsexagies**: un bucle de video se cierra con el mismo estado, no con un fundido. Y Fotón
+  Cero gana su propio `fotoncero/CLAUDE.md` (con `Docs/BITACORA.md`) en la tabla de proyectos.
 
 - **v63 (2026-10-04):** tres lecciones de la sala de Lúcido (sin marco, pasos propios y la página que selló luz de
   cine y a Tonalli). **0-sexagies**: un defecto que no se explica se caza apagando una pieza a la vez. **0-unsexagies**:

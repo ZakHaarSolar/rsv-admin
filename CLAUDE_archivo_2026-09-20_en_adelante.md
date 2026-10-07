@@ -4,6 +4,41 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-04 · III · ESCRITORIO PASO A PASO: LA COMUNIDAD COMO HERRAMIENTA, ESCAPE QUE CIERRA Y EL LOGO QUE SUENA
+
+- ✅ **Resuelto:** **el logo de apertura suena en la app de la Mac** (al abrir en pantalla completa la ventana nace
+  oculta un instante; el sello espera a verse para sonar y contar su reloj) · **la Comunidad de la computadora es un
+  panel de trabajo**: cabecera con regreso, título y pestañas con contador; bandeja lateral con buscador e invitaciones;
+  chat a todo lo ancho en una columna de 820 px con separadores de día, burbujas planas y la caja como un solo campo;
+  Explorar con filtros en columna y tarjetas sobrias · **clic derecho** en un mensaje: Responder, Copiar y Eliminar
+  para mí (guardado en la base, en todos sus aparatos) · **responder deslizando con dos dedos** en el trackpad ·
+  **sonido al enviar** (texto, sticker, foto y nota de voz; también en el teléfono) · **sin autocorrección** en la app
+  de la Mac · **Escape** cierra lo de más arriba (menú, ficha, hojas, visor, stickers, respuesta) y al final la
+  Comunidad, y en la app de la Mac nunca la saca de pantalla completa. El celular conserva su forma.
+- 📁 **Archivos:** escaner-app (14375f5, 28291a7): `ComunidadEscritorio.tsx` v1.1 (nuevo), `Comunidad.tsx` v1.24,
+  `Mensajes.tsx` v1.44, `MiNucleo.tsx` v6.88, `RitualDeLlegada.tsx` v3.4, `EscanerVibracional.tsx` v13.137,
+  `sensory.ts` v2.20, `desktopTauri.ts` v1.6, `main.tsx` v1.3, `lib/pilaEscape.ts` v1.0 (nuevo), `comu.es/en.ts` v1.7 y
+  el banco de pruebas `banco/` (nuevo) · admin 02ff22b.
+- 🗄️ **Migraciones SQL aplicadas:** `20261004_chat_ocultar_para_mi.sql` (tabla `chat_mensajes_ocultos`,
+  `chat_ocultar_mensaje`, `chat_get_ocultos`); Zak la pegó y se verificó que existen y que solo el portón las usa.
+- 🔌 **Edge functions deployed:** `user-action` v1.50 (rutea las dos de arriba).
+- ⏳ **Pendiente:** si el sonido al enviar se queda también en el teléfono (en Pendientes vivos).
+- 💡 **Decisiones:** la experiencia de escritorio se transforma pantalla por pantalla con la gramática de
+  `ComunidadEscritorio.tsx` (hairlines, un solo acento para estado, sin degradados animados ni brackets, monogramas con
+  iniciales) y el celular conserva su forma · Eliminar es «para mí», como WhatsApp, y vive en la base · Escape nunca
+  saca la app de la Mac de pantalla completa (para salir quedan el botón verde y Control+Cmd+F) · mi burbuja en
+  escritorio: cian claro plano con tinta oscura.
+- 🔧 **Patrones nuevos:** banco de pruebas de escritorio con sesión y servidor falsos (`escaner-app/banco/`, servidor
+  `banco-escritorio`, `?capa=comunidad&rapido&claro&sinOcultar`) y `banco/captura.mjs` (fotos nítidas con Chrome sin
+  ventana, mudo) · pila de Escape (`lib/pilaEscape`): lo que se abre apila su cierre · en el motor de la Mac un Escape
+  que la página no atiende llega a la ventana nativa y la saca de pantalla completa (se marca atendido en captura) · la
+  ventana de la Mac nace oculta un instante: lo que se dispara al arrancar espera a verse · un gesto del trackpad (rueda
+  horizontal) mueve la burbuja directo en la página, sin renders. Detalle en [[proyecto_escritorio_paso_a_paso]] y
+  [[feedback_ventanas_de_prueba_mac]].
+- 🧬 **Versión del sistema:** app de la Mac 1.1.49 · iPhone con el código del día (instalado) · protocolo v62.
+- 🧭 **Su arranque** (la siguiente pantalla de escritorio, el banco y los anchos a revisar) vive en
+  [[proyecto_escritorio_paso_a_paso]]: se movió ahí al cerrar la sala de Lúcido, porque solo la sala más reciente lleva 🔮.
+
 #### 2026-10-04 · II · NAVEGANTE: SINFONÍA, ODISEA, LA CONSTELACIÓN Y LUDUS CERO PREMIUM CON EL TRÁILER
 
 - ✅ **Resuelto:** **Sinfonía** (cada membrana es una canción: se dispara en el pulso, PERFECTO o BIEN, combo, capas que
