@@ -7,6 +7,7 @@ el lugar para el que se hizo, y ninguna se borra: así siempre sabes qué le man
 |---|---|---|
 | `cv/2026-10 DataAnnotation (Spanish + Software)` | DataAnnotation: el puesto de Spanish Specialist y las pruebas de programación. **Es la más completa: úsala de base para cualquier empresa nueva.** | `Diego_Soto_Borja_Almeida_Resume.pdf` |
 | `cv/2026-09 micro1 (original)` | La versión con la que entraste a micro1 (Generalist). Se queda tal cual. | `Diego Soto Borja Almeida Resume.pdf` |
+| `2026-10 Claude for Startups` | La solicitud de Red Solar Viva al programa de Anthropic: requisitos, datos medidos, textos en inglés y el prompt completo para el agente que llena el formulario. | `aplicacion.md` (se pega, no se sube) |
 
 ## Cómo usarla
 
