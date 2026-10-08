@@ -957,7 +957,7 @@ página: el maestro crece de a una línea por lección.
   v2.48, `EV_RealidadElegida` v1.9, `WallpapersShell` v1.23, `Mensajes` v1.45, `chatStore` v1.1, `codicesOffline` v1.1,
   `AppShellMobile` 1.5.0 M, `AppShellDesktop` v3.5, `App` v1.2, i18n v1.12, banco v1.2-1.3 y el `CLAUDE.md` del Escáner ·
   app de la Mac 1.1.51.
-- 🗄️ **Migraciones SQL aplicadas:** `admin/supabase/migrations/20261008_sin_conexion_fechas.sql` (1af2565):
+- 🗄️ **Migraciones SQL aplicadas:** `admin/supabase/migrations/✅ 20261008_sin_conexion_fechas.sql` (1af2565, marcada aplicada en ba50548):
   `grant_sendero_bonus`, `grant_plan_vuelo_bonus` y `grant_contemplacion_bonus` + `p_date` (hasta 7 días atrás);
   `reset_racha` y `toggle_racha_pause` + `p_at` (nunca en el futuro ni antes del tramo).
 - ⏳ **Pendiente:** nada de esta sala. Dos hallazgos de paso corren en sus propias salas: la fuga de los Anclajes Fotónicos
