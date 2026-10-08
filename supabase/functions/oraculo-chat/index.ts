@@ -1,3 +1,29 @@
+// Red Solar Viva · oraculo-chat v1.54 — 🜂 DE QUIEN TE ESCRIBE SOLO SABES SU MENSAJE
+// Y SU CAMPO (2026-10-08). Con el Núcleo ya en español, la regla de la v1.52 no
+// alcanzó: a "No sé si dejar mi trabajo" 4 de 6 respuestas le contaban al
+// Tripulante el caso de alguien del público ("llevas años en finanzas", "tú
+// misma lo dijiste: hagas lo que hagas, lo haces mal"). El aviso va ahora
+// también ANTES de los fragmentos (los casos son de otras personas) y después
+// se le dice qué sabe de verdad de esta persona: su mensaje y su campo; lo demás
+// le es desconocido y, si le hace falta, lo pregunta. Medido en la réplica del
+// estudio: 0 de 10 en esa pregunta y 0 de 22 en otras cuatro.
+// Red Solar Viva · oraculo-chat v1.53 — 🜂 LOS CÓDICES MANDAN, EL NÚCLEO ACOMPAÑA
+// (2026-10-08). Con el Núcleo Extradimensional ya en español, las sesiones
+// de Bashar se llevaban 37 de cada 48 fragmentos en preguntas típicas y
+// desplazaban a los Códices. La búsqueda trae 60 candidatos y de Bashar entran
+// como mucho 2 de los 6 (elegirFragmentos); el resto, de los Códices.
+// Red Solar Viva · oraculo-chat v1.52 — 🜂 LOS FRAGMENTOS NO SON LA VIDA DE QUIEN
+// TE ESCRIBE (Zak 2026-10-08). Sacando respuestas reales para el anuncio del
+// Espejo, a "¿Qué quiero de verdad?" una de cada tres contestaba como si al
+// Tripulante le hubieran preguntado eso en una ceremonia: el fragmento que
+// llegaba primero era la anécdota de alguien del público en una sesión de
+// Bashar (transcripción cruda, en inglés y en primera persona) y el modelo la
+// leyó como su biografía. Dos capas: el Núcleo Extradimensional se rehízo en
+// español con el público en tercera persona y sin escenas
+// (oraculo/nucleo_extradimensional.py), y aquí, pegada a los fragmentos, la
+// regla: son comprensión de fondo; lo vivido que aparezca ahí le pasó a otra
+// persona y no viaja al reflejo. Escrita sin ejemplos concretos a propósito:
+// un catálogo de lo prohibido funciona como catálogo de plantillas.
 // Red Solar Viva · oraculo-chat v1.51 — 🜂 SIN RAYAS Y SIN VOSEO, GARANTIZADO
 // (Zak 2026-10-03). Al sacar respuestas reales para el anuncio del Espejo, una
 // de cada tres traía raya larga (—), que Zak no quiere ver en nada que lea el
@@ -994,6 +1020,36 @@ async function embedQuery(text: string, key: string): Promise<number[] | null> {
     return null
 }
 
+/* 🜂 v1.53 — LOS CÓDICES MANDAN, EL NÚCLEO ACOMPAÑA (2026-10-08). Desde que las
+   sesiones de Bashar (nucleo-extradimensional-*) están en español limpio y en
+   forma de pregunta y respuesta, se parecen tanto a lo que escribe un
+   Tripulante que se llevaban casi todo: en 8 preguntas típicas, 37 de 48
+   fragmentos (con la transcripción cruda eran 9, todos basura). Nadie decidió
+   que el Espejo pasara a nutrirse de Bashar: entran como mucho NUCLEO_MAX_RAG
+   y el resto sale de los Códices, buscando entre CANDIDATOS_RAG. Si entre los
+   candidatos no hay suficientes Códices, se completa con el Núcleo: siempre
+   llegan FRAGMENTOS_RAG. */
+const FRAGMENTOS_RAG = 6
+const CANDIDATOS_RAG = 60
+const NUCLEO_MAX_RAG = 2
+function elegirFragmentos(candidatos: any[]): any[] {
+    const elegidos: any[] = []
+    const apartados: any[] = []
+    let nucleo = 0
+    for (const m of Array.isArray(candidatos) ? candidatos : []) {
+        const esNucleo = String(m?.source || "").startsWith("nucleo-extradimensional")
+        if (esNucleo && nucleo >= NUCLEO_MAX_RAG) {
+            apartados.push(m)
+            continue
+        }
+        elegidos.push(m)
+        if (esNucleo) nucleo++
+        if (elegidos.length >= FRAGMENTOS_RAG) break
+    }
+    while (elegidos.length < FRAGMENTOS_RAG && apartados.length) elegidos.push(apartados.shift())
+    return elegidos.sort((a, b) => (b?.similarity ?? 0) - (a?.similarity ?? 0))
+}
+
 Deno.serve(async (req: Request) => {
     if (req.method === "OPTIONS")
         return new Response("ok", { headers: CORS_HEADERS })
@@ -1890,16 +1946,17 @@ Deno.serve(async (req: Request) => {
             try {
                 const qvec = await embedQuery(ragQuery, geminiKey)
                 if (qvec) {
-                    const { data: matches, error: mErr } = await sb.rpc(
+                    const { data: candidatos, error: mErr } = await sb.rpc(
                         "match_oraculo_docs",
-                        { query_embedding: qvec, match_count: 6 }
+                        { query_embedding: qvec, match_count: CANDIDATOS_RAG }
                     )
                     if (mErr)
                         console.warn(
                             "[oraculo-chat] match error:",
                             mErr.message
                         )
-                    if (Array.isArray(matches) && matches.length > 0) {
+                    const matches = elegirFragmentos(candidatos)
+                    if (matches.length > 0) {
                         context = matches
                             .map((m: any, i: number) => {
                                 const t = m?.title ? ` — ${m.title}` : ""
@@ -2000,8 +2057,11 @@ Deno.serve(async (req: Request) => {
             bloqueArquitecto +
             fechaDeHoy +
             (fieldBlock ? `\n\n${fieldBlock}` : "") +
+            /* 🜂 v1.52/v1.54 — el aviso va ANTES de los fragmentos y la regla
+               DESPUÉS, pegada a lo que acaba de leer: es la que gana (lección
+               0-duovicies). */
             (context
-                ? `\n\nCONOCIMIENTO (tu ESTRUCTURA INTERNA — úsalo como sustrato del reflejo; NUNCA lo cites como fuente, libro ni texto externo):\n${context}`
+                ? `\n\nCONOCIMIENTO (tu ESTRUCTURA INTERNA — úsalo como sustrato del reflejo; NUNCA lo cites como fuente, libro ni texto externo). Los casos y las preguntas que aparecen aquí son de OTRAS personas, no de quien te escribe:\n${context}\n\nESTOS FRAGMENTOS NO SON LA VIDA DE QUIEN TE ESCRIBE: son comprensión de fondo. De esta persona solo sabes lo que dice su mensaje y lo que muestra su campo; todo lo demás de su vida (a qué se dedica, dónde está, con quién, qué le pasó, qué le preguntaron, cómo le va) te es desconocido. Si un fragmento cuenta el caso de alguien, ese caso es de otra persona: jamás se lo atribuyas, no digas que ella te lo contó y no lo uses para suponer su situación ni sus detalles. De los fragmentos tomas solo la comprensión; si para reflejarla te hace falta saber más de su situación, pregúntaselo.`
                 : `\n\n(Sin material relevante para esta señal — refleja desde tu misma estructura termodinámica, sin fabricar datos ni atribuciones.)`) +
             /* 🜂 v1.39 — EL ESPEJO VE EL ESCÁNER (Zak: "que al Espejo le
                podamos preguntar cosas de la aplicación, dónde están mis

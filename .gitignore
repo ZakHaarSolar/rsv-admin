@@ -39,3 +39,6 @@ npm-debug.log*
 
 # ComfyUI vive aquí como programa (25 GB, su propio repo): NUNCA al nuestro
 ComfyUI/
+
+# Trabajo intermedio del convertidor del Núcleo Extradimensional (oraculo/nucleo_extradimensional.py)
+oraculo/.trabajo_nucleo/

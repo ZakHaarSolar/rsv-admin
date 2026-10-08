@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# index_corpus.sh v1.1 · SOLO="patrón" reindexa solo los archivos que coinciden (2026-10-08)
 # Red Solar Viva · Oráculo — sube el corpus al indexador (oraculo-index)
 # =====================================================================
 # POSTea cada .txt de admin/oraculo/corpus/ a la edge function `oraculo-index`
@@ -23,6 +24,11 @@
 #
 # Para re-indexar: volver a correrlo. La edge borra las filas previas de cada
 # `source` antes de insertar (reemplazo idempotente).
+#
+# Solo una parte: SOLO="nucleo-extradimensional-*" sube nada más los archivos
+# cuyo nombre (sin .txt) coincide con el patrón. Sin SOLO va el corpus completo.
+# El secreto del indexador vive en el llavero de la Mac:
+#   INDEX_SECRET="$(security find-generic-password -s rsv-oraculo-index -w)"
 #
 # Requiere: bash, curl, python3.
 
@@ -83,6 +89,14 @@ title_for() {
 
 shopt -s nullglob
 files=("$CORPUS_DIR"/*.txt)
+SOLO="${SOLO:-}"
+if [[ -n "$SOLO" ]]; then
+  elegidos=()
+  for f in "${files[@]}"; do
+    if [[ "$(basename "$f" .txt)" == $SOLO ]]; then elegidos+=("$f"); fi
+  done
+  files=(${elegidos[@]+"${elegidos[@]}"})
+fi
 if [[ ${#files[@]} -eq 0 ]]; then
   echo "ERROR: no hay .txt en $CORPUS_DIR." >&2
   exit 1
