@@ -1,3 +1,4 @@
+// Red Solar Viva · admin-action v1.60 — rutea admin_campana_versiones (visitas, toques a la tienda y porcentaje POR VERSIÓN de la página de descarga) y admin_campana_set_landing (la versión por defecto y el mapa etiqueta → versión que Zak elige en Motor → Campaña → «Página de destino»); admin_campana_estado devuelve además los ajustes de la página. Migración 20261008c_campana_versiones; sin ella, estas dos responden falta_migracion con su nombre.
 // Red Solar Viva · admin-action v1.59 — solo comentarios: get_wallpapers NO es RPC anon directa (va por user-action y sabe de membresía; ver 20261008b). El código es idéntico a v1.58: no hace falta desplegar.
 // Red Solar Viva · admin-action v1.58 — rutea admin_campana_diario, admin_campana_set_gasto, admin_campana_set_pixel y admin_campana_estado (Motor → "Campaña": los anuncios de Meta que llevan a escanervibracional.com, cruzados con instalaciones, cuentas y suscripciones del día; migración 20261003_campana_anuncios). Si la migración de una acción todavía no está pegada, responde {error:"falta_migracion", migracion} en vez de un error críptico.
 // Red Solar Viva · admin-action v1.57 — rutea admin_get_user_meditaciones_owned (ficha del nodo: meditaciones canjeadas con cristal o compradas). | v1.56 — rutea admin_get_unread_counts (el
@@ -344,6 +345,12 @@ const ADMIN_RPCS: Record<string, string | null> = {
     admin_campana_set_gasto: "p_admin_clerk_id",
     admin_campana_set_pixel: "p_admin_clerk_id",
     admin_campana_estado: "p_admin_clerk_id",
+    // Las versiones de la página (energia, espejo, decodificador): cuál ve
+    // quien llega sin etiqueta, el mapa etiqueta → versión y la medición por
+    // versión. La lectura pública (get_campana_landing) NO va por gateway: la
+    // pide la función /api/landing de la página. Requiere 20261008.
+    admin_campana_versiones: "p_admin_clerk_id",
+    admin_campana_set_landing: "p_admin_clerk_id",
     // ── Correos (padrón para avisos masivos + lista de espera de Android) ──
     // La lista unificada NUNCA sale por vía anon: el alta pública de la landing
     // (join_android_waitlist) solo INSERTA, no lee.
@@ -534,6 +541,8 @@ const MIGRACION_DE: Record<string, string> = {
     admin_campana_set_gasto: "20261003_campana_anuncios",
     admin_campana_set_pixel: "20261003_campana_anuncios",
     admin_campana_estado: "20261003_campana_anuncios",
+    admin_campana_versiones: "20261008c_campana_versiones",
+    admin_campana_set_landing: "20261008c_campana_versiones",
 }
 const FALTA_OBJETO = new Set(["PGRST202", "42883", "42P01"])
 
