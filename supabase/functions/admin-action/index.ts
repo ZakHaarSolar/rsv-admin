@@ -1,3 +1,4 @@
+// Red Solar Viva · admin-action v1.59 — solo comentarios: get_wallpapers NO es RPC anon directa (va por user-action y sabe de membresía; ver 20261008b). El código es idéntico a v1.58: no hace falta desplegar.
 // Red Solar Viva · admin-action v1.58 — rutea admin_campana_diario, admin_campana_set_gasto, admin_campana_set_pixel y admin_campana_estado (Motor → "Campaña": los anuncios de Meta que llevan a escanervibracional.com, cruzados con instalaciones, cuentas y suscripciones del día; migración 20261003_campana_anuncios). Si la migración de una acción todavía no está pegada, responde {error:"falta_migracion", migracion} en vez de un error críptico.
 // Red Solar Viva · admin-action v1.57 — rutea admin_get_user_meditaciones_owned (ficha del nodo: meditaciones canjeadas con cristal o compradas). | v1.56 — rutea admin_get_unread_counts (el
 // faro de no-leídos del Motor: cuántos mensajes de Aliados y cuántos casos
@@ -301,8 +302,10 @@ const ADMIN_RPCS: Record<string, string | null> = {
     admin_get_user_sonda_progress: "p_admin_clerk_id",
     // ── Wallpapers (galería de fondos descargables) ──
     // CRUD de metadatos del catálogo. Las filas las CREA el edge upload-wallpaper
-    // (subida a R2 + INSERT); estas solo editan/borran/listan. La lectura pública
-    // (get_wallpapers) NO va por gateway — es RPC anon directa.
+    // (subida a R2 + INSERT); estas solo editan/borran/listan. La galería del
+    // Tripulante (get_wallpapers) NO es anon: va por el portón user-action como
+    // get_wallpapers(text), que sabe de membresía. No existe versión pública
+    // (20261008b): re-crearla filtra las URLs de los fondos de paga.
     admin_get_wallpapers: "p_admin_clerk_id",
     // Qué wallpapers descargó UN tripulante (Padrón → detalle del nodo; bajo
     // demanda, solo al tocar "Ver wallpapers descargados").
@@ -349,7 +352,8 @@ const ADMIN_RPCS: Record<string, string | null> = {
     // ── Categorías de Wallpapers (clasificación de la galería) ──
     // CRUD del catálogo de categorías + asignación de categoría a un wallpaper
     // (admin_set_wallpaper_category). La lectura pública (get_wallpaper_categories)
-    // NO va por gateway — es RPC anon directa, como get_wallpapers.
+    // NO va por gateway: es RPC anon directa (solo nombres, sin URLs). Los fondos
+    // en sí (get_wallpapers) sí van por el portón user-action.
     admin_get_wallpaper_categories: "p_admin_clerk_id",
     admin_upsert_wallpaper_category: "p_admin_clerk_id",
     admin_delete_wallpaper_category: "p_admin_clerk_id",
