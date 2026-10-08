@@ -14,7 +14,8 @@
 --   1. campana_eventos.version — qué versión vio la persona en ese evento.
 --      Los eventos viejos se rellenan: todo lo anterior al 2026-10-08 fue la
 --      página de siempre (energia); desde la publicación de la versión espejo
---      (2026-10-08 08:07 UTC), las etiquetas espejo* la vieron a ella.
+--      (2026-10-08 08:07 UTC) las etiquetas espejo* la vieron a ella, y desde
+--      la del decodificador (08:35 UTC) las decodificador*.
 --   2. record_campana_evento — la misma puerta pública, ahora con p_version
 --      (opcional: la página de antes, sin ella, sigue funcionando igual).
 --   3. Los ajustes de la página en campana_ajustes: landing_defecto y
@@ -48,11 +49,14 @@ END
 $$;
 
 -- Relleno: antes de las versiones solo existía «energia». Desde que se
--- publicó la versión espejo, la página la mostraba a las etiquetas espejo*
--- (todo lo demás, la de siempre). Los eventos que ya traen versión no se tocan.
+-- publicó la versión espejo (08:07 UTC), la página la mostraba a las
+-- etiquetas espejo*, y desde la del decodificador (08:35 UTC) a las
+-- decodificador*; todo lo demás, la de siempre. Los eventos que ya traen
+-- versión no se tocan.
 UPDATE public.campana_eventos
 SET version = CASE
         WHEN etiqueta ~ '^espejo' AND created_at >= '2026-10-08 08:07:00+00' THEN 'espejo'
+        WHEN etiqueta ~ '^decodificador' AND created_at >= '2026-10-08 08:35:00+00' THEN 'decodificador'
         ELSE 'energia'
     END
 WHERE version IS NULL;
