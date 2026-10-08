@@ -1540,8 +1540,42 @@ toma anterior y su segundo de fundido mezclaba un sol ya desplazado. De ida y vu
 
 Hermano del **0-quindecies** (mide lo que la persona percibe) y del **0-sexagies** (un defecto se caza pieza por pieza).
 
+### Paso 0-sexsexagies · Una sesión de cuenta se abre solo en el navegador propio de Zak
+
+**Regla.** Consolas (Claude Console, Supabase, Vercel), pagos, tiendas y cualquier pantalla donde se inicia sesión o se
+crea una cuenta se abren en el navegador de la Mac de Zak, con su mano. Nunca dentro de un agente remoto (el bot de
+Grok, un navegador en servidores ajenos), ni para «solo llenar un formulario». Si una tarea lo pide, se le da a Zak el
+texto listo para pegar y él entra.
+
+**Por qué.** El 2026-10-07, para aplicar a Claude for Startups, el bot de Grok abrió Claude Console en su navegador
+remoto y Zak entró ahí con zakhaar@redsolarviva.com por código: Console creó una cuenta nueva y la congeló al instante
+por actividad inusual (un alta desde una IP de servidor que se comporta como robot). La revisión tarda unos diez días y
+su decisión es final, y la cuenta congelada era justo la de la empresa: la solicitud quedó detenida. El prompt sí decía
+«WAITING FOR YOU: log in», pero no decía DÓNDE, y la pantalla del bot parecía un navegador cualquiera.
+
+**Hermanas.** 0-quinquadragies (un camino que el sistema bloquea no se rodea) · tras un congelamiento no se abren
+cuentas nuevas para esquivarlo: se espera la revisión o se escribe a soporte.
+
+### Paso 0-septsexagies · Lo guardado por usuario necesita al usuario cuando la sesión no responde
+
+**Regla.** Si una pantalla guarda datos en el aparato con una clave por usuario, también debe poder saber quién es el
+usuario sin red. Se recuerda al último que entró EN ESE APARATO (se borra al desanclar) y se usa solo cuando la sesión no
+puede responder (sin red o sin cargar); con red y sesión cargada sin usuario, nadie.
+
+**Por qué.** La biblioteca del Escáner guardaba la lista de Códices en el aparato con la clave
+`biblioteca:<clerk_user_id>`, pero sin red Clerk no carga, el id llegaba vacío y la clave pasaba a `biblioteca:anon`:
+la pantalla decía «Aún no tienes códices» con la lista completa guardada a un lado. La caché existía; faltaba la llave.
+Se curó con `useTripulanteId` (lib/codicesOffline) y se probó con un arranque en frío sin red ni sesión en el banco.
+
+**Hermanas.** 0-unsexagies (la clave de una caché dice de quién es) · 0-duodecies (la lógica pura no prueba la máquina
+asíncrona: se probó de punta a punta con la red cortada por interruptores dentro del servidor falso).
+
 ### Changelog del protocolo
 
+- **v65 (2026-10-07 · II):** dos lecciones de la sala de Claude for Startups, Ludus Cero en el sistema solar y los Códices
+  sin internet. **0-sexsexagies**: una sesión de cuenta se abre solo en el navegador propio de Zak (el bot de Grok creó una
+  cuenta de Console que quedó congelada). **0-septsexagies**: lo guardado por usuario necesita al usuario cuando la sesión
+  no responde (la biblioteca sin red buscaba a «anon»).
 - **v64 (2026-10-07):** tres lecciones de la sala de Fotón Cero (la sala propia, el instrumento que suena y el audio que
   volvió al estéreo). **0-tersexagies**: un audio que suena distinto a su original se alinea contra él y se resuelve su
   mezcla por canales. **0-quatersexagies**: un video con máscara o filtro parpadea en una tarjeta gráfica real y el Chrome

@@ -414,3 +414,30 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-04 · IV · LÚCIDO: SIN MARCO, PASOS PROPIOS Y LA PÁGINA QUE SELLÓ LUZ DE CINE Y A TONALLI
+
+- ✅ **Resuelto:** **Lúcido llena la pantalla sin marco** (elige su tamaño en pixeles con la proporción de la ventana,
+  se reacomoda en vivo al entrar a pantalla completa y el primer gesto en computadora la pone) · **pasos propios** al
+  caminar (talón, planta y polvo; medidos abajo de las campanas) · **la tercera sala ya no brinca** (cada sala trae una
+  sola cosa nueva, medido con el bot) · **el túnel se mueve a los cuatro lados** · **el protagonista es hombre** en las
+  cuatro edades (el viejo con barba y bastón) · **la página de propuestas** (`Ludus Cero/lucido/propuestas/`): la sala en cinco
+  niveles de pixel y cuatro candidatos esculpidos en volumen, con ocho vistas, caminata en cuatro direcciones y arte HD
+  · respuesta a Zak: a qué se parece Lúcido, cinco propuestas para Steam y sus porcentajes
+  (`Ludus Cero/lucido/Docs/PROPUESTAS_STEAM.md`).
+- 📁 **Archivos:** lucido (3c6a376, aa527ce): `main.ts` v2.2, `escenas.ts` v2.2, `vida.ts` v2.3, `audio.ts` v1.1,
+  `reglas.ts` v2.2, `arte.ts` v1.1, `textos.ts` v2.2, `base.ts` v1.1, `lienzo.ts` v1.1, `prueba.ts` v2.3 (modo
+  dificultad) y `propuestas/` (nueva) · publicado en Vercel (`index-TbrOwI-l.js`).
+- 💡 **Decisiones (Zak):** nivel 3 «luz de cine» (640 x 360 con la luz a resolución completa, la receta de Terra
+  Cristal) · Tonalli de protagonista · selector con Tonalli, Teyolia y Temictli, Ollin fuera · el arte HD fue solo para
+  verlo · cuatro direcciones · orden: el nivel 3 y los personajes, la propuesta 3 y luego la 1 (las épocas, que le
+  encantaron); después la 2, la 4 y la 5 · las salas de Lúcido se abren en la carpeta `Ludus Cero/lucido`.
+- 🔧 **Patrones nuevos:** personajes esculpidos con campos de distancia que dan a la vez el pixel de cada nivel (contorno
+  del color de cada parte y línea donde algo pasa por delante), las ocho vistas, la caminata y el arte HD · un
+  comparador honesto pinta «hoy» con el motor real · la curva de dificultad se mide por sala con el bot
+  (`prueba.ts dificultad`) · el volumen de un sonido nuevo se mide contra lo aprobado con OfflineAudioContext · fotos por
+  sección (una página completa con muchos lienzos de WebGL se atora). Detalle en [[proyecto_juego_pixel]].
+- 🧬 **Versión del sistema:** Lúcido 0.2 (sin marco, pasos) · protocolo v63.
+- 🧭 **Su arranque** vive en `Ludus Cero/lucido/Docs/PROXIMA_SALA.md` (abrir la carpeta `Ludus Cero/lucido` y pegar su
+  prompt); salió de aquí al cerrar la sala de Fotón Cero, porque solo la sala más reciente lleva 🔮.
+
+*Archivada completa el 2026-10-07 · II, al entrar la sala de Claude for Startups.*
