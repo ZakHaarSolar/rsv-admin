@@ -4,6 +4,42 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-07 · II · CLAUDE FOR STARTUPS, LUDUS CERO EN EL SISTEMA SOLAR Y LOS CÓDICES QUE SE LEEN SIN INTERNET
+
+- ✅ **Resuelto:** la solicitud a Claude for Startups armada (textos en inglés, hoja de llenado y prompt) · el botón de la
+  Mac de escanervibracional.com lee la versión vigente del manifiesto · en redsolarviva.com volvió el planeta del Escáner
+  (nunca recibía sus valores desde que salió de Framer), Simuladores es Ludus Cero (planeta y tarjeta del celular a
+  play.redsolarviva.com, sin pestaña en la barra, /simuladores salta allá), firmas nuevas de Zak'Haar y Aqua'Riia, el
+  sistema vuelve a girar al soltar un planeta y las portadas de /codices son copias ligeras (34 MB → 1.4 MB) ·
+  luduscero.com redirige a play (Zak cambió el A en GoDaddy) · en la app, **los Códices se leen sin internet**: la
+  biblioteca aparece sin red, cada EPUB se guarda solo en el dispositivo, el lector trae epub.js y JSZip adentro y el
+  avance sube al volver la conexión · consultas: Personal Agent Bench de micro1 (la corrida y la calificación las hizo
+  Zak) y los créditos API del plan Max (100 USD/mes).
+- 📁 **Archivos:** escaner-landing `index.html` v1.5 (daef4e0) · Code `Domo.tsx` v5.13, `Origen.tsx` v5.33,
+  `NavegadorEstacion.tsx` v4.27, `Codices.tsx` v6.2 (8a47f79, 66a4837) · rsv-web `vercel.json` y `public/portadas-codices`
+  (4167e1a, f0fe8ff) · escaner-app `lib/codicesOffline.ts` v1.0, `lib/portadas.ts` v1.0, `LectorCodice.tsx` v1.3,
+  `MN_Codices.tsx` v1.17, `BibliotecaShell.tsx` v1.4, `signOut.ts` v1.2, `main.tsx` v1.4, `Co_Mobile.tsx` v1.27,
+  `Co_Desktop.tsx` v1.16, `coverPrefetch.ts` v1.1, i18n `firma` v1.7 y `codm` v1.4, banco v1.1-1.2 (6c3e3a7, 4bc42c9) ·
+  admin `aplicaciones/2026-10 Claude for Startups/`.
+- ⏳ **Pendiente:** la revisión de la cuenta de Console (en Pendientes vivos, con lo sucedido) · mover cargas a la API de
+  Claude con los créditos del Max en otra sala: empezar por el Decodificador de Alimentos (un paso en vez de OCR + Gemini)
+  y antes leer los «Supplemental Credit Terms» (¿uso comercial en producción?); dejar los proveedores de hoy de respaldo.
+- 💡 **Decisiones:** aplicar como Red Solar Viva (el correo debe ser del dominio del sitio; escanervibracional.com no
+  tiene correo) · nada de Console ni cuentas por agentes remotos · Ludus Cero vive en play.redsolarviva.com hasta que haya
+  ingresos y el planeta apunta directo a play (con redirección la barra termina en play igual) · los Códices se guardan
+  solos y un avance pendiente de este aparato gana al reabrir · la protección de propiedad de GoDaddy no hace falta (basta
+  el candado del dominio y los dos pasos).
+- 🔧 **Patrones nuevos:** `useTripulanteId` (el último Tripulante del aparato cuando la sesión no responde) · prueba sin
+  red en el banco con interruptores dentro del servidor falso (`window.__bancoOffline`, `&sinSesion`, `&conservar`) y
+  `navigator.onLine` sobrescrito por CDP, porque cortar la red también corta el servidor de desarrollo · la landing se
+  prueba con la medición bloqueada (`Network.setBlockedURLs`) para no ensuciar la campaña · copias ligeras de portadas
+  por slug, las mismas en la web y en la app. Lecciones 0-sexsexagies y 0-septsexagies.
+- 🧬 **Versión del sistema:** app de la Mac 1.1.50 · el iPhone de Zak con los Códices sin internet · protocolo v65.
+- 🧭 **Su arranque** (salió de aquí al cerrar la sala de publicidad del 2026-10-08, porque solo la sala más reciente
+  lleva 🔮; el estado vive en Pendientes vivos y en la memoria `proyecto-claude-for-startups`): si Zak trae el resultado de la revisión,
+  seguir el pendiente vivo; si ya los aceptaron, borrar ese pendiente, la memoria `proyecto-claude-for-startups` y el
+  registro del incidente de esta entrada.
+
 #### 2026-10-07 · FOTÓN CERO: SU SALA PROPIA, EL INSTRUMENTO QUE SUENA Y EL AUDIO QUE VOLVIÓ AL ESTÉREO
 
 - ✅ **Resuelto:** **fotoncero.com proyecta sus cinco obras en su sala propia**, desde R2 y sin YouTube (ignición con el

@@ -501,7 +501,14 @@ que necesita una decisión de Zak o una mano suya.
 - **Consulta respondida el 2026-10-05 · qué hace posible el arte en código** (estilo Shining Force): 15 propuestas
   (dos miradas Clásico y Cristal, sonido FM de Mega Drive en código, equipo visible, transición gradual, terreno que
   recuerda, mapas enormes, editor con Steam Workshop…), su orden y sus porcentajes en `terra-cristal/Docs/PROPUESTAS_STEAM.md`.
-  Falta que Zak elija cuáles.
+  A Zak le gustaron; falta que elija cuáles. **Evaluación del 2026-10-07:** con lo de la Sala 6, ~35 % que le vaya bien y ~6 %
+  de éxito global si el audio sale sin IA (las voces de ElevenLabs y la música de Suno se declaran en Steam y lo bajan a
+  ~30 % y ~4-5 %); pasa al frente de Lúcido (~5 %).
+- **Consulta respondida el 2026-10-07 · ¿el combate de la Luz es muy liviano para el jugador común?** El concepto ayuda (el
+  gancho «el táctico donde no matas: liberas»); lo que le quita emoción es el poco riesgo, que las batallas salen fáciles y que el
+  golpe suena suave. Hoy bajaría la estimación de Steam (de 30 a 20 % que le vaya bien); con tensión y peso, la sube a 35 %. Cinco
+  propuestas (el gris que avanza como mecánica, combate con peso y dificultad «Prueba», los liberados se unen, el capítulo 1 con
+  mapas grandes, la demo de Steam) en `terra-cristal-pixel3/Docs/SIGUIENTE_NIVEL.md`. Falta que Zak elija.
 
 ### 🟢 Kal'El · lo que sigue abierto
 
@@ -517,14 +524,31 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 
 ### 🔵 Escáner · lo que necesita tu decisión
 
-- **Enviar la solicitud a Claude for Startups** (textos y prompt para Grok entregados el 2026-10-07, en
-  `admin/aplicaciones/2026-10 Claude for Startups/aplicacion.md`). La solicitud vive en Claude Console y exige un correo
-  del mismo dominio que el sitio: escanervibracional.com no tiene correo, así que se aplica como Red Solar Viva con
-  redsolarviva.com y una dirección @redsolarviva.com. Falta que Zak confirme esa dirección, el equipo de 2 y la fundación
-  2025, entre a Console con ella y dé el SUBMIT. ⚠️ Nada de Console por el bot de Grok: entrar con zakhaarsol@pm.me
-  desde su navegador remoto creó una cuenta nueva que quedó congelada al instante (2026-10-07, revisión pedida).
-  Zak entra y llena el formulario desde su propio Chrome. Da 1,000 USD en créditos (caducan a los 6 meses), un año de Team y
-  ofertas de socios (ElevenLabs incluida).
+- **Claude for Startups: esperando la revisión de la cuenta de Console** (desde 2026-10-07). Lo sucedido, por si hay que
+  apelar: (1) Zak pidió textos y un prompt para su bot de Grok; (2) el bot abrió platform.claude.com en SU navegador
+  remoto; con cuerpodeluz555 (Gmail) Console pidió un correo de empresa; (3) dentro de esa pantalla Zak entró con
+  zakhaar@redsolarviva.com por código: se creó una cuenta nueva y quedó «on hold» por actividad inusual (2026-10-07);
+  (4) Zak pidió la revisión ese día (unos 10 días, decisión final) con un texto que por error decía zakhaarsol@pm.me
+  (si hay forma de responder, corregirlo con una línea). Plan: esperar; si la reactivan, aplicar desde
+  zakhaar@redsolarviva.com en su propio Chrome, llenando a mano con `admin/aplicaciones/2026-10 Claude for
+  Startups/aplicacion.md` (o `~/Downloads/claude-startups-hoja.html`); si la rechazan, escribir a soporte de Anthropic.
+  NO crear otra cuenta de @redsolarviva.com: se leería como esquivar el congelamiento. Da 1,000 USD en créditos (caducan
+  a los 6 meses), un año de Team y ofertas de socios (ElevenLabs incluida). 🜂 **Cuando Zak diga que ya los aceptaron, se
+  borra todo esto:** este pendiente, la memoria `proyecto-claude-for-startups` (sala del escaner-app) y el registro del
+  incidente en la entrada del 2026-10-07 · II del historial.
+- **Google for Startups Cloud: enviada el 2026-10-08** (nivel Start, hasta 2,000 USD, desde zakhaar@redsolarviva.com,
+  facturación 01A6FF-E87869-821613). Respuesta en 3 a 5 días hábiles a Proton. Si aprueban: Nano Banana por Vertex AI
+  (no llaves de AI Studio) desde las funciones del servidor. Datos en `admin/aplicaciones/2026-10 Google for Startups Cloud/`.
+- **Consulta respondida el 2026-10-08 · ¿los Decodificadores de Alimentos y Sueños pasan a la API de Claude (los 100 USD/mes
+  del Max)?** Medido con las instrucciones reales desde la Mac: Gemini 3.6 Flash tarda ~2 s en un sueño y ~3.4 s en el
+  dictamen de un alimento (en producción la lectura de la foto suma ~1.8 s). Con las velocidades públicas, Claude Sonnet 5.5
+  en esfuerzo bajo tardaría ~3 a 4 s y ~7 a 8 s (Haiku 4.5 no es más rápido y razona menos: queda fuera). Calidad: se espera
+  igual o mejor (Gemini abrió los 12 dictámenes de sueño con «El sistema detecta», copió la ducha fría del ejemplo en 6 de 12
+  calibraciones, ignoró la llave dorada en 2 de 3 lecturas y escribió «frena» por «frene» y «Alto» por «Alta»), pero falta
+  verlo. Groq se queda en los comandos de voz (0.2 a 0.4 s contra ~1.5 s). Los términos de los créditos no prohíben el uso
+  comercial; si se acaban, la API se detiene hasta el mes siguiente: Gemini queda de respaldo automático y la lectura de la
+  foto sigue en Google Cloud Vision. **Falta:** que Zak cree una llave en Console (en su Chrome) y la guarde en el llavero
+  como `rsv-anthropic`; con ella se corre la prueba a ciegas (8 sueños y 6 etiquetas, sin decir cuál es cuál) y se decide.
 - **Que subir cambios del Escáner a GitHub no publique la web por su cuenta** (propuesta del 2026-09-25, falta el
   sí de Zak). Hoy cada push, aunque solo toque documentos, dispara un despliegue automático que deja el instalador
   de la Mac en 404 hasta volver a correr `./publicar-escritorio.sh` (pasó dos veces el 2026-09-25). La cura es una
@@ -532,12 +556,13 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   publicación, que es lo que ya dice el Mapa de destinos.
 - **Escribir a quienes no pudieron entrar a la web del 5 al 24 de septiembre** (Clerk sabe quiénes lo intentaron;
   venía de la sala del 21 al 25): falta que Zak decida el mensaje y si se manda.
-- **Anuncios pagados: el Espejo de la noche sale primero** (`Escaner Vibracional/Publicidad/03 Espejo 9x16.mp4`, decidido
-  el 2026-10-03; el segundo Espejo se descartó). Píxel 1639470941182641 activo en Motor → Campaña y dominio verificado.
-  México 21-55, 100 MXN/día × 7, SOLO Instagram. En esta cuenta Ads Manager fuerza ubicaciones automáticas con
-  Clientes potenciales, Ventas y Tráfico, así que se lanza como promoción del Reel desde la app de Instagram
-  (@escanervibracional, la hace Zak; pasos al final de `Prompts para Grok.md`) y el bot solo reporta. **Lanzada el 2026-10-04 desde instagram.com** (en la app de iOS Apple cobra ~30 % extra), en revisión de Meta. Las siguientes pruebas usan el MISMO público (sin «Meditaciones (filosofía)», que no es la práctica). Después: Decodificador o reel. Pasos en `Escaner Vibracional/Publicidad/Prompts para Grok.md`;
-  detalle en [[proyecto_publicidad_pagada]].
+- **Anuncios pagados: la promoción del Espejo corre en Instagram hasta el 11 de octubre** (`Escaner Vibracional/Publicidad/03
+  Espejo 9x16.mp4`, @escanervibracional, 100 MXN/día, México 21-55, solo Instagram, promocionada desde instagram.com; píxel
+  1639470941182641 activo y dominio verificado). Al 2026-10-08: clics casi 4 % y 2 MXN por visita, pero 1 o 2 toques a la
+  tienda de ~140 visitas y solo 10 % pasa de 3 segundos. Siguen dos salas con su prompt en `Escaner Vibracional/Publicidad/`:
+  la página del Espejo con selector de versiones en el Motor (`Prompt próxima sala · Landing del Espejo.md`) y el video que
+  para el scroll (`Prompt próxima sala · Video que para el scroll.md`). Zak anota el gasto diario en Motor → Campaña.
+  Después: Decodificador. Detalle en [[proyecto_publicidad_pagada]].
 - **El sonido al enviar un mensaje suena también en el teléfono** (2026-10-04): Zak lo pidió para el chat sin decir
   cara y quedó en las dos (en el iPhone llega con la siguiente versión de tienda). Si lo quiere solo en la computadora,
   es una línea en `escaner-app/src/components/nucleo/Mensajes.tsx` (los `sensory("mensaje")` con `isDesktop`).
@@ -596,10 +621,16 @@ la mano de Zak:
   musical (Spotify NO se rebrandea; MVs completos al canal @zakhaarsolar por el Official Artist Channel), Fotón
   Cero=estudio (su IG estrena con los MVs; estrenos como collab con @escanervibracional), semillas de conciencia renacen como
   cuenta del Escáner cuando haya cadencia; detalle en [[proyecto_planeta_zakhaar]].
+  **Consulta respondida el 2026-10-08 · el nombre visible en X:** «Diego Soto» con el handle @zakcero (cada respuesta ya
+  muestra los dos), bio en inglés con el Escáner, Ludus Cero y «Music as Zak'Haar» (las películas son de Fotón Cero, no
+  de Zak'Haar; Zak Cero entra cuando tenga peso: hoy son 3 reels; los Códices viven en la app), enlace
+  escanervibracional.com (luduscero.com en celular cae en la Holoteca del Escáner), Zak'Haar nunca como nombre visible. Por qué: el fundador que lee respuestas premia al constructor con nombre real (igual que en Slack y el CV), y un
+  movimiento que maneja dinero necesita un responsable con nombre. Cuando Zak Cero tenga su propia cadencia, se le da cuenta
+  propia en X. Nunca nombrar al cliente de micro1. Falta el sí de Zak.
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v64 (2026-10-07)
+## 🜂 Protocolo de Cierre de Sesión · v67 (2026-10-08 · II)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -757,6 +788,11 @@ memorias.
 - **0-tersexagies** · Un audio que suena distinto a su original se alinea contra él y se resuelve su mezcla por canales: los números dicen qué pasó y dejan repararlo sin re-exportar.
 - **0-quatersexagies** · Nunca máscara ni filtro sobre un video: en una tarjeta gráfica real parpadea en negro y el Chrome sin ventana no lo ve; los videos aparecen hasta su primer cuadro.
 - **0-quinsexagies** · Un bucle de video se cierra con el mismo estado: si la toma viaja, ida y vuelta (y más lento), nunca un fundido; empieza después de la transición anterior.
+- **0-sexsexagies** · Una sesión de cuenta (consolas, pagos, tiendas) se abre solo en el navegador propio de Zak: un agente remoto crea cuentas nuevas y dispara congelamientos sin vuelta rápida.
+- **0-septsexagies** · Lo que se guarda por usuario necesita al usuario cuando la sesión no responde: sin red, recordar al último que entró en el aparato, o la caché busca a «anon».
+- **0-duodeseptuagies** · Un texto que Zak le va a pegar a otro agente no afirma pasos que él aún no hizo: lo pega al recibirlo y el otro actúa sobre algo falso.
+- **0-undeseptuagies** · Una recomendación que solo optimiza el número ignora a quien la va a construir: el ganador se busca dentro de su gusto.
+- **0-septuagies** · Lo que se hace sin red sube con la fecha en que se hizo: el «hoy» del servidor es el de la subida; lo que alterna se junta en la fila.
 
 ### Paso 1 — Test de continuidad
 
@@ -898,36 +934,99 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v64 (2026-10-07). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v67 (2026-10-08 · II). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
 
+#### 2026-10-08 · II · LA APP SIN INTERNET: TODO ABRE SIN RED Y LO HECHO SIN CONEXIÓN SE SINCRONIZA SOLO
+
+- ✅ **Resuelto:** **la app del Escáner funciona sin internet**: Mi Núcleo, Sendero de Luz, Rachas, Bitácora, Plan de
+  Vuelo, Realidad Elegida, el Radar (con su puntaje), los chats, los Códices y los Anclajes Fotónicos abren sin red y sin
+  pedir cuenta (el teléfono recuerda al Tripulante) · lo hecho sin red (rituales, rachas, notas, misiones, la visión, un
+  escaneo, mensajes) se anota en el aparato y sube solo, en orden, al volver la conexión, con su fecha real e ids
+  provisionales que se traducen al real · los chats como WhatsApp (relojito y envío solo, aunque la conversación esté
+  cerrada) · la membresía se respeta sin red (sin muros) · los fondos y las fotos de la Realidad se guardan en el teléfono
+  · una vez al día, con señal, se guarda en silencio lo que falte · la sesión de Clerk revive sola al volver la red (medido:
+  1 s) · aviso discreto de conexión arriba. Zak pegó la migración (verificada: las cinco funciones aceptan la fecha real) y
+  la app quedó instalada en su iPhone.
+- 📁 **Archivos:** escaner-app (631998d): nuevos `lib/sinConexion.ts`, `lib/sinConexionReglas.ts`,
+  `lib/sinConexionPrecalentar.ts`, `lib/imagenesSinConexion.ts`, `components/SinConexion.tsx` y el módulo i18n `conexion` ·
+  `EV_Shared` v2.50, `EscanerVibracional` v13.138, `MiNucleo` v6.89, `MN_Shared` v1.7, `MN_Firma` v2.56, `RitualDiario`
+  v2.48, `EV_RealidadElegida` v1.9, `WallpapersShell` v1.23, `Mensajes` v1.45, `chatStore` v1.1, `codicesOffline` v1.1,
+  `AppShellMobile` 1.5.0 M, `AppShellDesktop` v3.5, `App` v1.2, i18n v1.12, banco v1.2-1.3 y el `CLAUDE.md` del Escáner ·
+  app de la Mac 1.1.51.
+- 🗄️ **Migraciones SQL aplicadas:** `admin/supabase/migrations/20261008_sin_conexion_fechas.sql` (1af2565):
+  `grant_sendero_bonus`, `grant_plan_vuelo_bonus` y `grant_contemplacion_bonus` + `p_date` (hasta 7 días atrás);
+  `reset_racha` y `toggle_racha_pause` + `p_at` (nunca en el futuro ni antes del tramo).
+- ⏳ **Pendiente:** nada de esta sala. Dos hallazgos de paso corren en sus propias salas: la fuga de los Anclajes Fotónicos
+  de paga (`get_wallpapers()` sin parámetros concedida a anon) y la voz que desella un ritual del Sendero
+  (`useComandoVoz` lee `checked` en vez de `today`).
+- 💡 **Decisiones:** lo que necesita al servidor para pensar o subir archivos sigue pidiendo red (Espejo, Decodificadores,
+  fotos y notas de voz, sesión, pagos, nombre y foto, invitaciones y notas compartidas) · una escritura sin regla, sin red,
+  responde null como siempre (nada se finge hecho) · los límites del plan se aplican igual sin red · lo creado y borrado
+  sin red no sube nada.
+- 🔧 **Patrones nuevos:** `lib/sinConexion` (identidad recordada solo si la sesión no responde; `sesionCaida()` distinto de
+  «la sesión aún carga»; caché de lecturas en IndexedDB; fila con reglas, compactación, ids provisionales y `extras` que se
+  quitan si el servidor responde PGRST202) · revivir Clerk con `useClerk().loadClerkJS()` (clerk-react no reintenta solo)
+  · las imágenes de R2 se guardan con `fetch(url, { cache: "reload" })` (la copia que dejó un `<img>` sin CORS no se puede
+  leer) · banco con `&sinRed&conservar`, `window.__bancoVolverRed()` y `window.__bancoSinMigracion` · una función con
+  permiso solo de servicio se verifica desde fuera sin ejecutarla: «permission denied» (42501) prueba que la firma existe y
+  PGRST202 que no · si Zak reporta algo sin red, la caja negra anota `sin-red-anota`, `sin-red-subidas`, `sin-red-negada`,
+  `sin-red-abandona` y `sesion-revive`. Lección 0-septuagies.
+- 🧬 **Versión del sistema:** app de la Mac 1.1.51 · el iPhone de Zak con la app sin internet · protocolo v67.
+
+#### 2026-10-08 · PUBLICIDAD: EL ESPEJO EN DOS COMERCIALES, LA CAMPAÑA VIVA EN INSTAGRAM Y LAS CONSULTAS DE JUEGOS
+
+- ✅ **Resuelto:** **el segundo comercial del Espejo** (el espejo dorado) se hizo y Zak lo descartó («me gustó más el
+  primero»; el video a la papelera, el estudio queda) · **el Espejo habla de tú y sin rayas** (regla y filtro en vivo y al
+  guardar) · **el píxel de Meta activo** en Motor → Campaña, **el dominio verificado** y **la promoción del Reel del
+  Espejo corriendo** desde @escanervibracional, solo en Instagram, del 4 al 11 de octubre a 100 MXN/día · a medio camino:
+  el anuncio da clics (casi 4 %, 2 MXN por visita) pero la página no convierte (1 o 2 toques de ~140 visitas) y solo 10 %
+  pasa de 3 segundos: se rehacen la página y el video · consultas: el mejor juego propio (Terra Cristal Pixel 3, ~35 % que
+  le vaya bien y ~6 % de éxito global con audio sin IA), qué hace posible el arte en código, ingresos y tiempos por juego,
+  SONORA descartada y TERRA VIVA propuesta; además micro1 (reviewer y HDM), impuestos y LinkedIn de Zak.
+- 📁 **Archivos:** admin `oraculo-chat` v1.51 (a1fc7c4) · escaner-landing `index.html` v1.4 (4868a6f) · terra-cristal
+  `Docs/PROPUESTAS_STEAM.md` (b6e1737) · sin repo: `Escaner Vibracional/Publicidad/Prompts para Grok.md` (lo que Meta
+  deja y los pasos de la promoción desde Instagram) y los dos prompts de las próximas salas · `Escaner Vibracional/Anuncio
+  Espejo 2/estudio/` (descartado) · `Ludus Cero/PROPUESTA_GANADORA.md`.
+- 🔌 **Edge functions deployed:** `oraculo-chat` v1.51 (sin rayas ni voseo, en vivo y al guardar).
+- ⏳ **Pendiente:** la página del Espejo con selector de versiones (el 🔮) y el video que para el scroll (en Pendientes
+  vivos, con su prompt).
+- 💡 **Decisiones:** el Espejo de la noche va primero, solo y solo en Instagram · las promociones se hacen desde
+  instagram.com en la computadora (en la app de iOS Apple cobra 30 %) · las siguientes pruebas usan el mismo público ·
+  las propuestas de juego se buscan dentro del gusto de Zak · Terra Cristal pasa al frente de Lúcido.
+- 🔧 **Patrones nuevos:** en esta cuenta de Meta, optimizar a Lead obliga a ubicaciones automáticas (Ventas no ofrece
+  Lead y Tráfico ni deja fijar la edad): solo Instagram es promocionar el Reel · el píxel se comprueba con la función
+  pública de la landing y su llave · dos tomas de Blender que comparten cuadros se pisan los renders · un fundido entre
+  dos capas solo cuando ya coinciden. Lecciones 0-duodeseptuagies y 0-undeseptuagies; detalle en
+  [[proyecto_publicidad_pagada]] y [[proyecto_sonora]].
+- 🧬 **Versión del sistema:** landing v1.4 en adelante · oraculo-chat v1.51 · protocolo v66.
+- 🔮 **Cómo arrancar la próxima Sala de Comando:** abrir la carpeta raíz `Red Solar Viva` y pegar el prompt de
+  `Escaner Vibracional/Publicidad/Prompt próxima sala · Landing del Espejo.md`, antes del 11 de octubre (cuando termina
+  la promoción). El del video vive al lado: `Prompt próxima sala · Video que para el scroll.md`.
+
+#### 2026-10-07 · II · CLAUDE FOR STARTUPS, LUDUS CERO EN EL SISTEMA SOLAR Y LOS CÓDICES QUE SE LEEN SIN INTERNET
+
+- 💡 **Decisiones:** aplicar como Red Solar Viva (el correo debe ser del dominio del sitio; escanervibracional.com no
+  tiene correo) · nada de Console ni cuentas por agentes remotos · Ludus Cero vive en play.redsolarviva.com hasta que haya
+  ingresos y el planeta apunta directo a play (con redirección la barra termina en play igual) · los Códices se guardan
+  solos y un avance pendiente de este aparato gana al reabrir · la protección de propiedad de GoDaddy no hace falta (basta
+  el candado del dominio y los dos pasos).
+- 🔧 **Patrones nuevos:** `useTripulanteId` (el último Tripulante del aparato cuando la sesión no responde) · prueba sin
+  red en el banco con interruptores dentro del servidor falso (`window.__bancoOffline`, `&sinSesion`, `&conservar`) y
+  `navigator.onLine` sobrescrito por CDP, porque cortar la red también corta el servidor de desarrollo · la landing se
+  prueba con la medición bloqueada (`Network.setBlockedURLs`) para no ensuciar la campaña · copias ligeras de portadas
+  por slug, las mismas en la web y en la app. Lecciones 0-sexsexagies y 0-septsexagies.
+- 🧭 **Su arranque** (salió de aquí al cerrar la sala de publicidad del 2026-10-08, porque solo la sala más reciente
+  lleva 🔮; el estado vive en Pendientes vivos y en la memoria `proyecto-claude-for-startups`): si Zak trae el resultado de la revisión,
+  seguir el pendiente vivo; si ya los aceptaron, borrar ese pendiente, la memoria `proyecto-claude-for-startups` y el
+  registro del incidente de esta entrada.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+
 #### 2026-10-07 · FOTÓN CERO: SU SALA PROPIA, EL INSTRUMENTO QUE SUENA Y EL AUDIO QUE VOLVIÓ AL ESTÉREO
 
-- ✅ **Resuelto:** **fotoncero.com proyecta sus cinco obras en su sala propia**, desde R2 y sin YouTube (ignición con el
-  sello, la pantalla se abre desde una línea de luz, luz ambiente, miniaturas en la línea del tiempo, calidad que baja
-  sola, retomar y la siguiente con cuenta regresiva): **Everything You Dream** y **Harmonía · Códigos Aurora** en videos
-  musicales; **No vine aquí**, **Diálogo con el Reflejo Estelar** y **Sol que Respira** en Fragmentos del Sol; «El Eco
-  del Vacío» salió y la tercera luna queda oscura (PRÓXIMAMENTE) · cada obra y cada serie con su dirección, su tarjeta
-  para redes y sus datos de video para buscadores · **la portada es el astrolabio grande con «Desciende»** (sin placas)
-  y abajo esperan el estreno en visor de cámara, el índice, el motor de universos con una nota por anillo, la casa y las
-  dos puertas del taller (alianza y padrino, que escriben a Motor → Aliados) · **todo respira**: las lunas son bucles de
-  video (el sol de ida y vuelta, sin temblor), cada serie tiene su cielo y las ondas de Zak'Haar bailan con el espectro
-  real de la canción · **sonidos de ElevenLabs afinados en La 432** (engranes en las lunas, cristal al pasar, campana al
-  abrir una serie, soplo al cerrar, chispas al descender) con un solo interruptor que nace encendido · sin barra de
-  desplazamiento · **la página de videos musicales ya no parpadea en negro** · **Everything You Dream suena en estéreo**
-  en la web (versión 2) · Red Solar Viva: sin pestaña Fotón Cero, el planeta abre fotoncero.com, `/fotoncero`,
-  `/fragmentos` y `/fragmentosdelsol` redirigen, y **los planetas de Origen solo abren su tarjeta cuando la mano frena**.
-- 📁 **Archivos:** fotoncero (f45cedb a 572b9b4 y el del cierre): `index.html` v5.2, `main.ts` v5.2, `estilos.css` v5.2,
-  `sala.ts` v1.0, `sala.css` v1.1, `series.ts` v2.1, `descenso.ts` v1.1, `ondas.ts` v1.0, `sfx.ts` v1.0,
-  `vite.config.ts` v2.2, `herramientas/nueva-transmision.sh` v1.1, y `CLAUDE.md`, `.claude/settings.json` y
-  `Docs/BITACORA.md` (nuevos) · Code (9b24e05): `Origen.tsx` v5.31, `Domo.tsx` v5.12, `NavegadorEstacion.tsx` v4.26 ·
-  rsv-web (92ba610): `vercel.json` · admin: `CLAUDE_lecciones.md` (tres lecciones y protocolo v64).
-- 🔌 **Edge functions deployed:** `fotoncero-subida`, puente TEMPORAL que solo firmaba subidas a `FotonCero/` en R2;
-  desplegado y borrado dos veces (404 verificado). En R2 quedó `FotonCero/prueba/portada.jpg`, inofensivo.
-- ⏳ **Pendiente:** el re-export en estéreo de Everything You Dream (Pendientes vivos · Fotón Cero).
 - 💡 **Decisiones:** Fotón Cero vive en su propia casa y Red Solar Viva solo la señala · los videos van desde R2 en tres
   calidades y una obra que cambia sube con nombre nuevo (`-vN`), para que la caché nunca sirva la vieja · sin
   descripciones de episodio · la portada sin placas: manda el astrolabio · el sonido nace encendido y la sala de
@@ -940,25 +1039,10 @@ página: el maestro crece de a una línea por lección.
   intención antes de abrir una tarjeta (el cursor frena: 12 px por 100 ms o 420 ms quieto) · puente temporal de subida
   a R2 que solo firma un prefijo y se borra al terminar · con `cleanUrls` el respaldo de la SPA va a `/index`. Lecciones
   0-tersexagies, 0-quatersexagies y 0-quinsexagies; detalle en [[proyecto_foton_cero_sala]] y [[feedback_todo_vivo]].
-- 🧬 **Versión del sistema:** fotoncero.com con su sala propia, cinco obras y su sonido · protocolo v64.
-- 🔮 **Cómo arrancar la próxima Sala de Comando de Fotón Cero:** abrir la carpeta `fotoncero` (su `CLAUDE.md` se carga
-  solo) y leer `Docs/BITACORA.md`. Cuando Zak traiga el re-export de Everything You Dream: medir que el canal izquierdo
-  y el derecho sean distintos (correlación menor a 0.99), pasarlo por `herramientas/nueva-transmision.sh`, subir las
-  tres calidades a R2 con el sufijo `-v3` y poner `version: 3` en `src/series.ts`.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 #### 2026-10-04 · IV · LÚCIDO: SIN MARCO, PASOS PROPIOS Y LA PÁGINA QUE SELLÓ LUZ DE CINE Y A TONALLI
 
-- ✅ **Resuelto:** **Lúcido llena la pantalla sin marco** (elige su tamaño en pixeles con la proporción de la ventana,
-  se reacomoda en vivo al entrar a pantalla completa y el primer gesto en computadora la pone) · **pasos propios** al
-  caminar (talón, planta y polvo; medidos abajo de las campanas) · **la tercera sala ya no brinca** (cada sala trae una
-  sola cosa nueva, medido con el bot) · **el túnel se mueve a los cuatro lados** · **el protagonista es hombre** en las
-  cuatro edades (el viejo con barba y bastón) · **la página de propuestas** (`Ludus Cero/lucido/propuestas/`): la sala en cinco
-  niveles de pixel y cuatro candidatos esculpidos en volumen, con ocho vistas, caminata en cuatro direcciones y arte HD
-  · respuesta a Zak: a qué se parece Lúcido, cinco propuestas para Steam y sus porcentajes
-  (`Ludus Cero/lucido/Docs/PROPUESTAS_STEAM.md`).
-- 📁 **Archivos:** lucido (3c6a376, aa527ce): `main.ts` v2.2, `escenas.ts` v2.2, `vida.ts` v2.3, `audio.ts` v1.1,
-  `reglas.ts` v2.2, `arte.ts` v1.1, `textos.ts` v2.2, `base.ts` v1.1, `lienzo.ts` v1.1, `prueba.ts` v2.3 (modo
-  dificultad) y `propuestas/` (nueva) · publicado en Vercel (`index-TbrOwI-l.js`).
 - 💡 **Decisiones (Zak):** nivel 3 «luz de cine» (640 x 360 con la luz a resolución completa, la receta de Terra
   Cristal) · Tonalli de protagonista · selector con Tonalli, Teyolia y Temictli, Ollin fuera · el arte HD fue solo para
   verlo · cuatro direcciones · orden: el nivel 3 y los personajes, la propuesta 3 y luego la 1 (las épocas, que le
@@ -968,9 +1052,7 @@ página: el maestro crece de a una línea por lección.
   comparador honesto pinta «hoy» con el motor real · la curva de dificultad se mide por sala con el bot
   (`prueba.ts dificultad`) · el volumen de un sonido nuevo se mide contra lo aprobado con OfflineAudioContext · fotos por
   sección (una página completa con muchos lienzos de WebGL se atora). Detalle en [[proyecto_juego_pixel]].
-- 🧬 **Versión del sistema:** Lúcido 0.2 (sin marco, pasos) · protocolo v63.
-- 🧭 **Su arranque** vive en `Ludus Cero/lucido/Docs/PROXIMA_SALA.md` (abrir la carpeta `Ludus Cero/lucido` y pegar su
-  prompt); salió de aquí al cerrar la sala de Fotón Cero, porque solo la sala más reciente lleva 🔮.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 #### 2026-10-04 · III · ESCRITORIO PASO A PASO: LA COMUNIDAD COMO HERRAMIENTA, ESCAPE QUE CIERRA Y EL LOGO QUE SUENA
 

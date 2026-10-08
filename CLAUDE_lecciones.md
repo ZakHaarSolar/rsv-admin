@@ -1599,7 +1599,30 @@ La segunda propuesta (TERRA VIVA, en su universo) y la evaluación de Terra Cris
 **Hermanas.** 0-septtricies (un brief prestado no es el norte del dueño) · 0-duosexagies (la propuesta se mira junto a lo
 de hoy antes de enseñarla).
 
+### Paso 0-septuagies · Lo que se hace sin red sube con la fecha en que se hizo
+
+**Regla.** Toda acción que se anota en el aparato para subir después (sin red, en una fila) guarda el día y la hora en que
+el Tripulante la hizo y los manda al servidor: el «hoy» del servidor es el de la subida, no el del toque. Una función que
+decide el día con `now()` necesita un parámetro opcional y acotado con la fecha real (si el servidor aún no lo conoce, la
+app reintenta sin él). Y lo que alterna (marcar y desmarcar) se junta o se anula en la fila antes de subir: repetir un
+interruptor lo deshace.
+
+**Por qué.** El 2026-10-08 la app aprendió a funcionar sin internet (`escaner-app/src/lib/sinConexion.ts`). La revisión
+de las funciones del servidor mostró que los tres bonos de Fotones (Sendero completo, Plan de Vuelo, Contemplación) usaban
+siempre el hoy de Cancún, y el reinicio y la pausa de una racha usaban `now()`. Un Sendero completado anoche en el avión y
+sincronizado hoy habría acreditado el bono hoy (bloqueando el de hoy y perdiendo el de ayer), y un reinicio de racha habría
+arrancado el conteo horas tarde. Se curó mandando `p_date`/`p_at` desde la fila (`toggle_ritual` ya aceptaba `p_date`) y
+con la migración `20261008_sin_conexion_fechas` (hasta 7 días atrás, nunca en el futuro). Se probó en el banco también
+contra un servidor sin la migración (responde PGRST202 y la fila reintenta sin la fecha).
+
+**Hermanas.** 0-terdecies (lo efímero se mide contra el reloj) · 0-septsexagies (lo guardado por usuario necesita al
+usuario cuando la sesión no responde) · 0-vicies (un atajo exige todas las señales: «sin red» no es «la sesión aún carga»,
+y con red las lecturas esperan al servidor como siempre).
+
 ### Changelog del protocolo
+
+- **v67 (2026-10-08 · II):** una lección de la sala de la app sin internet. **0-septuagies**: lo que se hace sin red sube
+  con la fecha en que se hizo (el «hoy» del servidor es el de la subida; lo que alterna se junta en la fila).
 
 - **v66 (2026-10-08):** dos lecciones de la sala de publicidad (el Espejo en dos comerciales, la campaña viva en
   Instagram y las consultas de juegos). **0-duodeseptuagies**: un texto que Zak le va a pegar a otro agente no afirma pasos
