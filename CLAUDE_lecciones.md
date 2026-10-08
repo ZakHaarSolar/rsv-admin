@@ -1570,7 +1570,41 @@ Se curó con `useTripulanteId` (lib/codicesOffline) y se probó con un arranque 
 **Hermanas.** 0-unsexagies (la clave de una caché dice de quién es) · 0-duodecies (la lógica pura no prueba la máquina
 asíncrona: se probó de punta a punta con la red cortada por interruptores dentro del servidor falso).
 
+### Paso 0-duodeseptuagies · Un texto que Zak le va a pegar a otro agente no afirma pasos que él aún no hizo
+
+**Regla.** Cuando se redacta una respuesta para que Zak la pegue a otro agente (un bot de anuncios, otra sala), el texto
+no dice «ya lo hice» por él. Si depende de un paso manual suyo, ese paso va en «Lo que tienes que hacer» y el texto
+dice «cuando lo haya hecho» o se entrega DESPUÉS de que él confirme. Y lo que el otro agente reporta se comprueba por
+nuestra cuenta cuando se puede (una función pública, la página en vivo).
+
+**Por qué.** El 2026-10-03 se le dio a Zak una respuesta para el bot de Meta que empezaba «Listo: ya guardé el ID del
+píxel». Zak la pegó en cuanto la recibió, sin haber guardado el número en el Motor; el bot probó, no llegó ningún evento
+y reportó que la función de la página devolvía vacío. Se perdió una vuelta entera. Se resolvió comprobando la función
+pública con la llave de la landing (respondía null) y dándole a Zak el paso exacto.
+
+**Hermanas.** 0-duodevicies (un «no hay nada» se confirma por otra vía) · 0-nonies (una verificación que no pudo correr
+no pasó).
+
+### Paso 0-undeseptuagies · Una recomendación que solo optimiza el número ignora a quien la va a construir
+
+**Regla.** Cuando Zak pide «el ganador» (un juego, un rumbo, un estilo), se busca dentro de su gusto y de lo que lo
+emociona, y ahí se elige el de más probabilidad. Un género o una idea que los datos favorecen pero que a él no le mueve
+no se propone como ganador: se puede mencionar como contraste, nunca como la apuesta.
+
+**Por qué.** El 2026-10-05 se le propuso SONORA (cartas tipo Balatro donde tu mano es una canción) porque es el género con
+más éxitos de una sola persona. Respuesta de Zak: «qué feo y aburrido juego». Lo que lo emociona son los mundos enormes,
+lo épico y el arte que da ganas de vivir ahí; un proyecto de uno o dos años se sostiene con eso, no con una estadística.
+La segunda propuesta (TERRA VIVA, en su universo) y la evaluación de Terra Cristal ya salieron de ahí.
+
+**Hermanas.** 0-septtricies (un brief prestado no es el norte del dueño) · 0-duosexagies (la propuesta se mira junto a lo
+de hoy antes de enseñarla).
+
 ### Changelog del protocolo
+
+- **v66 (2026-10-08):** dos lecciones de la sala de publicidad (el Espejo en dos comerciales, la campaña viva en
+  Instagram y las consultas de juegos). **0-duodeseptuagies**: un texto que Zak le va a pegar a otro agente no afirma pasos
+  que él aún no hizo. **0-undeseptuagies**: una recomendación que solo optimiza el número ignora a quien la va a
+  construir; el ganador se busca dentro de su gusto.
 
 - **v65 (2026-10-07 · II):** dos lecciones de la sala de Claude for Startups, Ludus Cero en el sistema solar y los Códices
   sin internet. **0-sexsexagies**: una sesión de cuenta se abre solo en el navegador propio de Zak (el bot de Grok creó una

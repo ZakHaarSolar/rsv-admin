@@ -4,6 +4,48 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-07 · FOTÓN CERO: SU SALA PROPIA, EL INSTRUMENTO QUE SUENA Y EL AUDIO QUE VOLVIÓ AL ESTÉREO
+
+- ✅ **Resuelto:** **fotoncero.com proyecta sus cinco obras en su sala propia**, desde R2 y sin YouTube (ignición con el
+  sello, la pantalla se abre desde una línea de luz, luz ambiente, miniaturas en la línea del tiempo, calidad que baja
+  sola, retomar y la siguiente con cuenta regresiva): **Everything You Dream** y **Harmonía · Códigos Aurora** en videos
+  musicales; **No vine aquí**, **Diálogo con el Reflejo Estelar** y **Sol que Respira** en Fragmentos del Sol; «El Eco
+  del Vacío» salió y la tercera luna queda oscura (PRÓXIMAMENTE) · cada obra y cada serie con su dirección, su tarjeta
+  para redes y sus datos de video para buscadores · **la portada es el astrolabio grande con «Desciende»** (sin placas)
+  y abajo esperan el estreno en visor de cámara, el índice, el motor de universos con una nota por anillo, la casa y las
+  dos puertas del taller (alianza y padrino, que escriben a Motor → Aliados) · **todo respira**: las lunas son bucles de
+  video (el sol de ida y vuelta, sin temblor), cada serie tiene su cielo y las ondas de Zak'Haar bailan con el espectro
+  real de la canción · **sonidos de ElevenLabs afinados en La 432** (engranes en las lunas, cristal al pasar, campana al
+  abrir una serie, soplo al cerrar, chispas al descender) con un solo interruptor que nace encendido · sin barra de
+  desplazamiento · **la página de videos musicales ya no parpadea en negro** · **Everything You Dream suena en estéreo**
+  en la web (versión 2) · Red Solar Viva: sin pestaña Fotón Cero, el planeta abre fotoncero.com, `/fotoncero`,
+  `/fragmentos` y `/fragmentosdelsol` redirigen, y **los planetas de Origen solo abren su tarjeta cuando la mano frena**.
+- 📁 **Archivos:** fotoncero (f45cedb a 572b9b4 y el del cierre): `index.html` v5.2, `main.ts` v5.2, `estilos.css` v5.2,
+  `sala.ts` v1.0, `sala.css` v1.1, `series.ts` v2.1, `descenso.ts` v1.1, `ondas.ts` v1.0, `sfx.ts` v1.0,
+  `vite.config.ts` v2.2, `herramientas/nueva-transmision.sh` v1.1, y `CLAUDE.md`, `.claude/settings.json` y
+  `Docs/BITACORA.md` (nuevos) · Code (9b24e05): `Origen.tsx` v5.31, `Domo.tsx` v5.12, `NavegadorEstacion.tsx` v4.26 ·
+  rsv-web (92ba610): `vercel.json` · admin: `CLAUDE_lecciones.md` (tres lecciones y protocolo v64).
+- 🔌 **Edge functions deployed:** `fotoncero-subida`, puente TEMPORAL que solo firmaba subidas a `FotonCero/` en R2;
+  desplegado y borrado dos veces (404 verificado). En R2 quedó `FotonCero/prueba/portada.jpg`, inofensivo.
+- ⏳ **Pendiente:** el re-export en estéreo de Everything You Dream (Pendientes vivos · Fotón Cero).
+- 💡 **Decisiones:** Fotón Cero vive en su propia casa y Red Solar Viva solo la señala · los videos van desde R2 en tres
+  calidades y una obra que cambia sube con nombre nuevo (`-vN`), para que la caché nunca sirva la vieja · sin
+  descripciones de episodio · la portada sin placas: manda el astrolabio · el sonido nace encendido y la sala de
+  proyección calla por dentro · las salas de Fotón Cero se abren en la carpeta `fotoncero`.
+- 🔧 **Patrones nuevos:** nunca máscara ni filtro CSS sobre un `<video>` (Chrome con tarjeta gráfica lo pinta por bloques
+  y parpadea en negro; el Chrome sin ventana no lo ve): penumbras como capa encima y el video aparece hasta pintar su
+  primer cuadro · bucles de ida y vuelta y más lentos cuando la toma se desplaza, arrancando después de la transición
+  anterior · la matriz de canales de un audio se mide por mínimos cuadrados contra el master alineado · efectos
+  decodificados fuera de línea (sin avisos) que despiertan con el primer gesto, afinados con análisis de frecuencias ·
+  intención antes de abrir una tarjeta (el cursor frena: 12 px por 100 ms o 420 ms quieto) · puente temporal de subida
+  a R2 que solo firma un prefijo y se borra al terminar · con `cleanUrls` el respaldo de la SPA va a `/index`. Lecciones
+  0-tersexagies, 0-quatersexagies y 0-quinsexagies; detalle en [[proyecto_foton_cero_sala]] y [[feedback_todo_vivo]].
+- 🧬 **Versión del sistema:** fotoncero.com con su sala propia, cinco obras y su sonido · protocolo v64.
+- 🧭 **Su arranque** (salió de aquí al cerrar la sala de Claude for Startups, porque solo la sala más reciente lleva 🔮):
+  abrir la carpeta `fotoncero` (su `CLAUDE.md` se carga solo) y leer `Docs/BITACORA.md`. Cuando Zak traiga el re-export de Everything You Dream: medir que el canal izquierdo
+  y el derecho sean distintos (correlación menor a 0.99), pasarlo por `herramientas/nueva-transmision.sh`, subir las
+  tres calidades a R2 con el sufijo `-v3` y poner `version: 3` en `src/series.ts`.
+
 #### 2026-10-04 · III · ESCRITORIO PASO A PASO: LA COMUNIDAD COMO HERRAMIENTA, ESCAPE QUE CIERRA Y EL LOGO QUE SUENA
 
 - ✅ **Resuelto:** **el logo de apertura suena en la app de la Mac** (al abrir en pantalla completa la ventana nace
