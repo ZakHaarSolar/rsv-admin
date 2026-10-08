@@ -1,8 +1,16 @@
+// Red Solar Viva — Edge Function: decode-dream v1.14
+// v1.14 — 🜂 HAIKU 5.5 PRIMERO (Zak 2026-10-08, ganó la prueba a ciegas): la lectura la
+//         hace Claude Haiku 5.5 (_shared/claudeHaiku.ts: salida estructurada, sin
+//         pensamiento, esfuerzo bajo) y la cascada de Gemini queda de RESPALDO automático
+//         (sin llave, saldo agotado, rechazo o error → Gemini, sin que el Tripulante lo
+//         note). + La instrucción deja de dar un menú que todos los modelos copiaban: la
+//         calibración nace de una imagen concreta del sueño y el arranque varía (en la
+//         prueba, 14 de 24 lecturas de Gemini abrían con "El sistema detecta" y 12 de 24
+//         recetaban la ducha fría del ejemplo).
 // 2026-07-21 — MIGRACIÓN a gemini-3.6-flash: el modelo Flash primario pasa
 //   de gemini-3.5-flash / gemini-flash-latest a gemini-3.6-flash (GA, reemplaza
 //   a 3.5 Flash: misma entrada, salida ~17% más barata y más rápida). Los
 //   respaldos de cascada (gemini-3-flash-preview, gemini-2.5-flash) intactos.
-// Red Solar Viva — Edge Function: decode-dream v1.13
 // v1.13 — AUDITORÍA PARTE 4 — techo DIARIO por persona + FRENO GLOBAL de gasto (una cota por hora dejaba pasar 24 veces esa cifra al día, y no existía techo de ecosistema).
 // v1.12 — i18n: idioma del DISPOSITIVO. El body trae `lang` ("es"|"en", default
 //         "es"). dictamen_vibral y calibracion_quirurgica salen en ese idioma;
@@ -80,7 +88,7 @@
 // (gemini-flash-latest → gemini-2.5-flash), backoff exponencial ante 5xx.
 //
 // Deploy: supabase functions deploy decode-dream --no-verify-jwt
-// Secrets: GEMINI_API_KEY, CLERK_SECRET_KEY, SUPABASE_URL,
+// Secrets: ANTHROPIC_API_KEY (carril Haiku), GEMINI_API_KEY (respaldo), CLERK_SECRET_KEY, SUPABASE_URL,
 //          SUPABASE_SERVICE_ROLE_KEY (todos ya instalados).
 
 // deno-lint-ignore-file no-explicit-any
@@ -88,6 +96,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts"
 import { jwtVerify, createLocalJWKSet } from "https://esm.sh/jose@5.9.6"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0"
+import { claudeJson, DREAM_SCHEMA } from "../_shared/claudeHaiku.ts"
 
 const GEMINI_MODEL = "gemini-3.6-flash"
 /* Cascada de modelos (v1.7): si el primario está saturado (503), baja al
@@ -211,7 +220,7 @@ async function gateDream(
 const SYSTEM_PROMPT = `Eres el "Decodificador de Estasis" de Red Solar Viva. No haces psicoanálisis ni interpretación de símbolos de los sueños. Decodificas lo que tu mente y tu cuerpo procesaron mientras dormías: por qué se generó ese sueño y qué te pide tu sistema ahora que despertaste.
 Hablas con honestidad directa, precisión y calma. No consuelas: revelas. Tu tono es de guía claro y firme.
 
-LENGUAJE — REGLA CRÍTICA: escribes para una persona que recién llega y no ha leído ningún libro nuestro. Usa palabras simples y humanas. PROHIBIDO usar jerga que no se entienda sin contexto: NADA de "silicio", "carbono", "hardware", "procesador", "avatar", "RAM", "matriz", "ancho de banda", "termodinámica", "densidades". Di las cosas en llano: "tu mente", "tu cuerpo", "tu sistema nervioso", "tu energía", "tu calma", "tu miedo", "tu claridad". Nunca uses "te sugiero", "intenta", "quizás significa": usa "La lectura indica", "El sistema detecta", "Tu mente", "Ejecuta esto".
+LENGUAJE — REGLA CRÍTICA: escribes para una persona que recién llega y no ha leído ningún libro nuestro. Usa palabras simples y humanas. PROHIBIDO usar jerga que no se entienda sin contexto: NADA de "silicio", "carbono", "hardware", "procesador", "avatar", "RAM", "matriz", "ancho de banda", "termodinámica", "densidades". Di las cosas en llano: "tu mente", "tu cuerpo", "tu sistema nervioso", "tu energía", "tu calma", "tu miedo", "tu claridad". Nunca uses "te sugiero", "intenta", "quizás significa": habla con certeza ("La lectura indica", "Tu mente", "Ejecuta esto"). Varía cómo empiezas: no abras todas las lecturas con la misma frase.
 
 Clasifica el sueño en UNA de estas TRES bandas y emite un dictamen y una calibración acordes:
 
@@ -229,6 +238,8 @@ BANDA 3 — Descarga de Código (transmisión directa)
 * Cuándo: claridad extrema, sensación de volar consciente, luz o geometría, calma profunda, paz, o ideas y respuestas nítidas.
 * Dictamen: confírmale que esto no fue un sueño común: su mente se aquietó tanto que recibió información clara, una intuición o una dirección. Ancla qué le estaba mostrando y por qué importa.
 * Calibración: una acción para no perder esa claridad. Ejemplo: escribir de inmediato lo que recibió al despertar, exponerse al sol directo 11 minutos en la mañana, o ejecutar hoy mismo ese proyecto que venía posponiendo.
+
+LECTURA PERSONAL — REGLA CRÍTICA: el dictamen nombra al menos una imagen concreta de ESTE sueño (un objeto, un lugar, una persona, un desenlace) y dice qué revela. La calibración nace de esa imagen o de lo que el sueño pide; los ejemplos de cada banda muestran el tono, no son un menú. No los copies: la ducha o el baño de agua fría, caminar descalzo y las horas sin pantallas solo valen si algo del sueño los llama.
 
 FORMATO DE SALIDA — Responde ÚNICAMENTE con un objeto JSON válido (sin markdown, sin texto fuera del objeto), con EXACTAMENTE estas claves:
 {
@@ -342,6 +353,35 @@ async function decodeDreamOnce(
     apiKey: string,
     lang: string = "es"
 ): Promise<any | null> {
+    const userText = `TELEMETRÍA DE ESTASIS DEL TRIPULANTE:\n"""\n${clean}\n"""\n\nDecodifica y emite el JSON.`
+
+    /* v1.14 — Haiku 5.5 primero. Su forma llega garantizada por el esquema; si no
+       contesta o algo no cuadra, sigue la cascada de Gemini de siempre. */
+    const viaClaude = await claudeJson({
+        tag: "decode-dream",
+        system: dreamSystemPrompt(lang),
+        content: userText,
+        schema: DREAM_SCHEMA,
+        maxTokens: 2000,
+    })
+    if (viaClaude) {
+        try {
+            const d = JSON.parse(viaClaude)
+            if (
+                typeof d?.dictamen_vibral === "string" && d.dictamen_vibral.trim() &&
+                typeof d?.calibracion_quirurgica === "string" && d.calibracion_quirurgica.trim()
+            ) {
+                d.banda_key = String(d.banda_key || "").toLowerCase().trim()
+                if (!["purga", "simulador", "descarga"].includes(d.banda_key))
+                    d.banda_key = bandaKeyFrom(d.banda_frecuencial)
+                return d
+            }
+        } catch (_e) {
+            /* cae a Gemini */
+        }
+        console.warn("[decode-dream] salida de Claude sin forma válida → Gemini")
+    }
+
     const geminiPayload = {
         systemInstruction: {
             role: "system",
@@ -350,11 +390,7 @@ async function decodeDreamOnce(
         contents: [
             {
                 role: "user",
-                parts: [
-                    {
-                        text: `TELEMETRÍA DE ESTASIS DEL TRIPULANTE:\n"""\n${clean}\n"""\n\nDecodifica y emite el JSON.`,
-                    },
-                ],
+                parts: [{ text: userText }],
             },
         ],
         generationConfig: {

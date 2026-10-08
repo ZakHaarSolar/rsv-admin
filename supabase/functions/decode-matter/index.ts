@@ -1,8 +1,14 @@
+// Red Solar Viva — Edge Function: decode-matter v6.20
+// v6.20 — 🜂 HAIKU 5.5 PRIMERO (Zak 2026-10-08, ganó la prueba a ciegas): el dictamen lo
+//         emite Claude Haiku 5.5 (_shared/claudeHaiku.ts: salida estructurada con el
+//         esquema del dictamen, sin pensamiento, esfuerzo bajo) en los 3 modos; en visión
+//         recibe la foto si es JPEG/PNG/WebP/GIF (HEIC va directo a Gemini). La cascada de
+//         Gemini queda de RESPALDO automático. La lectura OCR (extract-text) no cambia.
+//         + Las instrucciones quedan sin voseo (Dirígete, Capitaliza, Trata, Aplica…).
 // 2026-07-21 — MIGRACIÓN a gemini-3.6-flash: el modelo Flash primario pasa
 //   de gemini-3.5-flash / gemini-flash-latest a gemini-3.6-flash (GA, reemplaza
 //   a 3.5 Flash: misma entrada, salida ~17% más barata y más rápida). Los
 //   respaldos de cascada (gemini-3-flash-preview, gemini-2.5-flash) intactos.
-// Red Solar Viva — Edge Function: decode-matter v6.19
 // v6.19 — AUDITORÍA PARTE 4 — techo DIARIO por persona + FRENO GLOBAL de gasto (una cota por hora dejaba pasar 24 veces esa cifra al día, y no existía techo de ecosistema).
 // v6.18 — CLASIFICACIÓN DIETÉTICA (Zak 2026-07-13): el dictamen suma el campo
 //         "clasificacion_dietetica" {vegano, vegetariano, sin_gluten} (booleanos,
@@ -120,13 +126,14 @@
 //   5xx de Gemini. Errores 4xx NO se reintentan.
 //
 // Deploy: supabase functions deploy decode-matter --no-verify-jwt
-// Secret: supabase secrets set GEMINI_API_KEY=<tu-api-key>
+// Secrets: ANTHROPIC_API_KEY (carril Haiku) · GEMINI_API_KEY (respaldo)
 
 // deno-lint-ignore-file no-explicit-any
 // @ts-ignore — Deno runtime
 import "jsr:@supabase/functions-js/edge-runtime.d.ts"
 import { jwtVerify, createLocalJWKSet } from "https://esm.sh/jose@5.9.6"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0"
+import { claudeJson, MATTER_SCHEMA } from "../_shared/claudeHaiku.ts"
 
 const GEMINI_MODEL = "gemini-3.6-flash"
 /* v6.12 — `GEMINI_MODEL_FALLBACK` (v6.6) quedó muerto desde la cascada v6.10
@@ -295,7 +302,7 @@ REGLAS DE DECODIFICACIÓN DE DENSIDAD:
 2. FRICCIÓN ENERGÉTICA (Energy-Density): Materia orgánica de origen animal, secreciones, o experimentación animal (cruelty). Anclan tu biología a la densidad, elevan la entropía y frenan tu ligereza.
 3. IMPACTO EN LA MATRIZ: La contribución externa a la destrucción ecológica (ej. microplásticos, químicos en mantos acuíferos) o la memoria de sacrificio animal.
 4. DENSIDAD/LIGEREZA (Termodinámica de Sexta Densidad): aplicar la matriz Gravedad-vs-Fotones del bloque siguiente. SIEMPRE devolver este valor.
-5. TONO: Imperativo, oscuro, tecnológico y definitivo. Dirigite al tripulante con expresiones como "tu avatar", "tu vehículo", "tu antena biológica", "tu núcleo", "tu chasis", "tu campo" — SIEMPRE EN MINÚSCULAS, integradas como lenguaje natural, NO como nombres propios. Capitalizá la primera palabra solo cuando sean inicio de oración. PROHIBIDO escribir Title Case en medio de oración: NO "Tu Avatar", NO "Tu Antena Biológica", NO "Tu Vehículo". Sí "tu avatar", "tu antena biológica", "tu vehículo".
+5. TONO: Imperativo, oscuro, tecnológico y definitivo. Dirígete al tripulante con expresiones como "tu avatar", "tu vehículo", "tu antena biológica", "tu núcleo", "tu chasis", "tu campo" — SIEMPRE EN MINÚSCULAS, integradas como lenguaje natural, NO como nombres propios. Capitaliza la primera palabra solo cuando sean inicio de oración. PROHIBIDO escribir Title Case en medio de oración: NO "Tu Avatar", NO "Tu Antena Biológica", NO "Tu Vehículo". Sí "tu avatar", "tu antena biológica", "tu vehículo".
 
 ${TERMODINAMICA_SEXTA_DENSIDAD}
 
@@ -337,7 +344,7 @@ Cada elemento empieza con "Nombre: [TIPO: NIVEL] descripción". Reglas inviolabl
   TIPO permitidos (exactamente estos, sin variantes):
   - Para cargas negativas: "Fricción Biológica", "Fricción Energética", "Fricción Química", "Densidad", "Impacto", "Entropía".
   - Para cargas positivas: "Conductividad", "Pureza", "Hidratación", "Claridad", "Fluidez".
-  - PROHIBIDO usar "Ligereza" como tipo en analisis_quirurgico (la ligereza vive solo en el medidor de gravedad superior, no acá). Si querés expresar ligereza en un componente, usá "Conductividad" o "Pureza".
+  - PROHIBIDO usar "Ligereza" como tipo en analisis_quirurgico (la ligereza vive solo en el medidor de gravedad superior, no acá). Si quieres expresar ligereza en un componente, usa "Conductividad" o "Pureza".
 
   NIVEL permitidos (exactamente estos, en mayúsculas o minúsculas):
   - "Baja" / "Media" / "Alta" / "Crítica" para tipos negativos.
@@ -346,7 +353,7 @@ Cada elemento empieza con "Nombre: [TIPO: NIVEL] descripción". Reglas inviolabl
 
 ESTILO DE LA DESCRIPCIÓN (CRÍTICO — calidad de marca):
 Cada descripción es UNA frase ELEGANTE, PRECISA y PROFESIONAL que nombra el MECANISMO real del componente sobre el cuerpo, con vocabulario de Sexta Densidad aplicado con criterio (conductividad, densidad, entropía, código solar, transmutación, frecuencia, ignición metabólica, fotónico). Debe sonar de alta gama, mística pero seria — NUNCA amateur. PROHIBIDO usar las palabras 'carbono' y 'silicio' en cualquier texto visible: habla de densidad, entropía y ligereza.
-PROHIBIDO el relleno barato y las metáforas literales sin sustancia: nada de "legumbre de carga terrestre", "alimento de la tierra", "producto común", "cosa que comes", descripciones genéricas o infantiles. Si no aportás el mecanismo, no lo escribas.
+PROHIBIDO el relleno barato y las metáforas literales sin sustancia: nada de "legumbre de carga terrestre", "alimento de la tierra", "producto común", "cosa que comes", descripciones genéricas o infantiles. Si no aportas el mecanismo, no lo escribas.
   - EJEMPLO POBRE (NUNCA): "Habas: [Densidad: Media] legumbre de carga terrestre."
   - EJEMPLO FINO (SÍ): "Habas: [Densidad: Media] proteína de raíz telúrica — combustible denso que exige ignición metabólica para transmutarse en frecuencia utilizable."
 
@@ -403,9 +410,9 @@ ESTRUCTURA PARA SEÑAL CORRUPTA:
 const PROMPT_MATTER_NAME_MODE = `# DECODIFICADOR DE MATERIA v6.0 — MODO CÓDICE DE MATERIA (texto puro)
 # MOTOR: Gemini Flash Latest · TEMPERATURA: 0.1
 
-El tripulante escribió directamente el nombre de la materia en el campo "Códice de Materia". Tratá ese texto como dato exacto y soberano. NO intentes interpretarlo como etiqueta de un producto, NO le añadas ingredientes hipotéticos. Si dice "Plátano", es plátano puro. Si dice "Glutamato Monosódico", es ese químico individual.
+El tripulante escribió directamente el nombre de la materia en el campo "Códice de Materia". Trata ese texto como dato exacto y soberano. NO intentes interpretarlo como etiqueta de un producto, NO le añadas ingredientes hipotéticos. Si dice "Plátano", es plátano puro. Si dice "Glutamato Monosódico", es ese químico individual.
 
-Aplicá la matriz Gravedad-vs-Fotones para asignar densidad_ligereza con precisión.
+Aplica la matriz Gravedad-vs-Fotones para asignar densidad_ligereza con precisión.
 
 ${REGLAS_DECODIFICACION}`
 
@@ -615,6 +622,38 @@ function buildMatterPayload(input: {
     }
 }
 
+/* v6.20 — El mismo pedido para Claude Haiku: las reglas van en el system (fijo por modo)
+   y el dato en el mensaje. null = este pedido no puede ir a Claude (HEIC) → solo Gemini. */
+function buildMatterClaude(input: {
+    matter_name?: any
+    extracted_text?: any
+    image_base64?: any
+    mime_type?: any
+    lang?: any
+}): { system: string; content: any } | null {
+    const { matter_name, extracted_text, image_base64, mime_type } = input
+    const langDir = outputLangDirective(input.lang === "en" ? "en" : "es")
+    if (typeof matter_name === "string" && matter_name.trim().length >= 2)
+        return {
+            system: PROMPT_MATTER_NAME_MODE + langDir,
+            content: `=== CÓDICE DE MATERIA ===\n${matter_name.trim().slice(0, 200)}\n=== FIN ===\n\nEmite el dictamen.`,
+        }
+    if (typeof extracted_text === "string" && extracted_text.trim().length >= 20)
+        return {
+            system: PROMPT_TEXT_MODE + langDir,
+            content: `=== TEXTO_EXTRAIDO ===\n${extracted_text}\n=== FIN ===\n\nEmite el dictamen.`,
+        }
+    const mime = typeof mime_type === "string" ? mime_type : "image/jpeg"
+    if (typeof image_base64 !== "string" || !image_base64 || !/^image\/(jpeg|png|webp|gif)$/.test(mime)) return null
+    return {
+        system: PROMPT_VISION_MODE + langDir,
+        content: [
+            { type: "image", source: { type: "base64", media_type: mime, data: image_base64 } },
+            { type: "text", text: "Emite el dictamen." },
+        ],
+    }
+}
+
 /* Rescata un dictamen de un JSON truncado (finishReason MAX_TOKENS): el caso
    típico es que el `dictamen_hud` (objeto plano de scalars) llegó completo pero
    el `analisis_quirurgico` se cortó a media frase. Extrae el hud por regex,
@@ -691,25 +730,45 @@ function salvageMatter(raw: string): any | null {
    Lo comparten el modo síncrono y el asíncrono. */
 async function decodeMatterOnce(
     geminiPayload: any,
-    apiKey: string
+    apiKey: string,
+    claudeReq: { system: string; content: any } | null = null
 ): Promise<any | null> {
-    const r = await callGeminiWithRetry(geminiPayload, apiKey, 3)
-    if (!r.ok) {
-        const errText = await r.text().catch(() => "")
-        console.error(
-            "[decode-matter] Gemini error after retries:",
-            r.status,
-            errText
-        )
-        return null
+    /* v6.20 — Haiku 5.5 primero; si no contesta o su JSON no trae la forma, Gemini. */
+    let rawText = ""
+    let gjson: any = null
+    const viaClaude = claudeReq
+        ? await claudeJson({ tag: "decode-matter", system: claudeReq.system, content: claudeReq.content, schema: MATTER_SCHEMA, maxTokens: 4000 })
+        : null
+    if (viaClaude) {
+        try {
+            const d = JSON.parse(viaClaude)
+            if (d?.dictamen_hud && Array.isArray(d.analisis_quirurgico) && typeof d.comando_final === "string")
+                rawText = viaClaude
+        } catch (_e) {
+            /* cae a Gemini */
+        }
+        if (!rawText) console.warn("[decode-matter] salida de Claude sin forma válida → Gemini")
     }
 
-    const gjson = await r.json()
-    /* Concatenar TODOS los `parts` (Gemini parte el JSON en varios). */
-    const _parts = gjson?.candidates?.[0]?.content?.parts
-    const rawText = Array.isArray(_parts)
-        ? _parts.map((p: any) => p?.text ?? "").join("")
-        : ""
+    if (!rawText) {
+        const r = await callGeminiWithRetry(geminiPayload, apiKey, 3)
+        if (!r.ok) {
+            const errText = await r.text().catch(() => "")
+            console.error(
+                "[decode-matter] Gemini error after retries:",
+                r.status,
+                errText
+            )
+            return null
+        }
+
+        gjson = await r.json()
+        /* Concatenar TODOS los `parts` (Gemini parte el JSON en varios). */
+        const _parts = gjson?.candidates?.[0]?.content?.parts
+        rawText = Array.isArray(_parts)
+            ? _parts.map((p: any) => p?.text ?? "").join("")
+            : ""
+    }
 
     const tryParse = (src: string): any => {
         try {
@@ -975,6 +1034,13 @@ Deno.serve(async (req: Request) => {
             mime_type,
             lang: deviceLang,
         })
+        const claudeReq = buildMatterClaude({
+            matter_name,
+            extracted_text,
+            image_base64,
+            mime_type,
+            lang: deviceLang,
+        })
 
         /* ── MODO ASÍNCRONO (v6.12) ─────────────────────────────────────────
            El cliente manda `async: true`. Creamos un job 'processing' en
@@ -1036,7 +1102,7 @@ Deno.serve(async (req: Request) => {
             const work = (async () => {
                 let dictamen: any = null
                 try {
-                    dictamen = await decodeMatterOnce(geminiPayload, apiKey)
+                    dictamen = await decodeMatterOnce(geminiPayload, apiKey, claudeReq)
                 } catch (e) {
                     console.error("[decode-matter] cascada async falló:", e)
                 }
@@ -1127,7 +1193,7 @@ Deno.serve(async (req: Request) => {
         /* ── MODO SÍNCRONO (fallback) ─────────────────────────────────────
            decodeMatterOnce devuelve el dictamen (válido o SENAL_CORRUPTA) o
            null si Gemini falló upstream tras agotar la cascada. */
-        const dictamen = await decodeMatterOnce(geminiPayload, apiKey)
+        const dictamen = await decodeMatterOnce(geminiPayload, apiKey, claudeReq)
         if (!dictamen) {
             return new Response(
                 JSON.stringify({ error: "Gemini upstream failure" }),
