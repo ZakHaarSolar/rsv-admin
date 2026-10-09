@@ -4,6 +4,36 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-08 · PUBLICIDAD: EL ESPEJO EN DOS COMERCIALES, LA CAMPAÑA VIVA EN INSTAGRAM Y LAS CONSULTAS DE JUEGOS
+
+- ✅ **Resuelto:** **el segundo comercial del Espejo** (el espejo dorado) se hizo y Zak lo descartó («me gustó más el
+  primero»; el video a la papelera, el estudio queda) · **el Espejo habla de tú y sin rayas** (regla y filtro en vivo y al
+  guardar) · **el píxel de Meta activo** en Motor → Campaña, **el dominio verificado** y **la promoción del Reel del
+  Espejo corriendo** desde @escanervibracional, solo en Instagram, del 4 al 11 de octubre a 100 MXN/día · a medio camino:
+  el anuncio da clics (casi 4 %, 2 MXN por visita) pero la página no convierte (1 o 2 toques de ~140 visitas) y solo 10 %
+  pasa de 3 segundos: se rehacen la página y el video · consultas: el mejor juego propio (Terra Cristal Pixel 3, ~35 % que
+  le vaya bien y ~6 % de éxito global con audio sin IA), qué hace posible el arte en código, ingresos y tiempos por juego,
+  SONORA descartada y TERRA VIVA propuesta; además micro1 (reviewer y HDM), impuestos y LinkedIn de Zak.
+- 📁 **Archivos:** admin `oraculo-chat` v1.51 (a1fc7c4) · escaner-landing `index.html` v1.4 (4868a6f) · terra-cristal
+  `Docs/PROPUESTAS_STEAM.md` (b6e1737) · sin repo: `Escaner Vibracional/Publicidad/Prompts para Grok.md` (lo que Meta
+  deja y los pasos de la promoción desde Instagram) y los dos prompts de las próximas salas · `Escaner Vibracional/Anuncio
+  Espejo 2/estudio/` (descartado) · `Ludus Cero/PROPUESTA_GANADORA.md`.
+- 🔌 **Edge functions deployed:** `oraculo-chat` v1.51 (sin rayas ni voseo, en vivo y al guardar).
+- ⏳ **Pendiente:** la página del Espejo con selector de versiones (el 🔮) y el video que para el scroll (en Pendientes
+  vivos, con su prompt).
+- 💡 **Decisiones:** el Espejo de la noche va primero, solo y solo en Instagram · las promociones se hacen desde
+  instagram.com en la computadora (en la app de iOS Apple cobra 30 %) · las siguientes pruebas usan el mismo público ·
+  las propuestas de juego se buscan dentro del gusto de Zak · Terra Cristal pasa al frente de Lúcido.
+- 🔧 **Patrones nuevos:** en esta cuenta de Meta, optimizar a Lead obliga a ubicaciones automáticas (Ventas no ofrece
+  Lead y Tráfico ni deja fijar la edad): solo Instagram es promocionar el Reel · el píxel se comprueba con la función
+  pública de la landing y su llave · dos tomas de Blender que comparten cuadros se pisan los renders · un fundido entre
+  dos capas solo cuando ya coinciden. Lecciones 0-duodeseptuagies y 0-undeseptuagies; detalle en
+  [[proyecto_publicidad_pagada]] y [[proyecto_sonora]].
+- 🧬 **Versión del sistema:** landing v1.4 en adelante · oraculo-chat v1.51 · protocolo v66.
+- 🔮 **Cómo arrancar la próxima Sala de Comando:** abrir la carpeta raíz `Red Solar Viva` y pegar el prompt de
+  `Escaner Vibracional/Publicidad/Prompt próxima sala · Landing del Espejo.md`, antes del 11 de octubre (cuando termina
+  la promoción). El del video vive al lado: `Prompt próxima sala · Video que para el scroll.md`.
+
 #### 2026-10-07 · II · CLAUDE FOR STARTUPS, LUDUS CERO EN EL SISTEMA SOLAR Y LOS CÓDICES QUE SE LEEN SIN INTERNET
 
 - ✅ **Resuelto:** la solicitud a Claude for Startups armada (textos en inglés, hoja de llenado y prompt) · el botón de la

@@ -1619,7 +1619,35 @@ contra un servidor sin la migración (responde PGRST202 y la fila reintenta sin 
 usuario cuando la sesión no responde) · 0-vicies (un atajo exige todas las señales: «sin red» no es «la sesión aún carga»,
 y con red las lecturas esperan al servidor como siempre).
 
+### Paso 0-unseptuagies · Lo que tiene que verse no espera un cuadro de animación
+
+**Regla.** Una capa que tiene que aparecer nace visible: su entrada animada es un adorno, nunca la condición para verse.
+framer-motion toma `requestAnimationFrame` una sola vez al cargar y, si un cuadro pedido no vuelve, se queda esperándolo
+para siempre: todo lo que nace con `initial={{ opacity: 0 }}` queda montado e invisible, tapando la pantalla y tragándose
+los toques. Por eso: `initial={false}` más una entrada que el navegador corre solo (`riseLayerIn`) con un rescate por reloj
+normal (un `setTimeout` que la termina si no avanzó), y el vigía del reloj de cuadros en línea en `escaner-app/index.html`
+(antes de cualquier módulo, porque un módulo podría evaluarse después de framer), que atiende él mismo las peticiones de
+cuadro vencidas a los 200 ms con la página visible.
+
+**Por qué.** El 2026-09-27 Zak volvió a la app tras 32 minutos en segundo plano: el sello de entrada se quedó en pantalla y,
+en la misma sesión, la Bitácora «no abría nada» con la barra de abajo escondida. El registro del teléfono (sessionDiag)
+mostró que el código siguió vivo (Clerk renovó la sesión a los 60 s) y que cerrar la app una vez curó las dos cosas. En la
+vista previa oculta (reloj de cuadros detenido y la página declarándose visible) la Bitácora vieja quedó en opacidad 0 a
+los 4.9 s sin ninguna animación iniciada; la nueva apareció a los 0.95 s, y Plan de Vuelo, Realidad Elegida y Rachas
+igual. Ahí mismo salió otro defecto de la misma familia: el Espejo y las cuatro capas compartían la clave vacía dentro
+del `AnimatePresence` del Escáner. Por qué se detuvo el reloj en WebKit no quedó probado: la caja negra
+(`escaner-app/src/lib/cajaNegra.ts`, con los rescates del vigía en cada latido) lo dirá si vuelve.
+
+**Hermanas.** 0-ter (lo que el panel oculto congela no está roto, y además sirve de laboratorio: forzar
+`document.visibilityState` reproduce el reloj mudo) · 0-duodecies (la lógica pura no prueba la máquina asíncrona) ·
+0-septies (se probó también contra la versión vieja) · 0-terquadragies (claves con prefijo) · 0-vicies-semel (la causa se
+anuncia después de probarla).
+
 ### Changelog del protocolo
+
+- **v68 (2026-10-09):** una lección de la sala del Escáner que no se traba, la bienvenida exprés, las tiendas 1.1.6 y los
+  CV. **0-unseptuagies**: lo que tiene que verse no espera un cuadro de animación. Y nace la sala de los CV de Zak con su
+  propio `admin/aplicaciones/CLAUDE.md` en la tabla de proyectos (excluye el maestro con `claudeMdExcludes`).
 
 - **v67 (2026-10-08 · II):** una lección de la sala de la app sin internet. **0-septuagies**: lo que se hace sin red sube
   con la fecha en que se hizo (el «hoy» del servidor es el de la subida; lo que alterna se junta en la fila).

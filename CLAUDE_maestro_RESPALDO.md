@@ -450,6 +450,7 @@ proyecto guarde lo suyo en SU carpeta y que la sala se abra ahí dentro.
 | **Navegante de la Red** (código en `Code/`) | `Ludus Cero/Navegante/CLAUDE.md` ✅ hecho (2026-10-03) | abrir `Ludus Cero/Navegante` |
 | **Lúcido** (play.redsolarviva.com/lucido) | `Ludus Cero/lucido/CLAUDE.md` ✅ hecho (2026-10-03) | abrir `Ludus Cero/lucido` |
 | **Fotón Cero** (fotoncero.com, la sala de proyección del estudio) | `fotoncero/CLAUDE.md` ✅ hecho (2026-10-07) | abrir `fotoncero` |
+| **Aplicaciones** (los CV de Zak y las solicitudes de Red Solar Viva) | `admin/aplicaciones/CLAUDE.md` ✅ hecho (2026-10-09) | abrir `admin/aplicaciones` |
 
 Este archivo se queda como **índice del ecosistema**: quién es Zak, cómo se le habla, dónde vive cada proyecto,
 los destinos de publicación y el protocolo de cierre. Lo que sea de un solo proyecto baja a su carpeta.
@@ -524,6 +525,12 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 
 ### 🔵 Escáner · lo que necesita tu decisión
 
+- **Bienvenida exprés: decidir si se queda** (vive desde la 1.1.6 de App Store y Android vc9): aviso médico, «¿Qué te
+  trajo aquí?» y directo a lo que eligió, gratis y sin muro de pago al entrar; el muro aparece al llegar a un límite
+  real. Al 2026-10-09: 3 instalaciones nuevas desde el 28 de septiembre y las 3 entraron directo; muy pocas para
+  decidir. Revisar a fin de octubre en el Motor (el embudo ya cuenta aparte a quien «Entró directo»): cuentas creadas,
+  primer escaneo y Sintonía, contra el recorrido completo de julio a septiembre. Volver al recorrido largo es un clic en
+  Motor → Pruebas A/B → «Onboarding · Duración», sin publicar nada.
 - **Claude for Startups: esperando la revisión de la cuenta de Console** (desde 2026-10-07). Lo sucedido, por si hay que
   apelar: (1) Zak pidió textos y un prompt para su bot de Grok; (2) el bot abrió platform.claude.com en SU navegador
   remoto; con cuerpodeluz555 (Gmail) Console pidió un correo de empresa; (3) dentro de esa pantalla Zak entró con
@@ -540,15 +547,18 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   facturación 01A6FF-E87869-821613). Respuesta en 3 a 5 días hábiles a Proton. Si aprueban: Nano Banana por Vertex AI
   (no llaves de AI Studio) desde las funciones del servidor. Datos en `admin/aplicaciones/2026-10 Google for Startups Cloud/`.
 - **Consulta respondida el 2026-10-08 · ¿los Decodificadores de Alimentos y Sueños pasan a la API de Claude (los 100 USD/mes
-  del Max)?** Medido con las instrucciones reales desde la Mac: Gemini 3.6 Flash tarda ~2 s en un sueño y ~3.4 s en el
-  dictamen de un alimento (en producción la lectura de la foto suma ~1.8 s). Con las velocidades públicas, Claude Sonnet 5.5
-  en esfuerzo bajo tardaría ~3 a 4 s y ~7 a 8 s (Haiku 4.5 no es más rápido y razona menos: queda fuera). Calidad: se espera
-  igual o mejor (Gemini abrió los 12 dictámenes de sueño con «El sistema detecta», copió la ducha fría del ejemplo en 6 de 12
-  calibraciones, ignoró la llave dorada en 2 de 3 lecturas y escribió «frena» por «frene» y «Alto» por «Alta»), pero falta
-  verlo. Groq se queda en los comandos de voz (0.2 a 0.4 s contra ~1.5 s). Los términos de los créditos no prohíben el uso
-  comercial; si se acaban, la API se detiene hasta el mes siguiente: Gemini queda de respaldo automático y la lectura de la
-  foto sigue en Google Cloud Vision. **Falta:** que Zak cree una llave en Console (en su Chrome) y la guarde en el llavero
-  como `rsv-anthropic`; con ella se corre la prueba a ciegas (8 sueños y 6 etiquetas, sin decir cuál es cuál) y se decide.
+  del Max)?** Prueba real hecha el mismo día (llave en el llavero como `rsv-anthropic`; 126 llamadas, cero errores, cero
+  respuestas cortadas, cero bloqueos), con las instrucciones de producción: Gemini 3.6 Flash tarda 2.0 s en un sueño y
+  3.3 s en un alimento; Claude Haiku 5.5 (salió el 2026-10-07) 2.6 s y 4.1 s; Claude Sonnet 5.5 en esfuerzo bajo 3.9 s y
+  7.4 s. Costo por 1,000 (sueño / alimento): Gemini 1.40 / 4.83 USD, Haiku 1/4 de eso (0.35 / 1.11), Sonnet 7.16 / 22.48.
+  La lectura de la foto sigue en Google Cloud Vision; Groq se queda en la voz; si se activa Claude, Gemini queda de
+  respaldo automático (también cuando se acaban los créditos: la API se detiene hasta el mes siguiente). El Espejo se queda
+  en DeepSeek por ahora (Zak teme perder su voz). Zak eligió 4 sueños a ciegas
+  (https://claude.ai/artifact/QtyVxqqC8scRW1GG4qyspE, colección `votos`): Haiku 2, Sonnet 1, Gemini 1. Recomendación
+  entregada: Haiku 5.5 en los dos Decodificadores con Gemini de respaldo, y quitar de las instrucciones los ejemplos que
+  los tres copian (ducha fría, descalzo, «El sistema detecta"). **CONSTRUIDO el mismo día:** decode-dream v1.14 y
+  decode-matter v6.20 con `_shared/claudeHaiku.ts` (secreto `ANTHROPIC_API_KEY`), desplegados (admin 1a8dfcd). Para ver
+  quién contestó: los logs de la función dicen «respondió claude-haiku-5-5» o caen a Gemini con el motivo.
 - **Que subir cambios del Escáner a GitHub no publique la web por su cuenta** (propuesta del 2026-09-25, falta el
   sí de Zak). Hoy cada push, aunque solo toque documentos, dispara un despliegue automático que deja el instalador
   de la Mac en 404 hasta volver a correr `./publicar-escritorio.sh` (pasó dos veces el 2026-09-25). La cura es una
@@ -559,10 +569,32 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 - **Anuncios pagados: la promoción del Espejo corre en Instagram hasta el 11 de octubre** (`Escaner Vibracional/Publicidad/03
   Espejo 9x16.mp4`, @escanervibracional, 100 MXN/día, México 21-55, solo Instagram, promocionada desde instagram.com; píxel
   1639470941182641 activo y dominio verificado). Al 2026-10-08: clics casi 4 % y 2 MXN por visita, pero 1 o 2 toques a la
-  tienda de ~140 visitas y solo 10 % pasa de 3 segundos. Siguen dos salas con su prompt en `Escaner Vibracional/Publicidad/`:
-  la página del Espejo con selector de versiones en el Motor (`Prompt próxima sala · Landing del Espejo.md`) y el video que
-  para el scroll (`Prompt próxima sala · Video que para el scroll.md`). Zak anota el gasto diario en Motor → Campaña.
-  Después: Decodificador. Detalle en [[proyecto_publicidad_pagada]].
+  tienda de ~140 visitas y solo 10 % pasa de 3 segundos (y del 5 al 8 de octubre el Espejo no respondió: OpenRouter sin
+  saldo; desde la recarga del 8 responde, 16 de 16 preguntas esa mañana). **La página nueva ya está en vivo (2026-10-08):** escanervibracional.com con versiones
+  (energia intacta, espejo y decodificador; `?a=espejo` ya ve la del Espejo) y la caja «Página de destino» en Motor →
+  Campaña (migración 20261008c pegada por Zak): ahí se elige qué ve escanervibracional.com sin etiqueta, así que la bio
+  puede llevar solo escanervibracional.com; también existen las ligas fijas /espejo, /decodificador y /energia. Falta que
+  Zak elija la versión de la portada. **El video que para el scroll ya está (2026-10-08):** `05 Espejo gancho A/B/C 9x16.mp4` en
+  `Publicidad/` (A la cama, B la Presencia desde el primer cuadro, C tres preguntas; mismo cuerpo de 18 s y la promesa de
+  la página nueva). Recomendado para la siguiente promoción: **B**, con la misma configuración y `?a=espejo`, en cuanto el
+  Espejo responda y la página nueva esté publicada; falta el sí de Zak. Siguen tres anuncios NUEVOS del Espejo, uno por
+  sala (Zak: «vamos a hacer todos»): 1 Ruido, 2 Tinta, 3 Papel. Los conceptos están en `Publicidad/Propuestas anuncios Espejo ·
+  2026-10-08.md`. Las tres corren EN PARALELO, cada una con su prompt en `Publicidad/`: Ruido (entrega `06`, puerto 8895),
+  Tinta (`07`, puerto 8897) y Papel (`08`, puerto 8899). Un solo render de Blender a la vez entre las tres, cuidar el disco
+  (~27 GB libres) y no tocar el estudio de otra. La última en terminar propone el orden de prueba, uno por semana.
+  **Ruido ya está (2026-10-08):** `06 Espejo Ruido 9x16.mp4` (18.2 s), su ligero y su portada en `Publicidad/`; su sala lo
+  recomienda como siguiente prueba frente al 05 B porque está hecho para el primer segundo (la métrica que falla).
+  **Tinta ya está (2026-10-08):** `07 Espejo Tinta 9x16.mp4` (18.2 s), su ligero y su portada en `Publicidad/` (misma
+  pregunta, respuesta y voces que Ruido; la tinta hecha con código, el teléfono en Blender). Su sala recomienda probar
+  primero Tinta (el único cuadro 1 cálido y luminoso del feed, la gota que va a tocar la pregunta crea espera y la espiral
+  con el orbe cae dentro de los 3 s), luego Ruido y el 05 B como control.
+  **Papel ya está (2026-10-08):** `08 Espejo Papel 9x16.mp4` (19.2 s), su ligero y su portada en `Publicidad/` (el cuarto
+  de noche hecho a mano en papel recortado, a 12 cuadros por segundo; misma pregunta, respuesta y voces; estudio en
+  `Anuncio Espejo Papel/estudio/`, ver su `LEEME.md`). **Orden propuesto por la última sala, uno por semana con la misma
+  configuración:** 1 Papel (la escena cotidiana que Zak prefirió, ahora con la pregunta grande desde el cuadro 1 y un
+  estilo que no se parece a ningún anuncio del feed), 2 Ruido (si el primer segundo sigue flojo, la otra hipótesis es el
+  movimiento), 3 Tinta; el 05 B queda de control. Falta el sí de Zak.
+  Zak anota el gasto diario en Motor → Campaña. Después: Decodificador. Detalle en [[proyecto_publicidad_pagada]].
 - **El sonido al enviar un mensaje suena también en el teléfono** (2026-10-04): Zak lo pidió para el chat sin decir
   cara y quedó en las dos (en el iPhone llega con la siguiente versión de tienda). Si lo quiere solo en la computadora,
   es una línea en `escaner-app/src/components/nucleo/Mensajes.tsx` (los `sensory("mensaje")` con `isDesktop`).
@@ -630,7 +662,7 @@ la mano de Zak:
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v67 (2026-10-08 · II)
+## 🜂 Protocolo de Cierre de Sesión · v68 (2026-10-09)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -793,6 +825,7 @@ memorias.
 - **0-duodeseptuagies** · Un texto que Zak le va a pegar a otro agente no afirma pasos que él aún no hizo: lo pega al recibirlo y el otro actúa sobre algo falso.
 - **0-undeseptuagies** · Una recomendación que solo optimiza el número ignora a quien la va a construir: el ganador se busca dentro de su gusto.
 - **0-septuagies** · Lo que se hace sin red sube con la fecha en que se hizo: el «hoy» del servidor es el de la subida; lo que alterna se junta en la fila.
+- **0-unseptuagies** · Lo que tiene que verse no espera un cuadro de animación: nace visible y la entrada es un adorno con rescate por reloj (framer espera para siempre el cuadro que no llega).
 
 ### Paso 1 — Test de continuidad
 
@@ -934,11 +967,50 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v67 (2026-10-08 · II). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v68 (2026-10-09). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
+
+#### 2026-09-27 → 2026-10-09 · ESCÁNER: LA APP QUE NO SE TRABA, LA BIENVENIDA EXPRÉS, LAS TIENDAS 1.1.6 Y LA SALA DE LOS CV
+
+- ✅ **Resuelto:** **la Bitácora y las capas del Radar ya no quedan invisibles** (vigía del reloj de cuadros en
+  `index.html`, entrada que nace visible con rescate por reloj, velo con «Cerrar» y «Reiniciar la app» si una capa tarda
+  o falla, y clave propia para cada capa y el Espejo) · **el sello de entrada tiene tres salidas** (reloj, guardia a los
+  5 s y salida CSS a los 7 s) · **caja negra** del arranque en el teléfono · **bienvenida exprés**: aviso médico, «¿Qué te
+  trajo aquí?» y directo a lo que eligió, gratis y sin muro de pago (quien viene por los libros aterriza en Holoteca →
+  Códices), con «Empieza gratis, sin tarjeta.» · el interruptor «Onboarding · Duración» y la cuenta de «Entró directo»
+  en el Motor, publicados el 2026-10-09 (el 27 se habían puesto en `MI_Growth.tsx`, una copia que nadie importa: caí en
+  la 0-quinquinquagies) · App Store 1.1.6 (build 29) y Android 1.1.6 (vc9, `.aab` firmado) con todo esto · **los CV de
+  Zak**: carpeta `admin/aplicaciones` ordenada con cuatro versiones (micro1 original, DataAnnotation doble, Spanish
+  Specialist y micro1 QA Engineer 2D) y su propia sala.
+- 📁 **Archivos:** escaner-app (d3a1d3e, 742c08d, 9ed3fdc): `index.html` (vigía), `lib/cajaNegra.ts` v1.1,
+  `EV_CapaSegura.tsx` v1.0, `EscanerVibracional` v13.136, `EV_Shared` v2.49, `EV_Bitacora` v1.22, `EV_PlanVuelo` v1.15,
+  `EV_RealidadElegida` v1.8, `RitualDeLlegada` v3.3, `OnboardingV2` v2.11, `growthFlags` v2.2, `main.tsx` v1.1,
+  diccionarios onb2 v2.9 y shell v1.5, app de la Mac 1.1.47 · Code (0acff7f, 0375851): `MotorDeIntervencion` v5.3 y
+  `MI_Growth` v1.2 (marcada como copia sin uso) · rsv-web publicado el 2026-10-09 · admin `aplicaciones/` (c5c30ee,
+  966fb44, 16d66eb): `CLAUDE.md`, `LEEME.md`, `.claude/settings.json` y un `build_resume.py` por versión.
+- 🗄️ **Migraciones SQL aplicadas:** `20260927_onb_expres.sql` (el embudo cuenta el paso 14 aparte del paywall y
+  `completed` significa solo «llegó al paywall»); Zak la pegó, verificado el 2026-10-09.
+- ⏳ **Pendiente:** decidir si la bienvenida exprés se queda (en Pendientes vivos).
+- 💡 **Decisiones:** la bienvenida se recorta, no se quita (el aviso médico es obligatorio y la pantalla de elección
+  manda a cada quien a lo que vio en el video) · la oferta de Sintonía aparece al llegar a un límite real · se saltó la
+  1.1.5 (iOS 1.1.6 build 29, Android vc9) · los CV dicen solo lo comprobable (Vite, no Next.js; el puesto de micro1 con
+  su título real), uno por puesto, y Zak no aplica a los tracks de programación de DataAnnotation · la sala de los CV se
+  abre en `admin/aplicaciones`.
+- 🔧 **Patrones nuevos:** vigía de `requestAnimationFrame` en línea en `index.html` (umbral 200 ms, revisión cada
+  125 ms, solo con la página visible; `window.__rsvRescatesDeCuadro`) · lo que tiene que verse nace visible
+  (`initial={false}` + `riseLayerIn` con guardia por `setTimeout`) · `CapaSegura` (velo, frontera de errores y
+  `PresenceContext` en null para cerrar al instante) · caja negra `rsv_caja_negra` que se lee del iPhone por
+  `devicectl` ([[referencia_leer_caja_negra_iphone]], [[proyecto_robustez_arranque_escaner]]) · la vista previa oculta
+  como laboratorio de reloj detenido (forzando `document.visibilityState`) · generador de CV (PDF y `.md` de una sola
+  fuente, ajustado a una hoja) · antes de publicar rsv-web con trabajo ajeno sin commit, se comprueba que ya esté en el
+  paquete vivo. Lección 0-unseptuagies.
+- 🧬 **Versión del sistema:** App Store 1.1.6 · Android 1.1.6 (vc9) · Motor con «Onboarding · Duración» · protocolo v68.
+- 🔮 **Cómo arrancar la próxima Sala de Comando:** para los CV y las solicitudes de trabajo, abrir la carpeta
+  `admin/aplicaciones` (su `CLAUDE.md` trae el banco de datos comprobados, las reglas y el estado de cada solicitud);
+  para lo demás, la sala del proyecto que toque.
 
 #### 2026-10-08 · II · LA APP SIN INTERNET: TODO ABRE SIN RED Y LO HECHO SIN CONEXIÓN SE SINCRONIZA SOLO
 
@@ -979,21 +1051,6 @@ página: el maestro crece de a una línea por lección.
 
 #### 2026-10-08 · PUBLICIDAD: EL ESPEJO EN DOS COMERCIALES, LA CAMPAÑA VIVA EN INSTAGRAM Y LAS CONSULTAS DE JUEGOS
 
-- ✅ **Resuelto:** **el segundo comercial del Espejo** (el espejo dorado) se hizo y Zak lo descartó («me gustó más el
-  primero»; el video a la papelera, el estudio queda) · **el Espejo habla de tú y sin rayas** (regla y filtro en vivo y al
-  guardar) · **el píxel de Meta activo** en Motor → Campaña, **el dominio verificado** y **la promoción del Reel del
-  Espejo corriendo** desde @escanervibracional, solo en Instagram, del 4 al 11 de octubre a 100 MXN/día · a medio camino:
-  el anuncio da clics (casi 4 %, 2 MXN por visita) pero la página no convierte (1 o 2 toques de ~140 visitas) y solo 10 %
-  pasa de 3 segundos: se rehacen la página y el video · consultas: el mejor juego propio (Terra Cristal Pixel 3, ~35 % que
-  le vaya bien y ~6 % de éxito global con audio sin IA), qué hace posible el arte en código, ingresos y tiempos por juego,
-  SONORA descartada y TERRA VIVA propuesta; además micro1 (reviewer y HDM), impuestos y LinkedIn de Zak.
-- 📁 **Archivos:** admin `oraculo-chat` v1.51 (a1fc7c4) · escaner-landing `index.html` v1.4 (4868a6f) · terra-cristal
-  `Docs/PROPUESTAS_STEAM.md` (b6e1737) · sin repo: `Escaner Vibracional/Publicidad/Prompts para Grok.md` (lo que Meta
-  deja y los pasos de la promoción desde Instagram) y los dos prompts de las próximas salas · `Escaner Vibracional/Anuncio
-  Espejo 2/estudio/` (descartado) · `Ludus Cero/PROPUESTA_GANADORA.md`.
-- 🔌 **Edge functions deployed:** `oraculo-chat` v1.51 (sin rayas ni voseo, en vivo y al guardar).
-- ⏳ **Pendiente:** la página del Espejo con selector de versiones (el 🔮) y el video que para el scroll (en Pendientes
-  vivos, con su prompt).
 - 💡 **Decisiones:** el Espejo de la noche va primero, solo y solo en Instagram · las promociones se hacen desde
   instagram.com en la computadora (en la app de iOS Apple cobra 30 %) · las siguientes pruebas usan el mismo público ·
   las propuestas de juego se buscan dentro del gusto de Zak · Terra Cristal pasa al frente de Lúcido.
@@ -1002,10 +1059,10 @@ página: el maestro crece de a una línea por lección.
   pública de la landing y su llave · dos tomas de Blender que comparten cuadros se pisan los renders · un fundido entre
   dos capas solo cuando ya coinciden. Lecciones 0-duodeseptuagies y 0-undeseptuagies; detalle en
   [[proyecto_publicidad_pagada]] y [[proyecto_sonora]].
-- 🧬 **Versión del sistema:** landing v1.4 en adelante · oraculo-chat v1.51 · protocolo v66.
-- 🔮 **Cómo arrancar la próxima Sala de Comando:** abrir la carpeta raíz `Red Solar Viva` y pegar el prompt de
-  `Escaner Vibracional/Publicidad/Prompt próxima sala · Landing del Espejo.md`, antes del 11 de octubre (cuando termina
-  la promoción). El del video vive al lado: `Prompt próxima sala · Video que para el scroll.md`.
+- 🧭 **Su arranque ya se ejecutó** (la página nueva con versiones está en vivo y los videos 05 a 08 entregados): su 🔮
+  salió de aquí al cerrar la sala del 2026-10-09, porque solo la sala más reciente lleva 🔮; lo que sigue de la campaña
+  vive en Pendientes vivos y en [[proyecto_publicidad_pagada]].
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 #### 2026-10-07 · II · CLAUDE FOR STARTUPS, LUDUS CERO EN EL SISTEMA SOLAR Y LOS CÓDICES QUE SE LEEN SIN INTERNET
 
