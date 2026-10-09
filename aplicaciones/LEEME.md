@@ -5,10 +5,12 @@ el lugar para el que se hizo, y ninguna se borra: así siempre sabes qué le man
 
 | Carpeta | Para qué sirve | Archivo para subir |
 |---|---|---|
+| `cv/2026-10 micro1 (QA Engineer 2D Creative)` | **La que se sube a micro1 para QA Engineer · 2D & Creative Applications.** Pruebas manuales y funcionales, consistencia visual, casos límite y reportes de bugs; nada de backend. Tu puesto actual va con su título real (micro1 lo conoce). | `Diego_Soto_Borja_Almeida_Resume.pdf` |
 | `cv/2026-10 DataAnnotation (Spanish Specialist)` | **La que se sube a DataAnnotation.** Enfocada 100 % al puesto bilingüe (Bilingual AI Data Evaluator & Spanish Specialist): el español va primero y lo técnico queda al final, en corto, para no caer en las pruebas de programación. | `Diego_Soto_Borja_Almeida_Resume.pdf` |
 | `cv/2026-10 DataAnnotation (Spanish + Software)` | La versión doble (español + programación). Úsala de base solo si un día aplicas a algo de software. | `Diego_Soto_Borja_Almeida_Resume.pdf` |
 | `cv/2026-09 micro1 (original)` | La versión con la que entraste a micro1 (Generalist). Se queda tal cual. | `Diego Soto Borja Almeida Resume.pdf` |
 | `2026-10 Claude for Startups` | La solicitud de Red Solar Viva al programa de Anthropic: requisitos, datos medidos, textos en inglés y el prompt completo para el agente que llena el formulario. | `aplicacion.md` (se pega, no se sube) |
+| `2026-10 Google for Startups Cloud` | La solicitud de Red Solar Viva a Google for Startups Cloud (enviada el 2026-10-08). | (ya enviada) |
 
 ## Cómo usarla
 
@@ -24,7 +26,10 @@ el lugar para el que se hizo, y ninguna se borra: así siempre sabes qué le man
 
 - **Todo lo que dice se puede comprobar.** El stack es el que corre en producción (Vite, no Next.js): en una prueba
   de programación te pueden preguntar por cualquier cosa de la lista.
-- **micro1 y su cliente van bajo NDA:** el CV describe el trabajo sin nombrar a ninguno de los dos.
+- **El cliente de micro1 nunca se nombra (NDA).** micro1 solo se nombra en los CV que van a micro1; en los demás el
+  puesto se describe sin empresa.
+- **Un CV por puesto:** cada uno se enfoca en lo que pide ese puesto y deja fuera lo que lo desvía (en DataAnnotation,
+  nada de programación; en QA, nada de backend).
 - **Sin rayas largas (—)** en el texto, como en todo lo tuyo.
 
 ## Datos comprobados el 2026-10-07
