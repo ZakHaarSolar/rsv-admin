@@ -1,4 +1,12 @@
-// Red Solar Viva · oraculo-chat v1.54 — 🜂 DE QUIEN TE ESCRIBE SOLO SABES SU MENSAJE
+// Red Solar Viva · oraculo-chat v1.55 — 🜂 HASTA 8 FOTOS POR MENSAJE Y 60 FOTOS AL
+// DÍA (Zak 2026-10-10). El turno lee hasta MAX_FOTOS_TURNO (8, antes 4). El freno de
+// visión deja de contar MENSAJES con fotos (30 al día, hasta 120 fotos) y cuenta
+// FOTOS: cada una pesa 1 en `reserve_edge_spend`, tope FOTOS_POR_DIA (60) por
+// persona en 24 horas, 180 por IP y ORACULO_VISION_GLOBAL_DIA pasa a fotos (6.000,
+// lo mismo que daban 1.500 mensajes de 4). Al topar se responde `fotos: true` con
+// `quedan` y `limite`, para que la app devuelva el mensaje al campo y diga cuántas
+// le quedan. Costo medido: ~0,06 MXN por foto (Gemini 3.6 Flash). Sin migración.
+// | v1.54 — 🜂 DE QUIEN TE ESCRIBE SOLO SABES SU MENSAJE
 // Y SU CAMPO (2026-10-08). Con el Núcleo ya en español, la regla de la v1.52 no
 // alcanzó: a "No sé si dejar mi trabajo" 4 de 6 respuestas le contaban al
 // Tripulante el caso de alguien del público ("llevas años en finanzas", "tú
@@ -388,7 +396,13 @@ const FREE_ORACULO_LIMIT = 3
    volver a desplegar esta función. Si el freno llega a saltar, el Tripulante
    recibe "rate_limited" (no un error feo) y el gasto se detiene. */
 const ORACULO_GLOBAL_DIA = 20000
-const ORACULO_VISION_GLOBAL_DIA = 1500
+/* 🜂 v1.55 — en FOTOS (antes en mensajes con foto: 1.500 × hasta 4). A ~0,06 MXN
+   por foto, 6.000 ≈ 360 MXN/día en el peor caso absoluto de todo el ecosistema. */
+const ORACULO_VISION_GLOBAL_DIA = 6000
+/* 🜂 v1.55 — cuántas fotos lee un turno y cuántas puede mandar una persona en 24
+   horas (Zak 2026-10-10: "hasta 8 imágenes" y "el tope de 60 fotos al día"). */
+const MAX_FOTOS_TURNO = 8
+const FOTOS_POR_DIA = 60
 
 // gemini-embedding-001 truncado a 768 dims — DEBE coincidir con oraculo-index
 // (text-embedding-004 fue retirado → 404). taskType QUERY para la búsqueda.
@@ -1611,7 +1625,7 @@ Deno.serve(async (req: Request) => {
                 : "image/jpeg"
         const rawImages: Array<{ b64: string; mime: string }> = []
         if (Array.isArray(body?.images)) {
-            for (const im of body.images.slice(0, 4)) {
+            for (const im of body.images.slice(0, MAX_FOTOS_TURNO)) {
                 const b64 = typeof im?.b64 === "string" ? im.b64.trim() : ""
                 if (!b64) continue
                 const mime =
@@ -1873,14 +1887,16 @@ Deno.serve(async (req: Request) => {
                 const _ip =
                     req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
                     null
+                /* 🜂 v1.55 — cada FOTO pesa 1: el tope es de fotos, no de
+                   mensajes (60 por persona en 24 horas). */
                 const _rl = await sb.rpc("reserve_edge_spend", {
                     p_edge: "oraculo-vision",
                     p_user_key: clerkUserId,
                     p_ip: _ip,
-                    p_cost: 1,
-                    p_user_limit: 30,
+                    p_cost: rawImages.length,
+                    p_user_limit: FOTOS_POR_DIA,
                     p_user_window_seconds: 86400,
-                    p_ip_limit: 90,
+                    p_ip_limit: FOTOS_POR_DIA * 3,
                     p_ip_window_seconds: 86400,
                     /* Parte 4 — freno global: la lectura de imagen cuesta
                        bastante más que un reflejo de texto. */
@@ -1888,8 +1904,18 @@ Deno.serve(async (req: Request) => {
                     p_global_window_seconds: 86400,
                 })
                 if (_rl?.data && _rl.data.ok === false) {
+                    /* La app devuelve el mensaje al campo y dice cuántas
+                       fotos quedan: `quedan` = lo que aún cabe en la ventana. */
+                    const limite = Number(_rl.data.limit) || FOTOS_POR_DIA
+                    const gastado = Number(_rl.data.spent) || 0
                     return json(
-                        { error: "rate_limited", reason: _rl.data.reason },
+                        {
+                            error: "rate_limited",
+                            reason: _rl.data.reason,
+                            fotos: true,
+                            limite,
+                            quedan: Math.max(0, limite - gastado),
+                        },
                         429
                     )
                 }
