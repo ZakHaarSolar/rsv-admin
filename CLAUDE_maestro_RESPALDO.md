@@ -543,9 +543,12 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   a los 6 meses), un año de Team y ofertas de socios (ElevenLabs incluida). 🜂 **Cuando Zak diga que ya los aceptaron, se
   borra todo esto:** este pendiente, la memoria `proyecto-claude-for-startups` (sala del escaner-app) y el registro del
   incidente en la entrada del 2026-10-07 · II del historial.
-- **Google for Startups Cloud: enviada el 2026-10-08** (nivel Start, hasta 2,000 USD, desde zakhaar@redsolarviva.com,
-  facturación 01A6FF-E87869-821613). Respuesta en 3 a 5 días hábiles a Proton. Si aprueban: Nano Banana por Vertex AI
-  (no llaves de AI Studio) desde las funciones del servidor. Datos en `admin/aplicaciones/2026-10 Google for Startups Cloud/`.
+- **Google for Startups Cloud: rechazada el 2026-10-09 por «sitio inactivo» y REENVIADA el mismo día; esperando respuesta** (3 a 5 días hábiles a Proton). Se reaplicó con el
+  enlace especial del correo, desde zakhaar@redsolarviva.com y con los mismos datos (nivel Start, hasta 2,000 USD,
+  facturación 01A6FF-E87869-821613). Causa medida: redsolarviva.com entregaba un HTML vacío y la portada pasaba segundos en
+  negro. Arreglado y publicado el mismo día (rsv-web c9ab219): fachada con quiénes somos y los productos que se funde en
+  el sistema solar. 🜂 **No quitar la fachada de `rsv-web/index.html`:** es lo que leen los revisores y buscadores. Si
+  aprueban: Nano Banana por Vertex AI (no llaves de AI Studio). Datos en `admin/aplicaciones/2026-10 Google for Startups Cloud/`.
 - **Consulta respondida el 2026-10-08 · ¿los Decodificadores de Alimentos y Sueños pasan a la API de Claude (los 100 USD/mes
   del Max)?** Prueba real hecha el mismo día (llave en el llavero como `rsv-anthropic`; 126 llamadas, cero errores, cero
   respuestas cortadas, cero bloqueos), con las instrucciones de producción: Gemini 3.6 Flash tarda 2.0 s en un sueño y
@@ -563,7 +566,8 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   sí de Zak). Hoy cada push, aunque solo toque documentos, dispara un despliegue automático que deja el instalador
   de la Mac en 404 hasta volver a correr `./publicar-escritorio.sh` (pasó dos veces el 2026-09-25). La cura es una
   línea en `escaner-app/vercel.json` (`"ignoreCommand": "exit 0"`): el guion quedaría como el único camino de
-  publicación, que es lo que ya dice el Mapa de destinos.
+  publicación, que es lo que ya dice el Mapa de destinos. Volvió a pasar tres veces del 2026-10-08 al 10 (cada versión
+  de la Mac dejó el .dmg en 404 entre el push y la publicación).
 - **Escribir a quienes no pudieron entrar a la web del 5 al 24 de septiembre** (Clerk sabe quiénes lo intentaron;
   venía de la sala del 21 al 25): falta que Zak decida el mensaje y si se manda.
 - **Anuncios pagados: la promoción del Espejo corre en Instagram hasta el 11 de octubre** (`Escaner Vibracional/Publicidad/03
@@ -598,6 +602,13 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 - **El sonido al enviar un mensaje suena también en el teléfono** (2026-10-04): Zak lo pidió para el chat sin decir
   cara y quedó en las dos (en el iPhone llega con la siguiente versión de tienda). Si lo quiere solo en la computadora,
   es una línea en `escaner-app/src/components/nucleo/Mensajes.tsx` (los `sensory("mensaje")` con `isDesktop`).
+- **Consulta respondida el 2026-10-10 · ¿DeepSeek o Gemini con las fotos del Espejo?** Hoy los dos: Gemini 3.6 Flash
+  lee cada foto y escribe lo que ve (~0.06 MXN por foto); DeepSeek V4 Flash (0731), la voz, lee esa descripción. DeepSeek
+  V4.1 Flash ya ve imágenes (0.30/1.20 USD por millón contra 0.75/3.75 de Gemini): como OJO saldría más barato (cerca de
+  un tercio, sin medir) sin tocar la voz; como VOZ costaría más (su entrada vale ~20 veces la de la 0731, y la voz lee
+  mucho contexto en cada turno) y cambiaría su forma de escribir. Zak no quiere la prueba a ciegas por ahora.
+- **Las ligas largas también se salen en la Matriz** (`EV_Rafaga.tsx`, `.rafaga-lectura` sin `overflow-wrap`); en el
+  Espejo ya se parten. Es una línea si Zak la quiere (lección 0-duotricies: no se tocó sin su sí).
 - **Pipedream Workflows se apaga el 2027-03-31** (borra todo el 2027-04-30): mudar sus 3 flujos de correo vivos
   (bienvenidas, Sello del Primer Ciclo y padrón con sus bajas) a funciones de Supabase. Zak: «luego lo enlazamos»;
   falta el cuándo. Trampas y plan en [[pendiente_migrar_pipedream]].
@@ -662,7 +673,7 @@ la mano de Zak:
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v68 (2026-10-09)
+## 🜂 Protocolo de Cierre de Sesión · v69 (2026-10-10)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -742,7 +753,7 @@ línea en el índice (así se hizo el 2026-09-25: de 167.000 a unos 51.000 carac
 | Destino | Cómo llega | Quién |
 |---|---|---|
 | 🥇 App de macOS (la que Zak usa a diario) | versión en `src-tauri/tauri.conf.json` → `pnpm tauri build --bundles app dmg` → firma a mano (`TAURI_SIGNING_PRIVATE_KEY_PASSWORD="" pnpm tauri signer sign -f src-tauri/updater.key …tar.gz`) → `distribucion/manifest.json` → commit + push → esperar el auto-despliegue → `./publicar-escritorio.sh` | Claude |
-| 🥇 iPhone | `cd escaner-app && ./al-iphone.sh` | Claude |
+| 🥇 iPhone | `cd escaner-app && ./al-iphone.sh` (2 min como máximo: si la Mac no ve el teléfono, se detiene, se corre `pnpm build && npx cap copy ios` y Zak compila en Xcode) | Claude |
 | Web (`app.escanervibracional.com`) | la publica `./publicar-escritorio.sh` (nunca antes del push) | Claude |
 | Android | `.aab` por terminal, en el siguiente paquete de Play | Claude |
 | Servidor | SQL: Zak en SQL Editor · funciones: `supabase functions deploy <nombre> --no-verify-jwt` | SQL Zak · funciones Claude |
@@ -826,6 +837,8 @@ memorias.
 - **0-undeseptuagies** · Una recomendación que solo optimiza el número ignora a quien la va a construir: el ganador se busca dentro de su gusto.
 - **0-septuagies** · Lo que se hace sin red sube con la fecha en que se hizo: el «hoy» del servidor es el de la subida; lo que alterna se junta en la fila.
 - **0-unseptuagies** · Lo que tiene que verse no espera un cuadro de animación: nace visible y la entrada es un adorno con rescate por reloj (framer espera para siempre el cuadro que no llega).
+- **0-duoseptuagies** · Lo que sigue rodando de un gesto anterior no es la persona: la continuidad se mide con la hora en que nació el evento, no con la que se atiende.
+- **0-terseptuagies** · Un motor que no se maneja desde fuera se prueba desde dentro (la página corre su prueba y pinta el resultado), y el servidor falso recuerda como el real o fabrica fallas.
 
 ### Paso 1 — Test de continuidad
 
@@ -967,11 +980,41 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v68 (2026-10-09). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v69 (2026-10-10). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
+
+#### 2026-10-08 → 2026-10-10 · ESPEJO: ENTRAR EN LO ÚLTIMO, EL SEGUIMIENTO QUE AGUANTA LA INERCIA, HASTA 8 FOTOS Y LA VOZ QUE NO DESELLA RITUALES
+
+- ✅ **Resuelto:** **pedir por voz un ritual ya sellado lo deja sellado** (la voz leía `checked` y la consulta trae `today`;
+  `toggle_ritual` alterna) · **el Espejo:** al entrar se ve el último mensaje también en el celular (la medida del cromo
+  anotaba «está leyendo arriba» con la vista recién nacida) y el aterrizaje aguanta 2.5 s lo que llega tarde · **el
+  seguimiento aguanta la inercia** del trackpad o del dedo (Enter a media inercia dejaba el envío 1,400 px fuera de
+  pantalla) · las ligas largas caben en su burbuja y en el reflejo · cada foto mide lo suyo · **hasta 8 fotos por mensaje**
+  con **tope de 60 fotos en 24 horas por persona**: al topar, el mensaje vuelve al campo con sus fotos y el aviso dice
+  cuántas quedan · las fotos del Tripulante se guardan en el cofre del aparato (la charla guarda solo el puntero) · app de
+  la Mac 1.1.52 y 1.1.53 publicadas; el iPhone de Zak con la 1.1.52.
+- 📁 **Archivos:** escaner-app: `useComandoVoz` v3.2 (7fed1d2), `EV_Oraculo` v6.26 (de96374) y v6.27 (2e9dafa),
+  `imgCache` v1.1, i18n `espejo` v1.25, banco `espejo.ts` v1.1 + `datos.ts` v1.4 + `arranque.tsx` v1.4 · app de la Mac
+  1.1.52 (65c172e) y 1.1.53 (958938c).
+- 🔌 **Edge functions deployed:** `oraculo-chat` v1.55 (admin ace1a33): lee hasta 8 fotos; el freno de visión cobra una
+  unidad por foto (60 por persona, 180 por IP, 6,000 en todo el ecosistema, ventanas de 24 h) y al topar responde
+  `fotos: true`, `limite` y `quedan`. Sin migración (usa `reserve_edge_spend`).
+- ⏳ **Pendiente:** nada de esta sala (las dos consultas abiertas están en Pendientes vivos).
+- 💡 **Decisiones:** el ojo del Espejo sigue siendo Gemini 3.6 Flash; Zak no quiere la prueba a ciegas con DeepSeek V4.1
+  Flash por ahora · la cura de una pieza compartida por las dos caras va en las dos (la burbuja); la Matriz no se tocó ·
+  al instalar en el iPhone se espera 2 minutos como máximo; si la Mac no lo ve, se detiene y Zak compila en Xcode (el
+  proyecto de iOS queda con el código copiado).
+- 🔧 **Patrones nuevos:** banco del Espejo (`&espejo`, `&prueba=espejo&pasos=…`, `&mudo`; con `&conservar` el servidor
+  falso recuerda la charla) que corre sola y pinta su resultado · el motor de Safari sin ventana: `xcrun simctl boot` +
+  `openurl` + `io screenshot` (iPad = cara de computadora, iPhone = teléfono) · inercia del trackpad por CDP con los pasos
+  a ritmo fijo y su `timestamp` · leer el localStorage de la app de la Mac (sqlite en UTF-16LE, solo las claves necesarias)
+  · la caja negra anota `espejo-seguir-cede` y `espejo-seguir-agota` · un cuerpo de 8 MB pasa la plataforma (sonda con
+  llave inválida). Lecciones 0-duoseptuagies y 0-terseptuagies; detalle en [[referencia-probar-espejo]],
+  [[integrar-desde-worktree]] y [[feedback-iphone-no-esperar]].
+- 🧬 **Versión del sistema:** app de la Mac 1.1.53 · `oraculo-chat` v1.55 · `EV_Oraculo` v6.27 · protocolo v69.
 
 #### 2026-09-27 → 2026-10-09 · ESCÁNER: LA APP QUE NO SE TRABA, LA BIENVENIDA EXPRÉS, LAS TIENDAS 1.1.6 Y LA SALA DE LOS CV
 
@@ -1008,33 +1051,13 @@ página: el maestro crece de a una línea por lección.
   fuente, ajustado a una hoja) · antes de publicar rsv-web con trabajo ajeno sin commit, se comprueba que ya esté en el
   paquete vivo. Lección 0-unseptuagies.
 - 🧬 **Versión del sistema:** App Store 1.1.6 · Android 1.1.6 (vc9) · Motor con «Onboarding · Duración» · protocolo v68.
-- 🔮 **Cómo arrancar la próxima Sala de Comando:** para los CV y las solicitudes de trabajo, abrir la carpeta
+- 🧭 **Su arranque** (salió del 🔮 al cerrar la sala del Espejo del 2026-10-10, porque solo la sala más reciente lo
+  lleva; el estado vive en `admin/aplicaciones/CLAUDE.md`): para los CV y las solicitudes de trabajo, abrir la carpeta
   `admin/aplicaciones` (su `CLAUDE.md` trae el banco de datos comprobados, las reglas y el estado de cada solicitud);
   para lo demás, la sala del proyecto que toque.
 
 #### 2026-10-08 · II · LA APP SIN INTERNET: TODO ABRE SIN RED Y LO HECHO SIN CONEXIÓN SE SINCRONIZA SOLO
 
-- ✅ **Resuelto:** **la app del Escáner funciona sin internet**: Mi Núcleo, Sendero de Luz, Rachas, Bitácora, Plan de
-  Vuelo, Realidad Elegida, el Radar (con su puntaje), los chats, los Códices y los Anclajes Fotónicos abren sin red y sin
-  pedir cuenta (el teléfono recuerda al Tripulante) · lo hecho sin red (rituales, rachas, notas, misiones, la visión, un
-  escaneo, mensajes) se anota en el aparato y sube solo, en orden, al volver la conexión, con su fecha real e ids
-  provisionales que se traducen al real · los chats como WhatsApp (relojito y envío solo, aunque la conversación esté
-  cerrada) · la membresía se respeta sin red (sin muros) · los fondos y las fotos de la Realidad se guardan en el teléfono
-  · una vez al día, con señal, se guarda en silencio lo que falte · la sesión de Clerk revive sola al volver la red (medido:
-  1 s) · aviso discreto de conexión arriba. Zak pegó la migración (verificada: las cinco funciones aceptan la fecha real) y
-  la app quedó instalada en su iPhone.
-- 📁 **Archivos:** escaner-app (631998d): nuevos `lib/sinConexion.ts`, `lib/sinConexionReglas.ts`,
-  `lib/sinConexionPrecalentar.ts`, `lib/imagenesSinConexion.ts`, `components/SinConexion.tsx` y el módulo i18n `conexion` ·
-  `EV_Shared` v2.50, `EscanerVibracional` v13.138, `MiNucleo` v6.89, `MN_Shared` v1.7, `MN_Firma` v2.56, `RitualDiario`
-  v2.48, `EV_RealidadElegida` v1.9, `WallpapersShell` v1.23, `Mensajes` v1.45, `chatStore` v1.1, `codicesOffline` v1.1,
-  `AppShellMobile` 1.5.0 M, `AppShellDesktop` v3.5, `App` v1.2, i18n v1.12, banco v1.2-1.3 y el `CLAUDE.md` del Escáner ·
-  app de la Mac 1.1.51.
-- 🗄️ **Migraciones SQL aplicadas:** `admin/supabase/migrations/✅ 20261008_sin_conexion_fechas.sql` (1af2565, marcada aplicada en ba50548):
-  `grant_sendero_bonus`, `grant_plan_vuelo_bonus` y `grant_contemplacion_bonus` + `p_date` (hasta 7 días atrás);
-  `reset_racha` y `toggle_racha_pause` + `p_at` (nunca en el futuro ni antes del tramo).
-- ⏳ **Pendiente:** nada de esta sala. Dos hallazgos de paso corren en sus propias salas: la fuga de los Anclajes Fotónicos
-  de paga (`get_wallpapers()` sin parámetros concedida a anon) y la voz que desella un ritual del Sendero
-  (`useComandoVoz` lee `checked` en vez de `today`).
 - 💡 **Decisiones:** lo que necesita al servidor para pensar o subir archivos sigue pidiendo red (Espejo, Decodificadores,
   fotos y notas de voz, sesión, pagos, nombre y foto, invitaciones y notas compartidas) · una escritura sin regla, sin red,
   responde null como siempre (nada se finge hecho) · los límites del plan se aplican igual sin red · lo creado y borrado
@@ -1047,7 +1070,7 @@ página: el maestro crece de a una línea por lección.
   permiso solo de servicio se verifica desde fuera sin ejecutarla: «permission denied» (42501) prueba que la firma existe y
   PGRST202 que no · si Zak reporta algo sin red, la caja negra anota `sin-red-anota`, `sin-red-subidas`, `sin-red-negada`,
   `sin-red-abandona` y `sesion-revive`. Lección 0-septuagies.
-- 🧬 **Versión del sistema:** app de la Mac 1.1.51 · el iPhone de Zak con la app sin internet · protocolo v67.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 #### 2026-10-08 · PUBLICIDAD: EL ESPEJO EN DOS COMERCIALES, LA CAMPAÑA VIVA EN INSTAGRAM Y LAS CONSULTAS DE JUEGOS
 
