@@ -1643,7 +1643,49 @@ del `AnimatePresence` del Escáner. Por qué se detuvo el reloj en WebKit no que
 0-septies (se probó también contra la versión vieja) · 0-terquadragies (claves con prefijo) · 0-vicies-semel (la causa se
 anuncia después de probarla).
 
+### Paso 0-duoseptuagies · Lo que sigue rodando de un gesto anterior no es la persona
+
+**Regla.** Cuando un gesto de la persona apaga algo automático (el seguimiento, un aterrizaje), primero se pregunta si ese
+gesto empezó DESPUÉS de la acción o es la cola de uno anterior: la inercia del trackpad sigue mandando rueda hasta un par
+de segundos después de levantar los dedos, y en el teléfono el deslizamiento sigue sin eventos de dedo. La cola no manda:
+mientras se apaga se recoloca lo que importa, y al quedar quieta se coloca una vez más. La continuidad se mide con la hora
+en que NACIÓ cada evento (`e.timeStamp`), no con la hora en que se atiende: una acción que pinta mucho bloquea la página,
+los pasos de la inercia esperan en fila y, medidos al atenderlos, parecen un gesto nuevo tras una pausa.
+
+**Por qué.** El 2026-10-08 Zak escribió: «tengo seguimiento encendido y nada, mandé un mensaje estando arriba y no dio
+follow up». En Chrome y en el Safari del iPad, enviar desde arriba funcionaba. Con el mensaje ya escrito, subir con el
+trackpad y dar Enter a media inercia dejaba el envío 1,461 px fuera de pantalla (en la versión vieja); con la cola
+perdonada, el envío queda en su sitio. La primera versión del arreglo todavía fallaba, porque medía la pausa con
+`performance.now()` en el manejador y el pintado del envío la fabricaba.
+
+**Hermanas.** 0-duodecies (la máquina asíncrona se modela) · 0-terdecies (lo efímero se mide contra el reloj) ·
+0-septies (se probó contra la versión vieja) · 0-unquadragies (un centinela en la caja negra: `espejo-seguir-cede`).
+
+### Paso 0-terseptuagies · Un motor que no se maneja desde fuera se prueba desde dentro
+
+**Regla.** Si el problema puede vivir en el motor de Safari (la app de la Mac y el iPhone) y ese motor no se deja manejar
+desde fuera, la prueba vive DENTRO de la página: una URL del banco la arranca, corre sola los pasos con el servidor falso y
+pinta su resultado en pantalla; un simulador sin ventana (`xcrun simctl boot` + `openurl` + `io screenshot`) la abre en el
+Safari de verdad sin quitarle a Zak la pantalla. Y el servidor falso tiene que recordar como el real: si olvida un turno,
+la prueba fabrica una falla que no existe.
+
+**Por qué.** El 2026-10-08 el arreglo de «entrar en lo último» y el de las ligas había que verlo en Safari, y Chrome solo
+no bastaba (0-tricies). La misma prueba corrió en Chrome sin ventana, en el iPad (cara de computadora) y en el iPhone (cara
+del teléfono). El 2026-10-10 la prueba de «al recargar vuelven las 8 fotos» falló: el servidor falso olvidaba los turnos al
+reabrir el Espejo dentro de la misma carga y la app, con razón, se quedaba con su versión. Con el banco recordando, pasó.
+Los toques a mano en el simulador no sirvieron: abrieron la ceremonia de Presencia, que sonó por las bocinas de la Mac.
+
+**Hermanas.** 0-tricies (WebKit contra Chrome) · 0-undesexagies (sin quitarle la pantalla a Zak) · 0-duodesexagies (sin
+sonido; aquí un toque mal puesto sí sonó) · 0-sexies (primero se acusa al código, pero el arnés también se revisa) ·
+0-undecies (el dato de prueba se parece al real).
+
 ### Changelog del protocolo
+
+- **v69 (2026-10-10):** dos lecciones de la sala del Espejo (entrar en lo último, el seguimiento que aguanta la inercia,
+  hasta 8 fotos y la voz que no desella rituales). **0-duoseptuagies**: lo que sigue rodando de un gesto anterior no es la
+  persona; la continuidad se mide con la hora en que nació el evento. **0-terseptuagies**: un motor que no se maneja desde
+  fuera se prueba desde dentro, y el servidor falso recuerda como el real. Y el Mapa de destinos: el iPhone se espera
+  2 minutos como máximo; si la Mac no lo ve, Zak compila en Xcode (pedido de Zak el 2026-10-10).
 
 - **v68 (2026-10-09):** una lección de la sala del Escáner que no se traba, la bienvenida exprés, las tiendas 1.1.6 y los
   CV. **0-unseptuagies**: lo que tiene que verse no espera un cuadro de animación. Y nace la sala de los CV de Zak con su

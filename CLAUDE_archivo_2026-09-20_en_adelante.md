@@ -4,6 +4,43 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-08 · II · LA APP SIN INTERNET: TODO ABRE SIN RED Y LO HECHO SIN CONEXIÓN SE SINCRONIZA SOLO
+
+- ✅ **Resuelto:** **la app del Escáner funciona sin internet**: Mi Núcleo, Sendero de Luz, Rachas, Bitácora, Plan de
+  Vuelo, Realidad Elegida, el Radar (con su puntaje), los chats, los Códices y los Anclajes Fotónicos abren sin red y sin
+  pedir cuenta (el teléfono recuerda al Tripulante) · lo hecho sin red (rituales, rachas, notas, misiones, la visión, un
+  escaneo, mensajes) se anota en el aparato y sube solo, en orden, al volver la conexión, con su fecha real e ids
+  provisionales que se traducen al real · los chats como WhatsApp (relojito y envío solo, aunque la conversación esté
+  cerrada) · la membresía se respeta sin red (sin muros) · los fondos y las fotos de la Realidad se guardan en el teléfono
+  · una vez al día, con señal, se guarda en silencio lo que falte · la sesión de Clerk revive sola al volver la red (medido:
+  1 s) · aviso discreto de conexión arriba. Zak pegó la migración (verificada: las cinco funciones aceptan la fecha real) y
+  la app quedó instalada en su iPhone.
+- 📁 **Archivos:** escaner-app (631998d): nuevos `lib/sinConexion.ts`, `lib/sinConexionReglas.ts`,
+  `lib/sinConexionPrecalentar.ts`, `lib/imagenesSinConexion.ts`, `components/SinConexion.tsx` y el módulo i18n `conexion` ·
+  `EV_Shared` v2.50, `EscanerVibracional` v13.138, `MiNucleo` v6.89, `MN_Shared` v1.7, `MN_Firma` v2.56, `RitualDiario`
+  v2.48, `EV_RealidadElegida` v1.9, `WallpapersShell` v1.23, `Mensajes` v1.45, `chatStore` v1.1, `codicesOffline` v1.1,
+  `AppShellMobile` 1.5.0 M, `AppShellDesktop` v3.5, `App` v1.2, i18n v1.12, banco v1.2-1.3 y el `CLAUDE.md` del Escáner ·
+  app de la Mac 1.1.51.
+- 🗄️ **Migraciones SQL aplicadas:** `admin/supabase/migrations/✅ 20261008_sin_conexion_fechas.sql` (1af2565, marcada aplicada en ba50548):
+  `grant_sendero_bonus`, `grant_plan_vuelo_bonus` y `grant_contemplacion_bonus` + `p_date` (hasta 7 días atrás);
+  `reset_racha` y `toggle_racha_pause` + `p_at` (nunca en el futuro ni antes del tramo).
+- ⏳ **Pendiente:** nada de esta sala. Dos hallazgos de paso corren en sus propias salas: la fuga de los Anclajes Fotónicos
+  de paga (`get_wallpapers()` sin parámetros concedida a anon) y la voz que desella un ritual del Sendero
+  (`useComandoVoz` lee `checked` en vez de `today`). → ✅ la voz, hecho el 2026-10-08 (`useComandoVoz` v3.2, escaner-app 7fed1d2).
+- 💡 **Decisiones:** lo que necesita al servidor para pensar o subir archivos sigue pidiendo red (Espejo, Decodificadores,
+  fotos y notas de voz, sesión, pagos, nombre y foto, invitaciones y notas compartidas) · una escritura sin regla, sin red,
+  responde null como siempre (nada se finge hecho) · los límites del plan se aplican igual sin red · lo creado y borrado
+  sin red no sube nada.
+- 🔧 **Patrones nuevos:** `lib/sinConexion` (identidad recordada solo si la sesión no responde; `sesionCaida()` distinto de
+  «la sesión aún carga»; caché de lecturas en IndexedDB; fila con reglas, compactación, ids provisionales y `extras` que se
+  quitan si el servidor responde PGRST202) · revivir Clerk con `useClerk().loadClerkJS()` (clerk-react no reintenta solo)
+  · las imágenes de R2 se guardan con `fetch(url, { cache: "reload" })` (la copia que dejó un `<img>` sin CORS no se puede
+  leer) · banco con `&sinRed&conservar`, `window.__bancoVolverRed()` y `window.__bancoSinMigracion` · una función con
+  permiso solo de servicio se verifica desde fuera sin ejecutarla: «permission denied» (42501) prueba que la firma existe y
+  PGRST202 que no · si Zak reporta algo sin red, la caja negra anota `sin-red-anota`, `sin-red-subidas`, `sin-red-negada`,
+  `sin-red-abandona` y `sesion-revive`. Lección 0-septuagies.
+- 🧬 **Versión del sistema:** app de la Mac 1.1.51 · el iPhone de Zak con la app sin internet · protocolo v67.
+
 #### 2026-10-08 · PUBLICIDAD: EL ESPEJO EN DOS COMERCIALES, LA CAMPAÑA VIVA EN INSTAGRAM Y LAS CONSULTAS DE JUEGOS
 
 - ✅ **Resuelto:** **el segundo comercial del Espejo** (el espejo dorado) se hizo y Zak lo descartó («me gustó más el
