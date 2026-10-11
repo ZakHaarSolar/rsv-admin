@@ -1,3 +1,4 @@
+// Red Solar Viva · espejo-voz v3.5 — el WebSocket de Soniox se autentica con el subprotocolo ["soniox-api-key", llave] y ya no manda api_key en el primer mensaje (la forma vieja deja de servir el 2027-01-15). Sin header Authorization: en Deno es inestable y junto con el subprotocolo Soniox responde 400. El REST no cambia.
 // Red Solar Viva · espejo-voz v3.4 — 🜂 LA VOZ NO CAMBIA DE PERSONA A MEDIA
 // LECTURA (Zak 2026-08-14: "entró la voz de Goku y nosotros habíamos mandado
 // la de Bennett; y cuando comenzó la parte práctica volvió a Bennett"). Cada
@@ -325,7 +326,7 @@ async function sintetizarConMarcas(
     return await new Promise((resolve) => {
         let ws: WebSocket
         try {
-            ws = new WebSocket(SONIOX_WS_URL)
+            ws = new WebSocket(SONIOX_WS_URL, ["soniox-api-key", key])
         } catch {
             resolve(null)
             return
@@ -349,7 +350,6 @@ async function sintetizarConMarcas(
             try {
                 ws.send(
                     JSON.stringify({
-                        api_key: key,
                         model: modelo,
                         language: idioma,
                         voice: voz,
