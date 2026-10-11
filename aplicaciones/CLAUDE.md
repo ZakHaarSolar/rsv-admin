@@ -97,6 +97,7 @@ los da, se agrega una sección Education.
 | 2026-09 | micro1 | Generalist | `cv/2026-09 micro1 (original)` | aceptado (Video Annotation Specialist) |
 | 2026-10 | DataAnnotation | Spanish Specialist (25-40 USD/h) | `cv/2026-10 DataAnnotation (Spanish Specialist)` | CV listo |
 | 2026-10 | micro1 | QA Engineer · 2D & Creative Applications | `cv/2026-10 micro1 (QA Engineer 2D Creative)` | CV listo |
+| 2026-10 | Alignerr | Video Annotation Specialist | `cv/2026-10 Alignerr (Video Annotation Specialist)` | CV listo |
 
 DataAnnotation: desde México el generalista en inglés no está abierto (solo EE. UU., Reino Unido, Canadá,
 Australia, Nueva Zelanda e Irlanda); va el track bilingüe. Nunca VPN.

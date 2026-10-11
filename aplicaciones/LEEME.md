@@ -5,6 +5,7 @@ el lugar para el que se hizo, y ninguna se borra: así siempre sabes qué le man
 
 | Carpeta | Para qué sirve | Archivo para subir |
 |---|---|---|
+| `cv/2026-10 Alignerr (Video Annotation Specialist)` | **La que se sube a Alignerr para Video Annotation Specialist.** Igual a la de QA, con el titular «Video Annotation Specialist \| Multimodal AI Data Evaluator» y el resumen enfocado en anotación de video. | `Diego_Soto_Borja_Almeida_Resume.pdf` |
 | `cv/2026-10 micro1 (QA Engineer 2D Creative)` | **La que se sube a micro1 para QA Engineer · 2D & Creative Applications.** Pruebas manuales y funcionales, consistencia visual, casos límite y reportes de bugs; nada de backend. Tu puesto actual va con su título real (micro1 lo conoce). | `Diego_Soto_Borja_Almeida_Resume.pdf` |
 | `cv/2026-10 DataAnnotation (Spanish Specialist)` | **La que se sube a DataAnnotation.** Enfocada 100 % al puesto bilingüe (Bilingual AI Data Evaluator & Spanish Specialist): el español va primero y lo técnico queda al final, en corto, para no caer en las pruebas de programación. | `Diego_Soto_Borja_Almeida_Resume.pdf` |
 | `cv/2026-10 DataAnnotation (Spanish + Software)` | La versión doble (español + programación). Úsala de base solo si un día aplicas a algo de software. | `Diego_Soto_Borja_Almeida_Resume.pdf` |
