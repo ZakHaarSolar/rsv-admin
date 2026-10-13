@@ -1,3 +1,4 @@
+// Red Solar Viva · admin-action v1.61 — 🜂 TERRA CRISTAL EN EL MOTOR (Sala 38 de Terra Cristal, 2026-10-13): nace admin_terra_cristal, la única acción de este gateway que NO es una RPC. Con el admin ya verificado, lee la tabla de las partidas del juego (terra_cristal_partidas) con service role, en dos modos: «lista» (una fila por partida, la más reciente primero, con solo las rutas del documento que la lista pinta) y «ficha» (el documento entero de una cuenta). La cuenta (correo y nombre) sale de profiles y, lo que falte, de Clerk. Sin migración nueva: la tabla ya existe (20261006_terra_cristal_partida). La lista blanca de RPC no cambia.
 // Red Solar Viva · admin-action v1.60 — rutea admin_campana_versiones (visitas, toques a la tienda y porcentaje POR VERSIÓN de la página de descarga) y admin_campana_set_landing (la versión por defecto y el mapa etiqueta → versión que Zak elige en Motor → Campaña → «Página de destino»); admin_campana_estado devuelve además los ajustes de la página. Migración 20261008c_campana_versiones; sin ella, estas dos responden falta_migracion con su nombre.
 // Red Solar Viva · admin-action v1.59 — solo comentarios: get_wallpapers NO es RPC anon directa (va por user-action y sabe de membresía; ver 20261008b). El código es idéntico a v1.58: no hace falta desplegar.
 // Red Solar Viva · admin-action v1.58 — rutea admin_campana_diario, admin_campana_set_gasto, admin_campana_set_pixel y admin_campana_estado (Motor → "Campaña": los anuncios de Meta que llevan a escanervibracional.com, cruzados con instalaciones, cuentas y suscripciones del día; migración 20261003_campana_anuncios). Si la migración de una acción todavía no está pegada, responde {error:"falta_migracion", migracion} en vez de un error críptico.
@@ -546,6 +547,238 @@ const MIGRACION_DE: Record<string, string> = {
 }
 const FALTA_OBJETO = new Set(["PGRST202", "42883", "42P01"])
 
+/* ═══ TERRA CRISTAL (Motor → «Terra Cristal») · v1.61 ═══════════════════
+   🜂 La única acción de este gateway que NO es una RPC. El juego (Terra
+   Cristal Pixel 3, Ludus Cero) guarda UNA partida por cuenta en
+   terra_cristal_partidas (migración 20261006_terra_cristal_partida), con RLS
+   y sin policies; solo la escribe el portón user-action. Para leerla desde el
+   Motor no hace falta una función nueva en la base: el admin ya viene
+   verificado por gateAdmin y este mismo cliente con service role lee la tabla.
+   Dos modos:
+     · { modo: "lista", desde?, limite? } → una fila por partida, la más
+       reciente primero, con SOLO lo que la lista pinta: los datos de la fila y
+       unas rutas del documento (nombre, avatar, fotones, viaje, aldea,
+       batallas, las marcas de la historia, el nivel de cada quien, las almas y
+       el resumen de la bitácora). Nunca el documento entero: la bitácora trae
+       hasta 150 sucesos por jugador y una batalla guardada a medias pesa más
+       que todo lo demás junto.
+     · { modo: "ficha", clerk_user_id } → el documento entero de esa partida.
+   En los dos, la cuenta (correo y nombre) sale de profiles, como en el
+   padrón; lo que profiles no sabe (sin perfil, o el correo vacío de «Ocultar
+   mi correo» de Apple) se le pregunta a Clerk en tandas de 100 y con un tope
+   de 6 s en total: si Clerk tarda, la lista sale igual, sin ese dato. */
+const CLERK_SECRET = Deno.env.get("CLERK_SECRET_KEY") || ""
+const TC_TABLA = "terra_cristal_partidas"
+const TC_MIGRACION = "20261006_terra_cristal_partida"
+const TC_LISTA = [
+    "clerk_user_id",
+    "version",
+    "guardada",
+    "creada",
+    "actualizada",
+    "nombre:documento->>nombre",
+    "avatar:documento->>avatar",
+    "fotones:documento->fotones",
+    "dificultad:documento->>dificultad",
+    "aldea:documento->>aldea",
+    "batallas:documento->batallas",
+    "historia:documento->historia",
+    "tripulacion:documento->tripulacion",
+    "almas:documento->almas",
+    "lejos:documento->lejos",
+    "b_segundos:documento->bitacora->segundos",
+    "b_sesiones:documento->bitacora->sesiones",
+    "b_primera:documento->bitacora->>primera",
+    "b_ultima:documento->bitacora->>ultima",
+].join(",")
+
+type CuentaTC = { email: string | null; nombre: string | null }
+
+const textoTC = (v: unknown): string | null => {
+    if (typeof v !== "string") return null
+    const s = v.trim()
+    return s ? s : null
+}
+
+async function cuentasTC(ids: string[]): Promise<Record<string, CuentaTC>> {
+    const out: Record<string, CuentaTC> = {}
+    for (const id of ids) out[id] = { email: null, nombre: null }
+    for (let i = 0; i < ids.length; i += 100) {
+        const trozo = ids.slice(i, i + 100)
+        const { data, error } = await supabase
+            .from("profiles")
+            .select("clerk_user_id,email,full_name")
+            .in("clerk_user_id", trozo)
+        if (error) {
+            console.error("[admin-action] terra cristal · profiles:", error.message)
+            continue
+        }
+        for (const p of (data ?? []) as {
+            clerk_user_id: string
+            email: string | null
+            full_name: string | null
+        }[]) {
+            const c = out[p.clerk_user_id]
+            if (!c) continue
+            c.email = c.email || textoTC(p.email)
+            c.nombre = c.nombre || textoTC(p.full_name)
+        }
+    }
+    const faltan = ids.filter((id) => !out[id].email || !out[id].nombre)
+    if (!faltan.length || !CLERK_SECRET) return out
+    const tope = Date.now() + 6000
+    for (let i = 0; i < faltan.length; i += 100) {
+        const queda = tope - Date.now()
+        if (queda < 500) break
+        const trozo = faltan.slice(i, i + 100)
+        try {
+            const qs = trozo
+                .map((id) => "user_id=" + encodeURIComponent(id))
+                .join("&")
+            const r = await fetch(
+                `https://api.clerk.com/v1/users?${qs}&limit=100`,
+                {
+                    headers: { Authorization: `Bearer ${CLERK_SECRET}` },
+                    signal: AbortSignal.timeout(Math.min(5000, queda)),
+                }
+            )
+            if (!r.ok) {
+                console.error("[admin-action] terra cristal · clerk HTTP", r.status)
+                break
+            }
+            const usuarios = await r.json()
+            for (const u of Array.isArray(usuarios) ? usuarios : []) {
+                const c = out[String(u?.id || "")]
+                if (!c) continue
+                const correos = Array.isArray(u.email_addresses)
+                    ? u.email_addresses
+                    : []
+                const principal =
+                    correos.find(
+                        (e: { id?: string }) => e?.id === u.primary_email_address_id
+                    ) ?? correos[0]
+                c.email = c.email || textoTC(principal?.email_address)
+                const completo = [u.first_name, u.last_name]
+                    .map(textoTC)
+                    .filter(Boolean)
+                    .join(" ")
+                c.nombre = c.nombre || textoTC(completo) || textoTC(u.username)
+            }
+        } catch (e) {
+            console.error(
+                "[admin-action] terra cristal · clerk:",
+                String((e as Error)?.message || e)
+            )
+            break
+        }
+    }
+    return out
+}
+
+function errorTC(error: { message?: string; code?: string }): Response {
+    const code = String(error?.code || "")
+    console.error("[admin-action] admin_terra_cristal fail:", error?.message)
+    if (FALTA_OBJETO.has(code) || code === "PGRST205")
+        return json(
+            {
+                error: "falta_migracion",
+                migracion: TC_MIGRACION,
+                detalle: error?.message,
+                code,
+            },
+            400
+        )
+    return json({ error: error?.message || "error", code }, 400)
+}
+
+async function listaTC(params: Record<string, unknown>): Promise<Response> {
+    const limite = Math.min(
+        1000,
+        Math.max(1, Math.floor(Number(params?.limite) || 300))
+    )
+    const desde = Math.max(0, Math.floor(Number(params?.desde) || 0))
+    const { data, error, count } = await supabase
+        .from(TC_TABLA)
+        .select(TC_LISTA, { count: "exact" })
+        .order("guardada", { ascending: false })
+        .range(desde, desde + limite - 1)
+    if (error) return errorTC(error)
+    const filas = (data ?? []) as unknown as Record<string, any>[]
+    const cuentas = await cuentasTC(filas.map((f) => String(f.clerk_user_id)))
+    const partidas = filas.map((f) => {
+        const historia =
+            f.historia && typeof f.historia === "object" ? f.historia : {}
+        const marcas = Object.keys(historia).filter((k) => historia[k] === true)
+        const niveles: Record<string, number> = {}
+        const trip =
+            f.tripulacion && typeof f.tripulacion === "object"
+                ? f.tripulacion
+                : {}
+        for (const [id, s] of Object.entries(trip)) {
+            const n = Number((s as { nivel?: unknown })?.nivel)
+            if (Number.isFinite(n)) niveles[id] = n
+        }
+        const conBitacora =
+            f.b_segundos != null || f.b_sesiones != null || f.b_ultima != null
+        return {
+            clerk_user_id: f.clerk_user_id,
+            version: f.version,
+            guardada: f.guardada,
+            creada: f.creada,
+            actualizada: f.actualizada,
+            nombre: f.nombre ?? null,
+            avatar: f.avatar ?? null,
+            fotones: typeof f.fotones === "number" ? f.fotones : null,
+            dificultad: f.dificultad ?? null,
+            aldea: f.aldea ?? null,
+            batallas:
+                f.batallas && typeof f.batallas === "object" ? f.batallas : null,
+            marcas,
+            niveles,
+            almas: Array.isArray(f.almas) ? f.almas : [],
+            lejos: Array.isArray(f.lejos) ? f.lejos : [],
+            bitacora: conBitacora
+                ? {
+                      segundos: f.b_segundos ?? null,
+                      sesiones: f.b_sesiones ?? null,
+                      primera: f.b_primera ?? null,
+                      ultima: f.b_ultima ?? null,
+                  }
+                : null,
+            cuenta: cuentas[String(f.clerk_user_id)] ?? {
+                email: null,
+                nombre: null,
+            },
+        }
+    })
+    return json({ partidas, total: count ?? partidas.length, desde, limite })
+}
+
+async function fichaTC(params: Record<string, unknown>): Promise<Response> {
+    const id =
+        typeof params?.clerk_user_id === "string"
+            ? params.clerk_user_id.trim()
+            : ""
+    if (!id || id.length > 128)
+        return json({ error: "falta_clerk_user_id" }, 400)
+    const { data, error } = await supabase
+        .from(TC_TABLA)
+        .select("clerk_user_id,version,guardada,creada,actualizada,documento")
+        .eq("clerk_user_id", id)
+        .maybeSingle()
+    if (error) return errorTC(error)
+    if (!data) return json({ error: "sin_partida" }, 404)
+    const cuentas = await cuentasTC([id])
+    return json({ partida: data, cuenta: cuentas[id] })
+}
+
+async function terraCristal(params: Record<string, unknown>): Promise<Response> {
+    const modo = String(params?.modo || "lista")
+    if (modo === "lista") return await listaTC(params)
+    if (modo === "ficha") return await fichaTC(params)
+    return json({ error: "modo_desconocido" }, 400)
+}
+
 serve(async (req: Request) => {
     if (req.method === "OPTIONS") {
         return new Response("ok", { headers: corsHeaders })
@@ -562,6 +795,20 @@ serve(async (req: Request) => {
     }
 
     const action = (body?.action || "").toString()
+    /* v1.61 · la única acción que no es RPC (ver «TERRA CRISTAL» arriba):
+       ya pasó el portón de admin, igual que todas. */
+    if (action === "admin_terra_cristal") {
+        try {
+            const p = body?.params
+            return await terraCristal(p && typeof p === "object" ? p : {})
+        } catch (e) {
+            console.error(
+                "[admin-action] admin_terra_cristal:",
+                String((e as Error)?.message || e)
+            )
+            return json({ error: "terra_cristal_fallo" }, 500)
+        }
+    }
     if (!(action in ADMIN_RPCS)) {
         return json({ error: "action_not_allowed" }, 400)
     }
