@@ -1,4 +1,5 @@
-// Red Solar Viva · _shared/r2purge.ts v1.0 — borrar los archivos de un Tripulante
+// Red Solar Viva · _shared/r2purge.ts v1.1 — borrar los archivos de un Tripulante (v1.1, Sala 39 de Terra Cristal: también las fotos de
+// sus reportes del juego, TerraCristal/Reportes/{safeId}/ · terra-cristal-reporte)
 // =============================================================================
 // AUDITORÍA · PARTE 3 · App Store Guideline 5.1.1(v).
 //
@@ -18,6 +19,7 @@
 //   DM/{safeId}/…              · upload-dm-media  (fotos y notas de voz)
 //   Materia/Fotos/{safeId}/…   · upload-matter-photo
 //   Vision/{safeId}/…          · upload-vision
+//   TerraCristal/Reportes/{safeId}/… · terra-cristal-reporte (las fotos de los reportes del juego)
 //
 // Requiere los mismos secretos que las edges de subida (R2_ACCOUNT_ID,
 // R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET). Si faltan, no rompe nada:
@@ -34,12 +36,12 @@ const enc = new TextEncoder()
 
 async function sha256Hex(data: Uint8Array | string): Promise<string> {
     const buf = typeof data === "string" ? enc.encode(data) : data
-    const hash = await crypto.subtle.digest("SHA-256", buf)
+    const hash = await crypto.subtle.digest("SHA-256", buf as BufferSource)
     return [...new Uint8Array(hash)].map((b) => b.toString(16).padStart(2, "0")).join("")
 }
 
 async function hmac(key: Uint8Array, msg: string): Promise<Uint8Array> {
-    const k = await crypto.subtle.importKey("raw", key, { name: "HMAC", hash: "SHA-256" }, false, [
+    const k = await crypto.subtle.importKey("raw", key as BufferSource, { name: "HMAC", hash: "SHA-256" }, false, [
         "sign",
     ])
     return new Uint8Array(await crypto.subtle.sign("HMAC", k, enc.encode(msg)))
@@ -173,6 +175,7 @@ export async function purgeUserFiles(
         `DM/${safeUserId}/`,
         `Materia/Fotos/${safeUserId}/`,
         `Vision/${safeUserId}/`,
+        `TerraCristal/Reportes/${safeUserId}/`,
     ]
 
     for (const prefix of prefixes) {

@@ -1,3 +1,4 @@
+// Red Solar Viva · admin-action v1.62 — 🜂 TERRA CRISTAL: LAS BATALLAS QUE MÁS CUESTAN Y LOS REPORTES (Sala 39 de Terra Cristal, 2026-10-13): admin_terra_cristal suma cuatro modos. «batallas» (con `dificultad`, solo las partidas de esa manera de viajar; `viajes` cuenta cuántas hay de cada una): las batallas de la bitácora sumadas entre todos los jugadores (intentos, quiénes la ganaron, el porcentaje de victorias, las rondas para ganarla y en cuál se quedan: la última que pelearon sin ganarla; las cuentas de administrador no cuentan salvo incluye_admin), sin migración. «reportes» (la lista, la más reciente primero, con cuántos hay en cada estado), «reporte» (uno entero, con su bitácora) y «reporte_estado» (nuevo, visto o resuelto): los que mandan los jugadores con la R, de la tabla terra_cristal_reportes (migración 20261013_terra_cristal_reportes; mientras no se pegue, esos tres modos responden falta_migracion).
 // Red Solar Viva · admin-action v1.61 — 🜂 TERRA CRISTAL EN EL MOTOR (Sala 38 de Terra Cristal, 2026-10-13): nace admin_terra_cristal, la única acción de este gateway que NO es una RPC. Con el admin ya verificado, lee la tabla de las partidas del juego (terra_cristal_partidas) con service role, en dos modos: «lista» (una fila por partida, la más reciente primero, con solo las rutas del documento que la lista pinta) y «ficha» (el documento entero de una cuenta). La cuenta (correo y nombre) sale de profiles y, lo que falte, de Clerk. Sin migración nueva: la tabla ya existe (20261006_terra_cristal_partida). La lista blanca de RPC no cambia.
 // Red Solar Viva · admin-action v1.60 — rutea admin_campana_versiones (visitas, toques a la tienda y porcentaje POR VERSIÓN de la página de descarga) y admin_campana_set_landing (la versión por defecto y el mapa etiqueta → versión que Zak elige en Motor → Campaña → «Página de destino»); admin_campana_estado devuelve además los ajustes de la página. Migración 20261008c_campana_versiones; sin ella, estas dos responden falta_migracion con su nombre.
 // Red Solar Viva · admin-action v1.59 — solo comentarios: get_wallpapers NO es RPC anon directa (va por user-action y sabe de membresía; ver 20261008b). El código es idéntico a v1.58: no hace falta desplegar.
@@ -118,6 +119,7 @@
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0"
 import { gateAdmin } from "../_shared/clerkAuth.ts"
+import { type FilaBatallas, sumaBatallas } from "../_shared/terraBatallas.ts"
 
 const supabase = createClient(
     Deno.env.get("SUPABASE_URL")!,
@@ -772,10 +774,126 @@ async function fichaTC(params: Record<string, unknown>): Promise<Response> {
     return json({ partida: data, cuenta: cuentas[id] })
 }
 
+/* ═══ v1.62 · LAS BATALLAS QUE MÁS CUESTAN (modo «batallas») ═══════════
+   Las batallas de la bitácora de cada partida (documento.bitacora.batallas:
+   intentos, ganadas, perdidas, regresos, rondas del último intento, mejor =
+   las rondas de la victoria más corta, ultima = cuándo se peleó) sumadas
+   entre todos. Lee solo esa ruta del documento, de mil en mil. «Se quedan
+   aquí»: la última batalla que pelearon y todavía no ganan (el primer reto
+   se pierde a propósito: si es la última, se quedaron después de perderlo);
+   «se fueron»: de ellos, quienes no juegan hace tres días o más. Las cuentas
+   de administrador (profiles.is_admin) no cuentan, salvo incluye_admin. La
+   cuenta pura vive en _shared/terraBatallas.ts (se prueba sin la base). */
+const TC_BATALLAS_RUTAS = "clerk_user_id,b:documento->bitacora->batallas,u:documento->bitacora->>ultima,d:documento->>dificultad"
+
+async function batallasTC(params: Record<string, unknown>): Promise<Response> {
+    const incluyeAdmin = params?.incluye_admin === true
+    const admins = new Set<string>()
+    if (!incluyeAdmin) {
+        const { data, error } = await supabase.from("profiles").select("clerk_user_id").eq("is_admin", true)
+        if (error) console.error("[admin-action] terra cristal · admins:", error.message)
+        for (const a of (data ?? []) as { clerk_user_id: string }[]) admins.add(a.clerk_user_id)
+    }
+    const filas: FilaBatallas[] = []
+    for (let desde = 0; desde < 50000; desde += 1000) {
+        const { data, error } = await supabase
+            .from(TC_TABLA)
+            .select(TC_BATALLAS_RUTAS)
+            .order("clerk_user_id", { ascending: true })
+            .range(desde, desde + 999)
+        if (error) return errorTC(error)
+        const d = (data ?? []) as unknown as FilaBatallas[]
+        filas.push(...d)
+        if (d.length < 1000) break
+    }
+    // (la cuenta vive en _shared/terraBatallas.ts: se prueba sin la base)
+    const dificultad = typeof params?.dificultad === "string" ? params.dificultad : null
+    return json({ ...sumaBatallas(filas, admins, Date.now(), dificultad), incluye_admin: incluyeAdmin, calculado: new Date().toISOString() })
+}
+
+/* ═══ v1.62 · LOS REPORTES (modos «reportes», «reporte», «reporte_estado») ═══
+   Los manda el juego con la R por la función terra-cristal-reporte a
+   terra_cristal_reportes (migración 20261013_terra_cristal_reportes). La
+   lista no trae la bitácora (es lo que más pesa); «reporte» trae uno
+   entero. La cuenta de quien lo mandó sale de profiles y de Clerk, como en
+   la lista de jugadores; sin cuenta, el reporte va con el id del aparato. */
+const TC_REP_TABLA = "terra_cristal_reportes"
+const TC_REP_MIGRACION = "20261013_terra_cristal_reportes"
+const TC_REP_LISTA = "id,creado,recibido,clerk_user_id,aparato,nota,escena,lugar,batalla,ronda,momento,partida,pantalla,juego,navegador,idioma,zona,foto_url,estado,estado_en"
+const TC_ESTADOS = new Set(["nuevo", "visto", "resuelto"])
+
+function errorRepTC(error: { message?: string; code?: string }): Response {
+    const code = String(error?.code || "")
+    console.error("[admin-action] terra cristal · reportes:", error?.message)
+    if (FALTA_OBJETO.has(code) || code === "PGRST205")
+        return json({ error: "falta_migracion", migracion: TC_REP_MIGRACION, detalle: error?.message, code }, 400)
+    return json({ error: error?.message || "error", code }, 400)
+}
+
+async function reportesTC(params: Record<string, unknown>): Promise<Response> {
+    const estado = typeof params?.estado === "string" && TC_ESTADOS.has(params.estado) ? params.estado : null
+    const limite = Math.min(200, Math.max(1, Math.floor(Number(params?.limite) || 60)))
+    const desde = Math.max(0, Math.floor(Number(params?.desde) || 0))
+    let q = supabase
+        .from(TC_REP_TABLA)
+        .select(TC_REP_LISTA, { count: "exact" })
+        .order("recibido", { ascending: false })
+        .range(desde, desde + limite - 1)
+    if (estado) q = q.eq("estado", estado)
+    const { data, error, count } = await q
+    if (error) return errorRepTC(error)
+    const cuenta = async (e: string) => {
+        const r = await supabase.from(TC_REP_TABLA).select("id", { count: "exact", head: true }).eq("estado", e)
+        return r.count ?? 0
+    }
+    const [nuevo, visto, resuelto] = await Promise.all([cuenta("nuevo"), cuenta("visto"), cuenta("resuelto")])
+    const filas = (data ?? []) as unknown as Record<string, any>[]
+    const ids = [...new Set(filas.map((f) => f.clerk_user_id).filter((x): x is string => typeof x === "string" && !!x))]
+    const cuentas = ids.length ? await cuentasTC(ids) : {}
+    return json({
+        reportes: filas.map((f) => ({ ...f, cuenta: f.clerk_user_id ? cuentas[f.clerk_user_id] ?? { email: null, nombre: null } : null })),
+        total: count ?? filas.length,
+        conteo: { nuevo, visto, resuelto },
+        desde,
+        limite,
+    })
+}
+
+async function reporteTC(params: Record<string, unknown>): Promise<Response> {
+    const id = typeof params?.id === "string" ? params.id.trim().toLowerCase() : ""
+    if (!/^[0-9a-f-]{36}$/.test(id)) return json({ error: "falta_id" }, 400)
+    const { data, error } = await supabase.from(TC_REP_TABLA).select("*").eq("id", id).maybeSingle()
+    if (error) return errorRepTC(error)
+    if (!data) return json({ error: "sin_reporte" }, 404)
+    const c = (data as any).clerk_user_id as string | null
+    const cuentas = c ? await cuentasTC([c]) : {}
+    return json({ reporte: { ...(data as any), cuenta: c ? cuentas[c] ?? null : null } })
+}
+
+async function reporteEstadoTC(params: Record<string, unknown>): Promise<Response> {
+    const id = typeof params?.id === "string" ? params.id.trim().toLowerCase() : ""
+    const estado = typeof params?.estado === "string" ? params.estado : ""
+    if (!/^[0-9a-f-]{36}$/.test(id)) return json({ error: "falta_id" }, 400)
+    if (!TC_ESTADOS.has(estado)) return json({ error: "estado_invalido" }, 400)
+    const { data, error } = await supabase
+        .from(TC_REP_TABLA)
+        .update({ estado, estado_en: new Date().toISOString() })
+        .eq("id", id)
+        .select("id,estado,estado_en")
+        .maybeSingle()
+    if (error) return errorRepTC(error)
+    if (!data) return json({ error: "sin_reporte" }, 404)
+    return json({ ok: true, ...(data as any) })
+}
+
 async function terraCristal(params: Record<string, unknown>): Promise<Response> {
     const modo = String(params?.modo || "lista")
     if (modo === "lista") return await listaTC(params)
     if (modo === "ficha") return await fichaTC(params)
+    if (modo === "batallas") return await batallasTC(params)
+    if (modo === "reportes") return await reportesTC(params)
+    if (modo === "reporte") return await reporteTC(params)
+    if (modo === "reporte_estado") return await reporteEstadoTC(params)
     return json({ error: "modo_desconocido" }, 400)
 }
 
