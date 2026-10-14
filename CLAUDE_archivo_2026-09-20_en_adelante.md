@@ -4,6 +4,46 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-09-27 → 2026-10-09 · ESCÁNER: LA APP QUE NO SE TRABA, LA BIENVENIDA EXPRÉS, LAS TIENDAS 1.1.6 Y LA SALA DE LOS CV
+
+- ✅ **Resuelto:** **la Bitácora y las capas del Radar ya no quedan invisibles** (vigía del reloj de cuadros en
+  `index.html`, entrada que nace visible con rescate por reloj, velo con «Cerrar» y «Reiniciar la app» si una capa tarda
+  o falla, y clave propia para cada capa y el Espejo) · **el sello de entrada tiene tres salidas** (reloj, guardia a los
+  5 s y salida CSS a los 7 s) · **caja negra** del arranque en el teléfono · **bienvenida exprés**: aviso médico, «¿Qué te
+  trajo aquí?» y directo a lo que eligió, gratis y sin muro de pago (quien viene por los libros aterriza en Holoteca →
+  Códices), con «Empieza gratis, sin tarjeta.» · el interruptor «Onboarding · Duración» y la cuenta de «Entró directo»
+  en el Motor, publicados el 2026-10-09 (el 27 se habían puesto en `MI_Growth.tsx`, una copia que nadie importa: caí en
+  la 0-quinquinquagies) · App Store 1.1.6 (build 29) y Android 1.1.6 (vc9, `.aab` firmado) con todo esto · **los CV de
+  Zak**: carpeta `admin/aplicaciones` ordenada con cuatro versiones (micro1 original, DataAnnotation doble, Spanish
+  Specialist y micro1 QA Engineer 2D) y su propia sala.
+- 📁 **Archivos:** escaner-app (d3a1d3e, 742c08d, 9ed3fdc): `index.html` (vigía), `lib/cajaNegra.ts` v1.1,
+  `EV_CapaSegura.tsx` v1.0, `EscanerVibracional` v13.136, `EV_Shared` v2.49, `EV_Bitacora` v1.22, `EV_PlanVuelo` v1.15,
+  `EV_RealidadElegida` v1.8, `RitualDeLlegada` v3.3, `OnboardingV2` v2.11, `growthFlags` v2.2, `main.tsx` v1.1,
+  diccionarios onb2 v2.9 y shell v1.5, app de la Mac 1.1.47 · Code (0acff7f, 0375851): `MotorDeIntervencion` v5.3 y
+  `MI_Growth` v1.2 (marcada como copia sin uso) · rsv-web publicado el 2026-10-09 · admin `aplicaciones/` (c5c30ee,
+  966fb44, 16d66eb): `CLAUDE.md`, `LEEME.md`, `.claude/settings.json` y un `build_resume.py` por versión.
+- 🗄️ **Migraciones SQL aplicadas:** `20260927_onb_expres.sql` (el embudo cuenta el paso 14 aparte del paywall y
+  `completed` significa solo «llegó al paywall»); Zak la pegó, verificado el 2026-10-09.
+- ⏳ **Pendiente:** decidir si la bienvenida exprés se queda (en Pendientes vivos).
+- 💡 **Decisiones:** la bienvenida se recorta, no se quita (el aviso médico es obligatorio y la pantalla de elección
+  manda a cada quien a lo que vio en el video) · la oferta de Sintonía aparece al llegar a un límite real · se saltó la
+  1.1.5 (iOS 1.1.6 build 29, Android vc9) · los CV dicen solo lo comprobable (Vite, no Next.js; el puesto de micro1 con
+  su título real), uno por puesto, y Zak no aplica a los tracks de programación de DataAnnotation · la sala de los CV se
+  abre en `admin/aplicaciones`.
+- 🔧 **Patrones nuevos:** vigía de `requestAnimationFrame` en línea en `index.html` (umbral 200 ms, revisión cada
+  125 ms, solo con la página visible; `window.__rsvRescatesDeCuadro`) · lo que tiene que verse nace visible
+  (`initial={false}` + `riseLayerIn` con guardia por `setTimeout`) · `CapaSegura` (velo, frontera de errores y
+  `PresenceContext` en null para cerrar al instante) · caja negra `rsv_caja_negra` que se lee del iPhone por
+  `devicectl` ([[referencia_leer_caja_negra_iphone]], [[proyecto_robustez_arranque_escaner]]) · la vista previa oculta
+  como laboratorio de reloj detenido (forzando `document.visibilityState`) · generador de CV (PDF y `.md` de una sola
+  fuente, ajustado a una hoja) · antes de publicar rsv-web con trabajo ajeno sin commit, se comprueba que ya esté en el
+  paquete vivo. Lección 0-unseptuagies.
+- 🧬 **Versión del sistema:** App Store 1.1.6 · Android 1.1.6 (vc9) · Motor con «Onboarding · Duración» · protocolo v68.
+- 🧭 **Su arranque** (salió del 🔮 al cerrar la sala del Espejo del 2026-10-10, porque solo la sala más reciente lo
+  lleva; el estado vive en `admin/aplicaciones/CLAUDE.md`): para los CV y las solicitudes de trabajo, abrir la carpeta
+  `admin/aplicaciones` (su `CLAUDE.md` trae el banco de datos comprobados, las reglas y el estado de cada solicitud);
+  para lo demás, la sala del proyecto que toque.
+
 #### 2026-10-08 · II · LA APP SIN INTERNET: TODO ABRE SIN RED Y LO HECHO SIN CONEXIÓN SE SINCRONIZA SOLO
 
 - ✅ **Resuelto:** **la app del Escáner funciona sin internet**: Mi Núcleo, Sendero de Luz, Rachas, Bitácora, Plan de

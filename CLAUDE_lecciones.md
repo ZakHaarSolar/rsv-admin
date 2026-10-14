@@ -1679,7 +1679,26 @@ Los toques a mano en el simulador no sirvieron: abrieron la ceremonia de Presenc
 sonido; aquí un toque mal puesto sí sonó) · 0-sexies (primero se acusa al código, pero el arnés también se revisa) ·
 0-undecies (el dato de prueba se parece al real).
 
+### Paso 0-quaterseptuagies · Una propuesta de juego se valida en su núcleo jugable antes de vestirla
+
+**Regla.** Cuando Zak pide propuestas de juego, la primera entrega es el núcleo jugable de cada idea en pocas líneas:
+qué hace el jugador en cada ronda, qué decide y por qué engancha. Con eso elige o corrige. Solo después de su sí se
+visten: mundo, lore, escenas vivas y página. Y aunque el pedido traiga lore, en un juego la columna es la jugabilidad;
+el lore de los Códices es condimento y va en segundo plano.
+
+**Por qué.** El 2026-10-14 Zak pidió tres tower defense con el lore de sus Códices. Se leyeron los nueve libros con nueve
+lectores en paralelo, se construyeron tres escenas vivas con sonido y se publicó una página: horas de trabajo. Zak las
+descartó todas («no me gustaron para nada»). Lo que quería era jugabilidad pura y una interfaz concreta, y la trajo él
+con una imagen: PRISMA TD. Una ronda corta de núcleos jugables habría llegado ahí en minutos.
+
+**Hermanas.** 0-undeseptuagies (el ganador se busca dentro de su gusto) · 0-duosexagies (una propuesta se fotografía junto
+a «hoy») · 0-septtricies (un brief prestado no es el norte del dueño: se destila y se contrasta con él antes de construir).
+
 ### Changelog del protocolo
+
+- **v70 (2026-10-14):** una lección de la sala del tower defense nuevo (tres propuestas con lore descartadas y PRISMA TD
+  elegido). **0-quaterseptuagies**: una propuesta de juego se valida primero en su núcleo jugable, y en los juegos manda
+  la jugabilidad. Y nace la sala de PRISMA TD con su propio `Ludus Cero/prisma/CLAUDE.md` en la tabla de proyectos.
 
 - **v69 (2026-10-10):** dos lecciones de la sala del Espejo (entrar en lo último, el seguimiento que aguanta la inercia,
   hasta 8 fotos y la voz que no desella rituales). **0-duoseptuagies**: lo que sigue rodando de un gesto anterior no es la
