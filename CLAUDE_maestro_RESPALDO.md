@@ -253,6 +253,12 @@ pedir logs de consola quedaron en `admin/CLAUDE_archivo_secciones_2026-09-25.md`
   razonamiento. Con todo en un párrafo corrido las dos lecturas se estorban
   y la rápida se vuelve imposible.
 
+- **🜂 CON PROPUESTAS, AL FINAL LA RECOMENDACIÓN (Zak, 2026-10-13).** Cada vez que
+  hay dos o más opciones (diseños, sonidos, mecánicas, rutas), el reporte (y la
+  página, si la hay) cierra con cuál conviene y por qué, en una o dos frases.
+  Zak: *"igual siempre para que te acuerdes: cuando me des diferentes
+  propuestas, que me des al final tu recomendación"*.
+
 - **Prohibido en el cuerpo del reporte:** "activeSlotType", "fallback",
   "useEffect", "property control", "RLS", "RPC", "edge function",
   "handler", "state", "prop", "slotType", nombres de archivos con `.tsx`,
@@ -451,6 +457,7 @@ proyecto guarde lo suyo en SU carpeta y que la sala se abra ahí dentro.
 | **Lúcido** (play.redsolarviva.com/lucido) | `Ludus Cero/lucido/CLAUDE.md` ✅ hecho (2026-10-03) | abrir `Ludus Cero/lucido` |
 | **Fotón Cero** (fotoncero.com, la sala de proyección del estudio) | `fotoncero/CLAUDE.md` ✅ hecho (2026-10-07) | abrir `fotoncero` |
 | **Aplicaciones** (los CV de Zak y las solicitudes de Red Solar Viva) | `admin/aplicaciones/CLAUDE.md` ✅ hecho (2026-10-09) | abrir `admin/aplicaciones` |
+| **PRISMA TD** (el tower defense de Ludus Cero) | `Ludus Cero/prisma/CLAUDE.md` ✅ hecho (2026-10-14) | abrir `Ludus Cero/prisma` |
 
 Este archivo se queda como **índice del ecosistema**: quién es Zak, cómo se le habla, dónde vive cada proyecto,
 los destinos de publicación y el protocolo de cierre. Lo que sea de un solo proyecto baja a su carpeta.
@@ -510,6 +517,38 @@ que necesita una decisión de Zak o una mano suya.
   golpe suena suave. Hoy bajaría la estimación de Steam (de 30 a 20 % que le vaya bien); con tensión y peso, la sube a 35 %. Cinco
   propuestas (el gris que avanza como mecánica, combate con peso y dificultad «Prueba», los liberados se unen, el capítulo 1 con
   mapas grandes, la demo de Steam) en `terra-cristal-pixel3/Docs/SIGUIENTE_NIVEL.md`. Falta que Zak elija.
+- **Consulta respondida el 2026-10-12 · la música de batalla, el equilibrio, el ascenso y los mapas** (Zak: «tus propuestas para nuestro
+  archivo maestro de juego»). Sellado en `terra-cristal-pixel3/Docs/HISTORIA_Y_DINAMICAS.md` 13: todos los personajes del mapa miden 24
+  pixeles de la coronilla a los pies (la sala siguiente los pasa; Huitzil quedó más alto que Elafia y cabezón); cada unidad tiene lo suyo y
+  ningún jefe cae ante una sola; el ascenso será una unidad nueva con fanfarria y efecto; ningún pasillo de una casilla (hoy no hay).
+  Zak eligió y ya está en el juego (Sala 29 B): la música A (el tema del combate sigue donde iba; con la barra sostenida no cambia) y **el
+  Portador del Alba** de protagonista (combate, mapa a 24, encarnar y su cara). **Falta que Zak elija** los arreglos del equilibrio (el
+  Ajolote, la Garza, la Lanza de nivel 4 y la Polilla) (la Portadora del Alba ya está en el juego desde la Sala 32, y los mapas con batalla tienen sus pasos de dos casillas). El Portador quedó sellado en su versión definida (Sala 31). Los miedos
+  nuevos de la Cañada y del Puente ya están en el juego desde la Sala 28.
+
+
+
+- **Consulta respondida el 2026-10-13 · ver en qué punto va cada jugador** (Zak: «un amigo va a jugarlo, nuestro primer jugador»): sin
+  cuenta la partida vive solo en su aparato; con la cuenta de Red Solar Viva (la misma del Escáner) se guarda en la nube y se ve. **Construido
+  el mismo día:** la bitácora del viaje dentro de la partida (tiempo, sesiones, cada batalla, lo que hace, caídas, Reenlaces, afinaciones, con
+  qué juega y los últimos 150 sucesos; `terra-cristal-pixel3/src/juego/bitacora.ts`) y la pestaña «Terra Cristal» del Motor (lista, embudo
+  «Hasta dónde llegan», ficha y línea de tiempo; `Code/MI_TerraCristal.tsx`, admin-action v1.61, sin SQL). **Sala 39 (2026-10-13):** la
+  pestaña tiene Jugadores, Batallas (las que más cuestan, por manera de viajar) y Reportes (la R del juego manda la foto y el momento exacto;
+  admin-action v1.62, función `terra-cristal-reporte`); en el juego, CARGAR con su registro, GUARDAR que espera el turno y la L y la B solo con
+  `?admin=1`. **Sala 40 (2026-10-14):** el amigo todavía no aparece (ni partida ni reportes); la bitácora de cada aparato llega al Motor con
+  o sin cuenta (función `terra-cristal-bitacora`, admin-action v1.63) y la pestaña lleva el número rojo de los reportes nuevos. Zak pegó el SQL
+  de los aparatos. **Falta que Zak** abra la pestaña con su sesión de administrador, mande el juego a sus hermanos (prueba del primer capítulo,
+  en computadora con teclado). El salto que se rompe (por qué la alianza no viaja como luz en batalla) ya está en el juego. La base aguanta de 100 a 400 mil jugadores (plan Pro, 133 MB de 8 GB).
+- **Consulta respondida el 2026-10-14 · la forja, las tiendas desde Lemuria y las casas por dentro** (Zak: «una propuesta completa... que
+  mejore muchísimo la experiencia»): la forja sí funciona desde la Sala 6, pero solo en el Cenote, y el arma no se ve ni se oye crecer.
+  Propuesta: el arma que te recuerda (cambia de aspecto y habla al crecer, Afinación como ceremonia), un mineral por región que abre el
+  siguiente escalón, las armas nuevas se forjan con herencia (la vieja le pasa lo vivido) y, desde Lemuria, dos lugares como en Shining Force
+  (puesto de objetos y forja de la aldea); las casas, mapas separados empezando por el Templo de la Caracola. Detalle en
+  `terra-cristal-pixel3/Docs/HISTORIA_Y_DINAMICAS.md` 9.13 y 9.14. **Construido el mismo día (Sala 41 B):** el puesto de las perlas ×15 (la
+  Lanza de Coral, 240), «Un lugar en el mundo» en la nueva casa y el paseo del Templo libre. **Al cierre, Zak decidió: en Terra Cristal no se
+  vende nada** (fuera el puesto de las perlas y la compra del Árbol Madre; los fotones sirven para cultivar y forjar) y dejó tres salas listas en
+  `terra-cristal-pixel3/Docs/PROXIMA_SALA.md`: 42 C (despertar en Lemuria en primera persona, cultivo con luz, cámara más centrada), 42 D (el
+  arma que crece y la forja de Lemuria, con el arma de cerca de Elafia) y 42 E (por dentro: el Templo de la Caracola, luego el Salón de la Alianza).
 
 ### 🟢 Kal'El · lo que sigue abierto
 
@@ -609,6 +648,12 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   mucho contexto en cada turno) y cambiaría su forma de escribir. Zak no quiere la prueba a ciegas por ahora.
 - **Las ligas largas también se salen en la Matriz** (`EV_Rafaga.tsx`, `.rafaga-lectura` sin `overflow-wrap`); en el
   Espejo ya se parten. Es una línea si Zak la quiere (lección 0-duotricies: no se tocó sin su sí).
+- **Soniox: el oído del Council deja de servir el 2027-01-15** si nada cambia. Desde esa fecha Soniox solo acepta la
+  llave por subprotocolo; espejo-voz v3.5 y la voz de salida del Council ya lo hacen (2026-10-10), pero el micrófono
+  del Council (`rsv-web/src/council/soniox.ts`) usa la librería `@soniox/speech-to-text-web` 1.4.0, que manda la llave
+  en el primer mensaje, igual que la nueva `@soniox/client` 2.3.0. Falta decidir: esperar a que Soniox saque la
+  versión que use subprotocolos y subirla (revisar en diciembre), o escribir el socket a mano como la voz de salida.
+  Los guiones de voz de los anuncios del Espejo (`voz_espejo.mjs`) también usan la forma vieja.
 - **Pipedream Workflows se apaga el 2027-03-31** (borra todo el 2027-04-30): mudar sus 3 flujos de correo vivos
   (bienvenidas, Sello del Primer Ciclo y padrón con sus bajas) a funciones de Supabase. Zak: «luego lo enlazamos»;
   falta el cuándo. Trampas y plan en [[pendiente_migrar_pipedream]].
@@ -644,6 +689,14 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   trae 10,000 créditos al mes que se renuevan el 16 (iban 8,456) y no cobra de más: al acabarse, se detiene. fal.ai
   está en cero. El sonido de ganar de Navegante se hizo con la síntesis del juego (en la tonalidad de cada canción,
   sin créditos); ElevenLabs queda para voces y efectos sueltos.
+- **Tower defense nuevo: Zak eligió PRISMA TD (2026-10-14)**. Es su propia idea, con una imagen de interfaz de
+  referencia: prismas que se cargan con haces de luz que se mezclan, figuras en capas que se parten, banco con interés,
+  SEND NEXT y mapas Beginner, Normal y Extreme. Sus reglas: jugabilidad ante todo, el norte de ser el tower defense del
+  momento en Steam y tan profundo como Terra Cristal, el detalle sobre la velocidad, pantalla completa sin marco y pixel
+  art mucho más detallado que la referencia. El diseño completo (v2) está en `Ludus Cero/prisma/Docs/DISEÑO.md`, y el
+  prompt de la Sala 1 en `Docs/PROXIMA_SALA.md`. **Descartadas** las tres propuestas con lore de los Códices (Jardín
+  Cuántico, Cantera y Ruido Cero, https://claude.ai/artifact/C1Z4gdzgjE6azfkZcrkUjB): «no me gustaron para nada»; el lore
+  va en segundo plano. Quedan abiertos el precio y el idioma por defecto, sin bloquear la construcción.
 
 ### 🟤 Fotón Cero · lo que necesita tu mano
 
@@ -673,7 +726,7 @@ la mano de Zak:
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v69 (2026-10-10)
+## 🜂 Protocolo de Cierre de Sesión · v70 (2026-10-14)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -839,6 +892,7 @@ memorias.
 - **0-unseptuagies** · Lo que tiene que verse no espera un cuadro de animación: nace visible y la entrada es un adorno con rescate por reloj (framer espera para siempre el cuadro que no llega).
 - **0-duoseptuagies** · Lo que sigue rodando de un gesto anterior no es la persona: la continuidad se mide con la hora en que nació el evento, no con la que se atiende.
 - **0-terseptuagies** · Un motor que no se maneja desde fuera se prueba desde dentro (la página corre su prueba y pinta el resultado), y el servidor falso recuerda como el real o fabrica fallas.
+- **0-quaterseptuagies** · Una propuesta de juego se valida primero en su núcleo jugable, en pocas líneas, y se viste (mundo, escenas, página) solo después de su sí: en los juegos manda la jugabilidad.
 
 ### Paso 1 — Test de continuidad
 
@@ -980,11 +1034,47 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v69 (2026-10-10). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v70 (2026-10-14). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
+
+#### 2026-10-14 · LUDUS CERO: EL TOWER DEFENSE NUEVO, DE TRES PROPUESTAS CON LORE A PRISMA TD
+
+- ✅ **Resuelto:** se leyeron completos los 9 libros de Zak (y los 2 de Aqua'Riia, como inspiración) y se entregaron
+  tres tower defense con lore de los Códices, cada uno con escena viva y sonido (Jardín Cuántico, Cantera y Ruido Cero;
+  https://claude.ai/artifact/C1Z4gdzgjE6azfkZcrkUjB). Zak los descartó y eligió su propia idea, con una imagen de
+  interfaz: **PRISMA TD**. Su diseño completo quedó en texto (v2): la regla de la luz, prismas y haces, figuras, Campaña,
+  Espectro (roguelite), Laboratorio, jugo, pantalla completa, biblia de arte, Steam y hoja de ruta. Quedó también el
+  proyecto con su `CLAUDE.md` y el prompt de la Sala 1.
+- 📁 **Archivos:**
+  - `Ludus Cero/prisma/`: `CLAUDE.md`, `.claude/settings.json`, `Docs/DISEÑO.md` v2, `Docs/PROXIMA_SALA.md` y
+    `Docs/referencia_interfaz.jpg`.
+  - `Ludus Cero/Propuestas Tower Defense/`: `index.html` v1.0, `estudio/*.js` v1.0, `servidor.py`, `construir.py` y
+    `publicar/`.
+  - `.claude/launch.json`: servidor `propuestas-td` (puerto 8875).
+- ⏳ **Pendiente:** nada de esta sala. El juego se construye en su propia sala (ver 🔮).
+- 💡 **Decisiones:**
+  - En los juegos de Ludus Cero manda la jugabilidad: el lore de los Códices va en segundo plano y basta el sello de
+    Ludus Cero (Zak: «no me gustaron para nada»).
+  - **PRISMA TD:** el norte es ser el tower defense del momento en Steam y tan profundo como Terra Cristal. El detalle
+    va sobre la velocidad. Pantalla completa sin marco desde la primera ejecución. La referencia se sigue tal cual en
+    composición y color, con un pixel art mucho más detallado.
+  - **La regla de la luz:** cada figura es inmune a lo que refleja y a cada color lo mata su complementario; las blancas
+    se abren con el Refractor y las oscuras no se ven sin luz.
+  - **Espectro (roguelite)** es el motor de horas, porque hoy pegan los roguelites: Emberward debutó en el número 2 del
+    Steam 250 en septiembre de 2026.
+- 🔧 **Patrones nuevos:**
+  - Nueve lectores en paralelo, uno por libro, cada uno con un digesto orientado a diseño.
+  - Escenas vivas de propuestas con un motor mínimo y sonido sintetizado, medido con un render fuera de línea (la
+    liberación pica en -8 dB y los toques de torre van en -40).
+  - Las escenas se balancean contando sus resultados en Node (120 s simulados) antes de verlas.
+  - La paleta de una imagen se mide sin PIL: `sips` a BMP y lectura en Python.
+  - Lección 0-quaterseptuagies.
+- 🧬 **Versión del sistema:** protocolo v70.
+- 🔮 **Cómo arrancar la próxima Sala de Comando:** abrir la sala dentro de `Ludus Cero/prisma` y pegar el prompt de
+  `Docs/PROXIMA_SALA.md` (Sala 1 de PRISMA TD, Fundación). Para lo demás, la sala del proyecto que toque.
 
 #### 2026-10-08 → 2026-10-10 · ESPEJO: ENTRAR EN LO ÚLTIMO, EL SEGUIMIENTO QUE AGUANTA LA INERCIA, HASTA 8 FOTOS Y LA VOZ QUE NO DESELLA RITUALES
 
@@ -1018,43 +1108,14 @@ página: el maestro crece de a una línea por lección.
 
 #### 2026-09-27 → 2026-10-09 · ESCÁNER: LA APP QUE NO SE TRABA, LA BIENVENIDA EXPRÉS, LAS TIENDAS 1.1.6 Y LA SALA DE LOS CV
 
-- ✅ **Resuelto:** **la Bitácora y las capas del Radar ya no quedan invisibles** (vigía del reloj de cuadros en
-  `index.html`, entrada que nace visible con rescate por reloj, velo con «Cerrar» y «Reiniciar la app» si una capa tarda
-  o falla, y clave propia para cada capa y el Espejo) · **el sello de entrada tiene tres salidas** (reloj, guardia a los
-  5 s y salida CSS a los 7 s) · **caja negra** del arranque en el teléfono · **bienvenida exprés**: aviso médico, «¿Qué te
-  trajo aquí?» y directo a lo que eligió, gratis y sin muro de pago (quien viene por los libros aterriza en Holoteca →
-  Códices), con «Empieza gratis, sin tarjeta.» · el interruptor «Onboarding · Duración» y la cuenta de «Entró directo»
-  en el Motor, publicados el 2026-10-09 (el 27 se habían puesto en `MI_Growth.tsx`, una copia que nadie importa: caí en
-  la 0-quinquinquagies) · App Store 1.1.6 (build 29) y Android 1.1.6 (vc9, `.aab` firmado) con todo esto · **los CV de
-  Zak**: carpeta `admin/aplicaciones` ordenada con cuatro versiones (micro1 original, DataAnnotation doble, Spanish
-  Specialist y micro1 QA Engineer 2D) y su propia sala.
-- 📁 **Archivos:** escaner-app (d3a1d3e, 742c08d, 9ed3fdc): `index.html` (vigía), `lib/cajaNegra.ts` v1.1,
-  `EV_CapaSegura.tsx` v1.0, `EscanerVibracional` v13.136, `EV_Shared` v2.49, `EV_Bitacora` v1.22, `EV_PlanVuelo` v1.15,
-  `EV_RealidadElegida` v1.8, `RitualDeLlegada` v3.3, `OnboardingV2` v2.11, `growthFlags` v2.2, `main.tsx` v1.1,
-  diccionarios onb2 v2.9 y shell v1.5, app de la Mac 1.1.47 · Code (0acff7f, 0375851): `MotorDeIntervencion` v5.3 y
-  `MI_Growth` v1.2 (marcada como copia sin uso) · rsv-web publicado el 2026-10-09 · admin `aplicaciones/` (c5c30ee,
-  966fb44, 16d66eb): `CLAUDE.md`, `LEEME.md`, `.claude/settings.json` y un `build_resume.py` por versión.
-- 🗄️ **Migraciones SQL aplicadas:** `20260927_onb_expres.sql` (el embudo cuenta el paso 14 aparte del paywall y
-  `completed` significa solo «llegó al paywall»); Zak la pegó, verificado el 2026-10-09.
-- ⏳ **Pendiente:** decidir si la bienvenida exprés se queda (en Pendientes vivos).
 - 💡 **Decisiones:** la bienvenida se recorta, no se quita (el aviso médico es obligatorio y la pantalla de elección
   manda a cada quien a lo que vio en el video) · la oferta de Sintonía aparece al llegar a un límite real · se saltó la
-  1.1.5 (iOS 1.1.6 build 29, Android vc9) · los CV dicen solo lo comprobable (Vite, no Next.js; el puesto de micro1 con
-  su título real), uno por puesto, y Zak no aplica a los tracks de programación de DataAnnotation · la sala de los CV se
-  abre en `admin/aplicaciones`.
-- 🔧 **Patrones nuevos:** vigía de `requestAnimationFrame` en línea en `index.html` (umbral 200 ms, revisión cada
-  125 ms, solo con la página visible; `window.__rsvRescatesDeCuadro`) · lo que tiene que verse nace visible
-  (`initial={false}` + `riseLayerIn` con guardia por `setTimeout`) · `CapaSegura` (velo, frontera de errores y
-  `PresenceContext` en null para cerrar al instante) · caja negra `rsv_caja_negra` que se lee del iPhone por
-  `devicectl` ([[referencia_leer_caja_negra_iphone]], [[proyecto_robustez_arranque_escaner]]) · la vista previa oculta
-  como laboratorio de reloj detenido (forzando `document.visibilityState`) · generador de CV (PDF y `.md` de una sola
-  fuente, ajustado a una hoja) · antes de publicar rsv-web con trabajo ajeno sin commit, se comprueba que ya esté en el
-  paquete vivo. Lección 0-unseptuagies.
-- 🧬 **Versión del sistema:** App Store 1.1.6 · Android 1.1.6 (vc9) · Motor con «Onboarding · Duración» · protocolo v68.
-- 🧭 **Su arranque** (salió del 🔮 al cerrar la sala del Espejo del 2026-10-10, porque solo la sala más reciente lo
-  lleva; el estado vive en `admin/aplicaciones/CLAUDE.md`): para los CV y las solicitudes de trabajo, abrir la carpeta
-  `admin/aplicaciones` (su `CLAUDE.md` trae el banco de datos comprobados, las reglas y el estado de cada solicitud);
-  para lo demás, la sala del proyecto que toque.
+  1.1.5 · los CV dicen solo lo comprobable, uno por puesto, y la sala de los CV se abre en `admin/aplicaciones`.
+- 🔧 **Patrones nuevos:** vigía de `requestAnimationFrame` en `index.html` · lo que tiene que verse nace visible ·
+  `CapaSegura` (velo, frontera de errores) · caja negra `rsv_caja_negra` que se lee del iPhone por `devicectl`
+  ([[referencia_leer_caja_negra_iphone]], [[proyecto_robustez_arranque_escaner]]) · la vista previa oculta como
+  laboratorio de reloj detenido · generador de CV de una sola fuente. Lección 0-unseptuagies.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 #### 2026-10-08 · II · LA APP SIN INTERNET: TODO ABRE SIN RED Y LO HECHO SIN CONEXIÓN SE SINCRONIZA SOLO
 
