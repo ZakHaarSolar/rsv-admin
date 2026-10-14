@@ -1,4 +1,5 @@
-// Red Solar Viva · delete-account v1.1 (v1.1, Sala 39 de Terra Cristal: también la partida del juego y sus reportes, terra_cristal_partidas
+// Red Solar Viva · delete-account v1.2 (v1.2, Sala 40 de Terra Cristal: también la partida con su bitácora de cada aparato ligado a la
+// cuenta, terra_cristal_aparatos) (v1.1, Sala 39 de Terra Cristal: también la partida del juego y sus reportes, terra_cristal_partidas
 // y terra_cristal_reportes; las fotos de los reportes las barre r2purge v1.1)
 // =====================================================================
 // Borrado de cuenta self-service del Tripulante (cumple App Store
@@ -107,6 +108,8 @@ const PERSONAL_TABLES_BY_CLERK = [
     // (v1.1) Terra Cristal: la partida (con su bitácora) y los reportes que mandó con la R
     "terra_cristal_partidas",
     "terra_cristal_reportes",
+    // (v1.2) y la partida con su bitácora de cada aparato donde jugó con su sesión
+    "terra_cristal_aparatos",
     "email_dispatches",
 ]
 

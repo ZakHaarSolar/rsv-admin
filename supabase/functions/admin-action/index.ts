@@ -1,3 +1,4 @@
+// Red Solar Viva · admin-action v1.63 — 🜂 TERRA CRISTAL: LOS JUGADORES SIN CUENTA Y EL NÚMERO ROJO DE LOS REPORTES (Sala 40 de Terra Cristal, 2026-10-14): admin_terra_cristal lee también terra_cristal_aparatos (migración 20261014_terra_cristal_aparatos; la escribe la función terra-cristal-bitacora: la partida con su bitácora de cada aparato donde se juega, con o sin cuenta). «lista» trae los jugadores sin cuenta (sin_cuenta, el más reciente primero; los aparatos de administrador solo con incluye_admin) y a los de cuenta les pone la bitácora más fresca entre su partida y sus aparatos; «ficha» abre también un aparato ({ aparato }) y a la de una cuenta le da sus aparatos y su bitácora más fresca; «batallas» suma también a los de sin cuenta; «nuevos» cuenta los reportes nuevos (el número rojo de la pestaña); «reportes» y «reporte» dicen si el aparato que lo mandó tiene ficha (en_motor). La cuenta pura vive en _shared/terraAparatos.ts. Sin la tabla nueva, todo sigue como en la v1.62.
 // Red Solar Viva · admin-action v1.62 — 🜂 TERRA CRISTAL: LAS BATALLAS QUE MÁS CUESTAN Y LOS REPORTES (Sala 39 de Terra Cristal, 2026-10-13): admin_terra_cristal suma cuatro modos. «batallas» (con `dificultad`, solo las partidas de esa manera de viajar; `viajes` cuenta cuántas hay de cada una): las batallas de la bitácora sumadas entre todos los jugadores (intentos, quiénes la ganaron, el porcentaje de victorias, las rondas para ganarla y en cuál se quedan: la última que pelearon sin ganarla; las cuentas de administrador no cuentan salvo incluye_admin), sin migración. «reportes» (la lista, la más reciente primero, con cuántos hay en cada estado), «reporte» (uno entero, con su bitácora) y «reporte_estado» (nuevo, visto o resuelto): los que mandan los jugadores con la R, de la tabla terra_cristal_reportes (migración 20261013_terra_cristal_reportes; mientras no se pegue, esos tres modos responden falta_migracion).
 // Red Solar Viva · admin-action v1.61 — 🜂 TERRA CRISTAL EN EL MOTOR (Sala 38 de Terra Cristal, 2026-10-13): nace admin_terra_cristal, la única acción de este gateway que NO es una RPC. Con el admin ya verificado, lee la tabla de las partidas del juego (terra_cristal_partidas) con service role, en dos modos: «lista» (una fila por partida, la más reciente primero, con solo las rutas del documento que la lista pinta) y «ficha» (el documento entero de una cuenta). La cuenta (correo y nombre) sale de profiles y, lo que falte, de Clerk. Sin migración nueva: la tabla ya existe (20261006_terra_cristal_partida). La lista blanca de RPC no cambia.
 // Red Solar Viva · admin-action v1.60 — rutea admin_campana_versiones (visitas, toques a la tienda y porcentaje POR VERSIÓN de la página de descarga) y admin_campana_set_landing (la versión por defecto y el mapa etiqueta → versión que Zak elige en Motor → Campaña → «Página de destino»); admin_campana_estado devuelve además los ajustes de la página. Migración 20261008c_campana_versiones; sin ella, estas dos responden falta_migracion con su nombre.
@@ -120,6 +121,7 @@ import { serve } from "https://deno.land/std@0.177.0/http/server.ts"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0"
 import { gateAdmin } from "../_shared/clerkAuth.ts"
 import { type FilaBatallas, sumaBatallas } from "../_shared/terraBatallas.ts"
+import { type AparatoBatallas, RUTAS_APARATO_BATALLAS, RUTAS_APARATO_DE_CUENTA, RUTAS_APARATO_LISTA, datosAparato, filaDeAparato, filasBatallas, masFresca, resumenBitacora, resumenFila } from "../_shared/terraAparatos.ts"
 
 const supabase = createClient(
     Deno.env.get("SUPABASE_URL")!,
@@ -693,12 +695,27 @@ function errorTC(error: { message?: string; code?: string }): Response {
     return json({ error: error?.message || "error", code }, 400)
 }
 
+/* ═══ v1.63 · LOS APARATOS (terra_cristal_aparatos) ═══════════════════
+   La función terra-cristal-bitacora guarda, de cada aparato donde se juega
+   (con o sin cuenta), su partida con la bitácora: siempre lo último. Mientras
+   la migración 20261014_terra_cristal_aparatos no se pegue, todo sigue como
+   en la v1.62 (la respuesta lo dice en aparatos_falta). La cuenta pura (el
+   resumen de cada fila, la bitácora más fresca, las filas de las batallas)
+   vive en _shared/terraAparatos.ts. */
+const TC_AP_TABLA = "terra_cristal_aparatos"
+const TC_AP_MIGRACION = "20261014_terra_cristal_aparatos"
+const faltaTabla = (error: { code?: string } | null) => {
+    const code = String(error?.code || "")
+    return FALTA_OBJETO.has(code) || code === "PGRST205"
+}
+
 async function listaTC(params: Record<string, unknown>): Promise<Response> {
     const limite = Math.min(
         1000,
         Math.max(1, Math.floor(Number(params?.limite) || 300))
     )
     const desde = Math.max(0, Math.floor(Number(params?.desde) || 0))
+    const incluyeAdmin = params?.incluye_admin === true
     const { data, error, count } = await supabase
         .from(TC_TABLA)
         .select(TC_LISTA, { count: "exact" })
@@ -706,57 +723,117 @@ async function listaTC(params: Record<string, unknown>): Promise<Response> {
         .range(desde, desde + limite - 1)
     if (error) return errorTC(error)
     const filas = (data ?? []) as unknown as Record<string, any>[]
-    const cuentas = await cuentasTC(filas.map((f) => String(f.clerk_user_id)))
-    const partidas = filas.map((f) => {
-        const historia =
-            f.historia && typeof f.historia === "object" ? f.historia : {}
-        const marcas = Object.keys(historia).filter((k) => historia[k] === true)
-        const niveles: Record<string, number> = {}
-        const trip =
-            f.tripulacion && typeof f.tripulacion === "object"
-                ? f.tripulacion
-                : {}
-        for (const [id, s] of Object.entries(trip)) {
-            const n = Number((s as { nivel?: unknown })?.nivel)
-            if (Number.isFinite(n)) niveles[id] = n
+    const ids = filas.map((f) => String(f.clerk_user_id))
+    const cuentas = await cuentasTC(ids)
+    let aparatosFalta: string | null = null
+    /* v1.63 · los aparatos de estas cuentas: su bitácora más fresca */
+    const deCuenta = new Map<string, Record<string, any>[]>()
+    if (ids.length) {
+        const r = await supabase.from(TC_AP_TABLA).select(RUTAS_APARATO_DE_CUENTA).in("clerk_user_id", ids)
+        if (r.error) {
+            if (faltaTabla(r.error)) aparatosFalta = TC_AP_MIGRACION
+            else console.error("[admin-action] terra cristal · aparatos de cuenta:", r.error.message)
         }
-        const conBitacora =
-            f.b_segundos != null || f.b_sesiones != null || f.b_ultima != null
+        for (const a of (r.data ?? []) as unknown as Record<string, any>[]) {
+            const l = deCuenta.get(String(a.clerk_user_id)) ?? []
+            l.push(a)
+            deCuenta.set(String(a.clerk_user_id), l)
+        }
+    }
+    const partidas = filas.map((f) => {
+        const resumen = resumenFila(f)
+        const suyos = deCuenta.get(String(f.clerk_user_id)) ?? []
+        const mejor = masFresca([resumen.bitacora, ...suyos.map((a) => resumenBitacora(a))])
+        const deAparato = !!mejor && mejor !== resumen.bitacora
         return {
+            tipo: "cuenta" as const,
             clerk_user_id: f.clerk_user_id,
             version: f.version,
             guardada: f.guardada,
             creada: f.creada,
             actualizada: f.actualizada,
-            nombre: f.nombre ?? null,
-            avatar: f.avatar ?? null,
-            fotones: typeof f.fotones === "number" ? f.fotones : null,
-            dificultad: f.dificultad ?? null,
-            aldea: f.aldea ?? null,
-            batallas:
-                f.batallas && typeof f.batallas === "object" ? f.batallas : null,
-            marcas,
-            niveles,
-            almas: Array.isArray(f.almas) ? f.almas : [],
-            lejos: Array.isArray(f.lejos) ? f.lejos : [],
-            bitacora: conBitacora
-                ? {
-                      segundos: f.b_segundos ?? null,
-                      sesiones: f.b_sesiones ?? null,
-                      primera: f.b_primera ?? null,
-                      ultima: f.b_ultima ?? null,
-                  }
-                : null,
+            ...resumen,
+            bitacora: mejor,
+            bitacora_de: deAparato ? "aparato" : "partida",
+            aparatos: suyos.length,
             cuenta: cuentas[String(f.clerk_user_id)] ?? {
                 email: null,
                 nombre: null,
             },
         }
     })
-    return json({ partidas, total: count ?? partidas.length, desde, limite })
+    /* v1.63 · los jugadores sin cuenta (en la primera página): los aparatos sin
+       cuenta, el más reciente primero; los de administrador, solo si se piden */
+    let sinCuenta: ReturnType<typeof filaDeAparato>[] = []
+    let totalSinCuenta = 0
+    let sinCuentaAdmin = 0
+    if (desde === 0 && !aparatosFalta) {
+        let q = supabase
+            .from(TC_AP_TABLA)
+            .select(RUTAS_APARATO_LISTA, { count: "exact" })
+            .is("clerk_user_id", null)
+            .order("actualizado", { ascending: false })
+            .range(0, limite - 1)
+        if (!incluyeAdmin) q = q.eq("admin", false)
+        const r = await q
+        if (r.error) {
+            if (faltaTabla(r.error)) aparatosFalta = TC_AP_MIGRACION
+            else console.error("[admin-action] terra cristal · sin cuenta:", r.error.message)
+        } else {
+            sinCuenta = ((r.data ?? []) as unknown as Record<string, any>[]).map(filaDeAparato)
+            totalSinCuenta = r.count ?? sinCuenta.length
+            if (!incluyeAdmin) {
+                const a = await supabase.from(TC_AP_TABLA).select("aparato", { count: "exact", head: true }).is("clerk_user_id", null).eq("admin", true)
+                sinCuentaAdmin = a.count ?? 0
+            }
+        }
+    }
+    return json({
+        partidas,
+        total: count ?? partidas.length,
+        desde,
+        limite,
+        sin_cuenta: sinCuenta,
+        total_sin_cuenta: totalSinCuenta,
+        sin_cuenta_admin: sinCuentaAdmin,
+        incluye_admin: incluyeAdmin,
+        aparatos_falta: aparatosFalta,
+    })
 }
 
+const TC_AP_FICHA = "aparato,clerk_user_id,admin,juego,navegador,idioma,zona,envios,creado,actualizado"
+
 async function fichaTC(params: Record<string, unknown>): Promise<Response> {
+    /* v1.63 · la ficha de un aparato (un jugador sin cuenta) */
+    const aparato = typeof params?.aparato === "string" ? params.aparato.trim() : ""
+    if (aparato) {
+        if (!/^[A-Za-z0-9-]{8,64}$/.test(aparato)) return json({ error: "falta_aparato" }, 400)
+        const { data, error } = await supabase.from(TC_AP_TABLA).select(`${TC_AP_FICHA},documento`).eq("aparato", aparato).maybeSingle()
+        if (error) {
+            if (faltaTabla(error)) return json({ error: "falta_migracion", migracion: TC_AP_MIGRACION, code: error.code }, 400)
+            return errorTC(error)
+        }
+        if (!data) return json({ error: "sin_partida" }, 404)
+        const f = data as Record<string, any>
+        const doc = f.documento && typeof f.documento === "object" ? f.documento : {}
+        const c = typeof f.clerk_user_id === "string" && f.clerk_user_id ? f.clerk_user_id : null
+        const cuentas = c ? await cuentasTC([c]) : {}
+        return json({
+            partida: {
+                clerk_user_id: c,
+                aparato: f.aparato,
+                version: typeof doc.version === "number" ? doc.version : null,
+                guardada: doc.guardada ?? null,
+                creada: doc.creada ?? f.creado,
+                actualizada: f.actualizado,
+                documento: doc,
+            },
+            cuenta: c ? cuentas[c] ?? null : null,
+            aparato: datosAparato(f),
+            aparatos: [{ ...datosAparato(f), ultima: doc?.bitacora?.ultima ?? null }],
+            bitacora_de: f.aparato,
+        })
+    }
     const id =
         typeof params?.clerk_user_id === "string"
             ? params.clerk_user_id.trim()
@@ -771,7 +848,23 @@ async function fichaTC(params: Record<string, unknown>): Promise<Response> {
     if (error) return errorTC(error)
     if (!data) return json({ error: "sin_partida" }, 404)
     const cuentas = await cuentasTC([id])
-    return json({ partida: data, cuenta: cuentas[id] })
+    /* v1.63 · sus aparatos: la bitácora más fresca (la de su último guardado o la
+       de lo último que jugó en alguno de sus aparatos) */
+    const partida = data as Record<string, any>
+    const r = await supabase.from(TC_AP_TABLA).select(`${TC_AP_FICHA},bitacora:documento->bitacora`).eq("clerk_user_id", id).order("actualizado", { ascending: false }).limit(20)
+    if (r.error && !faltaTabla(r.error)) console.error("[admin-action] terra cristal · aparatos de la ficha:", r.error.message)
+    const suyos = (r.data ?? []) as unknown as Record<string, any>[]
+    const doc = partida.documento && typeof partida.documento === "object" ? partida.documento : {}
+    const propia = doc.bitacora && typeof doc.bitacora === "object" ? { ultima: (doc.bitacora.ultima as string) ?? null, b: doc.bitacora, de: "partida" } : null
+    const mejor = masFresca([propia, ...suyos.filter((a) => a.bitacora && typeof a.bitacora === "object").map((a) => ({ ultima: (a.bitacora.ultima as string) ?? null, b: a.bitacora, de: String(a.aparato) }))])
+    if (mejor && mejor !== propia) partida.documento = { ...doc, bitacora: mejor.b }
+    return json({
+        partida,
+        cuenta: cuentas[id],
+        aparatos: suyos.map((a) => ({ ...datosAparato(a), ultima: a.bitacora?.ultima ?? null })),
+        bitacora_de: mejor?.de ?? "partida",
+        aparatos_falta: r.error && faltaTabla(r.error) ? TC_AP_MIGRACION : null,
+    })
 }
 
 /* ═══ v1.62 · LAS BATALLAS QUE MÁS CUESTAN (modo «batallas») ═══════════
@@ -806,9 +899,31 @@ async function batallasTC(params: Record<string, unknown>): Promise<Response> {
         filas.push(...d)
         if (d.length < 1000) break
     }
-    // (la cuenta vive en _shared/terraBatallas.ts: se prueba sin la base)
+    /* v1.63 · los aparatos: los de sin cuenta suman como un jugador más cada uno, y a los de cuenta les toca su bitácora más fresca
+       (la de su partida o la de alguno de sus aparatos); sin la tabla todavía, solo las partidas */
+    const aparatos: AparatoBatallas[] = []
+    let aparatosFalta: string | null = null
+    for (let desde = 0; desde < 50000; desde += 1000) {
+        const { data, error } = await supabase
+            .from(TC_AP_TABLA)
+            .select(RUTAS_APARATO_BATALLAS)
+            .order("aparato", { ascending: true })
+            .range(desde, desde + 999)
+        if (error) {
+            if (faltaTabla(error)) aparatosFalta = TC_AP_MIGRACION
+            else console.error("[admin-action] terra cristal · aparatos de las batallas:", error.message)
+            break
+        }
+        const d = (data ?? []) as unknown as AparatoBatallas[]
+        aparatos.push(...d)
+        if (d.length < 1000) break
+    }
+    const juntas = filasBatallas(filas, aparatos, incluyeAdmin)
+    for (const id of juntas.adminsAparato) admins.add(id)
+    // (la cuenta vive en _shared/terraBatallas.ts y _shared/terraAparatos.ts: se prueban sin la base)
     const dificultad = typeof params?.dificultad === "string" ? params.dificultad : null
-    return json({ ...sumaBatallas(filas, admins, Date.now(), dificultad), incluye_admin: incluyeAdmin, calculado: new Date().toISOString() })
+    const sinCuenta = juntas.filas.filter((f) => f.clerk_user_id.startsWith("ap:") && !admins.has(f.clerk_user_id)).length
+    return json({ ...sumaBatallas(juntas.filas, admins, Date.now(), dificultad), sin_cuenta: sinCuenta, incluye_admin: incluyeAdmin, aparatos_falta: aparatosFalta, calculado: new Date().toISOString() })
 }
 
 /* ═══ v1.62 · LOS REPORTES (modos «reportes», «reporte», «reporte_estado») ═══
@@ -850,13 +965,36 @@ async function reportesTC(params: Record<string, unknown>): Promise<Response> {
     const filas = (data ?? []) as unknown as Record<string, any>[]
     const ids = [...new Set(filas.map((f) => f.clerk_user_id).filter((x): x is string => typeof x === "string" && !!x))]
     const cuentas = ids.length ? await cuentasTC(ids) : {}
+    const conFicha = await enMotor(filas.map((f) => String(f.aparato || "")))
     return json({
-        reportes: filas.map((f) => ({ ...f, cuenta: f.clerk_user_id ? cuentas[f.clerk_user_id] ?? { email: null, nombre: null } : null })),
+        reportes: filas.map((f) => ({ ...f, en_motor: conFicha.has(String(f.aparato || "")), cuenta: f.clerk_user_id ? cuentas[f.clerk_user_id] ?? { email: null, nombre: null } : null })),
         total: count ?? filas.length,
         conteo: { nuevo, visto, resuelto },
         desde,
         limite,
     })
+}
+
+/* v1.63 · el número rojo de la pestaña: cuántos reportes nuevos hay (una
+   cuenta ligera, sin filas). Sin la tabla todavía, cero. */
+async function nuevosTC(): Promise<Response> {
+    const r = await supabase.from(TC_REP_TABLA).select("id", { count: "exact", head: true }).eq("estado", "nuevo")
+    if (r.error) {
+        if (faltaTabla(r.error)) return json({ reportes: 0, falta_migracion: TC_REP_MIGRACION })
+        console.error("[admin-action] terra cristal · nuevos:", r.error.message)
+        return json({ reportes: 0 })
+    }
+    return json({ reportes: r.count ?? 0 })
+}
+
+/* v1.63 · ¿el aparato que mandó cada reporte tiene ficha en el Motor? (un
+   jugador sin cuenta se abre por su aparato) */
+async function enMotor(aparatos: string[]): Promise<Set<string>> {
+    const ids = [...new Set(aparatos.filter((a) => typeof a === "string" && /^[A-Za-z0-9-]{8,64}$/.test(a)))]
+    if (!ids.length) return new Set()
+    const r = await supabase.from(TC_AP_TABLA).select("aparato").in("aparato", ids)
+    if (r.error) return new Set()
+    return new Set(((r.data ?? []) as { aparato: string }[]).map((x) => x.aparato))
 }
 
 async function reporteTC(params: Record<string, unknown>): Promise<Response> {
@@ -867,7 +1005,8 @@ async function reporteTC(params: Record<string, unknown>): Promise<Response> {
     if (!data) return json({ error: "sin_reporte" }, 404)
     const c = (data as any).clerk_user_id as string | null
     const cuentas = c ? await cuentasTC([c]) : {}
-    return json({ reporte: { ...(data as any), cuenta: c ? cuentas[c] ?? null : null } })
+    const conFicha = await enMotor([String((data as any).aparato || "")])
+    return json({ reporte: { ...(data as any), en_motor: conFicha.has(String((data as any).aparato || "")), cuenta: c ? cuentas[c] ?? null : null } })
 }
 
 async function reporteEstadoTC(params: Record<string, unknown>): Promise<Response> {
@@ -894,6 +1033,7 @@ async function terraCristal(params: Record<string, unknown>): Promise<Response> 
     if (modo === "reportes") return await reportesTC(params)
     if (modo === "reporte") return await reporteTC(params)
     if (modo === "reporte_estado") return await reporteEstadoTC(params)
+    if (modo === "nuevos") return await nuevosTC()
     return json({ error: "modo_desconocido" }, 400)
 }
 
