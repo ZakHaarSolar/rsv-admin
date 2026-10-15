@@ -1,3 +1,4 @@
+// Red Solar Viva · oraculo-chat v1.57 — el tope de un mensaje sube a 40,000 caracteres (un artículo pegado entero cabe) y el rechazo devuelve { largo, tope }.
 // Red Solar Viva · oraculo-chat v1.56 — el Espejo acepta mensajes de hasta 14,000 caracteres, igual que la Matriz (antes 4,000: un artículo pegado volvía como "Tu nodo perdió su enlace").
 // Red Solar Viva · oraculo-chat v1.55 — 🜂 HASTA 8 FOTOS POR MENSAJE Y 60 FOTOS AL
 // DÍA (Zak 2026-10-10). El turno lee hasta MAX_FOTOS_TURNO (8, antes 4). El freno de
@@ -1656,12 +1657,18 @@ Deno.serve(async (req: Request) => {
             typeof body?.directiva === "string"
                 ? body.directiva.trim().slice(0, 8000)
                 : ""
-        /* 🜂 v1.56 — el Espejo lee lo mismo que la Matriz (Zak 2026-10-14: pegó
-           un artículo de ~11,000 caracteres con una foto y volvía "Tu nodo
-           perdió su enlace"; el tope de 4,000 lo rechazaba sin decir por qué). */
-        const topeMsg = 14000
+        /* 🜂 v1.56/v1.57 — un artículo pegado entero cabe (Zak 2026-10-14: un
+           texto de ~19,000 caracteres con una foto chocaba con 4,000 y luego
+           con 14,000). 40,000 son ~11,000 tokens de un solo turno: el historial
+           que vuelve al modelo recorta cada mensaje a 4,000 (priorTurns), así
+           que lo largo no encarece los turnos siguientes. El rechazo dice el
+           largo y el tope para que el aviso hable con números. */
+        const topeMsg = 40000
         if (userMessage.length > topeMsg)
-            return json({ error: "message_too_long" }, 400)
+            return json(
+                { error: "message_too_long", largo: userMessage.length, tope: topeMsg },
+                400
+            )
         if (directiva) userMessage = `${userMessage}\n\n${directiva}`
         // Higiene de marcadores: el texto del usuario jamás puede traer los
         // tags reservados (inyectaría una "lectura de imagen" falsa).
