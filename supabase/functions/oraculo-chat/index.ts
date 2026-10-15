@@ -1,3 +1,4 @@
+// Red Solar Viva · oraculo-chat v1.56 — el Espejo acepta mensajes de hasta 14,000 caracteres, igual que la Matriz (antes 4,000: un artículo pegado volvía como "Tu nodo perdió su enlace").
 // Red Solar Viva · oraculo-chat v1.55 — 🜂 HASTA 8 FOTOS POR MENSAJE Y 60 FOTOS AL
 // DÍA (Zak 2026-10-10). El turno lee hasta MAX_FOTOS_TURNO (8, antes 4). El freno de
 // visión deja de contar MENSAJES con fotos (30 al día, hasta 120 fotos) y cuenta
@@ -1655,7 +1656,10 @@ Deno.serve(async (req: Request) => {
             typeof body?.directiva === "string"
                 ? body.directiva.trim().slice(0, 8000)
                 : ""
-        const topeMsg = body?.efimero === true ? 14000 : 4000
+        /* 🜂 v1.56 — el Espejo lee lo mismo que la Matriz (Zak 2026-10-14: pegó
+           un artículo de ~11,000 caracteres con una foto y volvía "Tu nodo
+           perdió su enlace"; el tope de 4,000 lo rechazaba sin decir por qué). */
+        const topeMsg = 14000
         if (userMessage.length > topeMsg)
             return json({ error: "message_too_long" }, 400)
         if (directiva) userMessage = `${userMessage}\n\n${directiva}`
