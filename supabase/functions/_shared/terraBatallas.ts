@@ -1,3 +1,7 @@
+// Red Solar Viva · _shared/terraBatallas.ts v1.1 — 🜂 LO QUE USAN EN CADA BATALLA Y LO QUE CONTESTAN (Sala 42 E de Terra Cristal, tercera tanda,
+// 2026-10-15): cada batalla suma lo que hizo la alianza en ella (documento.bitacora.batallas[id].acciones, desde el juego de la Sala 42 E:
+// «ilumina», «magia:<id>», «portal», «portal_sella», «regreso»...): cuántas veces entre todos y cuántos jugadores lo usaron (`acciones`, de lo
+// que más se usa a lo que menos); y lo que contestan a «¿Por qué sigues en Terra Cristal?» (documento.respuesta, `r`; `respuestas`).
 // Red Solar Viva · _shared/terraBatallas.ts v1.0 — 🜂 LAS BATALLAS QUE MÁS CUESTAN (Sala 39 de Terra Cristal, 2026-10-13)
 // =============================================================================
 // La cuenta pura (sin base ni red) que hace admin-action v1.62 en el modo «batallas» de admin_terra_cristal: las batallas de la bitácora
@@ -12,7 +16,7 @@
 //   · (Zak, segunda tanda: «asegúrate que venga qué dificultad eligieron en el Motor») con `dificultad`, solo las partidas de esa manera de
 //     viajar (densidad o friccion; las que no eligieron, «sin»); `viajes` cuenta cuántas hay de cada una (sin el filtro).
 
-export type FilaBatallas = { clerk_user_id: string; b: unknown; u: string | null; /** la manera de viajar (densidad, friccion o null) */ d?: string | null }
+export type FilaBatallas = { clerk_user_id: string; b: unknown; u: string | null; /** la manera de viajar (densidad, friccion o null) */ d?: string | null; /** v1.1 · su respuesta a «¿Por qué sigues en Terra Cristal?» */ r?: string | null }
 
 export type BatallaSuma = {
     id: string
@@ -31,6 +35,8 @@ export type BatallaSuma = {
     se_quedan: number
     se_fueron: number
     ultima: string | null
+    /** v1.1 · lo que hizo la alianza en esta batalla, entre todos: cuántas veces y cuántos jugadores (de lo que más a lo que menos) */
+    acciones: { k: string; veces: number; jugadores: number }[]
 }
 
 export type SumaBatallas = {
@@ -43,7 +49,11 @@ export type SumaBatallas = {
     viajes: { densidad: number; friccion: number; sin: number }
     /** el filtro que se usó (null: las dos) */
     dificultad: string | null
+    /** v1.1 · lo que contestan a «¿Por qué sigues en Terra Cristal?» (alma, rindo, llamaron, nose), entre los jugadores que cuentan */
+    respuestas: Record<string, number>
 }
+/** v1.1 · Cuántas acciones distintas devuelve cada batalla (las que más se usan). */
+export const ACCIONES_TOPE = 24
 /** La manera de viajar de una partida, como la cuenta el Motor. */
 const viajeDe = (d: unknown): "densidad" | "friccion" | "sin" => (d === "densidad" || d === "friccion" ? d : "sin")
 
@@ -77,17 +87,19 @@ export function sumaBatallas(filas: FilaBatallas[], admins: Set<string> = new Se
         seQuedan: number
         seFueron: number
         ultima: number
+        acciones: Map<string, { veces: number; jugadores: number }>
     }
     const suma = new Map<string, Suma>()
     const de = (id: string): Suma => {
         let s = suma.get(id)
         if (!s) {
-            s = { id, jugadores: 0, ganaron: 0, intentos: 0, ganadas: 0, perdidas: 0, regresos: 0, sinTerminar: 0, hastaGanar: [], rondasGanar: [], rondasUltima: [], seQuedan: 0, seFueron: 0, ultima: -Infinity }
+            s = { id, jugadores: 0, ganaron: 0, intentos: 0, ganadas: 0, perdidas: 0, regresos: 0, sinTerminar: 0, hastaGanar: [], rondasGanar: [], rondasUltima: [], seQuedan: 0, seFueron: 0, ultima: -Infinity, acciones: new Map() }
             suma.set(id, s)
         }
         return s
     }
     let jugadores = 0, conBatallas = 0, excluidos = 0, quedados = 0
+    const respuestas: Record<string, number> = {}
     for (const f of filas) {
         if (admins.has(f.clerk_user_id)) {
             excluidos++
@@ -97,6 +109,8 @@ export function sumaBatallas(filas: FilaBatallas[], admins: Set<string> = new Se
         viajes[v]++
         if (filtro && v !== filtro) continue
         jugadores++
+        // v1.1 · su respuesta (una por jugador)
+        if (typeof f.r === "string" && f.r && f.r.length <= 20) respuestas[f.r] = (respuestas[f.r] ?? 0) + 1
         const b = f.b && typeof f.b === "object" && !Array.isArray(f.b) ? (f.b as Record<string, Record<string, unknown>>) : null
         if (!b) continue
         let ultimaId: string | null = null, ultimaT = -Infinity, alguna = false
@@ -119,6 +133,17 @@ export function sumaBatallas(filas: FilaBatallas[], admins: Set<string> = new Se
                 if (n(v.mejor) > 0) s.rondasGanar.push(n(v.mejor))
             }
             if (n(v.rondas) > 0) s.rondasUltima.push(n(v.rondas))
+            // v1.1 · lo que hizo en ella (desde el juego de la Sala 42 E)
+            const ac = v.acciones && typeof v.acciones === "object" && !Array.isArray(v.acciones) ? (v.acciones as Record<string, unknown>) : null
+            if (ac)
+                for (const [k, x] of Object.entries(ac)) {
+                    const veces = n(x)
+                    if (!veces || !k || k.length > 40) continue
+                    const a = s.acciones.get(k) ?? { veces: 0, jugadores: 0 }
+                    a.veces += veces
+                    a.jugadores++
+                    s.acciones.set(k, a)
+                }
             const t = Date.parse(String(v.ultima || ""))
             if (Number.isFinite(t)) {
                 if (t > s.ultima) s.ultima = t
@@ -157,7 +182,11 @@ export function sumaBatallas(filas: FilaBatallas[], admins: Set<string> = new Se
             se_quedan: s.seQuedan,
             se_fueron: s.seFueron,
             ultima: Number.isFinite(s.ultima) ? new Date(s.ultima).toISOString() : null,
+            acciones: [...s.acciones.entries()]
+                .map(([k, a]) => ({ k, veces: a.veces, jugadores: a.jugadores }))
+                .sort((a, b) => b.veces - a.veces || b.jugadores - a.jugadores || a.k.localeCompare(b.k))
+                .slice(0, ACCIONES_TOPE),
         }
     })
-    return { batallas, jugadores, con_batallas: conBatallas, quedados, excluidos, viajes, dificultad: filtro }
+    return { batallas, jugadores, con_batallas: conBatallas, quedados, excluidos, viajes, dificultad: filtro, respuestas }
 }
