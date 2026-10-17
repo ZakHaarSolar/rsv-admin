@@ -4,6 +4,36 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-08 → 2026-10-10 · ESPEJO: ENTRAR EN LO ÚLTIMO, EL SEGUIMIENTO QUE AGUANTA LA INERCIA, HASTA 8 FOTOS Y LA VOZ QUE NO DESELLA RITUALES
+
+- ✅ **Resuelto:** **pedir por voz un ritual ya sellado lo deja sellado** (la voz leía `checked` y la consulta trae `today`;
+  `toggle_ritual` alterna) · **el Espejo:** al entrar se ve el último mensaje también en el celular (la medida del cromo
+  anotaba «está leyendo arriba» con la vista recién nacida) y el aterrizaje aguanta 2.5 s lo que llega tarde · **el
+  seguimiento aguanta la inercia** del trackpad o del dedo (Enter a media inercia dejaba el envío 1,400 px fuera de
+  pantalla) · las ligas largas caben en su burbuja y en el reflejo · cada foto mide lo suyo · **hasta 8 fotos por mensaje**
+  con **tope de 60 fotos en 24 horas por persona**: al topar, el mensaje vuelve al campo con sus fotos y el aviso dice
+  cuántas quedan · las fotos del Tripulante se guardan en el cofre del aparato (la charla guarda solo el puntero) · app de
+  la Mac 1.1.52 y 1.1.53 publicadas; el iPhone de Zak con la 1.1.52.
+- 📁 **Archivos:** escaner-app: `useComandoVoz` v3.2 (7fed1d2), `EV_Oraculo` v6.26 (de96374) y v6.27 (2e9dafa),
+  `imgCache` v1.1, i18n `espejo` v1.25, banco `espejo.ts` v1.1 + `datos.ts` v1.4 + `arranque.tsx` v1.4 · app de la Mac
+  1.1.52 (65c172e) y 1.1.53 (958938c).
+- 🔌 **Edge functions deployed:** `oraculo-chat` v1.55 (admin ace1a33): lee hasta 8 fotos; el freno de visión cobra una
+  unidad por foto (60 por persona, 180 por IP, 6,000 en todo el ecosistema, ventanas de 24 h) y al topar responde
+  `fotos: true`, `limite` y `quedan`. Sin migración (usa `reserve_edge_spend`).
+- ⏳ **Pendiente:** nada de esta sala (las dos consultas abiertas están en Pendientes vivos).
+- 💡 **Decisiones:** el ojo del Espejo sigue siendo Gemini 3.6 Flash; Zak no quiere la prueba a ciegas con DeepSeek V4.1
+  Flash por ahora · la cura de una pieza compartida por las dos caras va en las dos (la burbuja); la Matriz no se tocó ·
+  al instalar en el iPhone se espera 2 minutos como máximo; si la Mac no lo ve, se detiene y Zak compila en Xcode (el
+  proyecto de iOS queda con el código copiado).
+- 🔧 **Patrones nuevos:** banco del Espejo (`&espejo`, `&prueba=espejo&pasos=…`, `&mudo`; con `&conservar` el servidor
+  falso recuerda la charla) que corre sola y pinta su resultado · el motor de Safari sin ventana: `xcrun simctl boot` +
+  `openurl` + `io screenshot` (iPad = cara de computadora, iPhone = teléfono) · inercia del trackpad por CDP con los pasos
+  a ritmo fijo y su `timestamp` · leer el localStorage de la app de la Mac (sqlite en UTF-16LE, solo las claves necesarias)
+  · la caja negra anota `espejo-seguir-cede` y `espejo-seguir-agota` · un cuerpo de 8 MB pasa la plataforma (sonda con
+  llave inválida). Lecciones 0-duoseptuagies y 0-terseptuagies; detalle en [[referencia-probar-espejo]],
+  [[integrar-desde-worktree]] y [[feedback-iphone-no-esperar]].
+- 🧬 **Versión del sistema:** app de la Mac 1.1.53 · `oraculo-chat` v1.55 · `EV_Oraculo` v6.27 · protocolo v69.
+
 #### 2026-09-27 → 2026-10-09 · ESCÁNER: LA APP QUE NO SE TRABA, LA BIENVENIDA EXPRÉS, LAS TIENDAS 1.1.6 Y LA SALA DE LOS CV
 
 - ✅ **Resuelto:** **la Bitácora y las capas del Radar ya no quedan invisibles** (vigía del reloj de cuadros en

@@ -1694,7 +1694,41 @@ con una imagen: PRISMA TD. Una ronda corta de núcleos jugables habría llegado 
 **Hermanas.** 0-undeseptuagies (el ganador se busca dentro de su gusto) · 0-duosexagies (una propuesta se fotografía junto
 a «hoy») · 0-septtricies (un brief prestado no es el norte del dueño: se destila y se contrasta con él antes de construir).
 
+### Paso 0-quinseptuagies · Lo que se publica de un juego no cuenta lo que el jugador tiene que descubrir
+
+**Regla.** En todo lo que ve alguien que todavía no juega (la página de Ludus Cero, la tienda, la ficha de Steam, el tráiler, las
+capturas, los correos y los anuncios) no se dice quién se une a la alianza, dónde ni cómo, ni quién es el jefe ni qué pasa al final de un
+capítulo. Se enseñan la mecánica, el mundo y el tono; lo que llega después se deja para que el jugador lo encuentre. Antes de publicar se
+lee cada texto y cada captura con una pregunta: ¿esto le quita a alguien una sorpresa?
+
+**Por qué.** El 2026-10-17, en la estación de Terra Cristal, una captura decía «En el Bosque del Olvido, Azta se une a la alianza» (con su
+letrero de unión dentro de la imagen) y la sinopsis nombraba a Azta entre los compañeros. Zak: «WTF no pongas spoilers que se une la garza
+en el bosque del olvido lol». El momento de la garza es de lo más trabajado del capítulo 1: lo que se descubre es parte de lo que se vende.
+
+**Hermanas.** 0-nonies (publicar cierra con su revisión; aquí, también la del texto) · 0-duosexagies (lo que se enseña se mira antes como
+lo verá quien lo recibe).
+
+### Paso 0-sexseptuagies · Un detalle de arte hecho con IA se arregla por partes, y solo donde está
+
+**Regla.** Para corregir un detalle de una imagen ya hecha con IA (una letra, unos pies, una mano), primero se mide el defecto con números
+contra lo que está bien a su lado. Lo que es geometría (una letra más grande que sus vecinas) se arregla con código, sin la IA. Lo que hay
+que redibujar (unas piernas) se le pide a la IA sobre un recorte de esa zona, con su hoja de diseño, y se pega de vuelta solo ahí, alineado
+y con la orilla suave. Pedirle el arreglo sobre la imagen entera casi no cambia nada: el modelo tiende a devolverla igual.
+
+**Por qué.** El 2026-10-17 Zak eligió la portada A1 de Terra Cristal y pidió arreglar la L de CRISTAL (más grande que las demás) y los pies
+de la garza (de perfil bajo un torso de frente). Pedido sobre la portada entera, Nano Banana devolvió la L y los pies casi iguales (0.064
+USD perdidos). Medida, la L tenía 268 pixeles de alto contra 244 de la T y la A: se ajustó con código, con el contorno de la A de TERRA,
+que la L tocaba, cerrado a mano pixel por pixel. Las piernas, pedidas sobre su recorte de 456 x 810, salieron bien a la primera y se pegaron
+solo de la falda para abajo.
+
+**Hermanas.** 0-quaterquadragies (lo que no se percibe se mide con un instrumento) · 0-undequinquagies (lo que tiene que sentirse humano
+se revisa de cerca) · 0-duosexagies (se mira junto a lo que había antes de entregarlo).
+
 ### Changelog del protocolo
+
+- **v71 (2026-10-17):** dos lecciones de la sala de la compra de Terra Cristal (la versión gratis hasta la puerta de Lemuria, el muro de
+  compra con Stripe, el juego en /terra-cristal/ y Ludus Cero al día). **0-quinseptuagies**: lo que se publica de un juego no cuenta lo que
+  el jugador tiene que descubrir. **0-sexseptuagies**: un detalle de arte hecho con IA se arregla por partes y solo donde está.
 
 - **v70 (2026-10-14):** una lección de la sala del tower defense nuevo (tres propuestas con lore descartadas y PRISMA TD
   elegido). **0-quaterseptuagies**: una propuesta de juego se valida primero en su núcleo jugable, y en los juegos manda
