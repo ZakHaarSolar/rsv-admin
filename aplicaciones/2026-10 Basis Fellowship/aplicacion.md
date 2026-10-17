@@ -77,3 +77,7 @@ The long game: Ghibli made wonder a language the whole world speaks. Red Solar V
 **Who are you? (optional)**
 
 Diego Soto, also Zak'Haar. Mexican, based in Cancún. For six years I taught blindfolded perception ("extraocular vision") to kids and adults; that's where I learned that people only change what they can feel. Since 2025 I've been building Red Solar Viva with my co-creator Aqua'Riia: I wrote nine books on consciousness (the Códices de Luz), I compose as Zak'Haar (four albums), and I direct AI the way a director directs a crew. I believe one person with enough clarity can now do what used to take a company.
+
+## Estado
+
+- **Enviada el 2026-10-17.** Referencia **BF-2026-2P3AN4** (no llega correo de confirmación; dudas a basis@orbit.engineering, asunto [basis]). Actualizar con «Update mine» en cada logro grande.
