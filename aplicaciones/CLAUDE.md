@@ -24,7 +24,8 @@ Diego Soto Borja Almeida, firma artística **Zak'Haar**. Mexicano, vive en Canc�
 - `cv/<fecha> <empresa> (<puesto>)/`: una carpeta por versión, nunca se borra ninguna. Cada una trae
   `build_resume.py` (la única fuente), el PDF para subir, el `.md` en texto limpio y `vista previa.png`.
 - `.venv/`: el Python del generador (reportlab, pypdf). Fuera de git.
-- `2026-10 Claude for Startups/` y `2026-10 Google for Startups Cloud/`: solicitudes de Red Solar Viva (no son CV).
+- `2026-10 Claude for Startups/`, `2026-10 Google for Startups Cloud/` y `2026-10 Basis Fellowship/`: solicitudes de Red
+  Solar Viva y de Zak (no son CV).
 
 **Hacer un CV nuevo:** copia la carpeta más cercana al puesto, cambia solo la parte «Contenido» del
 `build_resume.py` (y el orden de secciones en `todo()` si hace falta) y córrelo desde su carpeta con
