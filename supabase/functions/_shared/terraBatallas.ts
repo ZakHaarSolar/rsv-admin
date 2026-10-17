@@ -1,4 +1,5 @@
-// Red Solar Viva · _shared/terraBatallas.ts v1.1 — 🜂 LO QUE USAN EN CADA BATALLA Y LO QUE CONTESTAN (Sala 42 E de Terra Cristal, tercera tanda,
+// Red Solar Viva · _shared/terraBatallas.ts v1.2 — (v1.2, la compra, 2026-10-17: cada fila trae también `m`, `s` y `e`, el muro de la compra, la salida
+// y los errores de su bitácora, para _shared/terraMuro.ts; aquí no se usan) — 🜂 LO QUE USAN EN CADA BATALLA Y LO QUE CONTESTAN (Sala 42 E de Terra Cristal, tercera tanda,
 // 2026-10-15): cada batalla suma lo que hizo la alianza en ella (documento.bitacora.batallas[id].acciones, desde el juego de la Sala 42 E:
 // «ilumina», «magia:<id>», «portal», «portal_sella», «regreso»...): cuántas veces entre todos y cuántos jugadores lo usaron (`acciones`, de lo
 // que más se usa a lo que menos); y lo que contestan a «¿Por qué sigues en Terra Cristal?» (documento.respuesta, `r`; `respuestas`).
@@ -16,7 +17,7 @@
 //   · (Zak, segunda tanda: «asegúrate que venga qué dificultad eligieron en el Motor») con `dificultad`, solo las partidas de esa manera de
 //     viajar (densidad o friccion; las que no eligieron, «sin»); `viajes` cuenta cuántas hay de cada una (sin el filtro).
 
-export type FilaBatallas = { clerk_user_id: string; b: unknown; u: string | null; /** la manera de viajar (densidad, friccion o null) */ d?: string | null; /** v1.1 · su respuesta a «¿Por qué sigues en Terra Cristal?» */ r?: string | null }
+export type FilaBatallas = { clerk_user_id: string; b: unknown; u: string | null; /** la manera de viajar (densidad, friccion o null) */ d?: string | null; /** v1.1 · su respuesta a «¿Por qué sigues en Terra Cristal?» */ r?: string | null; /** v1.2 · el muro de la compra, la salida y los errores de su bitácora (documento.bitacora.muro, .salida, .errores) */ m?: unknown; s?: unknown; e?: unknown }
 
 export type BatallaSuma = {
     id: string

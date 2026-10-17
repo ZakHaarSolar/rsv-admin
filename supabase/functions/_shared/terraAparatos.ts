@@ -1,3 +1,5 @@
+// Red Solar Viva · _shared/terraAparatos.ts v1.2 — (la compra de Terra Cristal, 2026-10-17) las filas de las batallas llevan también el muro de la
+// compra, la salida y los errores de la bitácora (`m`, `s`, `e`), de la misma bitácora que se elige por más fresca.
 // Red Solar Viva · _shared/terraAparatos.ts v1.1 — (Sala 42 E de Terra Cristal, tercera tanda, 2026-10-15) las filas de las batallas llevan
 // también la respuesta a «¿Por qué sigues en Terra Cristal?» (`r`).
 // Red Solar Viva · _shared/terraAparatos.ts v1.0 — 🜂 LOS JUGADORES SIN CUENTA EN EL MOTOR (Sala 40 de Terra Cristal, 2026-10-14)
@@ -50,7 +52,8 @@ export const RUTAS_APARATO_DE_CUENTA =
     "aparato,clerk_user_id,admin,navegador,actualizado,b_segundos:documento->bitacora->segundos,b_sesiones:documento->bitacora->sesiones,b_primera:documento->bitacora->>primera,b_ultima:documento->bitacora->>ultima"
 
 /** Lo que se lee de cada aparato para las batallas. */
-export const RUTAS_APARATO_BATALLAS = "aparato,clerk_user_id,admin,b:documento->bitacora->batallas,u:documento->bitacora->>ultima,d:documento->>dificultad,r:documento->>respuesta"
+// (v1.2, la compra) también el muro de la compra, la salida y los errores de la bitácora (para _shared/terraMuro.ts)
+export const RUTAS_APARATO_BATALLAS = "aparato,clerk_user_id,admin,b:documento->bitacora->batallas,u:documento->bitacora->>ultima,d:documento->>dificultad,r:documento->>respuesta,m:documento->bitacora->muro,s:documento->bitacora->salida,e:documento->bitacora->errores"
 
 export type ResumenBitacora = { segundos: number | null; sesiones: number | null; primera: string | null; ultima: string | null }
 
@@ -128,7 +131,7 @@ export function masFresca<T extends { ultima: string | null } | null>(xs: T[]): 
 }
 
 /** Una fila de aparato leída con RUTAS_APARATO_BATALLAS. */
-export type AparatoBatallas = { aparato: string; clerk_user_id: string | null; admin?: boolean | null; b: unknown; u: string | null; d?: string | null; /** (Sala 42 E) su respuesta */ r?: string | null }
+export type AparatoBatallas = { aparato: string; clerk_user_id: string | null; admin?: boolean | null; b: unknown; u: string | null; d?: string | null; /** (Sala 42 E) su respuesta */ r?: string | null; /** (v1.2) el muro, la salida y los errores */ m?: unknown; s?: unknown; e?: unknown }
 
 /**
  * Las filas de las batallas del Motor: cada partida con cuenta con la bitácora más fresca (la suya o la de alguno de sus aparatos), las
@@ -152,19 +155,19 @@ export function filasBatallas(partidas: FilaBatallas[], aparatos: AparatoBatalla
         vistas.add(p.clerk_user_id)
         const suyos = deCuenta.get(p.clerk_user_id) ?? []
         // (la bitácora más fresca; la manera de viajar, la de la partida: es lo que eligió en su último guardado)
-        const mejor = masFresca<{ ultima: string | null; b: unknown } | null>([{ ultima: p.u, b: p.b }, ...suyos.map((a) => ({ ultima: a.u, b: a.b }))])
-        filas.push({ clerk_user_id: p.clerk_user_id, b: mejor?.b ?? p.b, u: mejor?.ultima ?? p.u, d: p.d ?? suyos[0]?.d ?? null, r: p.r ?? suyos.find((a) => a.r)?.r ?? null })
+        const mejor = masFresca<{ ultima: string | null; b: unknown; m?: unknown; s?: unknown; e?: unknown } | null>([{ ultima: p.u, b: p.b, m: p.m, s: p.s, e: p.e }, ...suyos.map((a) => ({ ultima: a.u, b: a.b, m: a.m, s: a.s, e: a.e }))])
+        filas.push({ clerk_user_id: p.clerk_user_id, b: mejor?.b ?? p.b, u: mejor?.ultima ?? p.u, d: p.d ?? suyos[0]?.d ?? null, r: p.r ?? suyos.find((a) => a.r)?.r ?? null, m: mejor ? mejor.m : p.m, s: mejor ? mejor.s : p.s, e: mejor ? mejor.e : p.e })
     }
     for (const [cuenta, suyos] of deCuenta) {
         if (vistas.has(cuenta)) continue
         const mejor = masFresca(suyos.map((a) => ({ ultima: a.u, a })))
-        if (mejor) filas.push({ clerk_user_id: cuenta, b: mejor.a.b, u: mejor.a.u, d: mejor.a.d ?? null, r: mejor.a.r ?? null })
+        if (mejor) filas.push({ clerk_user_id: cuenta, b: mejor.a.b, u: mejor.a.u, d: mejor.a.d ?? null, r: mejor.a.r ?? null, m: mejor.a.m, s: mejor.a.s, e: mejor.a.e })
     }
     const adminsAparato = new Set<string>()
     for (const a of sinCuenta) {
         const id = `ap:${a.aparato}`
         if (a.admin === true && !incluyeAdmin) adminsAparato.add(id)
-        filas.push({ clerk_user_id: id, b: a.b, u: a.u, d: a.d ?? null, r: a.r ?? null })
+        filas.push({ clerk_user_id: id, b: a.b, u: a.u, d: a.d ?? null, r: a.r ?? null, m: a.m, s: a.s, e: a.e })
     }
     return { filas, adminsAparato }
 }

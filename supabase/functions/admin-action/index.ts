@@ -1,3 +1,5 @@
+// Red Solar Viva · admin-action v1.66 — 🜂 TERRA CRISTAL: el muro de la compra, la salida y los errores se leen de su bitácora (las filas de las batallas traían solo `batallas`: la suma salía en cero), con _shared/terraMuro.ts v1.1 y _shared/terraAparatos.ts v1.2. Sin migración.
+// Red Solar Viva · admin-action v1.65 — 🜂 TERRA CRISTAL: EL MURO DE LA COMPRA, DÓNDE SE VAN Y LOS ERRORES (la compra, segunda tanda, 2026-10-17): el modo «batallas» de admin_terra_cristal también suma, de la bitácora de cada jugador (el juego desde muro.ts v1.3 y bitacora.ts v1.6), el embudo del muro de la compra, por qué «Ahora no», dónde se fue cada quien la última vez y los errores del juego (`muro`; la cuenta pura en _shared/terraMuro.ts v1.0). Sin migración.
 // Red Solar Viva · admin-action v1.64 — 🜂 TERRA CRISTAL: LO QUE USAN EN CADA BATALLA Y LO QUE CONTESTAN (Sala 42 E de Terra Cristal, tercera tanda, 2026-10-15): el modo «batallas» de admin_terra_cristal suma, por batalla, lo que hizo la alianza en ella (desde el juego de la Sala 42 E la bitácora lo guarda por batalla: Iluminar, cada Magia, el Portal de Regreso, el Regreso, los objetos...) y cuenta lo que contestan a «¿Por qué sigues en Terra Cristal?» (lee documento->>respuesta de las partidas y de los aparatos). La cuenta pura vive en _shared/terraBatallas.ts v1.1. Sin migración.
 // Red Solar Viva · admin-action v1.63 — 🜂 TERRA CRISTAL: LOS JUGADORES SIN CUENTA Y EL NÚMERO ROJO DE LOS REPORTES (Sala 40 de Terra Cristal, 2026-10-14): admin_terra_cristal lee también terra_cristal_aparatos (migración 20261014_terra_cristal_aparatos; la escribe la función terra-cristal-bitacora: la partida con su bitácora de cada aparato donde se juega, con o sin cuenta). «lista» trae los jugadores sin cuenta (sin_cuenta, el más reciente primero; los aparatos de administrador solo con incluye_admin) y a los de cuenta les pone la bitácora más fresca entre su partida y sus aparatos; «ficha» abre también un aparato ({ aparato }) y a la de una cuenta le da sus aparatos y su bitácora más fresca; «batallas» suma también a los de sin cuenta; «nuevos» cuenta los reportes nuevos (el número rojo de la pestaña); «reportes» y «reporte» dicen si el aparato que lo mandó tiene ficha (en_motor). La cuenta pura vive en _shared/terraAparatos.ts. Sin la tabla nueva, todo sigue como en la v1.62.
 // Red Solar Viva · admin-action v1.62 — 🜂 TERRA CRISTAL: LAS BATALLAS QUE MÁS CUESTAN Y LOS REPORTES (Sala 39 de Terra Cristal, 2026-10-13): admin_terra_cristal suma cuatro modos. «batallas» (con `dificultad`, solo las partidas de esa manera de viajar; `viajes` cuenta cuántas hay de cada una): las batallas de la bitácora sumadas entre todos los jugadores (intentos, quiénes la ganaron, el porcentaje de victorias, las rondas para ganarla y en cuál se quedan: la última que pelearon sin ganarla; las cuentas de administrador no cuentan salvo incluye_admin), sin migración. «reportes» (la lista, la más reciente primero, con cuántos hay en cada estado), «reporte» (uno entero, con su bitácora) y «reporte_estado» (nuevo, visto o resuelto): los que mandan los jugadores con la R, de la tabla terra_cristal_reportes (migración 20261013_terra_cristal_reportes; mientras no se pegue, esos tres modos responden falta_migracion).
@@ -122,6 +124,7 @@ import { serve } from "https://deno.land/std@0.177.0/http/server.ts"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0"
 import { gateAdmin } from "../_shared/clerkAuth.ts"
 import { type FilaBatallas, sumaBatallas } from "../_shared/terraBatallas.ts"
+import { sumaMuro } from "../_shared/terraMuro.ts"
 import { type AparatoBatallas, RUTAS_APARATO_BATALLAS, RUTAS_APARATO_DE_CUENTA, RUTAS_APARATO_LISTA, datosAparato, filaDeAparato, filasBatallas, masFresca, resumenBitacora, resumenFila } from "../_shared/terraAparatos.ts"
 
 const supabase = createClient(
@@ -878,7 +881,8 @@ async function fichaTC(params: Record<string, unknown>): Promise<Response> {
    «se fueron»: de ellos, quienes no juegan hace tres días o más. Las cuentas
    de administrador (profiles.is_admin) no cuentan, salvo incluye_admin. La
    cuenta pura vive en _shared/terraBatallas.ts (se prueba sin la base). */
-const TC_BATALLAS_RUTAS = "clerk_user_id,b:documento->bitacora->batallas,u:documento->bitacora->>ultima,d:documento->>dificultad,r:documento->>respuesta"
+// v1.66 · también el muro de la compra, la salida y los errores de la bitácora (_shared/terraMuro.ts)
+const TC_BATALLAS_RUTAS = "clerk_user_id,b:documento->bitacora->batallas,u:documento->bitacora->>ultima,d:documento->>dificultad,r:documento->>respuesta,m:documento->bitacora->muro,s:documento->bitacora->salida,e:documento->bitacora->errores"
 
 async function batallasTC(params: Record<string, unknown>): Promise<Response> {
     const incluyeAdmin = params?.incluye_admin === true
@@ -924,7 +928,8 @@ async function batallasTC(params: Record<string, unknown>): Promise<Response> {
     // (la cuenta vive en _shared/terraBatallas.ts y _shared/terraAparatos.ts: se prueban sin la base)
     const dificultad = typeof params?.dificultad === "string" ? params.dificultad : null
     const sinCuenta = juntas.filas.filter((f) => f.clerk_user_id.startsWith("ap:") && !admins.has(f.clerk_user_id)).length
-    return json({ ...sumaBatallas(juntas.filas, admins, Date.now(), dificultad), sin_cuenta: sinCuenta, incluye_admin: incluyeAdmin, aparatos_falta: aparatosFalta, calculado: new Date().toISOString() })
+    // v1.65 · el muro de la compra, dónde se van y los errores, con las mismas filas (sin el filtro de la manera de viajar)
+    return json({ ...sumaBatallas(juntas.filas, admins, Date.now(), dificultad), muro: sumaMuro(juntas.filas, admins), sin_cuenta: sinCuenta, incluye_admin: incluyeAdmin, aparatos_falta: aparatosFalta, calculado: new Date().toISOString() })
 }
 
 /* ═══ v1.62 · LOS REPORTES (modos «reportes», «reporte», «reporte_estado») ═══
