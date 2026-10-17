@@ -39,7 +39,8 @@ Red Solar Viva: a studio of one that ships like a team of thirty. I run it with 
 
 • Escáner Vibracional: a bilingual consciousness app, live on iOS, Android, Mac and the web. First line of code to the App Store in about two months. It measures six areas of your life and turns them into a 0 to 100 Light Index. Its heart is Espejo (Mirror): a voice companion with long-term memory that speaks its own language of consciousness, drawn from a 4,700-passage library that includes the nine books I wrote. It looks at the photos you send, remembers you across conversations and answers out loud. Two more AI tools decode food labels and dreams.
 • Terra Cristal: a pixel-art tactical RPG in the spirit of Shining Force, where you win battles by freeing your enemies. Chapter 1 is free in the browser; the paid version went live this week.
-• Three more games (two already playable), five animated films and four albums.
+• Fotón Cero, our film studio: five animated films, including the series Fragmentos del Sol, and a four-episode teaching series drawn from my books.
+• Three more games (two already playable) and four albums I composed as Zak'Haar.
 
 Under the hood: more than 550,000 lines of TypeScript that I specified, directed and tested, 61 serverless functions, 355 database migrations, offline sync and payments. Most people assume this takes a team and funding. I don't type the code; I direct it, the way a film director directs a crew.
 
@@ -61,9 +62,17 @@ I've lived with the same kind of question for years with blindfolded perception,
 
 **What are you doing now, and what's next?**
 
-Now: I work 40 hours a week evaluating multimodal AI training data (long multi-camera robotics video), and I build Red Solar Viva at night. This week Terra Cristal opened its paid version. Escáner is live on iOS, Android, Mac and the web. PRISMA TD, a tower defense built around mixing beams of light, is in development.
+Now: I build Red Solar Viva at night and on weekends while working full time on AI training data (multimodal robotics video). This week Terra Cristal's paid version went live, PRISMA TD (a tower defense where you fight by mixing beams of light) is in development, and we're building a daily stream of animated reels to grow an audience without paid ads.
 
-Next, and what $50,000 changes: it buys me a full year on this instead of nights. In order: (1) Terra Cristal on Steam, in English, with a demo for Next Fest; (2) Escáner English-first, so Espejo can speak to the world and not only to Spanish speakers; (3) the vacuum-chamber experiment, run in public with the protocol posted first. The long game: a studio of worlds, tools and stories that leave people more awake than they came in.
+Next: one worldview, told in every medium at once. The philosophy of my nine books becomes:
+• Series. Fotón Cero turns it into animated series for people who would never pick up a spiritual book. Fragmentos del Sol and the teaching series are the pilots; next come full seasons.
+• Games. Terra Cristal complete and on Steam, PRISMA TD after it, and a new world every year from our games label, Ludus Cero.
+• Practice. Escáner, where the ideas become a daily habit, for the world in English and Spanish.
+• Reach. The first 100,000 people, through the series and the daily reels.
+
+What $50,000 changes: we stop building at night. It's a full year on this, plus the production behind the first full season (voices, music, compute).
+
+The long game: Ghibli made wonder a language the whole world speaks. Red Solar Viva will do that for consciousness.
 
 **Who are you? (optional)**
 
