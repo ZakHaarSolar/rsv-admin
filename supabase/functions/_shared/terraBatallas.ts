@@ -1,4 +1,5 @@
-// Red Solar Viva · _shared/terraBatallas.ts v1.2 — (v1.2, la compra, 2026-10-17: cada fila trae también `m`, `s` y `e`, el muro de la compra, la salida
+// Red Solar Viva · _shared/terraBatallas.ts v1.3 — (v1.3, Sala RESISTIR de Terra Cristal, 2026-10-17: el primer reto ya no se pierde, se
+// resiste: cada batalla suma sus `resistidas` (bitácora v1.7 del juego) y cuentan como terminadas, no como «sin terminar») (v1.2, la compra, 2026-10-17: cada fila trae también `m`, `s` y `e`, el muro de la compra, la salida
 // y los errores de su bitácora, para _shared/terraMuro.ts; aquí no se usan) — 🜂 LO QUE USAN EN CADA BATALLA Y LO QUE CONTESTAN (Sala 42 E de Terra Cristal, tercera tanda,
 // 2026-10-15): cada batalla suma lo que hizo la alianza en ella (documento.bitacora.batallas[id].acciones, desde el juego de la Sala 42 E:
 // «ilumina», «magia:<id>», «portal», «portal_sella», «regreso»...): cuántas veces entre todos y cuántos jugadores lo usaron (`acciones`, de lo
@@ -27,6 +28,8 @@ export type BatallaSuma = {
     ganadas: number
     perdidas: number
     regresos: number
+    /** v1.3 · las veces que se resistió (el primer reto: «Resiste 3 rondas») */
+    resistidas: number
     sin_terminar: number
     victorias: number | null
     intentos_por_jugador: number | null
@@ -81,6 +84,7 @@ export function sumaBatallas(filas: FilaBatallas[], admins: Set<string> = new Se
         ganadas: number
         perdidas: number
         regresos: number
+        resistidas: number
         sinTerminar: number
         hastaGanar: number[]
         rondasGanar: number[]
@@ -94,7 +98,7 @@ export function sumaBatallas(filas: FilaBatallas[], admins: Set<string> = new Se
     const de = (id: string): Suma => {
         let s = suma.get(id)
         if (!s) {
-            s = { id, jugadores: 0, ganaron: 0, intentos: 0, ganadas: 0, perdidas: 0, regresos: 0, sinTerminar: 0, hastaGanar: [], rondasGanar: [], rondasUltima: [], seQuedan: 0, seFueron: 0, ultima: -Infinity, acciones: new Map() }
+            s = { id, jugadores: 0, ganaron: 0, intentos: 0, ganadas: 0, perdidas: 0, regresos: 0, resistidas: 0, sinTerminar: 0, hastaGanar: [], rondasGanar: [], rondasUltima: [], seQuedan: 0, seFueron: 0, ultima: -Infinity, acciones: new Map() }
             suma.set(id, s)
         }
         return s
@@ -120,14 +124,15 @@ export function sumaBatallas(filas: FilaBatallas[], admins: Set<string> = new Se
             const intentos = n(v.intentos)
             if (!intentos) continue
             alguna = true
-            const ganadas = n(v.ganadas), perdidas = n(v.perdidas), regresos = n(v.regresos)
+            const ganadas = n(v.ganadas), perdidas = n(v.perdidas), regresos = n(v.regresos), resistidas = n(v.resistidas)
             const s = de(id)
             s.jugadores++
             s.intentos += intentos
             s.ganadas += ganadas
             s.perdidas += perdidas
             s.regresos += regresos
-            s.sinTerminar += Math.max(0, intentos - ganadas - perdidas - regresos)
+            s.resistidas += resistidas
+            s.sinTerminar += Math.max(0, intentos - ganadas - perdidas - regresos - resistidas)
             if (ganadas > 0) {
                 s.ganaron++
                 s.hastaGanar.push(intentos)
@@ -165,7 +170,7 @@ export function sumaBatallas(filas: FilaBatallas[], admins: Set<string> = new Se
         }
     }
     const batallas = [...suma.values()].map((s): BatallaSuma => {
-        const terminadas = s.ganadas + s.perdidas + s.regresos
+        const terminadas = s.ganadas + s.perdidas + s.regresos + s.resistidas
         return {
             id: s.id,
             jugadores: s.jugadores,
@@ -174,6 +179,7 @@ export function sumaBatallas(filas: FilaBatallas[], admins: Set<string> = new Se
             ganadas: s.ganadas,
             perdidas: s.perdidas,
             regresos: s.regresos,
+            resistidas: s.resistidas,
             sin_terminar: s.sinTerminar,
             victorias: terminadas ? s.ganadas / terminadas : null,
             intentos_por_jugador: s.jugadores ? s.intentos / s.jugadores : null,
