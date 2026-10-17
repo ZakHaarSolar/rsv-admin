@@ -1724,7 +1724,27 @@ solo de la falda para abajo.
 **Hermanas.** 0-quaterquadragies (lo que no se percibe se mide con un instrumento) · 0-undequinquagies (lo que tiene que sentirse humano
 se revisa de cerca) · 0-duosexagies (se mira junto a lo que había antes de entregarlo).
 
+### Paso 0-septseptuagies · Lo que vende un juego habla en grande y en positivo
+
+**Regla.** Todo texto que vende un juego (la página de Ludus Cero, el muro de compra, la tienda, los pies de foto, los anuncios) dice lo que
+es, en grande y en positivo, con lo que emociona a cualquiera que todavía no lo conoce: capítulos, mundos, armas, una ciudad por descubrir,
+que cada aldea se vuelve tu casa. Nunca nombres internos que nadie conoce (el Salón de la Alianza, el Templo de la Caracola por dentro), ni
+detalles chicos (despejar las nubes del mapa, que el miedo dé las gracias), ni negaciones («aquí no matas», «nada que se compre para ganar»).
+Lo que se abre se nombra por capítulo (hoy el 2, después el 3) y lo que no se cobra se dice como «sin compras dentro del juego».
+
+**Por qué.** El 2026-10-17 Zak revisó el muro de compra y la página de Terra Cristal y corrigió casi cada renglón: «hoy entras al templo de
+la caracola por dentro, ¿eso a quién le importa?; pon cosas más generales que emocionen a cualquiera que no hable el idioma del juego»;
+«nadie sabe qué es el Salón de la Alianza: más bien viene el capítulo 2, que es Lemuria, y la Atlántida es el 3»; «no tenemos que decir no
+matas, solo decir lo que es»; «despeja las nubes de lo desconocido: mínimo es ese dato irrelevante»; «a nadie le importa que den las
+gracias». Quien escribió esos textos conocía el juego por dentro y escribió para alguien que ya lo jugó.
+
+**Hermanas.** 0-quinseptuagies (lo que se publica no cuenta lo que se tiene que descubrir) · 0-undeseptuagies (el ganador se busca dentro del
+gusto de Zak) · 0-septtricies (un brief prestado no es el norte del dueño).
+
 ### Changelog del protocolo
+
+- **v72 (2026-10-17, segunda tanda):** una lección más de la sala de la compra, de lo que Zak corrigió al revisar el muro y la página.
+  **0-septseptuagies**: lo que vende un juego habla en grande y en positivo, sin nombres internos, detalles chicos ni negaciones.
 
 - **v71 (2026-10-17):** dos lecciones de la sala de la compra de Terra Cristal (la versión gratis hasta la puerta de Lemuria, el muro de
   compra con Stripe, el juego en /terra-cristal/ y Ludus Cero al día). **0-quinseptuagies**: lo que se publica de un juego no cuenta lo que
