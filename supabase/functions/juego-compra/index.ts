@@ -1,4 +1,5 @@
-// Red Solar Viva · juego-compra v1.0 · 🜂 LA COMPRA DE LOS JUEGOS DE LUDUS CERO (Terra Cristal primero, 2026-10-17)
+// Red Solar Viva · juego-compra v1.1 · 🜂 LA COMPRA DE LOS JUEGOS DE LUDUS CERO (Terra Cristal primero, 2026-10-17)
+// v1.1 · la imagen del producto es la portada A1 (terra-cristal-portada-v3.jpg) y el juego vuelve solo a /terra-cristal/ (la ruta de -pixel3 se quitó)
 // =====================================================================
 // Zak: «implementar ya el sistema de cobro con Stripe... para comprar el juego completo... eso lo vamos a ir haciendo con cada
 // juego». La versión gratis de Terra Cristal llega hasta la puerta de Lemuria; el juego completo es un pago único de una cuenta de Red
@@ -55,10 +56,10 @@ const CATALOGO: Record<string, Juego> = {
         llave: "terra_cristal_completo_mxn_299",
         nombre: "Terra Cristal · Juego completo",
         descripcion: "Acceso anticipado. Pago único: entras a Lemuria y cada capítulo nuevo llega a tu cuenta sin volver a pagar.",
-        imagen: "https://play.redsolarviva.com/ludus/terra-cristal-portada-v2.jpg",
+        imagen: "https://play.redsolarviva.com/ludus/terra-cristal-portada-v3.jpg",
         centavos: 29900,
         moneda: "mxn",
-        rutas: ["/terra-cristal/", "/terra-cristal-pixel3/"],
+        rutas: ["/terra-cristal/"],
         aviso: "Pago único. Sin suscripción. Cada capítulo nuevo llega a tu cuenta sin volver a pagar.",
     },
 }
