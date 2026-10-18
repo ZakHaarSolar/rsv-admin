@@ -4,6 +4,81 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-18 · IV · HUECOS DE GASTO: LO GRATIS YA NO GASTA SIN TOPE, LA WEB COBRA LO QUE MUESTRA Y EL ESPEJO TIENE RESPALDO QUE AVISA
+
+- ✅ **Resuelto:** las 3 respuestas gratis del Espejo se reservan en un solo paso (20 mensajes simultáneos: antes pasaban
+  los 20, ahora 3) y se devuelven si el turno no entrega nada · la membresía falla cerrada en el Espejo, la voz y las
+  imágenes · las imágenes del Espejo son de Sintonía y la Matriz para quien no paga queda en 12 rápidas en toda su vida ·
+  las sondas de la voz solo para el Arquitecto y la muestra de voz con tope y guardada (de 6 s a menos de 1) · el resto
+  del reflejo profundo siempre se anota · tope por dinero (0.40 USD al día y 4 al mes por persona, con el costo real de
+  OpenRouter) y 20 búsquedas en internet al día · la prueba de dictado con tope · el semanal de la web sin Cristales ·
+  redsolarviva.com cobra lo que muestra (selector con 499 y 149 y su enlace cada uno, muros en 499, el Portal sin el 777
+  y con el selector) · el respaldo del Espejo (Claude Haiku 5.5) con muestras lado a lado, **encendido** por pedido de
+  Zak · el aviso cuando OpenRouter falla (notificación al teléfono, probada) · el inventario de enlaces de pago (Zak
+  desactivó el Decodificador 199 y la Inmersión 1,111 y archivó el 599) · el texto de las imágenes para quien no paga,
+  encargado a la sala del muro.
+- 📁 **Archivos:** admin `5df5a20` y `d785ebf`: oraculo-chat v1.59, espejo-voz v3.6, espejo-imagen v2.9,
+  dictado-fidelidad v1.1, stripe-webhook v2.6 con `ciclo.ts` v1.0, `_shared/membresia.ts` v1.0,
+  `_shared/claudeHaiku.ts` v1.1, `_shared/avisoRespaldo.ts` v1.0 · Code `9bb3634`: PlanSelector v1.2, EV_Shared v2.30,
+  EV_Freemium v2.7, BeneficiosSintonia v1.6, EV_Decoder v1.49, PortalInduccionEscaner v2.15 · `Escaner
+  Vibracional/Precios/RESPALDO_ESPEJO_MUESTRAS_2026-10-18.md` · memorias `referencia_banco_funciones_edge` y
+  `feedback_un_solo_deploy`.
+- 🗄️ **Migraciones SQL aplicadas:** `20261018_huecos_de_gasto.sql` (Zak la pegó): `reservar_cortesia_espejo`,
+  `devolver_cortesia_espejo` y el candado por persona en `reserve_edge_spend` (misma firma). Además
+  `app_flags.espejo_respaldo = true`, puesto por Claude a pedido de Zak.
+- 🔌 **Edge functions deployed:** oraculo-chat v1.59 · espejo-voz v3.6 (crea solo el bucket privado `voz-muestras`) ·
+  espejo-imagen v2.9 · dictado-fidelidad v1.1 · stripe-webhook v2.6.
+- ⏳ **Pendiente:** el correo del aviso (una llave de Resend) y las imágenes gratis (0 o 2), en Pendientes vivos.
+- 💡 **Decisiones:** se corrigió el selector viejo en vez de redirigir /escaner (el mismo selector vive en la tienda de
+  Códices y en el muro de Navegante, y el menú de la web lleva al Escáner viejo) · la muestra de voz sigue sin pedir
+  sesión porque la app publicada no la manda · el rechazo de imágenes a quien no paga usa «cupo», que la app vieja ya
+  entiende, más `motivo: "membresia"` · el respaldo escribe con las mismas instrucciones, sin la directiva de búsqueda,
+  y entra también con dos silencios seguidos · el aviso sale con cada falla de OpenRouter, conteste o no el respaldo, uno
+  cada 30 minutos.
+- 🔧 **Patrones nuevos:**
+  - Banco de funciones: el `index.ts` real de cada una con `fetch` y `Deno.serve` falsos y Clerk con un par de llaves
+    propio, contra la versión de `git show HEAD:` ([[referencia_banco_funciones_edge]]).
+  - SQL con concurrencia real sin Docker: `embedded-postgres` y `pg` en el bloc, 20 conexiones a la vez.
+  - Un enlace de pago se identifica sin la llave de Stripe abriendo su página: dice producto, precio e intervalo.
+  - Una notificación real se prueba con una función temporal con nonce que se borra al terminar.
+  - Lecciones 0-teroctogies, 0-quateroctogies y 0-quinoctogies.
+- 🧬 **Versión del sistema:** oraculo-chat v1.59 · espejo-voz v3.6 · espejo-imagen v2.9 · stripe-webhook v2.6 ·
+  protocolo v77.
+- 🧭 Sin 🔮 propio: el arranque vivo sigue siendo el 🔮 de la Biblioteca de Bashar, aquí abajo.
+
+#### 2026-10-18 · III · EL MURO DE SINTONÍA: DICE SOLO LO QUE LA APP DA, SE MIDE Y LLEVA DEL SEMANAL AL MENSUAL
+
+- ✅ **Resuelto:** el muro y la lista de beneficios sin Calibraciones ni Navegante y con los topes reales (150 respuestas
+  del Espejo y 120 lecturas de cada Decodificador al día, 30 rachas, 1,000 notas, 60 fotos), los Cristales solo con el
+  mensual · el precio de la tienda del aparato donde había «499 MXN» fijo y el aviso de compra con la tienda real (Google
+  Play en Android, tarjeta en la web) · a la 3.ª renovación semanal, el aviso «Llevas 3 semanas… con el mensual pagas $499
+  en lugar de unos $646 y recibes tus Cristales» con «Pasarme al mensual» · el semanal reconocido en Android con el plan
+  base pegado y el cambio de plan sin cobro doble (Google Play dice a cuál reemplaza; otra tienda se detiene con aviso) ·
+  cada muro medido (27 puertas: visto, plan, intento, compra, cancelada, error, cerrado, restaurado) con «¿Qué te detuvo?»
+  de un toque · Motor → Onboarding «El muro de Sintonía» (personas, intentos, pagos en la app y en la web, motivos, aviso
+  semanal) verificado en vivo con la sesión de Zak · de paso: «Tu plan» del Espejo carga en el teléfono y abre la
+  compuerta de membresía.
+- 📁 **Archivos:** escaner-app `465e784`: `lib/muroTelemetria.ts` v1.0, `lib/sintoniaTienda.ts` v1.0,
+  `components/AvisoSemanalMensual.tsx` v1.0, `components/escaner/MuroMotivo.tsx` v1.0, `lib/revenuecat.ts` v1.4,
+  PlanSelector v2.5, PaywallV2 v1.7, EV_Freemium v2.13, BeneficiosSintonia v1.13, EV_Oraculo v6.30, EV_Decoder v1.83,
+  EscanerVibracional v13.139, 16 puertas con `muro=`, diccionarios (freemium v1.4, pw2 v1.1 y más), banco (tienda falsa)
+  · Code `19056ff`/`f2b5722`: `MI_Muro.tsx` v1.1, `MotorDeIntervencion.tsx` v5.6 · admin `6680b1b`/`359f67b`.
+- 🗄️ **Migraciones SQL aplicadas:** `✅ 20261018_muro_eventos.sql` (tabla `muro_eventos`, `record_muro_evento`,
+  `record_muro_evento_anon`, `admin_muro_resumen`; Zak la pegó; probada antes en PGlite 0.2.17 con 24 comprobaciones).
+- 🔌 **Edge functions deployed:** user-action v1.52 (ruta `record_muro_evento`) · admin-action v1.68 (`admin_muro_resumen`).
+- ⏳ **Pendiente:** nada de esta sala; los datos llegan con el próximo muro (web ya; teléfono con la versión de tienda).
+- 💡 **Decisiones:** «¿Qué te detuvo?» solo a quien no es miembro, una vez al día · el aviso semanal solo donde se cobra,
+  sin otra capa encima y de nuevo a las 3 semanas tras «Ahora no» · un pago web se atribuye al último muro donde tocó
+  comprar · fuera de las cuentas de la casa (admin y excluidas).
+- 🔧 **Patrones nuevos:**
+  - Banco: `&sinPlan`, `&tienda=ios|android` (+ `&usd`, `&semanal=N`, `&pegado`, `&otraTienda`, `&compra=`),
+    `window.__bancoMuro`, `__bancoCompras`, `__bancoAbrirMuro()`; `src/lib/platform.ts` se cambia al resolver.
+  - Una migración se prueba sin Postgres local con PGlite (la 0.3 se cae con RAISE dentro de plpgsql: usar la 0.2.17).
+  - Una capa que no avisa con `rsv-overlay-open` se detecta en la pantalla: portal de body fijo, z ≥ 1000, que recibe
+    toques y cubre casi todo (no por su opacidad: su entrada empieza en 0).
+  - Lección 0-duooctogies.
+- 🧬 **Versión del sistema:** revenuecat v1.4 · PaywallV2 v1.7 · MI_Muro v1.1 · protocolo v76.
+
 #### 2026-10-18 · II · PRECIOS: LA AUDITORÍA DE SINTONÍA, LO QUE DE VERDAD LLEGA DE CADA PAGO Y TRES SALAS DE ARREGLOS
 
 - ✅ **Resuelto:** auditoría de precios completa de Sintonía Solar (valor y calibración de lo gratis, costo real por

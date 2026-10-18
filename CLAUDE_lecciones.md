@@ -1880,8 +1880,45 @@ costaba 1.
 0-septvicies (el testigo de una etapa se suelta al final de la etapa) · 0-tervicies (un cierre asíncrono comprueba que el
 recurso siga siendo suyo).
 
+### Paso 0-sexoctogies · Una propuesta visual para una serie se juzga sin sonido
+
+**Regla.** Cuando algo se va a repetir decenas de veces (una serie de reels), cada propuesta de estilo tiene que contar la
+idea con escenas, personajes y metáforas que cambian; si funciona solo por las letras sobre un fondo, no es un estilo.
+La prueba: sin sonido y sin subtítulos, ¿se entiende la idea?
+
+**Por qué.** En la ronda 1 de Emisiones (2026-10-17) se entregaron 8 estilos de 5 s con la misma frase sobre fondos
+distintos (señal, arena, nebulosa, mercurio). Zak: «solo cambia el fondo… vamos a hacer decenas, y todos con el mismo
+fondo no tiene sentido; lo que queremos es un estilo de animación… explicar con animación, no con letras». La ronda 2
+(8 estilos de 20 s con el mismo guion visual de cinco escenas y narración) sí sirvió: eligieron tres.
+
+**Cómo se aplica.** Antes de proponer estilos se escribe un guion visual común (qué tiene que entenderse en cada escena) y
+se juzga cada muestra muda; las muestras duran lo necesario para contar algo (15 a 20 s), no 5. Hermanas: 0-quaterseptuagies
+(el núcleo antes que el vestido), 0-duosexagies (fotografiar junto a «hoy»).
+
+### Paso 0-septoctogies · Lo que mide no es lo que la persona hizo
+
+**Regla.** La medición del uso viaja por su propio camino: no entra a la fila de «lo que hiciste sin red» ni a ningún aviso
+que la persona lea como suyo, y lo que se manda al irse de la app lleva un tope por envío (uno por minuto), porque
+«irse» puede pasar muchas veces en poco tiempo.
+
+**Por qué.** En la sala de telemetría (2026-10-18) la regla de la casa decía «funciona sin conexión con la fila de
+lib/sinConexion». Esa fila dispara «Guardado en tu dispositivo» y «Sincronizando lo que hiciste sin red»: un lote de
+medición la habría encendido sin que la persona hiciera nada. Se guardó aparte, con su fecha, y sube después de la fila.
+En el banco, el panel del navegador se ocultaba y volvía y cada vez salía un lote: cuatro en 20 segundos; con el tope, lo
+medido espera guardado y sale en el siguiente.
+
+**Cómo se aplica.** Antes de reusar un mecanismo de la persona (fila, avisos, número del ícono) para algo de la casa,
+pregunta qué le dice ese mecanismo a la persona. Todo envío disparado por un evento que se repite (ocultarse, enfocarse,
+reconectar) lleva un intervalo mínimo y no pierde datos al saltarse. Hermanas: 0-septuagies (lo hecho sin red sube con su
+fecha), 0-undevicies (tu automatización puede deshacer lo tuyo).
+
 ### Changelog del protocolo
 
+- **v79 (2026-10-18, sala de telemetría):** una lección. **0-septoctogies**: lo que mide no es lo que la persona hizo; la
+  medición no entra a su fila ni a su aviso, y lo que se manda al ocultarse lleva un tope por envío.
+
+- **v78 (2026-10-18, sala de Emisiones):** una lección. **0-sexoctogies**: una propuesta visual para una serie se juzga
+  sin sonido; si solo funciona por las letras sobre un fondo, no es un estilo.
 - **v77 (2026-10-18, sala de los huecos de gasto):** tres lecciones. **0-teroctogies**: la memoria de una función de
   Supabase no es caché; lo que debe durar va a Storage o a la base. **0-quateroctogies**: una regla nueva del servidor no
   exige lo que la app publicada no manda. **0-quinoctogies**: un contador se reserva en un solo paso, y lo ya entregado
