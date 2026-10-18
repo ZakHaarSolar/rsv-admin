@@ -498,8 +498,11 @@ Detalle en [[referencia_version_en_tienda]].
   Cristal y el inglés son los dos multiplicadores. La IA aplicada (el motor de la biblioteca como producto para autores y
   maestros) es la primera rama candidata de la etapa 2; la energía solar, la de la etapa 3; las inversiones, con asesor
   certificado en la etapa 2. Estimación: etapa 1 en 6 a 18 meses, etapa 2 en 2 a 4 años, el norte en 10 a 15 (6 a 8
-  con un éxito grande temprano). **Falta que Zak** decida abrir la página de Steam de Terra Cristal (100 USD, se
-  recuperan con las ventas). La auditoría de precios de Sintonía corre en su propia sala (`auditoria-precios`) y deja su
+  con un éxito grande temprano). **Decidido (2026-10-18):** la página de Steam de Terra Cristal se abre al terminar la
+  destilación, aunque no haya tráiler (con cápsulas y 5 capturas basta; el tráiler se suma cuando haya promociones dentro
+  del juego); Ludus Cero abre TikTok, Instagram y Shorts cuando la página esté viva. Prioridades hasta la etapa 1: si
+  regresa el trabajo de anotación, va primero (de 100 a 130 mil MXN al mes con 40 h) para liquidar unos 260 mil MXN de
+  deudas; si no, el Escáner y Terra Cristal, y buscar otro proyecto como ese en la sala de aplicaciones. La auditoría de precios de Sintonía corre en su propia sala (`auditoria-precios`) y deja su
   resultado en la sección del Escáner.
 
 ### 🟢 Terra Cristal · lo que sigue abierto
@@ -623,6 +626,28 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 
 ### 🔵 Escáner · lo que necesita tu decisión
 
+- **Consulta respondida el 2026-10-18 · el precio de Sintonía** (auditoría completa en
+  `Escaner Vibracional/Precios/AUDITORIA_PRECIOS_2026-10-18.md`; página con simulador:
+  https://claude.ai/artifact/2DMQ8rSKRbQznv4UZ7p2kL). **Recomendado: 499 MXN al mes y 149 a la semana se quedan**
+  (ya están así en la App Store, Google Play y la web; no hay nada que mover hoy). Por qué: el precio no frena (desde que
+  el muro del Espejo se cuenta, el 9 de agosto, las 2 personas que gastaron sus 3 preguntas gratis pagaron el mismo día,
+  las dos por el semanal aunque el muro marca el mensual); la IA de un suscriptor típico cuesta de 18 a 32 MXN al mes (un
+  mensaje, 0.02); bajar a 399/129 pediría 21 % más suscriptores para ganar lo mismo y a 299/99, 63 %; subir arriesga la
+  entrada, que es el punto sensible. De cada 499 en la tienda llegan unos 355, no 366: Apple cobra IVA sobre su comisión
+  y retiene 2.5 % de ISR a una persona física (sin el RFC cargado, 20 % y llegarían unos 279); el semanal deja unos 106 y
+  la web unos 398. Meta: unas 91 suscripciones activas (mitad semanal) o 98 con las herramientas del negocio. El hueco
+  está antes del muro (28 de 44 cuentas sin plan nunca usaron nada) y en la distribución (sostener 91 pide unas 67 altas
+  al mes). Descartado: bajar el precio y mover la escalera (el mensual ahorra 23 % contra un mes de semanal; la banda
+  sana del semanal es de 139 a 169). **Falta que Zak:** confirme su RFC en App Store Connect y Play Console; active la
+  recarga automática de OpenRouter (la caída del 5 al 8 de octubre coincidió con la baja del único suscriptor mensual);
+  diga de qué producto de Stripe cuelga el enlace del semanal (la función de Stripe le daría Cristales o lo contaría como
+  Inmersión); decida si el segundo Cristal puede ser un Códice (detrás de un Cristal hay una sola Meditación); y dé el sí
+  a una sala que cierre los huecos de gasto (imágenes del Espejo sin membresía, voz sin sesión, el contador gratis que se
+  brinca con mensajes simultáneos, la membresía que se da por buena si la base no contesta, el dictado sin tope) y lo que
+  se ve distinto a lo que se cobra (el Escáner viejo de redsolarviva.com/escaner muestra 599/399/199 y cobra Sintonía; el
+  muro promete Calibraciones y Navegante). Después: aviso de semanal a mensual en la 3.ª renovación, contar el muro con
+  un «¿Qué te detuvo?», precios a mano fuera de México, anual de 2,990 cuando haya 3 mensuales activos y el Radar gratis
+  una vez al mes como prueba.
 - **Consulta respondida el 2026-10-17 · emisiones de consciencia: un reel diario sin pagar publicidad** (Zak: «una
   emisión constante de reels de calidad… con código… con un lenguaje como el de Bashar, hecho nuestro»). Vive en
   `Escaner Vibracional/Emisiones/` con su `CLAUDE.md` (la rutina completa). Hecho: el transcriptor con el reconocedor de
@@ -657,8 +682,15 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   con la cuenta como tester; los permisos basic e insights ya estaban; la clave secreta ya está en el llavero). **Falta
   que Zak** guarde la llave completa con `security add-generic-password -U -a escanervibracional -s rsv-instagram-token
   -w "$(pbpaste)"` (el aviso oculto la cortó en 128 caracteres); luego se corren `estado`, `diario` e `instalar` (macOS
-  pide permiso para que Python lea Documentos). Falta también su sí para pedir a las salas de estilo las 6 emisiones de
-  la rotación y para la prueba con Grok.
+  pide permiso para que Python lea Documentos). **Decidido después (2026-10-18):** una al día a las **7:00 p. m. hora del
+  centro (8:00 p. m. en Cancún)**, que se revisa con las métricas a las 2 semanas; **Grok descartado** (70 a 110 MXN por
+  reel sin descargas que lo paguen y con riesgo de que no salga como se quiere); **las descripciones sin «● Emisión 00X»**
+  y el Espejo en 1 de cada 5 como mucho y en historias (el alcance va primero); YouTube Shorts y los episodios de 3 a 5
+  min en un canal nuevo **Escáner Vibracional** (no en Fotón Cero, que queda para las series; «una producción de Fotón
+  Cero» va en los créditos); Facebook fuera por ahora (opcional: una página con el compartir automático de Instagram).
+  Recomendado: **quitar la barra de arriba de Red viva** (los «nodos en línea» son inventados y se leen como dato real,
+  repite «Emisión 004», tapa la galería de la escena y sale en la cuadrícula del perfil). Falta el sí de Zak para eso y
+  para pedir a las salas de estilo las 6 emisiones de la rotación.
 - **Biblioteca de Bashar (2026-10-17 y 18):** comparada con el catálogo público de tv.bashar.org (780 programas, 431
   sesiones completas): nos faltan 47 sesiones completas (27 de 2025 y 2026), 9 grupos en inglés y los 108 grupos
   japoneses, y 12 están incompletas. La lista, con enlaces: `/Volumes/Crucial 4TB/Kingston KC3000/Awaken/Bashar
@@ -702,7 +734,8 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   menos de 1 % si la telequinesis va como hecho. Textos en inglés en `admin/aplicaciones/2026-10 Basis Fellowship/aplicacion.md`:
   la telequinesis va en «obsessed» como experimento con su prueba de cámara de vacío y la visión extraocular como biografía.
   La solicitud no caduca y se actualiza: cada lanzamiento grande (Terra Cristal en Steam, la prueba de vacío) va como «Update
-  mine». Falta que Zak la envíe.
+  mine». **Enviada el 2026-10-17, referencia BF-2026-2P3AN4** (no llega confirmación por correo; dudas a
+  basis@orbit.engineering con asunto [basis]). Falta solo actualizarla con cada logro grande.
 - **Consulta respondida el 2026-10-08 · ¿los Decodificadores de Alimentos y Sueños pasan a la API de Claude (los 100 USD/mes
   del Max)?** Prueba real hecha el mismo día (llave en el llavero como `rsv-anthropic`; 126 llamadas, cero errores, cero
   respuestas cortadas, cero bloqueos), con las instrucciones de producción: Gemini 3.6 Flash tarda 2.0 s en un sueño y
