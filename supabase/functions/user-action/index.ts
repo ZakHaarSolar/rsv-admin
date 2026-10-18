@@ -1,3 +1,6 @@
+// Red Solar Viva · user-action v1.53 — SOPORTE QUE SE VE (2026-10-18): rutea close_my_support_ticket (la
+// persona cierra SU caso desde la conversación; la función solo cierra casos propios y deja resolved_by = su
+// id para que el Motor sepa que lo cerró ella). Migración 20261018b_soporte_cerrar.
 // Red Solar Viva · user-action v1.52 — EL MURO DE SINTONÍA SE MIDE (auditoría de precios 2026-10-18): rutea
 // record_muro_evento (cada apertura del muro y lo que pasa en ella: visto, plan, intento, compra,
 // cancelada, error, cerrado, «¿Qué te detuvo?», restaurado). El id verificado lo pone el gateway: nadie
@@ -337,6 +340,9 @@ const USER_RPCS: Record<string, string> = {
     get_my_support_tickets: "p_clerk_user_id",
     add_support_message: "p_clerk_user_id",
     mark_support_read: "p_clerk_user_id",
+    // La persona cierra su caso («Cerrar caso» dentro de la conversación).
+    // Requiere 20261018b_soporte_cerrar.
+    close_my_support_ticket: "p_clerk_user_id",
     // 🜂 AFINAMIENTO DEL ESPEJO: la marca de "esto no me representa" sobre un
     // reflejo, con el ángulo correcto si lo escribieron. Es el bucle de mejora
     // del Espejo, hermano del panel de Voz: la corrección se captura EN
