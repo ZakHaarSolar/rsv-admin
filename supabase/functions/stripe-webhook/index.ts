@@ -1,5 +1,16 @@
 // ════════════════════════════════════════════════════════════════════
-// Red Solar Viva — stripe-webhook (v2.6 — 2026-10-18)
+// Red Solar Viva — stripe-webhook (v2.7 — 2026-10-18)
+//
+// v2.7 (2026-10-18) — UNA FILA POR FACTURA EN payments_log. Cada alta nueva
+//   de la web se anotaba dos veces: el checkout insertaba una fila SIN
+//   factura e invoice.payment_succeeded, al no encontrarla, insertaba otra con
+//   el mismo cobro (medido en el banco: en 3 de los 6 órdenes posibles de los
+//   tres avisos, el primer mes sumaba 998 en vez de 499). Ahora el checkout
+//   anota la primera factura (session.invoice, o latest_invoice de la
+//   suscripción) y no la repite si ya estaba; invoice.payment_succeeded la
+//   encuentra y la actualiza con el monto real. El índice único
+//   payments_log_una_por_factura (migración 20261018e) cierra la carrera
+//   cuando los dos avisos llegan a la vez. No se tocó ninguna fila guardada.
 //
 // v2.6 (2026-10-18) — EL SEMANAL DE LA WEB NO DA CRISTALES. El precio de
 //   149 a la semana cuelga del mismo producto que el mensual de 499
@@ -766,11 +777,20 @@ async function handleCheckoutCompleted(session: any) {
 
         const customerName = session.customer_details?.name || null
 
+        // v2.7 — la primera factura del alta: con ella este cobro y el de
+        // invoice.payment_succeeded son la MISMA fila de payments_log.
+        let primeraFactura: string | null =
+            typeof session.invoice === "string" ? session.invoice : (session.invoice?.id || null)
+
         // ── NUEVO: Intentar detectar grupo desde la suscripción de Stripe ──
         let groupName: string | null = null
         try {
             const stripeSub = await stripe.subscriptions.retrieve(session.subscription)
             groupName = detectGroupName(stripeSub)
+            if (!primeraFactura) {
+                const li = (stripeSub as any).latest_invoice
+                primeraFactura = typeof li === "string" ? li : (li?.id || null)
+            }
             console.log(`🏷️ Checkout → grupo detectado: ${groupName}`)
         } catch (e) {
             console.log("⚠️ No se pudo obtener sub para detectar grupo:", (e as any).message)
@@ -802,16 +822,38 @@ async function handleCheckoutCompleted(session: any) {
                 .eq("id", userId)
         }
  
+        /* v2.7 — UNA fila por factura: si invoice.payment_succeeded ya anotó
+           esta factura, aquí no se repite; si llega después, encuentra esta
+           fila por su factura y la actualiza con el monto real. */
         if (email) {
-            await supabase.from("payments_log").insert({
-                user_id: userId, email,
-                stripe_subscription_id: session.subscription,
-                payment_type: "subscription",
-                description: groupName === 'sintonia' ? 'Sintonía Solar' : `Inmersión Solar — ${groupName === 'cuasar' ? 'Cuásar' : 'Púlsar'}`,
-                amount_cents: session.amount_total || 0,
-                currency: session.currency || "usd",
-                status: "succeeded",
-            })
+            let yaAnotada = false
+            if (primeraFactura) {
+                const { data: fila } = await supabase
+                    .from("payments_log")
+                    .select("id")
+                    .eq("stripe_invoice_id", primeraFactura)
+                    .maybeSingle()
+                yaAnotada = !!fila
+            }
+            if (yaAnotada) {
+                console.log(`↷ payments_log: la factura ${primeraFactura} ya estaba anotada`)
+            } else {
+                const { error: insErr } = await supabase.from("payments_log").insert({
+                    user_id: userId, email,
+                    stripe_subscription_id: session.subscription,
+                    stripe_invoice_id: primeraFactura,
+                    payment_type: "subscription",
+                    description: groupName === 'sintonia' ? 'Sintonía Solar' : `Inmersión Solar — ${groupName === 'cuasar' ? 'Cuásar' : 'Púlsar'}`,
+                    amount_cents: session.amount_total || 0,
+                    currency: session.currency || "usd",
+                    status: "succeeded",
+                })
+                if (insErr?.code === "23505") {
+                    console.log(`↷ payments_log: la factura ${primeraFactura} la anotó un instante antes invoice.payment_succeeded`)
+                } else if (insErr) {
+                    console.error("❌ Error insertando payments_log (checkout):", insErr)
+                }
+            }
         }
     }
 }
@@ -998,7 +1040,26 @@ async function handleInvoicePaid(invoice: any) {
                 paid_at: paidAtISO,
                 stripe_hosted_invoice_url: invoice.hosted_invoice_url || null,
             })
-        if (insErr) {
+        if (insErr?.code === '23505') {
+            /* v2.7 — el checkout anotó esta factura un instante antes (los dos
+               avisos llegaron a la vez): se actualiza con el monto real. */
+            const { error: updErr2 } = await supabase
+                .from('payments_log')
+                .update({
+                    amount_cents: actualAmountCents,
+                    currency: (invoice.currency || 'mxn').toLowerCase(),
+                    stripe_hosted_invoice_url: invoice.hosted_invoice_url || null,
+                    paid_at: paidAtISO,
+                    status: 'succeeded',
+                    updated_at: new Date().toISOString(),
+                })
+                .eq('stripe_invoice_id', invoice.id)
+            if (updErr2) {
+                console.error('❌ Error actualizando payments_log (carrera con el checkout):', updErr2)
+            } else {
+                console.log(`✅ payments_log actualizado (carrera con el checkout): invoice ${invoice.id} | ${actualAmountCents} cents`)
+            }
+        } else if (insErr) {
             console.error('❌ Error insertando payments_log (renovación):', insErr)
         } else {
             console.log(`✅ payments_log NUEVA fila (renovación): invoice ${invoice.id} | ${actualAmountCents} cents`)
