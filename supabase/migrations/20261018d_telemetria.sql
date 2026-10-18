@@ -1790,4 +1790,134 @@ SELECT public._tele_reconstruir(date '2026-03-01');
 SELECT public._tele_mes_guardar(m::date)
 FROM generate_series(date '2026-03-01', date_trunc('month', now())::date, interval '1 month') AS m;
 
+-- ── (9) Borrar la cuenta también borra su medición ───────────────────
+-- purge_my_account_data copiada tal cual de producción (2026-10-18) con un solo
+-- bloque nuevo antes del final: las tablas de la telemetría.
+CREATE OR REPLACE FUNCTION public.purge_my_account_data(p_clerk_user_id text)
+ RETURNS json
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
+DECLARE
+    v_tables text[] := ARRAY[
+        -- lo que ya borraba la edge
+        'scan_vibracional','sonda_progress','decoder_scans',
+        'estado_tripulante_protocolos','cristales_extraccion','meditaciones_owned',
+        'reading_progress','navegante_progress','email_dispatches',
+        -- lo íntimo que quedaba fuera
+        'bitacora_notas','rachas','dream_records','dream_scans',
+        'oraculo_messages','oraculo_conversations','oraculo_usage',
+        'espejo_memoria','espejo_context_prefs',
+        'vision_board','vision_answers','vision_photos','vision_versions',
+        'vision_sessions','matter_jobs','crop_decodes',
+        -- ritual, plan de vuelo y progreso
+        'daily_checkins','daily_ritual_config','ritual_personalizado',
+        'ritual_user_afirmaciones_custom','ritual_user_afirmaciones_sel',
+        'day_tasks','medal_unlocks','user_crystal_owned','user_crystal_state',
+        'ciudad_luz_estado',
+        -- comunidad e identidad pública
+        'community_profiles','community_profile_interests',
+        -- grupos y notas compartidas (2026-09-21)
+        'bitacora_nota_members','grp_hearts',
+        -- avisos, telemetría y preferencias
+        'push_tokens','notif_prefs','radar_ready_notified','nav_events',
+        'wallpaper_downloads','voice_transcript_usage','app_feedback',
+        'gift_offers','analisis_profundo'
+    ];
+    v_t       text;
+    v_n       int;
+    v_gid     bigint;
+    v_deleted json[] := '{}';
+    v_total   int := 0;
+BEGIN
+    IF p_clerk_user_id IS NULL OR length(trim(p_clerk_user_id)) < 3 THEN
+        RETURN json_build_object('ok', false, 'error', 'unauthorized');
+    END IF;
+
+    FOREACH v_t IN ARRAY v_tables LOOP
+        BEGIN
+            IF to_regclass('public.' || quote_ident(v_t)) IS NULL THEN
+                CONTINUE;
+            END IF;
+            EXECUTE format(
+                'DELETE FROM public.%I WHERE clerk_user_id = $1', v_t
+            ) USING p_clerk_user_id;
+            GET DIAGNOSTICS v_n = ROW_COUNT;
+            IF v_n > 0 THEN
+                v_total := v_total + v_n;
+                v_deleted := v_deleted || json_build_object('t', v_t, 'n', v_n);
+            END IF;
+        EXCEPTION WHEN OTHERS THEN
+            v_deleted := v_deleted || json_build_object('t', v_t, 'err', SQLERRM);
+        END;
+    END LOOP;
+
+    BEGIN
+        IF to_regclass('public.dm_messages') IS NOT NULL THEN
+            EXECUTE 'DELETE FROM public.dm_messages WHERE sender_clerk_id = $1'
+                USING p_clerk_user_id;
+            GET DIAGNOSTICS v_n = ROW_COUNT;
+            v_total := v_total + v_n;
+            v_deleted := v_deleted || json_build_object('t', 'dm_messages', 'n', v_n);
+        END IF;
+    EXCEPTION WHEN OTHERS THEN
+        v_deleted := v_deleted || json_build_object('t', 'dm_messages', 'err', SQLERRM);
+    END;
+
+    -- Grupos: sus mensajes se van, su lugar se libera y el grupo sigue con
+    -- los demás (si se queda sin administrador, lo es el más antiguo; si se
+    -- queda sin nadie, desaparece).
+    BEGIN
+        IF to_regclass('public.grp_members') IS NOT NULL THEN
+            DELETE FROM public.grp_messages WHERE sender_clerk_id = p_clerk_user_id;
+            GET DIAGNOSTICS v_n = ROW_COUNT;
+            v_total := v_total + v_n;
+            DELETE FROM public.grp_invites
+            WHERE inviter_id = p_clerk_user_id OR invitee_id = p_clerk_user_id;
+            FOR v_gid IN
+                SELECT group_id FROM public.grp_members WHERE clerk_user_id = p_clerk_user_id
+            LOOP
+                DELETE FROM public.grp_members
+                WHERE group_id = v_gid AND clerk_user_id = p_clerk_user_id;
+                PERFORM public._grp_fix_admins(v_gid);
+            END LOOP;
+            v_deleted := v_deleted || json_build_object('t', 'grupos', 'n', v_n);
+        END IF;
+    EXCEPTION WHEN OTHERS THEN
+        v_deleted := v_deleted || json_build_object('t', 'grupos', 'err', SQLERRM);
+    END;
+
+    BEGIN
+        IF to_regclass('public.bitacora_nota_invites') IS NOT NULL THEN
+            DELETE FROM public.bitacora_nota_invites
+            WHERE inviter_id = p_clerk_user_id OR invitee_id = p_clerk_user_id;
+        END IF;
+    EXCEPTION WHEN OTHERS THEN
+        v_deleted := v_deleted || json_build_object('t', 'bitacora_nota_invites', 'err', SQLERRM);
+    END;
+
+    -- 🜂 La medición mes con mes (20261018d_telemetria): sus días, su uso, sus
+    -- respuestas y su persona se van; sus aparatos y los eventos de la tienda se
+    -- quedan sin cuenta (solo números, para que los totales no cambien).
+    BEGIN
+        IF to_regclass('public.tele_dias') IS NOT NULL THEN
+            DELETE FROM public.tele_dias WHERE persona = p_clerk_user_id;
+            GET DIAGNOSTICS v_n = ROW_COUNT;
+            v_total := v_total + v_n;
+            DELETE FROM public.tele_uso WHERE persona = p_clerk_user_id;
+            DELETE FROM public.tele_respuestas WHERE persona = p_clerk_user_id;
+            DELETE FROM public.tele_personas WHERE persona = p_clerk_user_id;
+            DELETE FROM public.tele_aparatos WHERE clerk_user_id = p_clerk_user_id;
+            UPDATE public.suscripcion_eventos SET clerk_user_id = NULL
+            WHERE clerk_user_id = p_clerk_user_id;
+            v_deleted := v_deleted || json_build_object('t', 'telemetria', 'n', v_n);
+        END IF;
+    EXCEPTION WHEN OTHERS THEN
+        v_deleted := v_deleted || json_build_object('t', 'telemetria', 'err', SQLERRM);
+    END;
+
+    RETURN json_build_object('ok', true, 'total', v_total, 'detail', array_to_json(v_deleted));
+END $function$;
+
 NOTIFY pgrst, 'reload schema';

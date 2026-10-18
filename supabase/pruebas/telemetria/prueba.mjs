@@ -151,5 +151,10 @@ ok(antes.d === despues.d && antes.a === despues.a, `idempotente con datos (${ant
 res = (await q(`select public.admin_telemetria_resumen('user_admin', NULL) x`))[0].x
 writeFileSync(process.argv[3] + "/telemetria-ejemplo.json", JSON.stringify(res, null, 1))
 writeFileSync(process.argv[3] + "/telemetria-persona-ejemplo.json", JSON.stringify(per, null, 1))
+// Borrar la cuenta borra su medición (y deja sus eventos de tienda sin cuenta)
+await ex(`insert into suscripcion_eventos (tipo, clerk_user_id, evento_id) values ('RENEWAL', 'user_j', 'ev-prueba-1')`)
+const borrado = (await q(`select public.purge_my_account_data('user_j') x`))[0].x
+const quedan = (await q(`select (select count(*) from tele_dias where persona='user_j')::int d, (select count(*) from tele_uso where persona='user_j')::int u, (select count(*) from tele_personas where persona='user_j')::int p, (select count(*) from tele_respuestas where persona='user_j')::int r, (select count(*) from tele_aparatos where clerk_user_id='user_j')::int a, (select count(*) from suscripcion_eventos where evento_id='ev-prueba-1' and clerk_user_id is null)::int e`))[0]
+ok(borrado.ok && quedan.d + quedan.u + quedan.p + quedan.r + quedan.a === 0 && quedan.e === 1, `borrar la cuenta borra su medición ${JSON.stringify(quedan)}`)
 console.log(fallas ? `FALLAS: ${fallas}` : "TODO BIEN")
 await db.close()
