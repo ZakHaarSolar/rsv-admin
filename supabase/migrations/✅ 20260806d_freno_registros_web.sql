@@ -41,20 +41,17 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 CREATE EXTENSION IF NOT EXISTS supabase_vault;
 
 -- ── 1) El secreto compartido con el proxy ────────────────────────────────────
--- Espejo de la variable RSV_FRENO_SECRET del proyecto de Vercel (escaner-app).
--- Si algún día se rota, hay que rotarla en los DOS lados: acá y con
--- `vercel env rm/add RSV_FRENO_SECRET production` + redeploy.
+-- 🜂 ROTADO EL 2026-10-18 (20261018f_freno_web_huella.sql): aquí estaba escrito
+-- el valor y este archivo vive en git, así que se cambió y ya no vale. El
+-- secreto vigente vive SOLO en Vercel (RSV_FRENO_SECRET, producción) y en el
+-- llavero de la Mac (rsv-freno-web); la bóveda guarda su huella sha256. Si este
+-- archivo se vuelve a correr, el bloque solo crea la entrada cuando no existe,
+-- con un valor al azar: nunca pisa la vigente.
 DO $$
-DECLARE v_secret text := '43a09f1e93ff859aa4720e990db99da0f8248b83dea24cbfbde733ea4ef26228';
 BEGIN
-    IF EXISTS (SELECT 1 FROM vault.secrets WHERE name = 'web_auth_freno_key') THEN
-        PERFORM vault.update_secret(
-            (SELECT id FROM vault.secrets WHERE name = 'web_auth_freno_key'),
-            v_secret
-        );
-    ELSE
+    IF NOT EXISTS (SELECT 1 FROM vault.secrets WHERE name = 'web_auth_freno_key') THEN
         PERFORM vault.create_secret(
-            v_secret,
+            encode(extensions.gen_random_bytes(32), 'hex'),
             'web_auth_freno_key',
             'Credencial que el proxy /api/fapi presenta para registrar intentos de alta/ingreso en la web'
         );

@@ -12,4 +12,8 @@ repetidas: avisa y no crea el índice).
     cp "<esta carpeta>"/*.mjs "<esta carpeta>"/*.sql /tmp/pg/
     node prueba.mjs "<ruta a migrations>/20261018e_candados_y_limpieza.sql"
 
+`prueba-freno.mjs` hace lo mismo con `20261018f_freno_web_huella.sql` (la bóveda guarda la huella sha256 del secreto del
+freno web): `node prueba-freno.mjs "<ruta a migrations>/20261018f_freno_web_huella.sql"`, con `registrar_intento_web-antes.sql`
+al lado.
+
 Termina en «TODO BIEN» o en «FALLAS: n». La 0.3 de PGlite se cae con RAISE dentro de plpgsql: usar la 0.2.17.
