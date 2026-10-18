@@ -1,3 +1,4 @@
+// dictado-fidelidad v1.1 — 🜂 CON TOPE (auditoría de precios 2026-10-18: "la prueba de dictado no tiene ningún tope"). Cada juicio pasa por reserve_edge_spend ('dictado-fidelidad'): 100 al día por persona, 300 por IP y 5,000 en toda la app. Al topar responde 429 y la app ya lo maneja (la medición se muestra sin el porcentaje).
 /*
  * ══════════════════════════════════════════════════════════════
  *  Supabase Edge Function: dictado-fidelidad  v1.0
@@ -32,6 +33,47 @@ const MODELO =
 /* Techos de cordura: un texto de lectura ronda los 1.200 caracteres y un
    dictado suyo otro tanto. Cortar acá evita que alguien mande un libro. */
 const MAX_CHARS = 6000
+
+/* 🜂 v1.1 — EL TOPE. Una prueba de lectura dura minutos y nadie hace cien en
+   un día; el juez cuesta casi nada (~0.0001 USD), pero sin tope una cuenta
+   podía pedirlo sin fin. Si el gobernador no contesta, la prueba sigue (el
+   criterio de la casa: nunca romper una función por su contabilidad). */
+const TOPE_PERSONA_DIA = 100
+const TOPE_IP_DIA = 300
+const TOPE_GLOBAL_DIA = 5000
+
+async function reservarJuicio(userKey: string, ip: string): Promise<boolean> {
+    const url = Deno.env.get("SUPABASE_URL")
+    const key = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")
+    if (!url || !key) return true
+    try {
+        const r = await fetch(`${url}/rest/v1/rpc/reserve_edge_spend`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                apikey: key,
+                Authorization: `Bearer ${key}`,
+            },
+            body: JSON.stringify({
+                p_edge: "dictado-fidelidad",
+                p_user_key: userKey,
+                p_ip: ip || null,
+                p_cost: 1,
+                p_user_limit: TOPE_PERSONA_DIA,
+                p_user_window_seconds: 86400,
+                p_ip_limit: TOPE_IP_DIA,
+                p_ip_window_seconds: 86400,
+                p_global_limit: TOPE_GLOBAL_DIA,
+                p_global_window_seconds: 86400,
+            }),
+        })
+        if (!r.ok) return true
+        const j = await r.json().catch(() => null)
+        return !(j && j.ok === false)
+    } catch {
+        return true
+    }
+}
 
 const corsHeaders = {
     "Access-Control-Allow-Origin": "*",
@@ -74,6 +116,13 @@ serve(async (req) => {
         const original = String(body?.original ?? "").slice(0, MAX_CHARS).trim()
         const dictado = String(body?.dictado ?? "").slice(0, MAX_CHARS).trim()
         if (!original || !dictado) return json({ error: "faltan_textos" }, 400)
+
+        const ip =
+            req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+            req.headers.get("cf-connecting-ip") ||
+            ""
+        if (!(await reservarJuicio(gate.userId!, ip)))
+            return json({ error: "rate_limited" }, 429)
 
         const r = await fetch(
             "https://openrouter.ai/api/v1/chat/completions",

@@ -1,5 +1,15 @@
 // ════════════════════════════════════════════════════════════════════
-// Red Solar Viva — stripe-webhook (v2.5 — 2026-08-01)
+// Red Solar Viva — stripe-webhook (v2.6 — 2026-10-18)
+//
+// v2.6 (2026-10-18) — EL SEMANAL DE LA WEB NO DA CRISTALES. El precio de
+//   149 a la semana cuelga del mismo producto que el mensual de 499
+//   (prod_UOf1RrEypuWFTg), así que una compra semanal en la web caía en
+//   `sintonia` y la emisión entregaba los 2 Cristales del mes (149 por dos
+//   libros de 399). Ahora cada factura pagada pregunta su ciclo
+//   (stripe-webhook/ciclo.ts: la suscripción de hoy, luego las líneas, luego
+//   el largo del periodo) y el semanal queda como `sintonia` SIN Cristales,
+//   igual que en revenuecat-webhook (`esCicloSemanal`). Un precio semanal en un
+//   producto que no esté en el mapa cae en `sintonia`, no en Púlsar.
 //
 // v2.5 (2026-08-01) — UN PAGO = EL CÓDICE COMPLETO. La compra suelta de un
 //   Códice en la web entregaba solo `metadata.formats` (típicamente "pdf") y
@@ -56,6 +66,7 @@
 import { serve } from "https://deno.land/std@0.177.0/http/server.ts"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0"
 import Stripe from "https://esm.sh/stripe@16.7.0"
+import { esCicloSemanal, intervaloDeItem } from "./ciclo.ts"
 
 const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY")!, {
   apiVersion: "2025-06-30.basil"
@@ -74,7 +85,7 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey)
 // Cuando crees nuevos productos, agrega su ID aquí.
 const PRODUCT_GROUP_MAP: Record<string, string> = {
     'prod_UJPj3SUcvleCdS': 'cuasar',     // Inmersión Solar - Cuásar (4:30pm)
-    'prod_UOf1RrEypuWFTg': 'sintonia',   // Sintonía Solar ($777 MXN/mes)
+    'prod_UOf1RrEypuWFTg': 'sintonia',   // Sintonía Solar: 499 MXN/mes y 149 MXN/semana (mismo producto; el ciclo lo distingue ciclo.ts)
     // 'prod_XXXXXXXXX': 'pulsar',         // ← Agrega aquí tu Product ID de Púlsar cuando lo tengas
 }
 
@@ -87,6 +98,10 @@ function detectGroupName(sub: any): string {
             return PRODUCT_GROUP_MAP[productId]
         }
     }
+    /* v2.6 — el único ciclo semanal que existe es el de Sintonía: un precio
+       semanal en un producto que no esté en el mapa no puede ser Púlsar
+       (Inmersión es mensual y daría su membresía y sus Cristales). */
+    if (items.some((it: any) => intervaloDeItem(it) === 'week')) return 'sintonia'
     // Default: si no reconocemos el producto, asumimos Púlsar (grupo original)
     return 'pulsar'
 }
@@ -1031,13 +1046,21 @@ async function handleInvoicePaid(invoice: any) {
         else if (groupName === "cuasar" || groupName === "pulsar" || groupName === "inmersion") origen = "inmersion"
 
         /* 🔒 CICLO SEMANAL SIN CRISTALES (decisión 2026-08-02): los Cristales
-           viven solo en el ciclo mensual. HOY la web (Stripe) es SOLO mensual
-           → todo lo que llega aquí es mensual y emite bien. Si algún día se
-           vende Sintonía SEMANAL por web, gatear aquí igual que en el
-           revenuecat-webhook: p.ej. `if (invoice.lines.data[0].price.recurring
-           .interval === "week") origen = null` antes de emitir. */
-
-        if (!origen) {
+           viven solo en el ciclo mensual. 🜂 v2.6 — la web SÍ vende el semanal
+           (149, en el mismo producto que el mensual de 499), así que cada
+           factura de Sintonía pregunta su ciclo (ciclo.ts) y la semanal no
+           emite: la persona tiene el Escáner completo, sin Cristales, igual
+           que con el semanal de la tienda (revenuecat-webhook). */
+        if (
+            origen === "sintonia" &&
+            (await esCicloSemanal(invoice, subscriptionId, (id) =>
+                stripe.subscriptions.retrieve(id)
+            ))
+        ) {
+            console.log(
+                `🔒 [cristales] ciclo SEMANAL de Sintonía (web) → SIN Cristales (viven solo en el mensual) · sub ${subscriptionId}`
+            )
+        } else if (!origen) {
             console.log(`⚠️ [cristales] group_name "${groupName}" no mapea a sintonia/inmersion — skip`)
         } else {
             // Resolvemos clerk_user_id vía profiles.id = dbSub.user_id

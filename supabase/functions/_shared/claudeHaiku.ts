@@ -1,3 +1,4 @@
+// _shared/claudeHaiku.ts v1.1 — 🜂 suma claudeConversacion(): el RESPALDO del Espejo (oraculo-chat v1.58) cuando OpenRouter no contesta. Texto libre, charla completa, sin pensamiento; claudeJson no cambia.
 // _shared/claudeHaiku.ts v1.0 — 🜂 EL CARRIL PRIMARIO DE LOS DECODIFICADORES (Zak 2026-10-08)
 // Claude Haiku 5.5 contesta primero en decode-dream y decode-matter; si algo falla,
 // la función sigue con su cascada de Gemini de siempre. Elegido en la prueba a ciegas
@@ -57,6 +58,68 @@ export async function claudeJson(opts: {
     } catch (e) {
         const status = e instanceof Anthropic.APIError ? e.status : "red"
         console.warn(`[${opts.tag}] ${CLAUDE_MODEL} falló (${status}) en ${Date.now() - t0} ms → Gemini: ${String(e).slice(0, 200)}`)
+        return null
+    }
+}
+
+/* 🜂 v1.1 — EL RESPALDO DEL ESPEJO. Cuando OpenRouter no contesta (saldo, caída, llave),
+   oraculo-chat puede pedirle el reflejo a Claude Haiku 5.5 con las MISMAS instrucciones y la
+   misma charla. Todo lo que el Espejo recibe como instrucción viaja en `system`; la charla
+   alterna persona y Espejo, empieza y termina con la persona (Haiku 5.5 no acepta que la
+   respuesta venga empezada). Sin pensamiento y en esfuerzo medio, su valor por defecto.
+   Precio: 0.10 USD por millón de entrada y 0.50 de salida (hasta 100 mil de entrada).
+   Devuelve el texto y los tokens, o null si no hubo respuesta usable. Nunca lanza. */
+export const PRECIO_HAIKU_MILLON: [number, number] = [0.1, 0.5]
+
+export async function claudeConversacion(opts: {
+    tag: string
+    system: string
+    turnos: Array<{ role: "user" | "assistant"; content: string }>
+    maxTokens: number
+    timeoutMs?: number
+}): Promise<{ texto: string; tokensEntrada: number; tokensSalida: number } | null> {
+    if (!client) return null
+    const t0 = Date.now()
+    const limpios: Array<{ role: "user" | "assistant"; content: string }> = []
+    for (const t of opts.turnos) {
+        const c = String(t?.content ?? "").trim()
+        if (!c || (t.role !== "user" && t.role !== "assistant")) continue
+        const previo = limpios[limpios.length - 1]
+        if (previo && previo.role === t.role) previo.content = `${previo.content}\n\n${c}`
+        else limpios.push({ role: t.role, content: c })
+    }
+    while (limpios.length && limpios[0].role !== "user") limpios.shift()
+    while (limpios.length && limpios[limpios.length - 1].role !== "user") limpios.pop()
+    if (!limpios.length) return null
+    try {
+        const r = await client.messages.create(
+            {
+                model: CLAUDE_MODEL,
+                max_tokens: opts.maxTokens,
+                system: opts.system,
+                messages: limpios as Anthropic.MessageParam[],
+                thinking: { type: "disabled" },
+                output_config: { effort: "medium" },
+            } as Anthropic.MessageCreateParamsNonStreaming,
+            { timeout: opts.timeoutMs ?? 25000, maxRetries: 0 }
+        )
+        if (r.stop_reason === "refusal") {
+            console.warn(`[${opts.tag}] respaldo ${CLAUDE_MODEL} declinó (refusal)`)
+            return null
+        }
+        const texto = r.content
+            .filter((b) => b.type === "text")
+            .map((b) => (b as Anthropic.TextBlock).text)
+            .join("")
+            .trim()
+        if (!texto) return null
+        console.log(
+            `[${opts.tag}] respondió el respaldo ${CLAUDE_MODEL} en ${Date.now() - t0} ms (in ${r.usage.input_tokens}, out ${r.usage.output_tokens}, ${r.stop_reason})`
+        )
+        return { texto, tokensEntrada: r.usage.input_tokens, tokensSalida: r.usage.output_tokens }
+    } catch (e) {
+        const status = e instanceof Anthropic.APIError ? e.status : "red"
+        console.warn(`[${opts.tag}] respaldo ${CLAUDE_MODEL} falló (${status}) en ${Date.now() - t0} ms: ${String(e).slice(0, 200)}`)
         return null
     }
 }

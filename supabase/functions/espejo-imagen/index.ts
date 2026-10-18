@@ -1,3 +1,4 @@
+// Red Solar Viva · espejo-imagen v2.8 — 🜂 LAS IMÁGENES DEL ESPEJO SON DE SINTONÍA (auditoría de precios 2026-10-18: "solo pide sesión, no membresía"; gratis y Sintonía tenían las mismas 2 al día y es lo más caro por pieza, 0.54 MXN). El carril del Espejo pide membresía con la señal canónica (_shared/membresia.ts) y quien no paga recibe 403 { error:"cupo", motivo:"membresia" }: la app publicada ya entiende "cupo" (apaga el modo imágenes y no vuelve a prometer), y `motivo` deja que una versión nueva abra el muro de Sintonía. Perilla IMAGENES_GRATIS_DE_POR_VIDA (hoy 0): con 2, quien no paga tiene 2 en toda su vida. Si la base no contesta: 503, nunca se regala la imagen. El carril Ráfaga queda igual (sesión y sus 30 al día).
 // Red Solar Viva · espejo-imagen v2.7 — 🜂 EL ESTILO DE LA CASA SALE DEL
 // CARRIL RÁFAGA (Zak 2026-08-19: "no le pongas estilo, deja que nos dé el
 // estilo… queremos poder ver la imagen completa"). El cine analógico de la
@@ -27,6 +28,7 @@
 // Deploy:  supabase functions deploy espejo-imagen --no-verify-jwt
 
 import { gateUser } from "../_shared/clerkAuth.ts"
+import { resolverMembresia } from "../_shared/membresia.ts"
 
 const CORS = {
     "Access-Control-Allow-Origin": "*",
@@ -48,6 +50,13 @@ const EDGE_NAME = "espejo-imagen"
    USD por persona en el peor caso: diez envíos completos diarios por menos de
    lo que cuesta UNA imagen del carril del Espejo. */
 const RAFAGA_LIMIT_DAY = 30
+/* 🜂 v2.8 — CUÁNTAS IMÁGENES DEL ESPEJO TIENE QUIEN NO PAGA, EN TODA SU VIDA.
+   0 = son solo de Sintonía. Con 2, quien no paga prueba el Reflejo ilustrado
+   dos veces (1.08 MXN por persona en toda su vida) y a la tercera topa. Se
+   cuentan en su propia ventana del gobernador ('espejo-imagen-gratis'), de diez
+   años, que el borrado de una charla no toca. */
+const IMAGENES_GRATIS_DE_POR_VIDA = 0
+const VENTANA_DE_POR_VIDA = 10 * 365 * 86400
 const MODELO_RAFAGA = "fal-ai/flux/schnell"
 const MODELO_ESPEJO = "fal-ai/flux-2-pro"
 
@@ -179,6 +188,49 @@ Deno.serve(async (req) => {
        El cliente del Espejo NUNCA la manda, así que su camino queda idéntico:
        mismo modelo, mismo cupo, mismo pase del Arquitecto. */
     const esRafaga = body?.modo === "rafaga"
+
+    /* 🜂 v2.8 — EL CARRIL DEL ESPEJO ES DE SINTONÍA. La membresía se resuelve
+       en el servidor con la señal de siempre y falla CERRADA: si la base no
+       contesta, la imagen no se regala (503, el cliente la marca como "no
+       llegó" y el modo sigue encendido para el siguiente reflejo). Quien no
+       paga recibe `cupo` (la palabra que la app publicada ya sabe leer: apaga
+       el modo y no vuelve a prometer) más `motivo: "membresia"`, para que una
+       versión nueva pueda abrir el muro de Sintonía en vez del aviso del día. */
+    if (!esRafaga) {
+        const m = await resolverMembresia(clerkUserId)
+        if (m.carril === "desconocido")
+            return fail(503, "membresia_no_verificada")
+        if (m.carril === "free") {
+            if (IMAGENES_GRATIS_DE_POR_VIDA <= 0 || !supaUrl || !supaKey)
+                return new Response(
+                    JSON.stringify({ error: "cupo", motivo: "membresia" }),
+                    { status: 403, headers: jHeaders }
+                )
+            const r = await fetch(`${supaUrl}/rest/v1/rpc/reserve_edge_spend`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    apikey: supaKey,
+                    Authorization: `Bearer ${supaKey}`,
+                },
+                body: JSON.stringify({
+                    p_edge: `${EDGE_NAME}-gratis`,
+                    p_user_key: clerkUserId,
+                    p_cost: 1,
+                    p_user_limit: IMAGENES_GRATIS_DE_POR_VIDA,
+                    p_user_window_seconds: VENTANA_DE_POR_VIDA,
+                }),
+            }).catch(() => null)
+            const j = r && r.ok ? await r.json().catch(() => null) : null
+            /* Aquí el gobernador caído NO abre la puerta: es un regalo, no un
+               servicio pagado que haya que sostener. */
+            if (!j || j.ok !== true)
+                return new Response(
+                    JSON.stringify({ error: "cupo", motivo: "membresia" }),
+                    { status: 403, headers: jHeaders }
+                )
+        }
+    }
 
     if (supaUrl && supaKey) {
         const res = await reservar(

@@ -1,3 +1,4 @@
+// Red Solar Viva · espejo-voz v3.6 — 🜂 LOS MODOS SIN PASE SE CIERRAN (auditoría de precios 2026-10-18). (1) Las sondas `marcas` y `voces` sintetizaban sin sesión ni tope: ahora piden la sesión del Arquitecto y tienen su ventana ('espejo-voz-sonda', 30 al día). (2) La `muestra` de la tarjeta de voces la piden la app publicada SIN token, así que exigirlo la dejaría muda: se sirve de una copia guardada por voz e idioma (la frase es fija; en memoria y en el bucket privado `voz-muestras`, porque en producción cada pedido cae en una instancia nueva) y solo sintetiza cuando no existe, con tope por persona, por IP y global ('espejo-voz-muestra'). (3) La membresía falla CERRADA (_shared/membresia.ts): si la base no contesta, la lectura no se cobra como miembro; responde 503 con la frase legible en `error` (la app publicada la muestra tal cual).
 // Red Solar Viva · espejo-voz v3.5 — el WebSocket de Soniox se autentica con el subprotocolo ["soniox-api-key", llave] y ya no manda api_key en el primer mensaje (la forma vieja deja de servir el 2027-01-15). Sin header Authorization: en Deno es inestable y junto con el subprotocolo Soniox responde 400. El REST no cambia.
 // Red Solar Viva · espejo-voz v3.4 — 🜂 LA VOZ NO CAMBIA DE PERSONA A MEDIA
 // LECTURA (Zak 2026-08-14: "entró la voz de Goku y nosotros habíamos mandado
@@ -222,6 +223,10 @@
 // @ts-ignore — Deno runtime
 import "jsr:@supabase/functions-js/edge-runtime.d.ts"
 import { gateUser } from "../_shared/clerkAuth.ts"
+import {
+    resolverMembresia,
+    avisoMembresiaNoVerificada,
+} from "../_shared/membresia.ts"
 
 declare const Deno: any
 
@@ -581,6 +586,89 @@ const FREE_WINDOW_SECONDS = 90 * 86400
    absoluto para toda la app. Sin esto, N cuentas suman sin freno. */
 const GLOBAL_LIMIT_DAY = 18000 /* v2.0 — mismo techo en dinero */
 const DAY_SECONDS = 86400
+/* 🜂 v3.6 — LOS TOPES DE LO QUE ANTES NO PEDÍA PASE.
+   · Sondas (`marcas`, `voces`): solo el Arquitecto, 30 al día y 100 en toda la
+     app. Son herramientas de diagnóstico: nadie más las necesita.
+   · Muestra de voz: la frase es fija, así que cada voz e idioma se sintetiza
+     una vez por instancia y después sale de la copia guardada (gratis). Estos
+     topes solo cuentan las síntesis nuevas: 20 al día por persona o por IP y
+     300 en toda la app (~0.6 USD de techo absoluto al día). */
+const SONDA_POR_DIA = 30
+const SONDA_GLOBAL_DIA = 100
+const MUESTRA_POR_DIA = 20
+const MUESTRA_GLOBAL_DIA = 300
+type MuestraGuardada = {
+    audio: Uint8Array<ArrayBuffer>
+    headers: Record<string, string>
+}
+const MUESTRAS = new Map<string, MuestraGuardada>()
+/* 🜂 v3.6 — LA COPIA QUE SOBREVIVE A LA INSTANCIA. Medido en producción: cada
+   pedido cae en una instancia nueva, así que la copia en memoria casi nunca
+   alcanza. Cada muestra se guarda además en el almacenamiento del proyecto
+   (bucket privado `voz-muestras`, se crea solo la primera vez) y se sirve de
+   ahí: cada voz e idioma se paga UNA vez. La ruta lleva la voz, la velocidad y
+   el largo de la frase, así que cambiar cualquiera de los tres la regenera. */
+const BUCKET_MUESTRAS = "voz-muestras"
+function cabecerasServicio(): Record<string, string> | null {
+    const key = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")
+    return key ? { apikey: key, Authorization: `Bearer ${key}` } : null
+}
+async function leerMuestraGuardada(
+    ruta: string
+): Promise<Uint8Array<ArrayBuffer> | null> {
+    const url = Deno.env.get("SUPABASE_URL")
+    const h = cabecerasServicio()
+    if (!url || !h) return null
+    try {
+        const r = await fetch(
+            `${url}/storage/v1/object/${BUCKET_MUESTRAS}/${ruta}`,
+            { headers: h, signal: AbortSignal.timeout(4000) }
+        )
+        if (!r.ok) return null
+        const audio = new Uint8Array(await r.arrayBuffer())
+        return audio.length > 1000 ? audio : null
+    } catch {
+        return null
+    }
+}
+async function guardarMuestra(
+    ruta: string,
+    audio: Uint8Array<ArrayBuffer>
+): Promise<void> {
+    const url = Deno.env.get("SUPABASE_URL")
+    const h = cabecerasServicio()
+    if (!url || !h) return
+    const subir = () =>
+        fetch(`${url}/storage/v1/object/${BUCKET_MUESTRAS}/${ruta}`, {
+            method: "POST",
+            headers: { ...h, "Content-Type": "audio/mpeg", "x-upsert": "true" },
+            body: audio,
+        })
+    try {
+        let r = await subir()
+        if (!r.ok && (r.status === 400 || r.status === 404)) {
+            /* el bucket todavía no existe: se crea privado y se reintenta */
+            await fetch(`${url}/storage/v1/bucket`, {
+                method: "POST",
+                headers: { ...h, "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    id: BUCKET_MUESTRAS,
+                    name: BUCKET_MUESTRAS,
+                    public: false,
+                }),
+            }).catch(() => null)
+            r = await subir()
+        }
+        if (!r.ok)
+            console.warn(
+                "[espejo-voz] la muestra no se guardó:",
+                r.status,
+                (await r.text().catch(() => "")).slice(0, 160)
+            )
+    } catch (e) {
+        console.warn("[espejo-voz] la muestra no se guardó:", String(e).slice(0, 160))
+    }
+}
 
 /* Gobernador de gasto compartido (misma RPC de la ola E / Parte 3-4).
    Fail-open a propósito: si la RPC no responde, la lectura sigue — nunca
@@ -603,12 +691,14 @@ type Reserva = {
 /** Una reserva contra una ventana concreta del gobernador. */
 async function reservarVentana(
     edge: string,
-    userKey: string,
+    userKey: string | null,
     ip: string,
     costo: number,
     limite: number,
     ventana: number,
-    globalLimit: number
+    globalLimit: number,
+    /* v3.6 — la muestra sin sesión se frena por IP; el resto no la usa. */
+    ipLimit = 0
 ): Promise<Reserva> {
     const supaUrl = Deno.env.get("SUPABASE_URL")
     const supaKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")
@@ -630,7 +720,7 @@ async function reservarVentana(
                 p_cost: costo,
                 p_user_limit: limite,
                 p_user_window_seconds: ventana,
-                p_ip_limit: 0,
+                p_ip_limit: ipLimit,
                 p_ip_window_seconds: DAY_SECONDS,
                 p_global_limit: globalLimit,
                 p_global_window_seconds: DAY_SECONDS,
@@ -742,48 +832,17 @@ async function refundSpend(userKey: string, desdeIso: string): Promise<void> {
 
 /* Membresía server-side — señal CANÓNICA del Espejo (misma de oraculo-chat):
    cualquier subscripción activa que NO sea un tier de decodificador (199
-   'decoder' / 399 'dream') es membresía plena. Fail-open: si el chequeo se
-   cae, tratamos como miembro — nunca se bloquea a un posible miembro por un
-   tropiezo de red. */
-async function resolverCarril(clerkUserId: string): Promise<Carril> {
-    const supaUrl = Deno.env.get("SUPABASE_URL")
-    const supaKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")
-    if (!supaUrl || !supaKey) return "miembro"
-    const headers = {
-        apikey: supaKey,
-        Authorization: `Bearer ${supaKey}`,
-    }
-    try {
-        /* v1.4 — is_admin viaja en el MISMO viaje que el email: cero costo. */
-        const rp = await fetch(
-            `${supaUrl}/rest/v1/profiles?clerk_user_id=eq.${encodeURIComponent(
-                clerkUserId
-            )}&select=email,is_admin&limit=1`,
-            { headers }
-        )
-        const profs = rp.ok ? await rp.json().catch(() => []) : []
-        if (profs?.[0]?.is_admin === true) return "admin"
-        const email = String(profs?.[0]?.email || "")
-            .toLowerCase()
-            .trim()
-        if (!email) return "free"
-        const rs = await fetch(
-            `${supaUrl}/rest/v1/subscriptions?email=eq.${encodeURIComponent(
-                email
-            )}&status=eq.active&select=group_name`,
-            { headers }
-        )
-        const subs = rs.ok ? await rs.json().catch(() => []) : []
-        const pleno = (Array.isArray(subs) ? subs : []).some((s: any) => {
-            const g = String(s?.group_name || "").toLowerCase()
-            return g !== "decoder" && g !== "dream"
-        })
-        return pleno ? "miembro" : "free"
-    } catch {
-        /* fail-open: nunca se trata como freemium a un posible miembro por un
-           tropiezo de red (le levantaría un muro de pago que no le toca). */
-        return "miembro"
-    }
+   'decoder' / 399 'dream') es membresía plena.
+   🜂 v3.6 — FALLA CERRADA (auditoría 2026-10-18). Antes, si la base no
+   contestaba, cualquiera leía como miembro. Ahora la señal vive en
+   _shared/membresia.ts (un reintento incluido) y la duda vuelve como
+   "desconocido": la lectura no se cobra ni como miembro ni como invitado
+   (eso último le levantaría el muro a quien sí paga); se responde 503 con la
+   frase legible y la persona vuelve a tocar Escuchar. */
+async function resolverCarril(
+    clerkUserId: string
+): Promise<Carril | "desconocido"> {
+    return (await resolverMembresia(clerkUserId)).carril
 }
 
 /* ── Los interruptores del Motor, con cache corto ─────────────────────────
@@ -1042,15 +1101,47 @@ Deno.serve(async (req: Request) => {
     /* 🜂 v3.0 — sin esta llave el carril de Soniox no existe y TODO cae a
        Fish: la migración no puede dejar la app muda si el secreto falta. */
     const SONIOX_KEY = Deno.env.get("SONIOX_API_KEY") || ""
+    const ipPedido =
+        req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+        req.headers.get("cf-connecting-ip") ||
+        ""
+
+    /* 🜂 v3.6 — EL PASE DE LAS SONDAS. `marcas` y `voces` sintetizan de verdad
+       (cuestan dinero) y nacieron sin token para el device-QA. Ahora piden la
+       sesión del Arquitecto y pasan por su propia ventana del gobernador.
+       Devuelve la respuesta de rechazo, o null si la sonda puede correr. */
+    const pasarSonda = async (b: any): Promise<Response | null> => {
+        const g = await gateUser(b?.token)
+        if (!g.ok)
+            return jsonResponse(g.status ?? 401, {
+                error: g.error || "auth_required",
+            })
+        const carrilSonda = await resolverCarril(g.userId!)
+        if (carrilSonda !== "admin")
+            return jsonResponse(403, { error: "not_admin" })
+        const res = await reservarVentana(
+            "espejo-voz-sonda",
+            g.userId!,
+            ipPedido,
+            1,
+            SONDA_POR_DIA,
+            DAY_SECONDS,
+            SONDA_GLOBAL_DIA
+        )
+        if (!res.ok) return jsonResponse(429, { error: "rate_limited" })
+        return null
+    }
 
     /* 🜂 v3.2 — SONDA DE MARCAS. `{ modo: "marcas" }` sintetiza una frase
        conocida por WebSocket y devuelve los números, no el audio: sirve para
        comprobar que los tiempos por carácter son REALES y monótonos antes de
-       colgar de ellos la palabra dorada. Sin token y sin cupo, como la
-       muestra, porque el texto es fijo y vive acá. */
+       colgar de ellos la palabra dorada. 🜂 v3.6 — con el pase del Arquitecto
+       (pasarSonda): ya no corre sin token ni sin tope. */
     {
         const b = await req.clone().json().catch(() => ({}))
         if (String(b?.modo || "") === "marcas") {
+            const rechazo = await pasarSonda(b)
+            if (rechazo) return rechazo
             if (!SONIOX_KEY) return jsonResponse(503, { error: "sin_llave" })
             const id = String(b?.voice_id || VOZ_POR_DEFECTO).toLowerCase()
             const c = VOCES[id]
@@ -1099,7 +1190,65 @@ Deno.serve(async (req: Request) => {
             const idioma = String(b?.lang || "es").slice(0, 2) === "en" ? "en" : "es"
             const frase = idioma === "en" ? MUESTRA_EN : MUESTRA_ES
             if (!c) return jsonResponse(400, { error: "voz_desconocida", id })
-            if (c.proveedor !== "soniox" || !SONIOX_KEY) {
+            /* 🜂 v3.6 — LA MUESTRA SALE DE LA COPIA GUARDADA. La frase es fija,
+               así que el audio de cada voz e idioma es siempre el mismo: se
+               sintetiza una vez y después se sirve gratis. La app publicada la
+               pide sin token (exigirlo dejaría muda la tarjeta de voces), así
+               que lo que cuesta, la síntesis nueva, pasa por su tope: por
+               persona si trae sesión, por IP y en toda la app. */
+            const porSoniox = c.proveedor === "soniox" && !!SONIOX_KEY
+            const claveMuestra = `${id}|${idioma}|${porSoniox ? "soniox" : "fish"}`
+            const guardada = MUESTRAS.get(claveMuestra)
+            if (guardada)
+                return new Response(guardada.audio, {
+                    status: 200,
+                    headers: {
+                        ...CORS_HEADERS,
+                        ...guardada.headers,
+                        "X-RSV-Muestra": "guardada",
+                    },
+                })
+            const rutaMuestra = porSoniox
+                ? `${idioma}/${id}-soniox-${c.voz.toLowerCase()}-${c.speed ?? 1}-${frase.length}.mp3`
+                : `${idioma}/${id}-fish-${(Deno.env.get("FISH_VOICE_ID") || "base").slice(-6)}-${frase.length}.mp3`
+            const delAlmacen = await leerMuestraGuardada(rutaMuestra)
+            if (delAlmacen) {
+                const hs: Record<string, string> = {
+                    "Content-Type": "audio/mpeg",
+                    "Cache-Control": "public, max-age=86400",
+                    "X-RSV-Proveedor": porSoniox ? "soniox" : "fish",
+                    ...(porSoniox ? { "X-RSV-Voz-Nombre": c.voz } : {}),
+                }
+                MUESTRAS.set(claveMuestra, { audio: delAlmacen, headers: hs })
+                return new Response(delAlmacen, {
+                    status: 200,
+                    headers: { ...CORS_HEADERS, ...hs, "X-RSV-Muestra": "guardada" },
+                })
+            }
+            let quienPide: string | null = null
+            if (b?.token) {
+                const g = await gateUser(b.token)
+                if (g.ok) quienPide = g.userId!
+            }
+            const cupoMuestra = await reservarVentana(
+                "espejo-voz-muestra",
+                quienPide,
+                ipPedido,
+                1,
+                quienPide ? MUESTRA_POR_DIA : 0,
+                DAY_SECONDS,
+                MUESTRA_GLOBAL_DIA,
+                MUESTRA_POR_DIA
+            )
+            if (!cupoMuestra.ok)
+                return jsonResponse(429, {
+                    error: "rate_limited",
+                    detalle:
+                        idioma === "en"
+                            ? "Too many voice samples today. Try again later"
+                            : "Ya se escucharon muchas muestras hoy. Intenta más tarde",
+                })
+            if (!porSoniox) {
                 /* Goku vive en Fish: su muestra sale por el mismo camino de
                    siempre, con la voz que el secreto tenga puesta. */
                 if (!FISH_KEY)
@@ -1128,14 +1277,22 @@ Deno.serve(async (req: Request) => {
                         status: rf.status,
                         detalle: (await rf.text().catch(() => "")).slice(0, 200),
                     })
-                return new Response(new Uint8Array(await rf.arrayBuffer()), {
+                const audioFish = new Uint8Array(await rf.arrayBuffer())
+                const headersFish = {
+                    "Content-Type": "audio/mpeg",
+                    "Cache-Control": "public, max-age=86400",
+                    "X-RSV-Proveedor": "fish",
+                }
+                if (audioFish.length) {
+                    MUESTRAS.set(claveMuestra, {
+                        audio: audioFish,
+                        headers: headersFish,
+                    })
+                    await guardarMuestra(rutaMuestra, audioFish)
+                }
+                return new Response(audioFish, {
                     status: 200,
-                    headers: {
-                        ...CORS_HEADERS,
-                        "Content-Type": "audio/mpeg",
-                        "Cache-Control": "public, max-age=86400",
-                        "X-RSV-Proveedor": "fish",
-                    },
+                    headers: { ...CORS_HEADERS, ...headersFish },
                 })
             }
             const rs = await fetch(SONIOX_TTS_URL, {
@@ -1160,26 +1317,37 @@ Deno.serve(async (req: Request) => {
                     status: rs.status,
                     detalle: (await rs.text().catch(() => "")).slice(0, 200),
                 })
-            return new Response(new Uint8Array(await rs.arrayBuffer()), {
+            const audioSoniox = new Uint8Array(await rs.arrayBuffer())
+            const headersSoniox = {
+                "Content-Type": "audio/mpeg",
+                /* La muestra es idéntica siempre: que el navegador la
+                   guarde un día evita pagarla en cada apertura. */
+                "Cache-Control": "public, max-age=86400",
+                "X-RSV-Proveedor": "soniox",
+                "X-RSV-Voz-Nombre": c.voz,
+            }
+            if (audioSoniox.length) {
+                MUESTRAS.set(claveMuestra, {
+                    audio: audioSoniox,
+                    headers: headersSoniox,
+                })
+                await guardarMuestra(rutaMuestra, audioSoniox)
+            }
+            return new Response(audioSoniox, {
                 status: 200,
-                headers: {
-                    ...CORS_HEADERS,
-                    "Content-Type": "audio/mpeg",
-                    /* La muestra es idéntica siempre: que el navegador la
-                       guarde un día evita pagarla en cada apertura. */
-                    "Cache-Control": "public, max-age=86400",
-                    "X-RSV-Proveedor": "soniox",
-                    "X-RSV-Voz-Nombre": c.voz,
-                },
+                headers: { ...CORS_HEADERS, ...headersSoniox },
             })
         }
     }
 
     /* 🜂 v3.0 — SONDA DE CATÁLOGO. `{ modo: "voces" }` devuelve lo que el
        proveedor dice que existe, para confirmar los nombres exactos sin
-       sacar la llave del servidor ni gastar una síntesis. No lee texto, no
-       cobra y no toca el cupo de nadie. */
-    if (String((await req.clone().json().catch(() => ({})))?.modo || "") === "voces") {
+       sacar la llave del servidor. 🜂 v3.6 — sí sintetiza una frase corta por
+       voz (la prueba de abajo), así que también pide el pase del Arquitecto. */
+    const cuerpoVoces = await req.clone().json().catch(() => ({}))
+    if (String(cuerpoVoces?.modo || "") === "voces") {
+        const rechazo = await pasarSonda(cuerpoVoces)
+        if (rechazo) return rechazo
         if (!SONIOX_KEY)
             return jsonResponse(200, { catalogo: VOCES, soniox: "sin_llave" })
         try {
@@ -1361,6 +1529,14 @@ Deno.serve(async (req: Request) => {
        selector de Sintonía. El freno global sigue siendo 429 para todos (no es
        culpa de la persona). */
     const carril = await resolverCarril(clerkUserId)
+    /* 🜂 v3.6 — sin saber quién es, la lectura no se cobra ni como miembro ni
+       como invitado. La frase va en `error` porque la app publicada muestra
+       ese campo tal cual cuando no lo reconoce. */
+    if (carril === "desconocido")
+        return jsonResponse(503, {
+            error: avisoMembresiaNoVerificada(lang),
+            codigo: "membresia_no_verificada",
+        })
     /* Sello del instante ANTES de reservar: acota el reembolso a la fila
        propia si la síntesis no llega a producir audio (v1.4). */
     const marcaReserva = new Date(Date.now() - 1000).toISOString()

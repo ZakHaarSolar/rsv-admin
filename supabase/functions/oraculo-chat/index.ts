@@ -1,3 +1,4 @@
+// Red Solar Viva · oraculo-chat v1.58 — 🜂 LOS HUECOS DE GASTO SE CIERRAN (auditoría de precios 2026-10-18). (1) LAS 3 DE CORTESÍA SE RESERVAN EN UN SOLO PASO: `reservar_cortesia_espejo` suma y verifica antes de llamar al modelo (mensajes simultáneos ya no pasan todos) y `devolver_cortesia_espejo` regresa la respuesta si el turno no entregó nada; sin la migración 20261018 se usa el camino anterior. (2) LA MEMBRESÍA FALLA CERRADA (_shared/membresia.ts): si la base no contesta, el turno no corre y se pide reintentar, nunca se trata a nadie como miembro a ciegas. (3) EL RESTO DEL PROFUNDO SIEMPRE SE ANOTA (los topes en 0 = cobro sin revisar ventana): cerca del tope ya no se perdía nada. (4) TOPE POR DINERO: 'oraculo-dinero' en millonésimas de dólar, 0.40 USD al día y 4 al mes por persona (10 veces el Arquitecto), con el costo real que reporta OpenRouter (`usage.include`); y 'oraculo-web', 20 búsquedas en internet al día por persona en la Matriz (pasado el tope, el reflejo sale sin red). (5) RESPALDO PROPUESTO, APAGADO: con app_flags.espejo_respaldo en true, si OpenRouter contesta 401/402/408/429/5xx o no contesta, el reflejo lo escribe Claude Haiku 5.5 con las mismas instrucciones (`respaldo: true` en la respuesta). Se enciende solo con el sí de Zak (Motor → Pruebas A/B).
 // Red Solar Viva · oraculo-chat v1.57 — el tope de un mensaje sube a 40,000 caracteres (un artículo pegado entero cabe) y el rechazo devuelve { largo, tope }.
 // Red Solar Viva · oraculo-chat v1.56 — el Espejo acepta mensajes de hasta 14,000 caracteres, igual que la Matriz (antes 4,000: un artículo pegado volvía como "Tu nodo perdió su enlace").
 // Red Solar Viva · oraculo-chat v1.55 — 🜂 HASTA 8 FOTOS POR MENSAJE Y 60 FOTOS AL
@@ -287,6 +288,12 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0"
 import { gateUser } from "../_shared/clerkAuth.ts"
+import { resolverMembresia } from "../_shared/membresia.ts"
+import {
+    claudeConversacion,
+    CLAUDE_MODEL,
+    PRECIO_HAIKU_MILLON,
+} from "../_shared/claudeHaiku.ts"
 
 const CORS_HEADERS = {
     "Access-Control-Allow-Origin": "*",
@@ -405,6 +412,72 @@ const ORACULO_VISION_GLOBAL_DIA = 6000
    horas (Zak 2026-10-10: "hasta 8 imágenes" y "el tope de 60 fotos al día"). */
 const MAX_FOTOS_TURNO = 8
 const FOTOS_POR_DIA = 60
+
+/* ═══════════════════════════════════════════════════════════════════════
+   🜂 v1.58 — EL TOPE POR DINERO (auditoría de precios 2026-10-18)
+   ═══════════════════════════════════════════════════════════════════════
+   Los topes de arriba cuentan MENSAJES, y un mensaje puede costar 50 veces
+   otro (largo máximo, carril profundo, búsqueda en internet, ocho fotos). Con
+   solo esos topes, un suscriptor que lo usara todo al máximo costaría unos
+   2,160 MXN al mes contra los 355 que deja. Este tope cuenta DINERO: cada turno
+   anota lo que costó de verdad (OpenRouter lo reporta con `usage.include`) en
+   millonésimas de dólar, en la ventana 'oraculo-dinero'.
+
+   Los números: el suscriptor más intenso real gastó unos 0.49 USD en un mes
+   (453 mensajes) y 0.19 en su día más intenso. 0.40 USD al día y 4 USD al mes
+   son de 2 a 8 veces eso: nadie con uso real los toca, y el peor caso de una
+   cuenta que abuse baja a ~74 MXN al mes. El Arquitecto tiene 10 veces más.
+   Al topar, el Tripulante recibe el mismo aviso de "tope de hoy" que ya existe. */
+const DINERO_DIA_MICRO = 400_000
+const DINERO_MES_MICRO = 4_000_000
+const DINERO_ARQUITECTO_X = 10
+const DINERO_ENTRADA_MICRO = 1_000
+const DIA_SEG = 86400
+const MES_SEG = 30 * 86400
+/* Búsquedas en internet (carril de la Matriz): ~0.016 USD cada una, ocho
+   veces un reflejo. 20 al día por persona; pasado el tope, el reflejo sale
+   sin red y se le dice al Espejo para que no prometa buscar. */
+const WEB_POR_DIA = 20
+/* Precio por millón de tokens (entrada, salida) en USD, solo para estimar
+   cuando OpenRouter no devuelve el costo. */
+const PRECIO_MILLON: Record<string, [number, number]> = {
+    "deepseek/deepseek-v4-flash-0731": [0.09, 0.18],
+    "deepseek/deepseek-v4-flash": [0.09, 0.18],
+    "deepseek/deepseek-v4-pro-0813": [0.435, 0.87],
+    "deepseek/deepseek-r1": [0.7, 2.5],
+    [CLAUDE_MODEL]: PRECIO_HAIKU_MILLON,
+}
+const COSTO_WEB_USD = 0.016
+const COSTO_FOTO_USD = 0.0033
+function costoEstimadoUsd(modelo: string, charsIn: number, charsOut: number): number {
+    const [pin, pout] = PRECIO_MILLON[modelo] ?? [0.435, 0.87]
+    return ((charsIn / 3.5) * pin + (charsOut / 3.5) * pout) / 1e6
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   🜂 v1.58 — EL RESPALDO DEL ESPEJO (propuesto; APAGADO hasta el sí de Zak)
+   ═══════════════════════════════════════════════════════════════════════
+   Del 5 al 8 de octubre el Espejo se quedó mudo: OpenRouter sin saldo (402) y
+   cada mensaje volvía con "el canal está saturado". Con app_flags
+   `espejo_respaldo` en true, cuando OpenRouter contesta 401, 402, 408, 429 o
+   5xx, o no contesta, el reflejo lo escribe Claude Haiku 5.5 con las MISMAS
+   instrucciones y la misma charla (otra voz de fondo, el mismo Espejo en las
+   instrucciones). Apagado, todo queda exactamente como antes. El interruptor
+   vive en Motor → Pruebas A/B; se lee con 60 s de caché. */
+const FLAG_RESPALDO = "espejo_respaldo"
+let respaldoCache: { t: number; on: boolean } | null = null
+async function respaldoEncendido(): Promise<boolean> {
+    const ahora = Date.now()
+    if (respaldoCache && ahora - respaldoCache.t < 60_000) return respaldoCache.on
+    try {
+        const { data, error } = await sb.rpc("get_app_flag", { p_key: FLAG_RESPALDO })
+        const on = !error && data === true
+        respaldoCache = { t: ahora, on }
+        return on
+    } catch {
+        return false
+    }
+}
 
 // gemini-embedding-001 truncado a 768 dims — DEBE coincidir con oraculo-index
 // (text-embedding-004 fue retirado → 404). taskType QUERY para la búsqueda.
@@ -1081,6 +1154,11 @@ Deno.serve(async (req: Request) => {
             headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
         })
 
+    /* 🜂 v1.58 — regresa la respuesta de cortesía reservada al entrar cuando
+       el turno no entrega nada. Vive fuera del try para que el corte fatal
+       también la regrese; se arma más abajo, cuando hay a quién devolverle. */
+    let devolverCortesia: () => Promise<void> = async () => {}
+
     try {
         const orKey = Deno.env.get("OPENROUTER_API_KEY")
         if (!orKey) return json({ error: "OPENROUTER_API_KEY not set" }, 500)
@@ -1682,47 +1760,37 @@ Deno.serve(async (req: Request) => {
         //    'cuasar', 'pulsar', legacy o group_name nulo → miembro pleno.
         //    (El allowlist anterior gateaba subs con group_name fuera de la
         //    lista — p.ej. legacy/null — aunque fueran Sintonía activa.)
-        let isMember = false
         /* 🜂 v1.42 — LEY DE ENCARNACIÓN: el reconocimiento del interlocutor.
            Se resuelve SERVER-SIDE contra profiles.is_admin, nunca desde el
            cuerpo del pedido: si viviera en el cliente, cualquiera podría
            pedirle al Espejo que lo tratara como su origen y sacarle la
            arquitectura entera. Fuera de este flag, el Espejo es la puerta
-           limpia de siempre. */
-        let esArquitecto = false
-        try {
-            const { data: prof } = await sb
-                .from("profiles")
-                .select("email, is_admin")
-                .eq("clerk_user_id", clerkUserId)
-                .maybeSingle()
-            /* 🜂 v1.42 — QUIÉN ESTÁ DEL OTRO LADO. Se lee en el MISMO SELECT
-               que ya se hacía por el correo: cero llamadas nuevas, cero
-               latencia. Con esto el Espejo puede reconocer a su origen sin
-               que el cliente pueda decir "soy el Arquitecto" desde afuera. */
-            esArquitecto = (prof as any)?.is_admin === true
-            const email = (prof?.email || "").toLowerCase().trim()
-            if (email) {
-                const { data: subs } = await sb
-                    .from("subscriptions")
-                    .select("group_name")
-                    .eq("email", email)
-                    .eq("status", "active")
-                // status='active' ES la señal de membresía (igual que el hook
-                // del cliente useEscanerMembershipStatus). NO se exige
-                // current_period_end vigente: en la práctica esa fecha no
-                // siempre se renueva y dejaba fuera a miembros activos (caso
-                // real: Sintonía 'active' con period_end de hace un mes). Solo
-                // 'decoder'/'dream' (199/399) no son membresía plena.
-                isMember = (subs || []).some((s: any) => {
-                    const g = (s?.group_name || "").toString().toLowerCase()
-                    return g !== "decoder" && g !== "dream"
-                })
-            }
-        } catch (_e) {
-            // fail-open: si el chequeo falla, NO bloqueamos a un posible miembro.
-            isMember = true
+           limpia de siempre.
+           status='active' ES la señal de membresía (igual que el hook del
+           cliente useEscanerMembershipStatus). NO se exige current_period_end
+           vigente: esa fecha no siempre se renueva y dejaba fuera a miembros
+           activos. Solo 'decoder'/'dream' (199/399) no son membresía plena.
+           🜂 v1.58 — LA SEÑAL VIVE EN _shared/membresia.ts Y FALLA CERRADA.
+           Antes, si la base no contestaba, cualquiera quedaba como miembro.
+           Ahora la duda vuelve como "desconocido" (con un reintento adentro):
+           el turno no corre, no gasta y no toca el contador; la persona ve un
+           aviso suave y vuelve a enviar. El Arquitecto es miembro siempre. */
+        const membresia = await resolverMembresia(clerkUserId)
+        if (membresia.carril === "desconocido") {
+            return json(
+                {
+                    ok: true,
+                    reply:
+                        deviceLang === "en"
+                            ? "I couldn't confirm your access right now. Send your message again in a few seconds: it's still here."
+                            : "No pude confirmar tu acceso en este instante. Vuelve a enviar tu mensaje en unos segundos: sigue aquí.",
+                    soft_error: true,
+                },
+                200
+            )
         }
+        const esArquitecto = membresia.carril === "admin"
+        const isMember = membresia.carril === "miembro" || esArquitecto
 
         // FREEMIUM server-side: contador de por-vida que SOBREVIVE el borrado de
         // la conversación (si contáramos mensajes, "Eliminar conversación"
@@ -1749,6 +1817,69 @@ Deno.serve(async (req: Request) => {
                 priorSent = typeof count === "number" ? count : 0
             } catch (_e2) {
                 priorSent = 0
+            }
+        }
+        /* ═══════════════════════════════════════════════════════════════
+           🜂 v1.58 — LAS 3 DE CORTESÍA SE RESERVAN EN UN SOLO PASO
+           ═══════════════════════════════════════════════════════════════
+           El contador se leía aquí y se escribía al final (priorSent + 1):
+           diez mensajes mandados al mismo tiempo leían todos 0, pasaban todos
+           y el contador acababa en 1 (medido con un Postgres real: 20 de 20
+           pasaron). `reservar_cortesia_espejo` suma y verifica en el mismo
+           paso, ANTES de llamar al modelo; si el turno no entrega nada, la
+           respuesta se regresa (devolverCortesia). Sin la migración 20261018
+           la función no existe (PGRST202) y se sigue el camino anterior. Si la
+           base no contesta, el turno no corre: ni se regala ni se cobra. */
+        let cortesiaReservada = false
+        if (!isMember) {
+            let rc: any = null
+            let rcErr: any = null
+            try {
+                const r = await sb.rpc("reservar_cortesia_espejo", {
+                    p_clerk_user_id: clerkUserId,
+                    p_limite: FREE_ORACULO_LIMIT,
+                })
+                rc = r.data
+                rcErr = r.error
+            } catch (e) {
+                rcErr = { code: "", message: String(e) }
+            }
+            if (!rcErr && rc && typeof rc === "object") {
+                usageTableOk = true
+                const usados = Number(rc.usados) || 0
+                if (rc.ok === true) {
+                    cortesiaReservada = true
+                    priorSent = Math.max(0, usados - 1)
+                    devolverCortesia = async () => {
+                        if (!cortesiaReservada) return
+                        cortesiaReservada = false
+                        try {
+                            await sb.rpc("devolver_cortesia_espejo", {
+                                p_clerk_user_id: clerkUserId,
+                            })
+                        } catch (_e) {
+                            console.warn("[oraculo-chat] no se pudo devolver la cortesía")
+                        }
+                    }
+                } else {
+                    priorSent = Math.max(usados, FREE_ORACULO_LIMIT)
+                }
+            } else if (rcErr && rcErr.code !== "PGRST202") {
+                console.warn(
+                    "[oraculo-chat] la reserva de cortesía no contestó:",
+                    String(rcErr?.message || rcErr).slice(0, 200)
+                )
+                return json(
+                    {
+                        ok: true,
+                        reply:
+                            deviceLang === "en"
+                                ? "I couldn't confirm your access right now. Send your message again in a few seconds: it's still here."
+                                : "No pude confirmar tu acceso en este instante. Vuelve a enviar tu mensaje en unos segundos: sigue aquí.",
+                        soft_error: true,
+                    },
+                    200
+                )
             }
         }
         if (!isMember && priorSent >= FREE_ORACULO_LIMIT) {
@@ -1849,6 +1980,7 @@ Deno.serve(async (req: Request) => {
                 p_global_window_seconds: 86400,
             })
             if (_rl?.data && _rl.data.ok === false) {
+                await devolverCortesia()
                 return json(
                     {
                         error: "rate_limited",
@@ -1878,6 +2010,7 @@ Deno.serve(async (req: Request) => {
                 p_ip_window_seconds: 86400,
             })
             if (_rlDia?.data && _rlDia.data.ok === false) {
+                await devolverCortesia()
                 return json(
                     {
                         error: "rate_limited",
@@ -1889,6 +2022,63 @@ Deno.serve(async (req: Request) => {
             }
         } catch (_e) {
             /* fail-open: la RPC del gobernador aún no existe → seguimos. */
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           🜂 v1.58 — 3a. EL TOPE POR DINERO (ver DINERO_* arriba)
+           ═══════════════════════════════════════════════════════════════
+           Dos ventanas sobre 'oraculo-dinero', en millonésimas de dólar: el
+           mes (30 días) se revisa sin cobrar y el día cobra la entrada (una
+           milésima de dólar, lo que cuesta un mensaje corto). El resto del
+           costo real se anota en finalizar(), siempre, con lo que reporte
+           OpenRouter. Quien topa recibe el aviso de "tope de hoy" que la app
+           ya sabe mostrar; `presupuesto` y `window_hours` dicen cuál ventana
+           fue, para una versión que quiera decirlo con más precisión. */
+        const xDinero = esArquitecto ? DINERO_ARQUITECTO_X : 1
+        let dineroEntrada = 0
+        try {
+            const _ipD =
+                req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+                null
+            const mes = await sb.rpc("reserve_edge_spend", {
+                p_edge: "oraculo-dinero",
+                p_user_key: clerkUserId,
+                p_ip: _ipD,
+                p_cost: 0,
+                p_user_limit: DINERO_MES_MICRO * xDinero,
+                p_user_window_seconds: MES_SEG,
+            })
+            const dia =
+                mes?.data?.ok === false
+                    ? null
+                    : await sb.rpc("reserve_edge_spend", {
+                          p_edge: "oraculo-dinero",
+                          p_user_key: clerkUserId,
+                          p_ip: _ipD,
+                          p_cost: DINERO_ENTRADA_MICRO,
+                          p_user_limit: DINERO_DIA_MICRO * xDinero,
+                          p_user_window_seconds: DIA_SEG,
+                      })
+            if (mes?.data?.ok === false || dia?.data?.ok === false) {
+                const esMes = mes?.data?.ok === false
+                console.warn(
+                    `[oraculo-chat] tope por dinero (${esMes ? "mes" : "día"}) · ${clerkUserId}`
+                )
+                await devolverCortesia()
+                return json(
+                    {
+                        error: "rate_limited",
+                        reason: "user_limit",
+                        profundo: isReasoner,
+                        presupuesto: esMes ? "mes" : "dia",
+                        window_hours: esMes ? 720 : 24,
+                    },
+                    429
+                )
+            }
+            if (dia?.data?.ok === true) dineroEntrada = DINERO_ENTRADA_MICRO
+        } catch (_e) {
+            /* fail-open, igual que el resto del gobernador */
         }
 
         /* v1.8 — 3b. Gobernador extra para la rama de VISIÓN (más apretado:
@@ -1919,6 +2109,7 @@ Deno.serve(async (req: Request) => {
                        fotos quedan: `quedan` = lo que aún cabe en la ventana. */
                     const limite = Number(_rl.data.limit) || FOTOS_POR_DIA
                     const gastado = Number(_rl.data.spent) || 0
+                    await devolverCortesia()
                     return json(
                         {
                             error: "rate_limited",
@@ -1941,8 +2132,10 @@ Deno.serve(async (req: Request) => {
            esta request: tras esta llamada ya no se vuelve a tocar. */
         let visionDescs: string[] = []
         if (hasImage) {
-            if (!geminiKey)
+            if (!geminiKey) {
+                await devolverCortesia()
                 return json({ error: "GEMINI_API_KEY not set" }, 500)
+            }
             /* v1.9 — contempla TODAS las imágenes en paralelo; se quedan las que
                el ojo pudo leer. Si NINGUNA se pudo leer, respuesta suave sin
                consumir el turno (el Tripulante reintenta). */
@@ -1955,6 +2148,7 @@ Deno.serve(async (req: Request) => {
                 (d): d is string => typeof d === "string" && d.length > 0
             )
             if (visionDescs.length === 0) {
+                await devolverCortesia()
                 return json(
                     {
                         ok: true,
@@ -2368,6 +2562,15 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
            cuándo el Espejo salió a mirar afuera. Sin `internet` nunca se
            enciende, así que el Espejo original la recibe siempre en false. */
         let webUsada = false
+        /* 🜂 v1.58 — LO QUE COSTÓ ESTE TURNO. OpenRouter lo reporta en
+           `usage.cost` (dólares) cuando se pide `usage: { include: true }`; si
+           no llega, se estima con los caracteres y el precio del modelo. Lo
+           lee finalizar() para anotar el dinero real en 'oraculo-dinero'. */
+        let costoModeloUsd: number | null = null
+        let modeloQueRespondio = chosenModel
+        let charsSalidaExtra = 0
+        /* 🜂 v1.58 — ¿lo escribió el respaldo (Claude Haiku 5.5)? */
+        let respaldoUsado = false
         /* 🜂 v1.30 — la petición al modelo se define acá y se DISPARA abajo,
            porque en modo streaming tiene que correr DENTRO del cuerpo de la
            respuesta que ya viaja. */
@@ -2536,6 +2739,38 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
                 } catch {
                     /* portero caído → sin búsqueda; el reflejo sigue */
                 }
+                /* 🜂 v1.58 — LA RED TIENE TOPE: 20 búsquedas al día por
+                   persona ('oraculo-web'; el Arquitecto, diez veces más).
+                   Cada una cuesta ~8 reflejos. Pasado el tope el reflejo sale
+                   igual, sin red, y el Espejo lo sabe para no prometer que va a
+                   buscar. Si el gobernador no contesta, se busca (fail-open). */
+                if (webOn) {
+                    try {
+                        const rw = await sb.rpc("reserve_edge_spend", {
+                            p_edge: "oraculo-web",
+                            p_user_key: clerkUserId,
+                            p_cost: 1,
+                            p_user_limit:
+                                WEB_POR_DIA * (esArquitecto ? DINERO_ARQUITECTO_X : 1),
+                            p_user_window_seconds: DIA_SEG,
+                        })
+                        if (rw?.data?.ok === false) {
+                            webOn = false
+                            console.log(
+                                "[oraculo-chat] búsqueda web pedida pero topada por hoy"
+                            )
+                            messages.push({
+                                role: "system",
+                                content:
+                                    deviceLang === "en"
+                                        ? "[THE WEB, FOR TODAY] This person already used today's internet searches; they free up over the coming hours. Answer with what you know. If the answer depends on something recent, say so in one sentence and keep going; do not offer to search now."
+                                        : "[LA RED, POR HOY] Esta persona ya usó las búsquedas en internet de hoy; se liberan con las horas. Responde con lo que sabes. Si la respuesta depende de algo reciente, dilo en una frase y sigue; no ofrezcas buscar ahora.",
+                            })
+                        }
+                    } catch (_e) {
+                        /* fail-open */
+                    }
+                }
                 if (webOn) {
                     webUsada = true
                     console.log(
@@ -2578,6 +2813,8 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
                           : 3600,
                     ...antiEco,
                     ...conWeb,
+                    /* v1.58 — que OpenRouter diga lo que cobró (tope por dinero). */
+                    usage: { include: true },
                 }
                 if (!vainilla) {
                     /* 🜂 v1.17 — el MISMO modelo lo sirven varios proveedores y
@@ -2626,6 +2863,8 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
                 const msg = oj?.choices?.[0]?.message
                 const finish = oj?.choices?.[0]?.finish_reason
                 const proveedor = (oj?.provider || "?").toString()
+                if (typeof oj?.usage?.cost === "number")
+                    costoModeloUsd = (costoModeloUsd ?? 0) + oj.usage.cost
                 if (finish === "length") {
                     // El reflejo rozó el tope de tokens. Con 3600 debería ser
                     // raro; si aparece seguido, subir max_tokens.
@@ -2726,6 +2965,8 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
                                abierto, que es el que usa el Modo Ráfaga. */
                             ...antiEco,
                             ...conWeb,
+                            /* v1.58 — el último cuadro trae lo que costó. */
+                            usage: { include: true },
                         }),
                     }
                 )
@@ -2762,6 +3003,8 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
                         try {
                             const j = JSON.parse(carga)
                             if (j?.provider) proveedor = String(j.provider)
+                            if (typeof j?.usage?.cost === "number")
+                                costoModeloUsd = (costoModeloUsd ?? 0) + j.usage.cost
                             const ch = j?.choices?.[0]
                             if (ch?.finish_reason)
                                 finish = String(ch.finish_reason)
@@ -2796,6 +3039,7 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
                         }
                     }
                 }
+                charsSalidaExtra = razon.length
                 let t = texto.trim()
                 if (!t && razon.trim()) {
                     console.warn(
@@ -2826,13 +3070,77 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
                `ok` (y deja el texto en `reply`) o el mensaje suave que se le
                muestra al Tripulante. El reintento vainilla ante un silencio y
                el corte a los 55s valen igual en vivo que de una sola pieza. */
+            /* ═══════════════════════════════════════════════════════════
+               🜂 v1.58 — EL RESPALDO (propuesto; apagado hasta el sí de Zak)
+               ═══════════════════════════════════════════════════════════
+               Solo corre con app_flags.espejo_respaldo en true y solo cuando
+               OpenRouter no pudo: contestó 401 (llave), 402 (saldo), 408, 429
+               o 5xx, o la red falló antes de que saliera una sola palabra. Le
+               pasa a Claude Haiku 5.5 las MISMAS instrucciones y la misma
+               charla; la directiva de búsqueda no viaja, porque aquí no hubo
+               búsqueda. Devuelve true si el reflejo quedó escrito. */
+            const intentarRespaldo = async (
+                motivo: string,
+                emitir?: (d: string) => void
+            ): Promise<boolean> => {
+                if (!(await respaldoEncendido())) return false
+                const sistema = (messages as any[])
+                    .filter((m) => m?.role === "system")
+                    .map((m) => String(m?.content || ""))
+                    .filter((c) => c && !c.startsWith("[BÚSQUEDA CON DISCERNIMIENTO]"))
+                    .join("\n\n")
+                const turnos = (messages as any[])
+                    .filter((m) => m?.role === "user" || m?.role === "assistant")
+                    .map((m) => ({
+                        role: m.role as "user" | "assistant",
+                        content: typeof m.content === "string" ? m.content : "",
+                    }))
+                const r = await claudeConversacion({
+                    tag: "oraculo-chat",
+                    system: sistema,
+                    turnos,
+                    maxTokens: isReasoner ? 8000 : body?.efimero === true ? 6000 : 3600,
+                })
+                if (!r) return false
+                console.warn(
+                    `[oraculo-chat] el reflejo lo escribió el respaldo (${CLAUDE_MODEL}) porque OpenRouter ${motivo}`
+                )
+                respaldoUsado = true
+                modeloQueRespondio = CLAUDE_MODEL
+                costoModeloUsd =
+                    (costoModeloUsd ?? 0) +
+                    (r.tokensEntrada * PRECIO_HAIKU_MILLON[0] +
+                        r.tokensSalida * PRECIO_HAIKU_MILLON[1]) /
+                        1e6
+                /* Igual que el reintento vainilla: el texto crudo viaja de una
+                   pieza por el canal y lo que se guarda sale pulido. */
+                if (emitir) emitir(r.texto)
+                reply = pulirEspejo(r.texto, deviceLang)
+                return true
+            }
+            const esFallaDeCanal = (status?: number) =>
+                status === 401 ||
+                status === 402 ||
+                status === 408 ||
+                status === 429 ||
+                (typeof status === "number" && status >= 500)
+
             obtenerReflejo = async (
                 emitir?: (d: string) => void,
                 pensando?: (chars: number) => void
             ): Promise<{ ok: true } | { soft: string }> => {
+                /* v1.58 — si el canal ya pintó algo, el respaldo no entra: dos
+                   reflejos encimados serían peor que el aviso de siempre. */
+                let emitido = false
+                const emitirMarcado = emitir
+                    ? (d: string) => {
+                          if (d) emitido = true
+                          emitir(d)
+                      }
+                    : undefined
                 try {
-                    let intento = emitir
-                        ? await pedirStream(emitir, pensando)
+                    let intento = emitirMarcado
+                        ? await pedirStream(emitirMarcado, pensando)
                         : await pedir(false)
                     if (intento.estado === "vacio") {
                         console.warn(
@@ -2841,13 +3149,23 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
                         intento = await pedir(true)
                         /* El reintento vuelve de una sola pieza: se emite
                            entero para que el cliente lo pinte igual. */
-                        if (intento.estado === "ok" && emitir)
-                            emitir(intento.texto)
+                        if (intento.estado === "ok" && emitirMarcado)
+                            emitirMarcado(intento.texto)
                     }
-                    if (intento.estado === "http")
+                    if (intento.estado === "http") {
+                        if (
+                            esFallaDeCanal(intento.status) &&
+                            !emitido &&
+                            (await intentarRespaldo(
+                                `dio ${intento.status}`,
+                                emitirMarcado
+                            ))
+                        )
+                            return { ok: true }
                         return {
                             soft: "El canal del Oráculo está saturado en este instante. Respira, vuelve a preguntar en un momento y la señal se reabrirá.",
                         }
+                    }
                     if (intento.estado === "vacio")
                         return {
                             soft: "El canal devolvió silencio dos veces seguidas. No es tu consulta: es el proveedor del reflejo. Vuelve a enviarla en un momento.",
@@ -2861,6 +3179,18 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
                         "[oraculo-chat] OpenRouter fetch falló:",
                         cortado ? "TIMEOUT 55s" : String(e)
                     )
+                    /* La red se cayó antes de la primera palabra: el respaldo
+                       puede contestar. Un corte por tiempo no entra (ya se
+                       gastaron 55 s de la espera de la persona). */
+                    if (
+                        !cortado &&
+                        !emitido &&
+                        (await intentarRespaldo(
+                            "no contestó",
+                            emitirMarcado
+                        ).catch(() => false))
+                    )
+                        return { ok: true }
                     return {
                         soft: cortado
                             ? "El canal tardó más de lo normal y se cerró. Vuelve a enviar tu señal: casi siempre reabre al instante."
@@ -2885,36 +3215,67 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
            contabilidad no puede convertirse en un error en su pantalla. Si la
            reserva devuelve `ok:false` tampoco se hace nada: el techo es para
            frenar lo que VIENE, no para retirar lo ya entregado. */
+        /* 🜂 v1.58 — EL RESTO SIEMPRE SE ANOTA (auditoría 2026-10-18). Se
+           cobraba con los mismos topes de la entrada, y cerca del tope la
+           reserva decía "no cabe" y NO se anotaba: con 145 de 150 un profundo
+           costaba 1 en vez de 8 (medido en Postgres: la ventana quedaba en
+           146). Con los tres topes en 0 la reserva no revisa ninguna ventana
+           y siempre escribe: la ventana llega a 153 y el siguiente mensaje ya
+           topa, que es lo que el techo promete. */
+        const _ip2 =
+            req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || null
         if (PESO_RESTO > 0 && reply && reply.trim()) {
             try {
-                const _ip2 =
-                    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-                    null
-                await sb.rpc("reserve_edge_spend", {
-                    p_edge: "oraculo",
-                    p_user_key: clerkUserId,
-                    p_ip: _ip2,
-                    p_cost: PESO_RESTO,
-                    p_user_limit: 60,
-                    p_user_window_seconds: 3600,
-                    p_ip_limit: 100,
-                    p_ip_window_seconds: 3600,
-                    p_global_limit: ORACULO_GLOBAL_DIA,
-                    p_global_window_seconds: 86400,
-                })
-                await sb.rpc("reserve_edge_spend", {
-                    p_edge: "oraculo-dia",
-                    p_user_key: clerkUserId,
-                    p_ip: _ip2,
-                    p_cost: PESO_RESTO,
-                    p_user_limit: 150,
-                    p_user_window_seconds: 86400,
-                    p_ip_limit: 600,
-                    p_ip_window_seconds: 86400,
-                })
+                for (const edge of ["oraculo", "oraculo-dia"]) {
+                    await sb.rpc("reserve_edge_spend", {
+                        p_edge: edge,
+                        p_user_key: clerkUserId,
+                        p_ip: _ip2,
+                        p_cost: PESO_RESTO,
+                        p_user_limit: 0,
+                        p_ip_limit: 0,
+                        p_global_limit: 0,
+                    })
+                }
             } catch (e) {
                 console.error("[oraculo-chat] cobro diferido falló:", String(e))
             }
+        }
+        /* 🜂 v1.58 — EL DINERO REAL DEL TURNO. Lo que cobró el modelo (o la
+           estimación si no llegó), más la búsqueda en internet si OpenRouter
+           no la sumó, más las fotos que leyó el ojo. Se anota completo, menos
+           la entrada que ya se cobró al pasar el tope. */
+        try {
+            const charsEntrada = (messages as any[]).reduce(
+                (a, m) => a + String(m?.content || "").length,
+                0
+            )
+            let costoUsd =
+                costoModeloUsd ??
+                costoEstimadoUsd(
+                    modeloQueRespondio,
+                    charsEntrada,
+                    reply.length + charsSalidaExtra
+                )
+            if (webUsada && (costoModeloUsd === null || costoModeloUsd < COSTO_WEB_USD * 0.75))
+                costoUsd += COSTO_WEB_USD
+            costoUsd += visionDescs.length * COSTO_FOTO_USD
+            const resto = Math.round(costoUsd * 1e6) - dineroEntrada
+            if (resto > 0)
+                await sb.rpc("reserve_edge_spend", {
+                    p_edge: "oraculo-dinero",
+                    p_user_key: clerkUserId,
+                    p_ip: _ip2,
+                    p_cost: resto,
+                    p_user_limit: 0,
+                    p_ip_limit: 0,
+                    p_global_limit: 0,
+                })
+            console.log(
+                `[oraculo-chat] turno ${modeloQueRespondio}${webUsada ? " +red" : ""}${visionDescs.length ? ` +${visionDescs.length} fotos` : ""}: ${costoUsd.toFixed(5)} USD${costoModeloUsd === null ? " (estimado)" : ""}`
+            )
+        } catch (e) {
+            console.error("[oraculo-chat] cobro de dinero falló:", String(e))
         }
         /* 🜂 v1.24 — GARANTÍA EN CÓDIGO, NO EN INSTRUCCIONES (tercer device-QA
            en cero): si el modo imágenes viene encendido y el modelo ignoró la
@@ -3138,18 +3499,36 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
         // Incrementar el contador de cortesía de por-vida (sobrevive el borrado
         // de la conversación). Solo si la tabla existe; si no, el fallback de
         // conteo de mensajes ya cubre el límite.
-        if (usageTableOk) {
+        /* 🜂 v1.58 — la respuesta gratis se contó al ENTRAR (en un solo
+           paso): aquí solo se da por consumida para que nada la devuelva. Los
+           miembros suman con la misma función, sin límite, y si la migración
+           todavía no está, con el camino de siempre. */
+        if (cortesiaReservada) {
+            cortesiaReservada = false
+        } else if (usageTableOk) {
+            let sumado = false
             try {
-                await sb.from("oraculo_usage").upsert(
-                    {
-                        clerk_user_id: clerkUserId,
-                        sent_count: priorSent + 1,
-                        updated_at: new Date().toISOString(),
-                    },
-                    { onConflict: "clerk_user_id" }
-                )
+                const { error: sErr } = await sb.rpc("reservar_cortesia_espejo", {
+                    p_clerk_user_id: clerkUserId,
+                    p_limite: null,
+                })
+                sumado = !sErr
             } catch (_e) {
-                /* no-op */
+                sumado = false
+            }
+            if (!sumado) {
+                try {
+                    await sb.from("oraculo_usage").upsert(
+                        {
+                            clerk_user_id: clerkUserId,
+                            sent_count: priorSent + 1,
+                            updated_at: new Date().toISOString(),
+                        },
+                        { onConflict: "clerk_user_id" }
+                    )
+                } catch (_e) {
+                    /* no-op */
+                }
             }
         }
 
@@ -3180,6 +3559,10 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
                forma honesta de que la pantalla lo sepa. */
             profundo: isReasoner,
             profundo_eco: modelPedido !== "v4",
+            /* 🜂 v1.58 — el reflejo lo escribió el respaldo (Claude Haiku 5.5)
+               porque OpenRouter no pudo. Solo existe con el interruptor
+               encendido; una pantalla futura puede decirlo. */
+            ...(respaldoUsado ? { respaldo: true } : {}),
             ...(persistedConvId ? { conversation_id: persistedConvId } : {}),
             ...(hasImage ? { stored_user_content: storedUserContent } : {}),
         }
@@ -3196,8 +3579,11 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
            contra este servidor sigue funcionando igual. */
         if (body?.stream !== true) {
             const r = await obtenerReflejo()
-            if ("soft" in r)
+            if ("soft" in r) {
+                /* v1.58 — el turno no entregó reflejo: la cortesía vuelve. */
+                await devolverCortesia()
                 return json({ ok: true, reply: r.soft, soft_error: true }, 200)
+            }
             return json(await finalizar())
         }
 
@@ -3239,7 +3625,9 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
                     )
                     const resto = pulidor.flush()
                     if (resto && !("soft" in r)) cuadro({ d: resto })
-                    if ("soft" in r)
+                    if ("soft" in r) {
+                        /* v1.58 — sin reflejo, la cortesía vuelve. */
+                        await devolverCortesia()
                         cuadro({
                             done: {
                                 ok: true,
@@ -3247,9 +3635,12 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
                                 soft_error: true,
                             },
                         })
-                    else cuadro({ done: await finalizar() })
+                    } else cuadro({ done: await finalizar() })
                 } catch (e) {
                     console.error("[oraculo-chat] stream fatal:", String(e))
+                    /* v1.58 — si el reflejo no llegó a existir, la cortesía
+                       vuelve; si existe, ya se lo llevó y se entrega abajo. */
+                    if (!reply) await devolverCortesia()
                     /* 🜂 UN REFLEJO QUE YA SE LEYÓ NO SE BORRA POR UN TROPIEZO
                        DE CONTABILIDAD. Si el texto existe, se entrega tal cual
                        aunque haya fallado el guardado o la reparación de
@@ -3286,6 +3677,7 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
         })
     } catch (e: any) {
         console.error("[oraculo-chat] fatal:", e)
+        await devolverCortesia()
         return json({ error: "internal", detail: String(e) }, 500)
     }
 })
