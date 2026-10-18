@@ -1346,6 +1346,11 @@ unos 20 pesos sobrevivió de suerte (la vida promedio supuesta lo compensaba); l
 
 Hermano del **0-decies** (lo que se promete se enumera contra la fuente).
 
+**Afinación (2026-10-18).** Para una persona física con RFC en México, el contrato de Apple agrega dos descuentos: IVA
+sobre su comisión (acreditable si declaras IVA) y la retención de ISR de plataformas, 2.5 % en 2026 (20 % sin RFC). De
+499 llegan ~355, de 149 ~106 y de la web con Stripe ~398. En el informe de pagos de Apple, la retención sale como
+«Impuestos y ajustes».
+
 ### Paso 0-terquinquagies — Una tarea en segundo plano MUERE a los 30 minutos: lo largo va por tramos
 
 Lo que puede pasar de media hora (un render de Blender, una composición larga) no se lanza como una sola tarea en
@@ -1790,7 +1795,50 @@ la clave secreta de 32 caracteres sí había entrado completa.
 **Hermanas.** 0-sexies (una verificación que falla acusa primero a lo nuestro) · 0-quinquadragies (las llaves en el
 llavero de la Mac) · 0-vicies-semel (la causa se anuncia después de probarla).
 
+### Paso 0-unoctogies · Un pago prueba un precio solo en la tienda donde se cobró
+
+**Regla.** Antes de usar una compra como prueba de que un precio funciona (o de que no), se confirma en qué país y en qué
+moneda se cobró: el informe de pagos de la tienda por región (App Store Connect → Pagos e informes financieros) o el país
+de la tienda en RevenueCat. Una conversión en euros o en dólares no dice nada del precio en pesos. Y al citar una tasa
+(«2 de 7», «2 de 2») se dice desde qué fecha cuenta su contador: uno que nació a medio camino mezcla épocas.
+
+**Por qué.** El 2026-10-18, en la auditoría de precios de Sintonía, «las 2 personas que llegaron al muro pagaron el mismo
+día, las dos por el semanal de 149» sostenía la recomendación de dejar 499 y 149 en México. Horas después, el informe de
+pagos de Apple que mandó Zak mostró que las 4 ventas del mes eran de la zona euro y de América en dólares, y ninguna de
+México: el precio mexicano no lo había probado nadie. La recomendación sobrevivió porque también se apoyaba en la cuenta
+(costos, margen y escalera), pero hubo que corregir el reporte, la página y el maestro frente a Zak. Antes, el «2 de 7»
+ya había mezclado cuentas de antes y de después del 9 de agosto, cuando el muro del Espejo se empezó a contar.
+
+**Hermanas.** 0-duoquinquagies (un número de dinero se calcula con lo que llega a la cuenta) · 0-undecies (el dato de
+prueba se parece al real en la dimensión que importa) · 0-quindecies (la métrica puede estar hecha a la medida del diseño
+viejo).
+
+### Paso 0-duooctogies · Una web compartida se publica desde lo guardado, no desde la carpeta
+
+**Regla.** Cuando varias salas tocan los archivos que compila una misma web (`Code/` para redsolarviva.com, `escaner-app`
+para app.escanervibracional.com), se publica desde una copia limpia de lo guardado (`git archive HEAD` más lo que ya está
+vivo y sin commit, como el Consejo de rsv-web), nunca desde la carpeta de trabajo, que trae el trabajo a medias de otras.
+Antes de publicar se comprueba que lo vivo es un ancestro: reconstruir esa versión da el mismo archivo `index-*.js` que
+sirve producción. Y la copia lleva el enlace correcto del proyecto: una carpeta enlazada por `.vercel/repo.json` tiene un
+`project.json` sin `projectId`, y copiarlo hace que `vercel pull` cree un proyecto nuevo con el nombre de la carpeta.
+
+**Por qué.** El 2026-10-18, en la sala del muro de Sintonía, otra sala publicó redsolarviva.com dos segundos después y
+quitó el panel nuevo del Motor (publicaba desde su propia copia); `Code/` tenía cambios suyos sin commit que no podían
+salir. Se guardó el Motor encima de su commit y se volvió a publicar tras reconstruir su versión y obtener el mismo
+archivo que estaba vivo. En el Escáner, el guion de publicación se negó (con razón) por cambios sin commit de una tercera
+sala; la copia limpia con el `project.json` copiado creó el proyecto «publicar-app» en Vercel, que se retiró a los 3 minutos.
+
+**Hermanas.** 0-undevicies (tu propia automatización puede deshacer lo que publicaste) · 0-sexquinquagies (lo que
+entrega otro no se toca mientras trabaja) · 0-nonies (publicar cierra con la verificación en vivo).
+
 ### Changelog del protocolo
+
+- **v76 (2026-10-18, sala del muro de Sintonía):** una lección. **0-duooctogies**: una web compartida se publica desde
+  lo guardado, comprobando que lo vivo es su ancestro, y con el enlace correcto del proyecto.
+
+- **v75 (2026-10-18, sala de la auditoría de precios):** una lección. **0-unoctogies**: un pago prueba un precio solo en
+  la tienda donde se cobró. Y se afina **0-duoquinquagies**: para una persona física en México, de cada 499 en la tienda
+  llegan ~355, no ~366, porque Apple también cobra IVA sobre su comisión y retiene 2.5 % de ISR.
 
 - **v74 (2026-10-18, sala de la biblioteca de Bashar):** dos lecciones. **0-undeoctogies**: el nombre o la duración de
   una grabación no prueban lo que trae. **0-octogies**: una llave guardada a ciegas se mide antes de usarla.

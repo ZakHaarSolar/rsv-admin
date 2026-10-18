@@ -4,6 +4,81 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-18 · BIBLIOTECA DE BASHAR: LO QUE NOS FALTA, LAS SESIONES SUELTAS, LAS MÉTRICAS DE INSTAGRAM Y EL PLAN MAESTRO
+
+- ✅ **Resuelto:** la transcripción del disco medida (1,832 grabaciones, 1,398 h) con sus copias escondidas · el catálogo
+  público de tv.bashar.org leído completo y comparado con la colección: la lista de lo que falta, con enlaces · búsqueda
+  en toda la Mac y el disco: 4 sesiones nuevas y 2 fragmentos en Bashar New (lo de la Mac copiado, lo suelto del disco
+  movido) y University of Earth descubierta como compilación de YouTube, con su copia cortada · consultas: conversar con
+  la biblioteca (tres capas, modelos, costos y selector DeepSeek o Haiku), la estrategia de las emisiones (rotación, Red
+  viva, Grok, frecuencia, YouTube) y la estrategia maestra (tres ingresos, años al norte, la mina de oro) · el plan
+  maestro escrito · la herramienta de métricas de Instagram lista y probada · la auditoría de precios abierta en su sala.
+- 📁 **Archivos:** `PLAN_MAESTRO.md` v1.1 (nuevo) · `Escaner Vibracional/Emisiones/herramientas/metricas_instagram.py` v1.0
+  (nuevo) · `Emisiones/CLAUDE.md` (las métricas) · en el disco: `Awaken/Bashar New/` (4 sesiones, `Fragmentos/`,
+  `Sesiones que nos faltan.txt` y `Qué hay en esta carpeta.txt`) · memorias `referencia_catalogo_bashar_tv` y
+  `proyecto_plan_maestro`.
+- ⏳ **Pendiente:** la llave de Instagram completa y luego `estado`, `diario` e `instalar`; el sí para las 6 emisiones de
+  la rotación y la prueba con Grok; revisar Bashar New; la destilación al terminar la transcripción (🔮); la auditoría de
+  precios en su sala. Todo en Pendientes vivos.
+- 💡 **Decisiones:** la lista de faltantes se mide contra tv.bashar.org (en lo antiguo, la colección supera a la
+  plataforma) · lo de la Mac se copia, lo suelto del mismo disco se mueve y nada se borra · el conocimiento de Bashar se
+  usa destilado y en voz propia: sin modelo entrenado ni voz clonada · uso personal de la biblioteca: página propia con
+  selector, sin gastar el plan · distribuir antes que construir (70/30) hasta los 33,500 MXN · la llave de Instagram vive
+  solo en el llavero.
+- 🔧 **Patrones nuevos:**
+  - El catálogo de una tienda Uscreen se lee sin cuenta: `sitemap.xml`, las tarjetas de
+    `/categories/<id>/search?format=turbo_stream&page=N` y el JSON-LD de cada programa ([[referencia_catalogo_bashar_tv]]).
+  - Copias escondidas: la duración no sirve (113 caras de cinta distintas miden 2,821 s); el tamaño idéntico y las
+    palabras, sí. Para saber qué trae un video largo, se transcribe y se busca «transmission has been titled».
+  - Métricas de Instagram con inicio de sesión de Instagram (sin página de Facebook): se piden juntas y, si Meta rechaza
+    una, se quita y se reintenta; la llave se renueva cada 7 días (Meta exige que tenga 24 h).
+  - Lecciones 0-undeoctogies y 0-octogies.
+- 🧬 **Versión del sistema:** `metricas_instagram.py` v1.0 · `PLAN_MAESTRO.md` v1.1 · protocolo v74.
+- 🔮 **Cómo arrancar la próxima Sala de Comando:** abrir la sala en `Escaner Vibracional/Emisiones` y pegar: «Sala
+  Biblioteca de Emisiones, la destilación. 0) Si la llave de Instagram ya está completa (su largo pasa de 128), corre
+  `herramientas/metricas_instagram.py estado`, `diario` e `instalar`. 1) Revisa que la transcripción terminó:
+  `pgrep -f transcribir.py` vacío y `biblioteca/bashar/transcripciones/disco/catalogo.tsv` con ~1,833 líneas; si no, di
+  el avance y para. 2) Corre `python3 herramientas/indexar.py` y reporta el tamaño (fuentes, pasajes y palabras por tipo);
+  al indexar, junta las transcripciones idénticas por sus palabras (la duración no sirve; confirmadas: Social Experiment
+  Step 3 tres veces y Step 5 y 6 dos veces). 3) Arma `biblioteca/mapa.md`: de 150 a 300 conceptos, cada uno con su
+  definición en nuestras palabras, sus 3 a 5 mejores fuentes con `buscar.py` (título y minuto), los conceptos
+  relacionados y si los Códices lo tocan (`--tipo zak`); por familias en paralelo y sin leer transcripciones completas.
+  4) Arma `biblioteca/parrilla.md`: 90 ideas, 30 por estilo (Tripulante, Red viva, Cuento de luz), cada una con gancho,
+  tesis, formato, concepto y por qué le queda al estilo, sin repetir el registro ni las muestras de la biblia; cada
+  gancho pasa `revisar.py --texto`. 5) Actualiza `CLAUDE.md` y reporta.»
+
+*Archivada completa el 2026-10-18 · III, al entrar la sala del muro de Sintonía.*
+
+#### 2026-10-17 · II · EMISIONES: EM-003 «LA BRÚJULA» EN TRIPULANTE, LOS SUBTÍTULOS SELLADOS Y UNA VERSIÓN POR RED
+
+- ✅ **Resuelto:** EM-003 «Eso que te enciende es una brújula» animada en el estilo Tripulante (30.5 s): al Tripulante se
+  le enciende el pecho al ver una estrella, su Luz se vuelve una brújula que no discute, el mapa casi en blanco, el primer
+  peldaño, el final que se suelta y cada paso que revela el siguiente justo a tiempo; el final vuelve al cuadro 0 · el
+  estilo Tripulante partido en biblioteca y escenas · la voz sola para Instagram y la música de Zak'Haar para TikTok · dos
+  rondas de subtítulos (primero maneras de resaltar, luego letras sobre la B) y **B4 Volumen sellada** · portadas pensadas
+  para la cuadrícula de cada red · las dos descripciones · su línea en el registro.
+- 📁 **Archivos:** `Escaner Vibracional/Emisiones/salida/EM-003/`: `EM-003 La brújula · Instagram.mp4` y `· TikTok.mp4`
+  (con sus `web`), `Portada Instagram.jpg`, `Portada TikTok.jpg`, `descripcion Instagram.txt`, `descripcion TikTok.txt`,
+  `subtitulos/` (las dos rondas) y `versiones anteriores/` · `estudio/`: `estilos/tripulante/biblioteca.js` v1.1,
+  `estilos/03-tripulante.js` v2.0, `comun.js` v1.6, `renderizar.sh` v1.1, `previa.sh` v1.1, `estilos/99-frases.js` v1.0,
+  `GUION_VISUAL.md`, `audio/voz_sola.wav`, `audio/mezcla_tiktok.wav` · `Emisiones/CLAUDE.md` · `registro/` (la línea de EM-003).
+- ⏳ **Pendiente:** que Zak publique EM-003 (en Pendientes vivos). EM-004 y EM-005 salieron antes de los sellos: si se
+  quieren iguales, sus salas las rehacen con B4 y las dos versiones (nota en la carpeta compartida de las salas).
+- 💡 **Decisiones:** subtítulos de la serie: B4 Volumen · cada emisión sale en dos versiones: Instagram sin música
+  (subtítulos en y 1570, portada con la frase en y 1490) y TikTok con la música de Zak'Haar (subtítulos en y 1440 y su
+  portada), cada una con su descripción · la voz a -14 LUFS · del estilo Tripulante solo se reescriben las escenas.
+- 🔧 **Patrones nuevos:**
+  - Un estilo de animación en dos archivos: la biblioteca (biblia, motor y utilería) y las escenas de la emisión;
+    `B.claves` mueve la cámara y lo que vive en pantalla (la estrella lejana) y `B.tiempos` ancla todo a la voz.
+  - Nada le cruza la cara a un personaje: la señal sale de arriba de su cabeza y la onda de la mano que apunta. La capa
+    de brillo suma: pecho, peldaño y destello juntos se queman.
+  - Subtítulos en frases cortas por costo mínimo (puntuación, 3 a 5 palabras, nunca terminar en «de», «la», «que»; en un
+    renglón, una palabra larga sola vale como énfasis); `estilos/99-frases.js` las vuelca para revisarlas.
+  - La cuadrícula de Instagram muestra el 3:4 del centro (y 240 a 1680); TikTok tapa de 320 a 400 px abajo y unos 120 a
+    la derecha.
+  - Lección 0-duodeoctogies.
+- 🧬 **Versión del sistema:** `comun.js` v1.6 (estudio de EM-003) · `tripulante/biblioteca.js` v1.1 · protocolo v73.
+
 #### 2026-10-17 · TERRA CRISTAL A LA VENTA: LA VERSIÓN GRATIS HASTA LEMURIA, EL MURO DE COMPRA Y LUDUS CERO AL DÍA
 
 - ✅ **Resuelto:** la versión gratis de Terra Cristal llega a la puerta de Lemuria y ahí sale el muro de compra (299 MXN, pago único; la
