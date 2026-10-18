@@ -436,8 +436,9 @@ APAGADO y no se cuenta en proyecciones ni se ofrece.
   - **SÍ se acumulan** (verificado 2026-06-14): `get_my_cristales` no filtra
     por `mes_lunar` y no hay job que los caduque. La regla vieja "no
     acumulables" nunca se implementó.
-  - ⚠️ **Se emiten por MES DE CALENDARIO sin distinguir semanal/mensual** →
-    ver el hueco del semanal 199 en `
+  - Se emiten por MES DE CALENDARIO y **solo con el ciclo mensual**: el semanal da el Escáner completo sin Cristales,
+    en las tiendas (revenuecat-webhook, desde el 2026-08-02) y en la web (stripe-webhook v2.6, desde el 2026-10-18: el
+    semanal de 149 cuelga del mismo producto que el mensual y se distingue por el intervalo del precio).
 
 ## 🗂️ Los proyectos cargan su propio contexto
 
@@ -641,10 +642,9 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   precio, mover la escalera (el mensual ahorra 23 % contra un mes de semanal; banda sana del semanal de 139 a 169) y
   bajar los precios de fuera de México (están en línea con ChatGPT Plus de cada tienda: Colombia 99,900 los dos; EE. UU. y
   Argentina 22.99 contra 19.99). La recarga automática de OpenRouter ya está activa (2026-10-18). El semanal de Stripe
-  cuelga del mismo producto que el mensual, así que en la web hoy daría Cristales. **Arrancaron dos salas el 2026-10-18:**
-  «Cerrar huecos de gasto y cobros del Escáner» (servidor y web: imágenes sin membresía, voz sin sesión, contador gratis,
-  membresía que falla abierta, dictado sin tope, tope por dinero, respaldo si OpenRouter falla, el semanal de Stripe sin
-  Cristales, el selector viejo de redsolarviva.com/escaner con 599/399/199) y «Muro honesto y paso del semanal al
+  cuelga del mismo producto que el mensual; desde stripe-webhook v2.6 se distingue por su intervalo y no da Cristales.
+  **Arrancaron dos salas el 2026-10-18:** «Cerrar huecos de gasto y cobros del Escáner» (**hecha el 2026-10-18**, ver
+  2026-10-18 · IV y el pendiente del respaldo, aquí abajo) y «Muro honesto y paso del semanal al
   mensual» (**hecha el 2026-10-18**: el muro sin Calibraciones ni Navegante y con los topes reales, precio y aviso de
   compra de la tienda real, aviso a la 3.ª renovación semanal, cada muro contado con «¿Qué te detuvo?» en Motor →
   Onboarding; migración pegada; llega al teléfono con la siguiente versión de tienda) y, por pedido de Zak, «Avisos de soporte que se ven» (número en Mi Núcleo y en
@@ -654,13 +654,26 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   la primera señal mexicana será su muro. **Primer depósito de Apple: 817.74 MXN el 2026-10-29** (Apple paga una vez al mes,
   unos 33 días después de cerrar cada mes fiscal, si pasa el mínimo; si no, se acumula, como pasó con agosto).
   **Falta que Zak** (su RFC ya está cargado en las dos tiendas): se dé de alta en el SAT con la actividad (su constancia
-  dice «Sin obligaciones fiscales»), de preferencia con contador; archive el precio de 599 en Stripe y desactive los
-  enlaces que la sala le diga que ya no se usan; y cree Meditaciones nuevas (los Cristales no se combinan: el de
+  dice «Sin obligaciones fiscales»), de preferencia con contador; y cree Meditaciones nuevas (el 599 ya está archivado y
+  los enlaces del Decodificador 199 y de Inmersión 1,111, desactivados, 2026-10-18) (los Cristales no se combinan: el de
   Meditación solo abre Meditaciones). F22 (usa la app en español, entra desde EE. UU., nunca aceptó los avisos push): el
   regalo de un mes ya se mandó (falta que lo acepte) y Zak le escribe en su caso de soporte abierto; su correo es un relevo
   de Apple (privaterelay) que solo recibe de remitentes registrados en Apple Developer. Después: anual de 2,990 cuando
   haya 3 mensuales activos y el Radar gratis una vez al mes como prueba. El número en el ícono (respuestas de soporte, regalo y mensajes) lo está haciendo la sala «Avisos de soporte que se ven»
   (pedido de Zak del 2026-10-18; solo lo ve quien aceptó las notificaciones).
+- **El respaldo del Espejo está encendido y avisa (2026-10-18, sala de los huecos de gasto).** Si OpenRouter no contesta
+  (saldo, llave, caída, red o dos silencios seguidos), el reflejo lo escribe Claude Haiku 5.5 con las mismas
+  instrucciones (muestras lado a lado en `Escaner Vibracional/Precios/RESPALDO_ESPEJO_MUESTRAS_2026-10-18.md`), y cada
+  falla de OpenRouter manda una notificación a los teléfonos del Arquitecto (probada: llegó al iPhone y al Android), una
+  cada 30 minutos como máximo, diciendo si contestó el respaldo o si la persona se quedó sin reflejo. Para apagarlo:
+  `update app_flags set value = false where key = 'espejo_respaldo';` en SQL Editor. **Para que el aviso llegue también
+  por correo a zakhaarsol@pm.me falta una llave** (Proton solo manda desde Pipedream y Supabase bloquea su puerto): Zak
+  crea una cuenta en resend.com con ese correo, copia su API key y la guarda en el llavero con
+  `security add-generic-password -U -a rsv -s rsv-resend -w "$(pbpaste)"`; la sala siguiente la sube con
+  `supabase secrets set RESEND_API_KEY=…` y el código ya la usa sola. **Falta que Zak decida** las imágenes del Espejo
+  para quien no paga: 0 (hoy) o 2 en toda la vida (recomendado: 2, en cuanto la app diga que son de Sintonía; ese texto
+  se le encargó a la sala del muro). Por revisar: `send-push` usa el canal de pruebas de Apple (no existe el secreto
+  `APNS_HOST`), así que las notificaciones quizá no lleguen a quien instaló la app de la tienda.
 - **Consulta respondida el 2026-10-17 · emisiones de consciencia: un reel diario sin pagar publicidad** (Zak: «una
   emisión constante de reels de calidad… con código… con un lenguaje como el de Bashar, hecho nuestro»). Vive en
   `Escaner Vibracional/Emisiones/` con su `CLAUDE.md` (la rutina completa). Hecho: el transcriptor con el reconocedor de
@@ -835,8 +848,6 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 - **Ludus Cero en celular.** En el teléfono, play.redsolarviva.com/simuladores muestra la página de simuladores del
   Escáner (con su barra de Radar, Calibración, Holoteca…) y solo Navegante; la Red que desciende con Terra Cristal,
   Lúcido y Navegante se ve en computadora y tableta. Falta decidir si en celular aparece Ludus Cero con sus juegos.
-- **El aviso de pago de Navegante en la web dice 599 MXN/mes** y Sintonía Solar cuesta 499 (`Code/EV_Freemium.tsx`).
-  Falta el sí de Zak para cambiarlo.
 - **Consulta respondida el 2026-10-05 · el juego con más probabilidad de éxito global:** SONORA (cartas donde tu mano es
   una canción) quedó DESCARTADA por Zak («feo y aburrido»). Segunda propuesta: TERRA VIVA, mundo abierto en pixel para
   explorar, construir y pelear en cooperativo en línea, en el universo de Terra Cristal (`Ludus Cero/PROPUESTA_GANADORA.md`).
@@ -888,7 +899,7 @@ la mano de Zak:
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v76 (2026-10-18)
+## 🜂 Protocolo de Cierre de Sesión · v77 (2026-10-18)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -1063,6 +1074,9 @@ memorias.
 - **0-octogies** · Una llave guardada a ciegas se mide antes de usarla: el aviso oculto de `security` corta en 128 caracteres; las largas van con `-w "$(pbpaste)"`.
 - **0-unoctogies** · Un pago prueba un precio solo en la tienda donde se cobró: antes de usar una conversión como evidencia, confirma país y moneda en el informe de la tienda, y di desde cuándo cuenta el contador.
 - **0-duooctogies** · Una web que publican varias salas se publica desde una copia limpia de lo guardado (git archive de HEAD), tras comprobar que lo vivo es su ancestro (reconstruirlo da el mismo archivo); una carpeta enlazada por `repo.json` no se copia con su `project.json`: crea un proyecto nuevo.
+- **0-teroctogies** · La memoria de una función de Supabase no es caché: cada pedido puede caer en una instancia nueva; lo que debe durar va a Storage o a la base, y el «se paga una vez» se mide en producción.
+- **0-quateroctogies** · Una regla nueva del servidor no exige lo que la app publicada no manda: el hueco se cierra por otro lado (tope, copia guardada, la respuesta que el cliente viejo ya lee) y se le pide al cliente nuevo.
+- **0-quinoctogies** · Un contador se reserva en un solo paso antes de gastar y se devuelve si no se usó; lo ya entregado se anota sin revisar el tope.
 
 ### Paso 1 — Test de continuidad
 
@@ -1204,11 +1218,53 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v76 (2026-10-18). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v77 (2026-10-18). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
+
+#### 2026-10-18 · IV · HUECOS DE GASTO: LO GRATIS YA NO GASTA SIN TOPE, LA WEB COBRA LO QUE MUESTRA Y EL ESPEJO TIENE RESPALDO QUE AVISA
+
+- ✅ **Resuelto:** las 3 respuestas gratis del Espejo se reservan en un solo paso (20 mensajes simultáneos: antes pasaban
+  los 20, ahora 3) y se devuelven si el turno no entrega nada · la membresía falla cerrada en el Espejo, la voz y las
+  imágenes · las imágenes del Espejo son de Sintonía y la Matriz para quien no paga queda en 12 rápidas en toda su vida ·
+  las sondas de la voz solo para el Arquitecto y la muestra de voz con tope y guardada (de 6 s a menos de 1) · el resto
+  del reflejo profundo siempre se anota · tope por dinero (0.40 USD al día y 4 al mes por persona, con el costo real de
+  OpenRouter) y 20 búsquedas en internet al día · la prueba de dictado con tope · el semanal de la web sin Cristales ·
+  redsolarviva.com cobra lo que muestra (selector con 499 y 149 y su enlace cada uno, muros en 499, el Portal sin el 777
+  y con el selector) · el respaldo del Espejo (Claude Haiku 5.5) con muestras lado a lado, **encendido** por pedido de
+  Zak · el aviso cuando OpenRouter falla (notificación al teléfono, probada) · el inventario de enlaces de pago (Zak
+  desactivó el Decodificador 199 y la Inmersión 1,111 y archivó el 599) · el texto de las imágenes para quien no paga,
+  encargado a la sala del muro.
+- 📁 **Archivos:** admin `5df5a20` y `d785ebf`: oraculo-chat v1.59, espejo-voz v3.6, espejo-imagen v2.9,
+  dictado-fidelidad v1.1, stripe-webhook v2.6 con `ciclo.ts` v1.0, `_shared/membresia.ts` v1.0,
+  `_shared/claudeHaiku.ts` v1.1, `_shared/avisoRespaldo.ts` v1.0 · Code `9bb3634`: PlanSelector v1.2, EV_Shared v2.30,
+  EV_Freemium v2.7, BeneficiosSintonia v1.6, EV_Decoder v1.49, PortalInduccionEscaner v2.15 · `Escaner
+  Vibracional/Precios/RESPALDO_ESPEJO_MUESTRAS_2026-10-18.md` · memorias `referencia_banco_funciones_edge` y
+  `feedback_un_solo_deploy`.
+- 🗄️ **Migraciones SQL aplicadas:** `20261018_huecos_de_gasto.sql` (Zak la pegó): `reservar_cortesia_espejo`,
+  `devolver_cortesia_espejo` y el candado por persona en `reserve_edge_spend` (misma firma). Además
+  `app_flags.espejo_respaldo = true`, puesto por Claude a pedido de Zak.
+- 🔌 **Edge functions deployed:** oraculo-chat v1.59 · espejo-voz v3.6 (crea solo el bucket privado `voz-muestras`) ·
+  espejo-imagen v2.9 · dictado-fidelidad v1.1 · stripe-webhook v2.6.
+- ⏳ **Pendiente:** el correo del aviso (una llave de Resend) y las imágenes gratis (0 o 2), en Pendientes vivos.
+- 💡 **Decisiones:** se corrigió el selector viejo en vez de redirigir /escaner (el mismo selector vive en la tienda de
+  Códices y en el muro de Navegante, y el menú de la web lleva al Escáner viejo) · la muestra de voz sigue sin pedir
+  sesión porque la app publicada no la manda · el rechazo de imágenes a quien no paga usa «cupo», que la app vieja ya
+  entiende, más `motivo: "membresia"` · el respaldo escribe con las mismas instrucciones, sin la directiva de búsqueda,
+  y entra también con dos silencios seguidos · el aviso sale con cada falla de OpenRouter, conteste o no el respaldo, uno
+  cada 30 minutos.
+- 🔧 **Patrones nuevos:**
+  - Banco de funciones: el `index.ts` real de cada una con `fetch` y `Deno.serve` falsos y Clerk con un par de llaves
+    propio, contra la versión de `git show HEAD:` ([[referencia_banco_funciones_edge]]).
+  - SQL con concurrencia real sin Docker: `embedded-postgres` y `pg` en el bloc, 20 conexiones a la vez.
+  - Un enlace de pago se identifica sin la llave de Stripe abriendo su página: dice producto, precio e intervalo.
+  - Una notificación real se prueba con una función temporal con nonce que se borra al terminar.
+  - Lecciones 0-teroctogies, 0-quateroctogies y 0-quinoctogies.
+- 🧬 **Versión del sistema:** oraculo-chat v1.59 · espejo-voz v3.6 · espejo-imagen v2.9 · stripe-webhook v2.6 ·
+  protocolo v77.
+- 🧭 Sin 🔮 propio: el arranque vivo sigue siendo el 🔮 de la Biblioteca de Bashar, aquí abajo.
 
 #### 2026-10-18 · III · EL MURO DE SINTONÍA: DICE SOLO LO QUE LA APP DA, SE MIDE Y LLEVA DEL SEMANAL AL MENSUAL
 
@@ -1245,18 +1301,6 @@ página: el maestro crece de a una línea por lección.
 
 #### 2026-10-18 · II · PRECIOS: LA AUDITORÍA DE SINTONÍA, LO QUE DE VERDAD LLEGA DE CADA PAGO Y TRES SALAS DE ARREGLOS
 
-- ✅ **Resuelto:** auditoría de precios completa de Sintonía Solar (valor y calibración de lo gratis, costo real por
-  persona y por suscriptor, valor percibido, semanal contra mensual, riesgos, suscripciones para los 33,500) con
-  recomendación: **499 al mes y 149 a la semana se quedan**; página con simulador · consultas de Zak: F22 (volvió tras la
-  caída, usa la app en español, nunca aceptó avisos push; regalo de un mes enviado), el alta en el SAT («Sin obligaciones
-  fiscales»), los precios de fuera de México (en línea con ChatGPT Plus de cada tienda: se quedan), Stripe (el 777 solo en
-  un comentario; el 599 activo sin nadie), Clerk (35 USD al mes), cuándo paga Apple (817.74 MXN el 29 de octubre) · las dos
-  personas que pagan lo hacen fuera de México (euros y dólares) · tres salas de arreglos arrancadas: «Cerrar huecos de
-  gasto y cobros del Escáner», «Muro honesto y paso del semanal al mensual» y «Avisos de soporte que se ven».
-- 📁 **Archivos:** `Escaner Vibracional/Precios/AUDITORIA_PRECIOS_2026-10-18.md` (nuevo) · `Escaner
-  Vibracional/Precios/pagina.html` v1.2 (nuevo; https://claude.ai/artifact/2DMQ8rSKRbQznv4UZ7p2kL) · memoria
-  `proyecto_precio_sintonia`. Sin código, precios ni SQL tocados: a la base solo consultas de lectura.
-- ⏳ **Pendiente:** lo de Zak (alta en el SAT, archivar el 599 y los enlaces que no se usan, Meditaciones nuevas, que F22 acepte el regalo) en Pendientes vivos; las tres salas llevan su propio estado.
 - 💡 **Decisiones:** 499 y 149 se quedan en México y fuera · para toda meta de dinero se usa ~355 por mensual en tienda (no
   366) · meta de 92 a 97 suscripciones activas · el precio solo se mueve con 50 o más personas en el muro desde el último
   cambio (o si la mitad de los «¿Qué te detuvo?» dice «el precio») · anual de 2,990 cuando haya 3 mensuales activos ·
@@ -1273,7 +1317,7 @@ página: el maestro crece de a una línea por lección.
   - Un correo `privaterelay.appleid.com` solo recibe de remitentes registrados en Apple Developer (Sign in with Apple for
     Email Communication); para escribirle a esa persona, el caso de soporte.
   - Lección 0-unoctogies.
-- 🧬 **Versión del sistema:** `pagina.html` v1.2 · protocolo v75.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 - 🧭 Sin 🔮 propio: el arranque vivo sigue siendo el 🔮 de la Biblioteca de Bashar, aquí abajo.
 
 #### 2026-10-18 · BIBLIOTECA DE BASHAR: LO QUE NOS FALTA, LAS SESIONES SUELTAS, LAS MÉTRICAS DE INSTAGRAM Y EL PLAN MAESTRO
