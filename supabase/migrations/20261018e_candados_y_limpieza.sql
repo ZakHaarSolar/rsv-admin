@@ -561,5 +561,5 @@ END $$;
 NOTIFY pgrst, 'reload schema';
 
 -- La primera limpieza, para ver que todo responde (lo normal hoy: el historial
--- de pg_cron baja de ~119 mil filas y algunos avisos viejos de webhooks).
+-- de pg_cron baja unas 107 mil filas y todo lo demás sale en cero).
 SELECT public.rsv_retencion_diaria() AS limpieza;
