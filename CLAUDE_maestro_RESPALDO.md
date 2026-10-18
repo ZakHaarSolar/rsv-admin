@@ -407,8 +407,8 @@ APAGADO y no se cuenta en proyecciones ni se ofrece.
   tablas siguen en el código por si algún día vuelven.
 - **Inmersión Solar** (1,999 MXN/mes) es histórica; la oferta viva es Sintonía.
 - **Cristales de Extracción** (incluidos en Sintonía Solar) — 2 cristales
-  lunares por mes. Combinables libremente entre Códices y Meditaciones de
-  la Holoteca:
+  lunares por mes: **1 de Códice y 1 de Meditación, NO se combinan** (Zak, 2026-10-18: «el de códices es el de códices
+  y el de meditación, meditación»):
   - 🜂 **1 cristal canjea el CÓDICE COMPLETO — todos sus formatos, ahora y a
     futuro** (decisión de Zak 2026-08-01, reemplaza el modelo viejo de "el
     formato que elijas"). Ebook, PDF y su audiolibro cuando exista; y el
@@ -431,8 +431,8 @@ APAGADO y no se cuenta en proyecciones ni se ofrece.
     (ya pagó por ese libro).
   - 1 cristal canjea cualquier Meditación de la Holoteca (precio
     individual de cada Meditación: 222 MXN para quien compra suelta).
-  - Combinaciones válidas: 1 Códice + 1 Meditación, 2 Códices, o 2
-    Meditaciones.
+  - El de Meditación abre solo Meditaciones: hoy hay una sola detrás de un Cristal (Anochecer del Eje). El plan de
+    Zak es crear Meditaciones nuevas en el mes que falta para el primer suscriptor mensual.
   - **SÍ se acumulan** (verificado 2026-06-14): `get_my_cristales` no filtra
     por `mes_lunar` y no hay job que los caduque. La regla vieja "no
     acumulables" nunca se implementó.
@@ -636,7 +636,7 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   entrada, que es el punto sensible. De cada 499 en la tienda llegan unos 355, no 366: Apple cobra IVA sobre su comisión
   y retiene 2.5 % de ISR a una persona física (sin el RFC cargado, 20 % y llegarían unos 279); el semanal deja unos 106 y
   la web unos 398. Meta: unas 92 suscripciones activas (mitad semanal) o 97 con las herramientas del negocio (Clerk cuesta
-  35 USD al mes según sus facturas: en el Motor está anotado dos veces, 440 y 855). El hueco está antes del muro (28 de 44
+  35 USD al mes según sus facturas; desde el 2026-10-18 el Motor la anota una sola vez, en 650). El hueco está antes del muro (28 de 44
   cuentas sin plan nunca usaron nada) y en la distribución (sostener 92 pide unas 68 altas al mes). Descartado: bajar el
   precio, mover la escalera (el mensual ahorra 23 % contra un mes de semanal; banda sana del semanal de 139 a 169) y
   bajar los precios de fuera de México (están en línea con ChatGPT Plus de cada tienda: Colombia 99,900 los dos; EE. UU. y
@@ -645,14 +645,22 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   «Cerrar huecos de gasto y cobros del Escáner» (servidor y web: imágenes sin membresía, voz sin sesión, contador gratis,
   membresía que falla abierta, dictado sin tope, tope por dinero, respaldo si OpenRouter falla, el semanal de Stripe sin
   Cristales, el selector viejo de redsolarviva.com/escaner con 599/399/199) y «Muro honesto y paso del semanal al
-  mensual» (la app: quitar Calibraciones y Navegante del muro, precio de la tienda, aviso a la 3.ª renovación semanal,
-  contar el muro con «¿Qué te detuvo?»); su estado vive en sus propias salas. **Falta que Zak:** confirme su RFC en App
-  Store Connect y Play Console; se dé de alta en el SAT con la actividad (su constancia dice «Sin obligaciones fiscales»),
-  de preferencia con contador; archive el precio de 599 en Stripe y desactive los enlaces que la sala le diga que ya no se
-  usan; deje una sola línea de Clerk en el Motor; le escriba a F22 (dejó de usar el Espejo en la caída, volvió del 9 al 14,
-  su suscripción venció el 15 y abrió la app el 16; sin aviso push) con un mes de regalo; y decida la regla del segundo
-  Cristal o agregue Meditaciones. Después: anual de 2,990 cuando haya 3 mensuales activos y el Radar gratis una vez al
-  mes como prueba.
+  mensual» (**hecha el 2026-10-18**: el muro sin Calibraciones ni Navegante y con los topes reales, precio y aviso de
+  compra de la tienda real, aviso a la 3.ª renovación semanal, cada muro contado con «¿Qué te detuvo?» en Motor →
+  Onboarding; migración pegada; llega al teléfono con la siguiente versión de tienda) y, por pedido de Zak, «Avisos de soporte que se ven» (número en Mi Núcleo y en
+  Ajustes con respuestas sin leer, la tarjeta del caso abierto arriba y el botón «Cerrar caso»); su estado vive en sus
+  propias salas. **Las dos personas que pagan lo hacen fuera de México** (informe de Apple del mes fiscal de septiembre:
+  2 ventas en la zona euro y 2 en América en dólares, ninguna en México): el precio mexicano se sostiene por la cuenta y
+  la primera señal mexicana será su muro. **Primer depósito de Apple: 817.74 MXN el 2026-10-29** (Apple paga una vez al mes,
+  unos 33 días después de cerrar cada mes fiscal, si pasa el mínimo; si no, se acumula, como pasó con agosto).
+  **Falta que Zak** (su RFC ya está cargado en las dos tiendas): se dé de alta en el SAT con la actividad (su constancia
+  dice «Sin obligaciones fiscales»), de preferencia con contador; archive el precio de 599 en Stripe y desactive los
+  enlaces que la sala le diga que ya no se usan; y cree Meditaciones nuevas (los Cristales no se combinan: el de
+  Meditación solo abre Meditaciones). F22 (usa la app en español, entra desde EE. UU., nunca aceptó los avisos push): el
+  regalo de un mes ya se mandó (falta que lo acepte) y Zak le escribe en su caso de soporte abierto; su correo es un relevo
+  de Apple (privaterelay) que solo recibe de remitentes registrados en Apple Developer. Después: anual de 2,990 cuando
+  haya 3 mensuales activos y el Radar gratis una vez al mes como prueba. El número en el ícono (respuestas de soporte, regalo y mensajes) lo está haciendo la sala «Avisos de soporte que se ven»
+  (pedido de Zak del 2026-10-18; solo lo ve quien aceptó las notificaciones).
 - **Consulta respondida el 2026-10-17 · emisiones de consciencia: un reel diario sin pagar publicidad** (Zak: «una
   emisión constante de reels de calidad… con código… con un lenguaje como el de Bashar, hecho nuestro»). Vive en
   `Escaner Vibracional/Emisiones/` con su `CLAUDE.md` (la rutina completa). Hecho: el transcriptor con el reconocedor de
@@ -817,9 +825,6 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 
 ### 🟣 Códices de Luz · lo que necesita tu decisión
 
-- **¿Los dos Cristales del mes se combinan libremente?** La sección «Suscripción RSV vigente» dice que sí (dos
-  Códices, dos Meditaciones o uno y uno); el código los separa en uno de Códice y uno de Meditación. Falta que Zak diga
-  cuál es la regla. El reel dice lo que es cierto en los dos casos («cada mes un Cristal abre un Códice completo»).
 - **¿Rehago la mezcla del 03 con sus cinco efectos a su velocidad?** El océano, el café que se sirve, el descenso, la
   respiración y el primer aliento suenan al doble de largo y una octava abajo: `ia.py` los guardaba en mono siendo
   estéreo (0-quinquagies). La herramienta ya está corregida y el 02 y el 04 salieron bien; rehacer la del 03 toma unos
@@ -883,7 +888,7 @@ la mano de Zak:
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v74 (2026-10-18)
+## 🜂 Protocolo de Cierre de Sesión · v76 (2026-10-18)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -1027,7 +1032,7 @@ memorias.
 - **0-undequinquagies** · Lo que tiene que sentirse humano no se dibuja con trazos: se esculpe con volumen, luz y sombra, y se revisa de cerca.
 - **0-quinquagies** · Un audio crudo no dice sus canales: se deducen de lo pedido (la duración) y se miden; si no, suena al doble de largo y una octava abajo.
 - **0-unquinquagies** · Tras un corte, cada salida se abre y se decodifica entera; se reanuda desde lo que sí quedó.
-- **0-duoquinquagies** · Un número de dinero se calcula con lo que llega a la cuenta: en México la tienda descuenta el IVA antes de su comisión (499 → ~366).
+- **0-duoquinquagies** · Un número de dinero se calcula con lo que llega a la cuenta: en México la tienda descuenta el IVA antes de su comisión y, a una persona física, le retiene 2.5 % de ISR (499 → ~355; ~366 antes del ISR).
 - **0-terquinquagies** · Una tarea en segundo plano muere a los 30 min: lo largo se parte en tramos que escriben su avance y se reanudan desde ahí.
 - **0-quaterquinquagies** · Lo que el lienzo dibuja (alcance, objetivo, estado) sale de las reglas: si el dibujo miente, el usuario reporta un error que no existe.
 - **0-quinquinquagies** · Una copia del código en otra carpeta no es una función viva: antes de portar, lee el encabezado de quien la monta.
@@ -1056,6 +1061,8 @@ memorias.
 - **0-duodeoctogies** · «Variantes de estilo» de algo visual cambian cómo se ve (la letra, el color, la textura), no cómo funciona: la mecánica que ya gustó se deja fija; si hay dos lecturas, una muestra de cada una.
 - **0-undeoctogies** · El nombre o la duración de una grabación no prueban lo que trae: se verifica el contenido (dónde empieza cada sesión, tamaño o palabras) antes de sumar, copiar o indexar.
 - **0-octogies** · Una llave guardada a ciegas se mide antes de usarla: el aviso oculto de `security` corta en 128 caracteres; las largas van con `-w "$(pbpaste)"`.
+- **0-unoctogies** · Un pago prueba un precio solo en la tienda donde se cobró: antes de usar una conversión como evidencia, confirma país y moneda en el informe de la tienda, y di desde cuándo cuenta el contador.
+- **0-duooctogies** · Una web que publican varias salas se publica desde una copia limpia de lo guardado (git archive de HEAD), tras comprobar que lo vivo es su ancestro (reconstruirlo da el mismo archivo); una carpeta enlazada por `repo.json` no se copia con su `project.json`: crea un proyecto nuevo.
 
 ### Paso 1 — Test de continuidad
 
@@ -1197,28 +1204,80 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v74 (2026-10-18). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v76 (2026-10-18). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
 
+#### 2026-10-18 · III · EL MURO DE SINTONÍA: DICE SOLO LO QUE LA APP DA, SE MIDE Y LLEVA DEL SEMANAL AL MENSUAL
+
+- ✅ **Resuelto:** el muro y la lista de beneficios sin Calibraciones ni Navegante y con los topes reales (150 respuestas
+  del Espejo y 120 lecturas de cada Decodificador al día, 30 rachas, 1,000 notas, 60 fotos), los Cristales solo con el
+  mensual · el precio de la tienda del aparato donde había «499 MXN» fijo y el aviso de compra con la tienda real (Google
+  Play en Android, tarjeta en la web) · a la 3.ª renovación semanal, el aviso «Llevas 3 semanas… con el mensual pagas $499
+  en lugar de unos $646 y recibes tus Cristales» con «Pasarme al mensual» · el semanal reconocido en Android con el plan
+  base pegado y el cambio de plan sin cobro doble (Google Play dice a cuál reemplaza; otra tienda se detiene con aviso) ·
+  cada muro medido (27 puertas: visto, plan, intento, compra, cancelada, error, cerrado, restaurado) con «¿Qué te detuvo?»
+  de un toque · Motor → Onboarding «El muro de Sintonía» (personas, intentos, pagos en la app y en la web, motivos, aviso
+  semanal) verificado en vivo con la sesión de Zak · de paso: «Tu plan» del Espejo carga en el teléfono y abre la
+  compuerta de membresía.
+- 📁 **Archivos:** escaner-app `465e784`: `lib/muroTelemetria.ts` v1.0, `lib/sintoniaTienda.ts` v1.0,
+  `components/AvisoSemanalMensual.tsx` v1.0, `components/escaner/MuroMotivo.tsx` v1.0, `lib/revenuecat.ts` v1.4,
+  PlanSelector v2.5, PaywallV2 v1.7, EV_Freemium v2.13, BeneficiosSintonia v1.13, EV_Oraculo v6.30, EV_Decoder v1.83,
+  EscanerVibracional v13.139, 16 puertas con `muro=`, diccionarios (freemium v1.4, pw2 v1.1 y más), banco (tienda falsa)
+  · Code `19056ff`/`f2b5722`: `MI_Muro.tsx` v1.1, `MotorDeIntervencion.tsx` v5.6 · admin `6680b1b`/`359f67b`.
+- 🗄️ **Migraciones SQL aplicadas:** `✅ 20261018_muro_eventos.sql` (tabla `muro_eventos`, `record_muro_evento`,
+  `record_muro_evento_anon`, `admin_muro_resumen`; Zak la pegó; probada antes en PGlite 0.2.17 con 24 comprobaciones).
+- 🔌 **Edge functions deployed:** user-action v1.52 (ruta `record_muro_evento`) · admin-action v1.68 (`admin_muro_resumen`).
+- ⏳ **Pendiente:** nada de esta sala; los datos llegan con el próximo muro (web ya; teléfono con la versión de tienda).
+- 💡 **Decisiones:** «¿Qué te detuvo?» solo a quien no es miembro, una vez al día · el aviso semanal solo donde se cobra,
+  sin otra capa encima y de nuevo a las 3 semanas tras «Ahora no» · un pago web se atribuye al último muro donde tocó
+  comprar · fuera de las cuentas de la casa (admin y excluidas).
+- 🔧 **Patrones nuevos:**
+  - Banco: `&sinPlan`, `&tienda=ios|android` (+ `&usd`, `&semanal=N`, `&pegado`, `&otraTienda`, `&compra=`),
+    `window.__bancoMuro`, `__bancoCompras`, `__bancoAbrirMuro()`; `src/lib/platform.ts` se cambia al resolver.
+  - Una migración se prueba sin Postgres local con PGlite (la 0.3 se cae con RAISE dentro de plpgsql: usar la 0.2.17).
+  - Una capa que no avisa con `rsv-overlay-open` se detecta en la pantalla: portal de body fijo, z ≥ 1000, que recibe
+    toques y cubre casi todo (no por su opacidad: su entrada empieza en 0).
+  - Lección 0-duooctogies.
+- 🧬 **Versión del sistema:** revenuecat v1.4 · PaywallV2 v1.7 · MI_Muro v1.1 · protocolo v76.
+
+#### 2026-10-18 · II · PRECIOS: LA AUDITORÍA DE SINTONÍA, LO QUE DE VERDAD LLEGA DE CADA PAGO Y TRES SALAS DE ARREGLOS
+
+- ✅ **Resuelto:** auditoría de precios completa de Sintonía Solar (valor y calibración de lo gratis, costo real por
+  persona y por suscriptor, valor percibido, semanal contra mensual, riesgos, suscripciones para los 33,500) con
+  recomendación: **499 al mes y 149 a la semana se quedan**; página con simulador · consultas de Zak: F22 (volvió tras la
+  caída, usa la app en español, nunca aceptó avisos push; regalo de un mes enviado), el alta en el SAT («Sin obligaciones
+  fiscales»), los precios de fuera de México (en línea con ChatGPT Plus de cada tienda: se quedan), Stripe (el 777 solo en
+  un comentario; el 599 activo sin nadie), Clerk (35 USD al mes), cuándo paga Apple (817.74 MXN el 29 de octubre) · las dos
+  personas que pagan lo hacen fuera de México (euros y dólares) · tres salas de arreglos arrancadas: «Cerrar huecos de
+  gasto y cobros del Escáner», «Muro honesto y paso del semanal al mensual» y «Avisos de soporte que se ven».
+- 📁 **Archivos:** `Escaner Vibracional/Precios/AUDITORIA_PRECIOS_2026-10-18.md` (nuevo) · `Escaner
+  Vibracional/Precios/pagina.html` v1.2 (nuevo; https://claude.ai/artifact/2DMQ8rSKRbQznv4UZ7p2kL) · memoria
+  `proyecto_precio_sintonia`. Sin código, precios ni SQL tocados: a la base solo consultas de lectura.
+- ⏳ **Pendiente:** lo de Zak (alta en el SAT, archivar el 599 y los enlaces que no se usan, Meditaciones nuevas, que F22 acepte el regalo) en Pendientes vivos; las tres salas llevan su propio estado.
+- 💡 **Decisiones:** 499 y 149 se quedan en México y fuera · para toda meta de dinero se usa ~355 por mensual en tienda (no
+  366) · meta de 92 a 97 suscripciones activas · el precio solo se mueve con 50 o más personas en el muro desde el último
+  cambio (o si la mitad de los «¿Qué te detuvo?» dice «el precio») · anual de 2,990 cuando haya 3 mensuales activos ·
+  el Radar gratis una vez al mes, como prueba.
+- 🔧 **Patrones nuevos:**
+  - El embudo real se mide con SQL de solo lectura por la API de gestión: `oraculo_usage.muro_intentos` (cuenta el muro
+    del Espejo desde el 2026-08-09), `edge_spend_ledger` por función y por cuenta, `onb_funnel` y `operational_expenses`;
+    el gasto de OpenRouter, con GET `/api/v1/credits` y `/api/v1/key` (no cuestan).
+  - Apple con una persona física en México: cobra IVA sobre su comisión y retiene 2.5 % de ISR (sin RFC, 20 %); en el
+    informe de pagos sale como «Impuestos y ajustes» y las ventas van por región (zona euro, América en dólares, México).
+  - Los precios de una app en cada país salen de su página pública de la App Store (`apps.apple.com/<país>/app/id<id>`);
+    la referencia de costumbre es ChatGPT Plus en la misma tienda.
+  - Un PDF se lee en la Mac sin poppler con un guion de Swift y PDFKit (la herramienta de lectura pide poppler).
+  - Un correo `privaterelay.appleid.com` solo recibe de remitentes registrados en Apple Developer (Sign in with Apple for
+    Email Communication); para escribirle a esa persona, el caso de soporte.
+  - Lección 0-unoctogies.
+- 🧬 **Versión del sistema:** `pagina.html` v1.2 · protocolo v75.
+- 🧭 Sin 🔮 propio: el arranque vivo sigue siendo el 🔮 de la Biblioteca de Bashar, aquí abajo.
+
 #### 2026-10-18 · BIBLIOTECA DE BASHAR: LO QUE NOS FALTA, LAS SESIONES SUELTAS, LAS MÉTRICAS DE INSTAGRAM Y EL PLAN MAESTRO
 
-- ✅ **Resuelto:** la transcripción del disco medida (1,832 grabaciones, 1,398 h) con sus copias escondidas · el catálogo
-  público de tv.bashar.org leído completo y comparado con la colección: la lista de lo que falta, con enlaces · búsqueda
-  en toda la Mac y el disco: 4 sesiones nuevas y 2 fragmentos en Bashar New (lo de la Mac copiado, lo suelto del disco
-  movido) y University of Earth descubierta como compilación de YouTube, con su copia cortada · consultas: conversar con
-  la biblioteca (tres capas, modelos, costos y selector DeepSeek o Haiku), la estrategia de las emisiones (rotación, Red
-  viva, Grok, frecuencia, YouTube) y la estrategia maestra (tres ingresos, años al norte, la mina de oro) · el plan
-  maestro escrito · la herramienta de métricas de Instagram lista y probada · la auditoría de precios abierta en su sala.
-- 📁 **Archivos:** `PLAN_MAESTRO.md` v1.1 (nuevo) · `Escaner Vibracional/Emisiones/herramientas/metricas_instagram.py` v1.0
-  (nuevo) · `Emisiones/CLAUDE.md` (las métricas) · en el disco: `Awaken/Bashar New/` (4 sesiones, `Fragmentos/`,
-  `Sesiones que nos faltan.txt` y `Qué hay en esta carpeta.txt`) · memorias `referencia_catalogo_bashar_tv` y
-  `proyecto_plan_maestro`.
-- ⏳ **Pendiente:** la llave de Instagram completa y luego `estado`, `diario` e `instalar`; el sí para las 6 emisiones de
-  la rotación y la prueba con Grok; revisar Bashar New; la destilación al terminar la transcripción (🔮); la auditoría de
-  precios en su sala. Todo en Pendientes vivos.
 - 💡 **Decisiones:** la lista de faltantes se mide contra tv.bashar.org (en lo antiguo, la colección supera a la
   plataforma) · lo de la Mac se copia, lo suelto del mismo disco se mueve y nada se borra · el conocimiento de Bashar se
   usa destilado y en voz propia: sin modelo entrenado ni voz clonada · uso personal de la biblioteca: página propia con
@@ -1232,7 +1291,7 @@ página: el maestro crece de a una línea por lección.
   - Métricas de Instagram con inicio de sesión de Instagram (sin página de Facebook): se piden juntas y, si Meta rechaza
     una, se quita y se reintenta; la llave se renueva cada 7 días (Meta exige que tenga 24 h).
   - Lecciones 0-undeoctogies y 0-octogies.
-- 🧬 **Versión del sistema:** `metricas_instagram.py` v1.0 · `PLAN_MAESTRO.md` v1.1 · protocolo v74.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 - 🔮 **Cómo arrancar la próxima Sala de Comando:** abrir la sala en `Escaner Vibracional/Emisiones` y pegar: «Sala
   Biblioteca de Emisiones, la destilación. 0) Si la llave de Instagram ya está completa (su largo pasa de 128), corre
   `herramientas/metricas_instagram.py estado`, `diario` e `instalar`. 1) Revisa que la transcripción terminó:
@@ -1248,19 +1307,6 @@ página: el maestro crece de a una línea por lección.
 
 #### 2026-10-17 · II · EMISIONES: EM-003 «LA BRÚJULA» EN TRIPULANTE, LOS SUBTÍTULOS SELLADOS Y UNA VERSIÓN POR RED
 
-- ✅ **Resuelto:** EM-003 «Eso que te enciende es una brújula» animada en el estilo Tripulante (30.5 s): al Tripulante se
-  le enciende el pecho al ver una estrella, su Luz se vuelve una brújula que no discute, el mapa casi en blanco, el primer
-  peldaño, el final que se suelta y cada paso que revela el siguiente justo a tiempo; el final vuelve al cuadro 0 · el
-  estilo Tripulante partido en biblioteca y escenas · la voz sola para Instagram y la música de Zak'Haar para TikTok · dos
-  rondas de subtítulos (primero maneras de resaltar, luego letras sobre la B) y **B4 Volumen sellada** · portadas pensadas
-  para la cuadrícula de cada red · las dos descripciones · su línea en el registro.
-- 📁 **Archivos:** `Escaner Vibracional/Emisiones/salida/EM-003/`: `EM-003 La brújula · Instagram.mp4` y `· TikTok.mp4`
-  (con sus `web`), `Portada Instagram.jpg`, `Portada TikTok.jpg`, `descripcion Instagram.txt`, `descripcion TikTok.txt`,
-  `subtitulos/` (las dos rondas) y `versiones anteriores/` · `estudio/`: `estilos/tripulante/biblioteca.js` v1.1,
-  `estilos/03-tripulante.js` v2.0, `comun.js` v1.6, `renderizar.sh` v1.1, `previa.sh` v1.1, `estilos/99-frases.js` v1.0,
-  `GUION_VISUAL.md`, `audio/voz_sola.wav`, `audio/mezcla_tiktok.wav` · `Emisiones/CLAUDE.md` · `registro/` (la línea de EM-003).
-- ⏳ **Pendiente:** que Zak publique EM-003 (en Pendientes vivos). EM-004 y EM-005 salieron antes de los sellos: si se
-  quieren iguales, sus salas las rehacen con B4 y las dos versiones (nota en la carpeta compartida de las salas).
 - 💡 **Decisiones:** subtítulos de la serie: B4 Volumen · cada emisión sale en dos versiones: Instagram sin música
   (subtítulos en y 1570, portada con la frase en y 1490) y TikTok con la música de Zak'Haar (subtítulos en y 1440 y su
   portada), cada una con su descripción · la voz a -14 LUFS · del estilo Tripulante solo se reescriben las escenas.
@@ -1274,7 +1320,7 @@ página: el maestro crece de a una línea por lección.
   - La cuadrícula de Instagram muestra el 3:4 del centro (y 240 a 1680); TikTok tapa de 320 a 400 px abajo y unos 120 a
     la derecha.
   - Lección 0-duodeoctogies.
-- 🧬 **Versión del sistema:** `comun.js` v1.6 (estudio de EM-003) · `tripulante/biblioteca.js` v1.1 · protocolo v73.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 #### 2026-10-17 · TERRA CRISTAL A LA VENTA: LA VERSIÓN GRATIS HASTA LEMURIA, EL MURO DE COMPRA Y LUDUS CERO AL DÍA
 
