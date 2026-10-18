@@ -1,3 +1,7 @@
+// Red Solar Viva · user-action v1.52 — EL MURO DE SINTONÍA SE MIDE (auditoría de precios 2026-10-18): rutea
+// record_muro_evento (cada apertura del muro y lo que pasa en ella: visto, plan, intento, compra,
+// cancelada, error, cerrado, «¿Qué te detuvo?», restaurado). El id verificado lo pone el gateway: nadie
+// anota por otro. Sin sesión, la app usa record_muro_evento_anon directo. Migración 20261018_muro_eventos.
 // Red Solar Viva · user-action v1.51 — TERRA CRISTAL (Ludus Cero): rutea la partida del
 // juego (get_terra_cristal_partida / save_terra_cristal_partida / clear_terra_cristal_partida).
 // UNA partida por cuenta: el documento del juego (avatar sellado, fotones, lo ganado);
@@ -205,6 +209,8 @@ const USER_RPCS: Record<string, string> = {
     get_citas_1to1_de_tripulante: "p_clerk_user_id",
     // Telemetría de navegación: registra capa/sub-capa abierta (id inyectado).
     record_nav_event: "p_clerk_user_id",
+    // v1.52 — Medición del muro de Sintonía (id inyectado). Migración 20261018_muro_eventos.
+    record_muro_evento: "p_clerk_user_id",
     // Sella el recorrido del onboarding (registrado con un id anónimo del
     // aparato, ANTES de que existiera sesión) con la cuenta recién creada.
     // El id del Tripulante lo inyecta el gateway desde el token verificado.
