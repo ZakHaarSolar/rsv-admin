@@ -458,9 +458,12 @@ proyecto guarde lo suyo en SU carpeta y que la sala se abra ahí dentro.
 | **Fotón Cero** (fotoncero.com, la sala de proyección del estudio) | `fotoncero/CLAUDE.md` ✅ hecho (2026-10-07) | abrir `fotoncero` |
 | **Aplicaciones** (los CV de Zak y las solicitudes de Red Solar Viva) | `admin/aplicaciones/CLAUDE.md` ✅ hecho (2026-10-09) | abrir `admin/aplicaciones` |
 | **PRISMA TD** (el tower defense de Ludus Cero) | `Ludus Cero/prisma/CLAUDE.md` ✅ hecho (2026-10-14) | abrir `Ludus Cero/prisma` |
+| **Emisiones** (los reels de consciencia del Escáner, sin publicidad) | `Escaner Vibracional/Emisiones/CLAUDE.md` ✅ hecho (2026-10-17) | abrir `Escaner Vibracional/Emisiones` |
 
 Este archivo se queda como **índice del ecosistema**: quién es Zak, cómo se le habla, dónde vive cada proyecto,
 los destinos de publicación y el protocolo de cierre. Lo que sea de un solo proyecto baja a su carpeta.
+🜂 **El plan maestro** (el norte de 11 M MXN al mes, las etapas, cada rama con su meta y las reglas de trayectoria) vive
+en `PLAN_MAESTRO.md` (v1.0, 2026-10-18): se lee antes de proponer una rama, un juego o un gasto nuevo.
 
 🜂 **Abrir la carpeta no basta:** Claude Code también carga los `CLAUDE.md` de todas las carpetas de arriba. Cada
 proyecto excluye este archivo en `<proyecto>/.claude/settings.json` con `"claudeMdExcludes": ["<ruta a este
@@ -487,18 +490,32 @@ Detalle en [[referencia_version_en_tienda]].
 
 ---
 
+### ⚪ Ecosistema · el plan maestro
+
+- **Consulta respondida el 2026-10-18 · la estrategia maestra, los años al norte y la mina de oro** (IA, robots,
+  energía solar, espacio; el tuit de Elon Musk). Todo vive en `PLAN_MAESTRO.md` v1.1. Etapa 1: 33,500 MXN al mes con los
+  productos (unas 85 a 90 suscripciones); hasta cumplirla, 70 % del tiempo a distribuir y nada nuevo. Steam para Terra
+  Cristal y el inglés son los dos multiplicadores. La IA aplicada (el motor de la biblioteca como producto para autores y
+  maestros) es la primera rama candidata de la etapa 2; la energía solar, la de la etapa 3; las inversiones, con asesor
+  certificado en la etapa 2. Estimación: etapa 1 en 6 a 18 meses, etapa 2 en 2 a 4 años, el norte en 10 a 15 (6 a 8
+  con un éxito grande temprano). **Falta que Zak** decida abrir la página de Steam de Terra Cristal (100 USD, se
+  recuperan con las ventas). La auditoría de precios de Sintonía corre en su propia sala (`auditoria-precios`) y deja su
+  resultado en la sección del Escáner.
+
 ### 🟢 Terra Cristal · lo que sigue abierto
 
 🜂 **Sus reglas de construcción, su hoja de ruta y su estado NO viven aquí**: están en `terra-cristal/CLAUDE.md`
 (el archivo que se carga al abrir una sala DENTRO de esa carpeta) y en `terra-cristal/Docs/`. Aquí solo queda lo
 que necesita una decisión de Zak o una mano suya.
 
-- **Sellado el 2026-10-05 · el juego es Terra Cristal Pixel 3** (`terra-cristal-pixel3/`, play.redsolarviva.com/terra-cristal-pixel3/):
+- **Sellado el 2026-10-05 · el juego es Terra Cristal Pixel 3** (`terra-cristal-pixel3/`; desde el 2026-10-17 se llama solo **Terra
+  Cristal** y vive en play.redsolarviva.com/terra-cristal/, sin la ruta de -pixel3, que Zak pidió quitar):
   Zak: «ahora sí hemos encontrado el norte de arte» (Shining Force 2 con el acabado de la C). El de Unity, Pixel y Pixel 2
   quedan descartados, sin borrarlos. Su estado y el prompt de la próxima sala: `terra-cristal-pixel3/Docs/PROXIMA_SALA.md`.
-- **Sellado el 2026-09-20 · precio:** **249 MXN el juego completo** (unos 14.99 USD), compra única, con el modo en
-  línea incluido y sin suscripción. Sin precio de fundador (la idea era un descuento de lanzamiento para quien
-  comprara antes del estreno; se descarta: un solo precio, más limpio).
+- **Sellado el 2026-10-17 · precio:** **299 MXN el juego completo** (unos 16 USD), pago único, con todos los capítulos que vengan
+  incluidos (acceso anticipado vendido como juego completo), con el modo en línea incluido y sin suscripción, y se queda así (Zak: «299
+  está bien, lo sellamos y dejamos así, muy accesible»). Reemplaza los 249 del 2026-09-20. Sin precio de fundador. Steam, cuando llegue:
+  24.99 USD recomendado (Steam México lo pone en 283 pesos; uno de 19.99 cuesta ahí 228).
 - **Sellado el 2026-09-20 · Sintonía Solar NO incluye el juego.** Es una compra aparte. La suscripción ya da
   bastante valor.
 - **Modo en línea:** factible y, por turnos, barato comparado con un juego de acción. Orden acordado: duelos contra
@@ -550,6 +567,48 @@ que necesita una decisión de Zak o una mano suya.
   `terra-cristal-pixel3/Docs/PROXIMA_SALA.md`: 42 C (despertar en Lemuria en primera persona, cultivo con luz, cámara más centrada), 42 D (el
   arma que crece y la forja de Lemuria, con el arma de cerca de Elafia) y 42 E (por dentro: el Templo de la Caracola, luego el Salón de la Alianza).
 
+- **Consulta respondida el 2026-10-15 · ¿hasta dónde la versión gratis antes de comprar el juego?** (Sala 44 B) Recomendado: gratis el
+  Prólogo, el Capítulo 1 y el camino hasta llegar a Lemuria (unas 2 horas), igual en la web y como demo de Steam, con la partida que pasa al
+  juego completo; Next Fest una sola vez, en la edición más cercana al lanzamiento, y con la demo dentro de Steam (la web no cuenta). Por qué:
+  el combate que libera está en el Capítulo 1 y el asombro es Lemuria; los tácticos y RPG que mejor venden dan de 1 a 5 horas (Octopath
+  Traveler II 3 h, Unicorn Overlord 5 h, Metaphor) y la mitad de quienes prueban una demo de historia la juegan 14 minutos o menos (que la
+  primera batalla llegue antes de los 10). Descartado cortar en el Árbol: guarda más juego, pero se va sin ver lo que nadie más tiene. **Elegido
+  y construido el 2026-10-17:** el corte en la puerta de Lemuria (ver «la compra», abajo). Detalle y fuentes en la página de la sala (puerto
+  8870) y en `terra-cristal-pixel3/Docs/BITACORA.md`.
+- **Consulta respondida el 2026-10-16 · ¿qué hacen el Miedo y la Duda?** (Sala 46) El Miedo entra con el golpe de un miedo (de 8 a 30 %
+  según quién): la luz pega 70 % y una Magia se apaga 3 de cada 10, hasta que se quita. La Duda entra con su Magia (el Susurro, 60 %): la
+  siguiente Magia sale al 60 % y se va con ella. Se quitan con un compañero al lado, una Magia de apoyo, respirando o cuando alguien sube de
+  nivel. Detalle en `terra-cristal-pixel3/Docs/HISTORIA_Y_DINAMICAS.md` 13.18. **Falta que Zak decida si se compensa la revancha**: como subir
+  de nivel ya no cura (su regla), se gana al primer intento 22 de cada 100 (antes 47); recomendado +1 de coherencia a la alianza (33).
+- **Construido el 2026-10-17 · la compra y Terra Cristal en Ludus Cero** (sala «COMPRA Terra Cristal», abierta en `Red Solar Viva/`): lo
+  gratis es el Capítulo 1 (José llegó a Lemuria a las 2 h de juego activo); al pie de la escalera de Lemuria sale el muro de compra (299 MXN,
+  pago único; hoy se abre el Capítulo 2 y luego el 3, la Atlántida, hasta el 8; sin compras dentro del juego; la cuenta de Ludus Cero, solo al
+  desbloquear; Stripe en vivo con el producto `terra_cristal_juego`); «Ahora no» pregunta qué te detuvo con un toque; «Terra Cristal es tuyo»
+  con la fanfarria de la alianza; el Motor regala el juego completo y muestra el muro, dónde se va cada quien y los errores (en la ficha y
+  sumados en Batallas). Las tablas ya están (Zak pegó el SQL). Ludus Cero trae la portada A1 (la L, la C y la garza arregladas), la historia sin
+  spoilers ni negativos, seis capturas, el avance y el tráiler premium. Para probar el muro como administrador:
+  `play.redsolarviva.com/terra-cristal/?admin=1&antes_del_muro=1`. Todo en `terra-cristal-pixel3/Docs/COMPRA.md` y [[proyecto_compra_juegos]].
+  **Falta que Zak**, cuando sus hermanos lleguen al muro, les pida crear su cuenta para regalarles el juego desde el Motor (José ya pasó
+  Lemuria: sin el juego completo, su partida se abre al pie de la escalera).
+- **Construido el 2026-10-17 · el primer reto se resiste (sala RESISTIR, la A y la D):** «Resiste 3 rondas» con su contador, nadie cae (quien
+  llega al límite tiembla), «¡RESISTIERON!» y la escena del quiebre (la ola de gris, la Sombra Mayor que crece, Huitzil que se interpone y su
+  alma al Estanque, el Enlace que se quiebra); el Reenlace con la Tierra corta y la práctica que vale; Elafia te recibe al despertar y la
+  afinación pasa cuando vas por Huitzil. La revancha se gana a la primera igual que antes (22 de cada 100). Medido: de 2.6 a 2.0 minutos hasta
+  moverte sin nada obligado (la mitad no se alcanza: se quedan la escena, la lección y la pregunta de Elafia). **Falta que Zak** vea la página
+  (puerto 8911) y juegue el reto. Todo en `terra-cristal-pixel3/Docs/BITACORA.md`.
+- **Consulta respondida el 2026-10-17 · la telemetría, el primer reto, el precio, cuánto puede ganar y los testers** (porqués y datos en
+  `terra-cristal-pixel3/Docs/PROPUESTAS_COMPRA.md` y en la página `Ludus Cero/portadas/terra-cristal/pagina/`, puerto 8881). La telemetría del
+  muro, del «Ahora no», de dónde se va cada quien y de los errores quedó construida; faltan, si se quieren, el reloj del arranque, dónde se
+  atoran, el aparato, de dónde llegan y si vuelven. El primer reto: Zak eligió «Resistir» (la A) y la D; construidos (arriba). Lo que
+  puede ganar, terminado, en inglés y en Steam: lo más probable de 1 a 5 millones de pesos en su vida; 2 de cada 10, de 5 a 28 millones; 1 de
+  cada 20, más de 30. A los testers de familia, el juego completo regalado, pero después de que vean el muro.
+- **Construido el 2026-10-17 · las casas de Lemuria por dentro (Sala 43, siete salas en paralelo, publicada):** las diez puertas de
+  Lemuria se abren (el Templo y ocho casas, cada una con su gente, su secreto, su comedia y su frase), el Salón de la Alianza bajo el
+  coral turquesa (la sabia da la referencia, el Canto del Coral, la alianza vive ahí) y los peces con su propia vida, por debajo de los
+  puentes. Todo en `terra-cristal-pixel3/Docs/BITACORA.md`; página de la sala en el puerto 8908. **Falta que Zak** juegue las casas y el
+  Salón (cada casa directo con `?admin=1&demo=<id>`) y vea las cinco caras de quienes más hablan en ellas (Lía, don Ramón, Atzin, la
+  abuela Paciencia y Ayotl), ya publicadas; si alguna no le convence, se pide otra toma solo de esa.
+
 ### 🟢 Kal'El · lo que sigue abierto
 
 🜂 **Su estado, sus pendientes y su bitácora viven en `kalel/CLAUDE.md` y `kalel/Docs/BITACORA.md`**; el plan del
@@ -564,6 +623,56 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 
 ### 🔵 Escáner · lo que necesita tu decisión
 
+- **Consulta respondida el 2026-10-17 · emisiones de consciencia: un reel diario sin pagar publicidad** (Zak: «una
+  emisión constante de reels de calidad… con código… con un lenguaje como el de Bashar, hecho nuestro»). Vive en
+  `Escaner Vibracional/Emisiones/` con su `CLAUDE.md` (la rutina completa). Hecho: el transcriptor con el reconocedor de
+  la Mac (gratis, sin internet, 4 h en 89 s), el revisor que bloquea frases copiadas de Bashar, la guía de voz con tres
+  emisiones de muestra y la primera ficha (16 ángulos de su video de 4 h). **La ronda 1 de estilos (8 de 5 s,
+  https://claude.ai/artifact/4gLn9bDipfLh92F7N2B22m) la rechazó:** «solo cambia el fondo… lo que queremos es un estilo
+  de animación… explicar con animación, no con letras»; solo sirve «Escáner del Alma». **Ronda 2 lista** en
+  `Emisiones/animacion/`: 8 estilos de animación de 20 s con la misma narración y el mismo guion visual (Cimática con
+  las formas al frente, Códice vivo, Tripulante, Espejo, Partícula, Cuento de luz, Red viva, Caricatura):
+  https://claude.ai/artifact/1Z9sdyEUZLxavohCSpKhQM. Recomendado: **Códice vivo** (lo único que nadie más tiene: los
+  Códices de Luz hechos animación, se entiende sin sonido y le cabe cualquier situación); alternativa: **Espejo**.
+  **Sellado por Zak:** la voz es **Bennett**. **Elegidos por Zak y Aqua (2026-10-17): 1 Tripulante, 2 Red viva, 3 Cuento
+  de luz**; se publica uno de cada uno (ángulos distintos) y se mide cuál pega más: EM-003, EM-004 y EM-005 en producción,
+  una sala por estilo. El disco de Bashar (564 GB, 1,497 h) se transcribe leyendo directo desde el 2026-10-17 (~10 h, en
+  la terminal); Bashar único hoy ~3.1 millones de palabras, con el disco ~12 a 13 millones. Destilación bajo demanda con
+  el buscador local (`herramientas/buscar.py`); la sala «Biblioteca de Emisiones» espera su arranque. Descartado: pagar API (el plan de Claude Code destila y escribe), música sintetizada
+  (suena su catálogo de Zak'Haar) y cualquier estilo que sea fondo con letras. **EM-003 (Tripulante) lista el 2026-10-17**
+  en `Emisiones/salida/EM-003/`: versión de Instagram sin música (Zak le pone la música en la app) y versión de TikTok con
+  la música de Zak'Haar y los subtítulos más arriba, cada una con su portada y su descripción; así sale cada emisión desde
+  ahora. **Subtítulos sellados: B4 Volumen** (palabra a palabra en un renglón, letra con relieve; los otros estudios
+  copian `salida/EM-003/estudio/comun.js`). EM-004 y EM-005 salieron antes de estos sellos. EM-003 se publicó el 2026-10-17 a las 5 p. m.; lo que
+  sigue está en la consulta del 2026-10-18, abajo.
+- **Consulta respondida el 2026-10-18 · la estrategia de las emisiones** (sala de la biblioteca de Bashar). EM-003 a las
+  7 h: 71 vistas, arriba de la curva típica y 87.5 % de no seguidores, pero 72.9 % de omisión, 5 s de promedio de 29 y
+  cero compartidos: la cura va en el primer cuadro (imagen fuerte y frase ya en pantalla, movimiento inmediato, una cara
+  a cámara y un cierre que invite a mandarlo). Recomendado: **rotar los tres estilos, uno al día durante 9 días**, a la
+  misma hora y en Instagram, TikTok, YouTube Shorts y Facebook, comparando a las 72 h; si queda uno solo, **Red viva** (se
+  parece a la app, le habla al adulto que paga y nadie en el nicho lo hace) mientras quede a menos de un tercio del
+  ganador; un cuarto estilo «Seres de luz» con Grok Imagine (0.04 a 0.08 USD por segundo, tope de 40 USD por 6 reels);
+  episodios de 3 a 5 min en YouTube desde el segundo mes; se juzga a las 8 semanas por seguidores y toques al enlace.
+  **Métricas automáticas listas:** `Emisiones/herramientas/metricas_instagram.py` (app «Escáner Vibracional App» de Meta
+  con la cuenta como tester; los permisos basic e insights ya estaban; la clave secreta ya está en el llavero). **Falta
+  que Zak** guarde la llave completa con `security add-generic-password -U -a escanervibracional -s rsv-instagram-token
+  -w "$(pbpaste)"` (el aviso oculto la cortó en 128 caracteres); luego se corren `estado`, `diario` e `instalar` (macOS
+  pide permiso para que Python lea Documentos). Falta también su sí para pedir a las salas de estilo las 6 emisiones de
+  la rotación y para la prueba con Grok.
+- **Biblioteca de Bashar (2026-10-17 y 18):** comparada con el catálogo público de tv.bashar.org (780 programas, 431
+  sesiones completas): nos faltan 47 sesiones completas (27 de 2025 y 2026), 9 grupos en inglés y los 108 grupos
+  japoneses, y 12 están incompletas. La lista, con enlaces: `/Volumes/Crucial 4TB/Kingston KC3000/Awaken/Bashar
+  New/Sesiones que nos faltan.txt`. Las sueltas nuevas (The Silent Season, Dark Skies, Emersion Conference y la parte de
+  University of Earth, que vino en una compilación de YouTube: se pasa solo la copia cortada), las copias repetidas y dos
+  archivos dañados están anotados en `Bashar New/Qué hay en esta carpeta.txt`. **Falta que Zak** las revise, las pase a
+  `Bashar/2025` o `2026` y consiga las faltantes que quiera. La transcripción del disco iba en 63 % (879 de 1,398 h) a la
+  1:23 del 2026-10-18; la destilación (índice, mapa y parrilla) arranca al terminar (ver el 🔮 del 2026-10-18).
+- **Consulta respondida el 2026-10-18 · conversar con la biblioteca** (Zak: que conteste personalizado con todo el
+  conocimiento, con estilo propio): tres capas, el mapa de conceptos, el buscador por significado y un guía con nuestro
+  estilo que nunca cita. Descartado entrenar un modelo (el conocimiento se revuelve y no se puede revisar) y clonar la
+  voz de Darryl (derechos y consentimiento). Para uso personal, una página en la Mac con selector DeepSeek V4 Flash o
+  Claude Haiku 5.5 (pagado con los 200 USD mensuales de créditos de API), de 3 a 5 centavos de peso por mensaje y sin
+  tocar los límites del plan de Claude. Se construye después de la destilación.
 - **Bienvenida exprés: decidir si se queda** (vive desde la 1.1.6 de App Store y Android vc9): aviso médico, «¿Qué te
   trajo aquí?» y directo a lo que eligió, gratis y sin muro de pago al entrar; el muro aparece al llegar a un límite
   real. Al 2026-10-09: 3 instalaciones nuevas desde el 28 de septiembre y las 3 entraron directo; muy pocas para
@@ -588,6 +697,12 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   negro. Arreglado y publicado el mismo día (rsv-web c9ab219): fachada con quiénes somos y los productos que se funde en
   el sistema solar. 🜂 **No quitar la fachada de `rsv-web/index.html`:** es lo que leen los revisores y buscadores. Si
   aprueban: Nano Banana por Vertex AI (no llaves de AI Studio). Datos en `admin/aplicaciones/2026-10 Google for Startups Cloud/`.
+- **Consulta respondida el 2026-10-17 · Basis Fellowship** (50,000 USD sin acciones, de los cofundadores de Orbit, empresa de
+  neurociencia; basisfellowship.org/apply): legítima y sin riesgo (no pide pagos ni datos bancarios); 1 a 3 % de ser fellow,
+  menos de 1 % si la telequinesis va como hecho. Textos en inglés en `admin/aplicaciones/2026-10 Basis Fellowship/aplicacion.md`:
+  la telequinesis va en «obsessed» como experimento con su prueba de cámara de vacío y la visión extraocular como biografía.
+  La solicitud no caduca y se actualiza: cada lanzamiento grande (Terra Cristal en Steam, la prueba de vacío) va como «Update
+  mine». Falta que Zak la envíe.
 - **Consulta respondida el 2026-10-08 · ¿los Decodificadores de Alimentos y Sueños pasan a la API de Claude (los 100 USD/mes
   del Max)?** Prueba real hecha el mismo día (llave en el llavero como `rsv-anthropic`; 126 llamadas, cero errores, cero
   respuestas cortadas, cero bloqueos), con las instrucciones de producción: Gemini 3.6 Flash tarda 2.0 s en un sueño y
@@ -726,7 +841,7 @@ la mano de Zak:
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v70 (2026-10-14)
+## 🜂 Protocolo de Cierre de Sesión · v74 (2026-10-18)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -893,6 +1008,12 @@ memorias.
 - **0-duoseptuagies** · Lo que sigue rodando de un gesto anterior no es la persona: la continuidad se mide con la hora en que nació el evento, no con la que se atiende.
 - **0-terseptuagies** · Un motor que no se maneja desde fuera se prueba desde dentro (la página corre su prueba y pinta el resultado), y el servidor falso recuerda como el real o fabrica fallas.
 - **0-quaterseptuagies** · Una propuesta de juego se valida primero en su núcleo jugable, en pocas líneas, y se viste (mundo, escenas, página) solo después de su sí: en los juegos manda la jugabilidad.
+- **0-quinseptuagies** · Lo que se publica de un juego (página, tienda, tráiler, capturas) no cuenta lo que el jugador tiene que descubrir: quién se une, dónde ni cómo.
+- **0-sexseptuagies** · Un detalle de arte hecho con IA se mide y se arregla por partes: la geometría con código y lo que se redibuja, sobre su recorte y pegado solo ahí.
+- **0-septseptuagies** · Lo que vende un juego habla en grande y en positivo: lo que emociona a cualquiera (capítulos, mundos, armas, que cada aldea se vuelve tu casa), nunca nombres internos, detalles chicos ni negaciones («no matas»).
+- **0-duodeoctogies** · «Variantes de estilo» de algo visual cambian cómo se ve (la letra, el color, la textura), no cómo funciona: la mecánica que ya gustó se deja fija; si hay dos lecturas, una muestra de cada una.
+- **0-undeoctogies** · El nombre o la duración de una grabación no prueban lo que trae: se verifica el contenido (dónde empieza cada sesión, tamaño o palabras) antes de sumar, copiar o indexar.
+- **0-octogies** · Una llave guardada a ciegas se mide antes de usarla: el aviso oculto de `security` corta en 128 caracteres; las largas van con `-w "$(pbpaste)"`.
 
 ### Paso 1 — Test de continuidad
 
@@ -1034,65 +1155,118 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v70 (2026-10-14). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v74 (2026-10-18). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
 
+#### 2026-10-18 · BIBLIOTECA DE BASHAR: LO QUE NOS FALTA, LAS SESIONES SUELTAS, LAS MÉTRICAS DE INSTAGRAM Y EL PLAN MAESTRO
+
+- ✅ **Resuelto:** la transcripción del disco medida (1,832 grabaciones, 1,398 h) con sus copias escondidas · el catálogo
+  público de tv.bashar.org leído completo y comparado con la colección: la lista de lo que falta, con enlaces · búsqueda
+  en toda la Mac y el disco: 4 sesiones nuevas y 2 fragmentos en Bashar New (lo de la Mac copiado, lo suelto del disco
+  movido) y University of Earth descubierta como compilación de YouTube, con su copia cortada · consultas: conversar con
+  la biblioteca (tres capas, modelos, costos y selector DeepSeek o Haiku), la estrategia de las emisiones (rotación, Red
+  viva, Grok, frecuencia, YouTube) y la estrategia maestra (tres ingresos, años al norte, la mina de oro) · el plan
+  maestro escrito · la herramienta de métricas de Instagram lista y probada · la auditoría de precios abierta en su sala.
+- 📁 **Archivos:** `PLAN_MAESTRO.md` v1.1 (nuevo) · `Escaner Vibracional/Emisiones/herramientas/metricas_instagram.py` v1.0
+  (nuevo) · `Emisiones/CLAUDE.md` (las métricas) · en el disco: `Awaken/Bashar New/` (4 sesiones, `Fragmentos/`,
+  `Sesiones que nos faltan.txt` y `Qué hay en esta carpeta.txt`) · memorias `referencia_catalogo_bashar_tv` y
+  `proyecto_plan_maestro`.
+- ⏳ **Pendiente:** la llave de Instagram completa y luego `estado`, `diario` e `instalar`; el sí para las 6 emisiones de
+  la rotación y la prueba con Grok; revisar Bashar New; la destilación al terminar la transcripción (🔮); la auditoría de
+  precios en su sala. Todo en Pendientes vivos.
+- 💡 **Decisiones:** la lista de faltantes se mide contra tv.bashar.org (en lo antiguo, la colección supera a la
+  plataforma) · lo de la Mac se copia, lo suelto del mismo disco se mueve y nada se borra · el conocimiento de Bashar se
+  usa destilado y en voz propia: sin modelo entrenado ni voz clonada · uso personal de la biblioteca: página propia con
+  selector, sin gastar el plan · distribuir antes que construir (70/30) hasta los 33,500 MXN · la llave de Instagram vive
+  solo en el llavero.
+- 🔧 **Patrones nuevos:**
+  - El catálogo de una tienda Uscreen se lee sin cuenta: `sitemap.xml`, las tarjetas de
+    `/categories/<id>/search?format=turbo_stream&page=N` y el JSON-LD de cada programa ([[referencia_catalogo_bashar_tv]]).
+  - Copias escondidas: la duración no sirve (113 caras de cinta distintas miden 2,821 s); el tamaño idéntico y las
+    palabras, sí. Para saber qué trae un video largo, se transcribe y se busca «transmission has been titled».
+  - Métricas de Instagram con inicio de sesión de Instagram (sin página de Facebook): se piden juntas y, si Meta rechaza
+    una, se quita y se reintenta; la llave se renueva cada 7 días (Meta exige que tenga 24 h).
+  - Lecciones 0-undeoctogies y 0-octogies.
+- 🧬 **Versión del sistema:** `metricas_instagram.py` v1.0 · `PLAN_MAESTRO.md` v1.1 · protocolo v74.
+- 🔮 **Cómo arrancar la próxima Sala de Comando:** abrir la sala en `Escaner Vibracional/Emisiones` y pegar: «Sala
+  Biblioteca de Emisiones, la destilación. 0) Si la llave de Instagram ya está completa (su largo pasa de 128), corre
+  `herramientas/metricas_instagram.py estado`, `diario` e `instalar`. 1) Revisa que la transcripción terminó:
+  `pgrep -f transcribir.py` vacío y `biblioteca/bashar/transcripciones/disco/catalogo.tsv` con ~1,833 líneas; si no, di
+  el avance y para. 2) Corre `python3 herramientas/indexar.py` y reporta el tamaño (fuentes, pasajes y palabras por tipo);
+  al indexar, junta las transcripciones idénticas por sus palabras (la duración no sirve; confirmadas: Social Experiment
+  Step 3 tres veces y Step 5 y 6 dos veces). 3) Arma `biblioteca/mapa.md`: de 150 a 300 conceptos, cada uno con su
+  definición en nuestras palabras, sus 3 a 5 mejores fuentes con `buscar.py` (título y minuto), los conceptos
+  relacionados y si los Códices lo tocan (`--tipo zak`); por familias en paralelo y sin leer transcripciones completas.
+  4) Arma `biblioteca/parrilla.md`: 90 ideas, 30 por estilo (Tripulante, Red viva, Cuento de luz), cada una con gancho,
+  tesis, formato, concepto y por qué le queda al estilo, sin repetir el registro ni las muestras de la biblia; cada
+  gancho pasa `revisar.py --texto`. 5) Actualiza `CLAUDE.md` y reporta.»
+
+#### 2026-10-17 · II · EMISIONES: EM-003 «LA BRÚJULA» EN TRIPULANTE, LOS SUBTÍTULOS SELLADOS Y UNA VERSIÓN POR RED
+
+- ✅ **Resuelto:** EM-003 «Eso que te enciende es una brújula» animada en el estilo Tripulante (30.5 s): al Tripulante se
+  le enciende el pecho al ver una estrella, su Luz se vuelve una brújula que no discute, el mapa casi en blanco, el primer
+  peldaño, el final que se suelta y cada paso que revela el siguiente justo a tiempo; el final vuelve al cuadro 0 · el
+  estilo Tripulante partido en biblioteca y escenas · la voz sola para Instagram y la música de Zak'Haar para TikTok · dos
+  rondas de subtítulos (primero maneras de resaltar, luego letras sobre la B) y **B4 Volumen sellada** · portadas pensadas
+  para la cuadrícula de cada red · las dos descripciones · su línea en el registro.
+- 📁 **Archivos:** `Escaner Vibracional/Emisiones/salida/EM-003/`: `EM-003 La brújula · Instagram.mp4` y `· TikTok.mp4`
+  (con sus `web`), `Portada Instagram.jpg`, `Portada TikTok.jpg`, `descripcion Instagram.txt`, `descripcion TikTok.txt`,
+  `subtitulos/` (las dos rondas) y `versiones anteriores/` · `estudio/`: `estilos/tripulante/biblioteca.js` v1.1,
+  `estilos/03-tripulante.js` v2.0, `comun.js` v1.6, `renderizar.sh` v1.1, `previa.sh` v1.1, `estilos/99-frases.js` v1.0,
+  `GUION_VISUAL.md`, `audio/voz_sola.wav`, `audio/mezcla_tiktok.wav` · `Emisiones/CLAUDE.md` · `registro/` (la línea de EM-003).
+- ⏳ **Pendiente:** que Zak publique EM-003 (en Pendientes vivos). EM-004 y EM-005 salieron antes de los sellos: si se
+  quieren iguales, sus salas las rehacen con B4 y las dos versiones (nota en la carpeta compartida de las salas).
+- 💡 **Decisiones:** subtítulos de la serie: B4 Volumen · cada emisión sale en dos versiones: Instagram sin música
+  (subtítulos en y 1570, portada con la frase en y 1490) y TikTok con la música de Zak'Haar (subtítulos en y 1440 y su
+  portada), cada una con su descripción · la voz a -14 LUFS · del estilo Tripulante solo se reescriben las escenas.
+- 🔧 **Patrones nuevos:**
+  - Un estilo de animación en dos archivos: la biblioteca (biblia, motor y utilería) y las escenas de la emisión;
+    `B.claves` mueve la cámara y lo que vive en pantalla (la estrella lejana) y `B.tiempos` ancla todo a la voz.
+  - Nada le cruza la cara a un personaje: la señal sale de arriba de su cabeza y la onda de la mano que apunta. La capa
+    de brillo suma: pecho, peldaño y destello juntos se queman.
+  - Subtítulos en frases cortas por costo mínimo (puntuación, 3 a 5 palabras, nunca terminar en «de», «la», «que»; en un
+    renglón, una palabra larga sola vale como énfasis); `estilos/99-frases.js` las vuelca para revisarlas.
+  - La cuadrícula de Instagram muestra el 3:4 del centro (y 240 a 1680); TikTok tapa de 320 a 400 px abajo y unos 120 a
+    la derecha.
+  - Lección 0-duodeoctogies.
+- 🧬 **Versión del sistema:** `comun.js` v1.6 (estudio de EM-003) · `tripulante/biblioteca.js` v1.1 · protocolo v73.
+
+#### 2026-10-17 · TERRA CRISTAL A LA VENTA: LA VERSIÓN GRATIS HASTA LEMURIA, EL MURO DE COMPRA Y LUDUS CERO AL DÍA
+
+- 💡 **Decisiones:** el corte en la puerta de Lemuria · 299 MXN pago único con todo lo que venga (reemplaza los 249) y, en Steam, 24.99 USD ·
+  la cuenta solo al desbloquear · `/terra-cristal-pixel3` fuera · la portada A1 · nada de spoilers en lo público · **299 sellado y se queda**
+  · el primer reto se resiste (la A) en su propia sala · lo que vende el juego habla en grande y en positivo · la cuenta se llama de Ludus Cero.
+- 🔧 **Patrones nuevos:**
+  - El cobro de un juego en dos puertas: el constructor del lugar desvía y `vaA` detiene; así la partida nunca anota un lugar de pago.
+  - Stripe sin webhook: se verifica al volver, los pagos abiertos se cierran al preguntar el estado y el muro pregunta otra vez al abrirse.
+  - El producto y su precio los crea la función con un id fijo y una llave fija (cambiar el precio es una llave nueva).
+  - Los precios reales de Steam por país salen de `store.steampowered.com/api/appdetails?appids=<id>&cc=mx`
+    ([[referencia_precios_steam]]).
+  - Un arreglo de arte hecho con IA va por partes: la geometría con código y lo redibujado sobre su recorte.
+  - Publicar el juego con otra sala trabajando en él: se le pregunta quién publica y se pide su aviso de inactividad.
+  - La telemetría nueva va en la bitácora de la partida (que ya viaja al Motor) con registros opcionales que no cambian el contrato; y lo que
+    el servidor suma se lee de las columnas que su consulta de verdad trae (las filas de Batallas traían solo `batallas`).
+  - Lecciones 0-quinseptuagies, 0-sexseptuagies y 0-septseptuagies.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+
 #### 2026-10-14 · LUDUS CERO: EL TOWER DEFENSE NUEVO, DE TRES PROPUESTAS CON LORE A PRISMA TD
 
-- ✅ **Resuelto:** se leyeron completos los 9 libros de Zak (y los 2 de Aqua'Riia, como inspiración) y se entregaron
-  tres tower defense con lore de los Códices, cada uno con escena viva y sonido (Jardín Cuántico, Cantera y Ruido Cero;
-  https://claude.ai/artifact/C1Z4gdzgjE6azfkZcrkUjB). Zak los descartó y eligió su propia idea, con una imagen de
-  interfaz: **PRISMA TD**. Su diseño completo quedó en texto (v2): la regla de la luz, prismas y haces, figuras, Campaña,
-  Espectro (roguelite), Laboratorio, jugo, pantalla completa, biblia de arte, Steam y hoja de ruta. Quedó también el
-  proyecto con su `CLAUDE.md` y el prompt de la Sala 1.
-- 📁 **Archivos:**
-  - `Ludus Cero/prisma/`: `CLAUDE.md`, `.claude/settings.json`, `Docs/DISEÑO.md` v2, `Docs/PROXIMA_SALA.md` y
-    `Docs/referencia_interfaz.jpg`.
-  - `Ludus Cero/Propuestas Tower Defense/`: `index.html` v1.0, `estudio/*.js` v1.0, `servidor.py`, `construir.py` y
-    `publicar/`.
-  - `.claude/launch.json`: servidor `propuestas-td` (puerto 8875).
-- ⏳ **Pendiente:** nada de esta sala. El juego se construye en su propia sala (ver 🔮).
-- 💡 **Decisiones:**
-  - En los juegos de Ludus Cero manda la jugabilidad: el lore de los Códices va en segundo plano y basta el sello de
-    Ludus Cero (Zak: «no me gustaron para nada»).
-  - **PRISMA TD:** el norte es ser el tower defense del momento en Steam y tan profundo como Terra Cristal. El detalle
-    va sobre la velocidad. Pantalla completa sin marco desde la primera ejecución. La referencia se sigue tal cual en
-    composición y color, con un pixel art mucho más detallado.
-  - **La regla de la luz:** cada figura es inmune a lo que refleja y a cada color lo mata su complementario; las blancas
-    se abren con el Refractor y las oscuras no se ven sin luz.
-  - **Espectro (roguelite)** es el motor de horas, porque hoy pegan los roguelites: Emberward debutó en el número 2 del
-    Steam 250 en septiembre de 2026.
-- 🔧 **Patrones nuevos:**
-  - Nueve lectores en paralelo, uno por libro, cada uno con un digesto orientado a diseño.
-  - Escenas vivas de propuestas con un motor mínimo y sonido sintetizado, medido con un render fuera de línea (la
-    liberación pica en -8 dB y los toques de torre van en -40).
-  - Las escenas se balancean contando sus resultados en Node (120 s simulados) antes de verlas.
-  - La paleta de una imagen se mide sin PIL: `sips` a BMP y lectura en Python.
-  - Lección 0-quaterseptuagies.
-- 🧬 **Versión del sistema:** protocolo v70.
-- 🔮 **Cómo arrancar la próxima Sala de Comando:** abrir la sala dentro de `Ludus Cero/prisma` y pegar el prompt de
-  `Docs/PROXIMA_SALA.md` (Sala 1 de PRISMA TD, Fundación). Para lo demás, la sala del proyecto que toque.
+- 💡 **Decisiones:** en los juegos de Ludus Cero manda la jugabilidad y el lore de los Códices va en segundo plano ·
+  PRISMA TD: ser el tower defense del momento en Steam y tan profundo como Terra Cristal, el detalle sobre la velocidad y
+  pantalla completa sin marco · la regla de la luz (cada figura es inmune a lo que refleja y la mata su complementario) ·
+  Espectro (roguelite) como motor de horas.
+- 🔧 **Patrones nuevos:** lectores en paralelo, uno por libro · escenas vivas de propuestas con motor mínimo y sonido
+  medido fuera de línea · el balance se cuenta en Node antes de verlas · la paleta de una imagen se mide con `sips` a
+  BMP. Lección 0-quaterseptuagies.
+- 🧭 **Su arranque ya se ejecutó** (la Sala 1 de PRISMA TD quedó hecha el 2026-10-14); lo que sigue vive en
+  `Ludus Cero/prisma/Docs/PROXIMA_SALA.md`.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 #### 2026-10-08 → 2026-10-10 · ESPEJO: ENTRAR EN LO ÚLTIMO, EL SEGUIMIENTO QUE AGUANTA LA INERCIA, HASTA 8 FOTOS Y LA VOZ QUE NO DESELLA RITUALES
 
-- ✅ **Resuelto:** **pedir por voz un ritual ya sellado lo deja sellado** (la voz leía `checked` y la consulta trae `today`;
-  `toggle_ritual` alterna) · **el Espejo:** al entrar se ve el último mensaje también en el celular (la medida del cromo
-  anotaba «está leyendo arriba» con la vista recién nacida) y el aterrizaje aguanta 2.5 s lo que llega tarde · **el
-  seguimiento aguanta la inercia** del trackpad o del dedo (Enter a media inercia dejaba el envío 1,400 px fuera de
-  pantalla) · las ligas largas caben en su burbuja y en el reflejo · cada foto mide lo suyo · **hasta 8 fotos por mensaje**
-  con **tope de 60 fotos en 24 horas por persona**: al topar, el mensaje vuelve al campo con sus fotos y el aviso dice
-  cuántas quedan · las fotos del Tripulante se guardan en el cofre del aparato (la charla guarda solo el puntero) · app de
-  la Mac 1.1.52 y 1.1.53 publicadas; el iPhone de Zak con la 1.1.52.
-- 📁 **Archivos:** escaner-app: `useComandoVoz` v3.2 (7fed1d2), `EV_Oraculo` v6.26 (de96374) y v6.27 (2e9dafa),
-  `imgCache` v1.1, i18n `espejo` v1.25, banco `espejo.ts` v1.1 + `datos.ts` v1.4 + `arranque.tsx` v1.4 · app de la Mac
-  1.1.52 (65c172e) y 1.1.53 (958938c).
-- 🔌 **Edge functions deployed:** `oraculo-chat` v1.55 (admin ace1a33): lee hasta 8 fotos; el freno de visión cobra una
-  unidad por foto (60 por persona, 180 por IP, 6,000 en todo el ecosistema, ventanas de 24 h) y al topar responde
-  `fotos: true`, `limite` y `quedan`. Sin migración (usa `reserve_edge_spend`).
-- ⏳ **Pendiente:** nada de esta sala (las dos consultas abiertas están en Pendientes vivos).
 - 💡 **Decisiones:** el ojo del Espejo sigue siendo Gemini 3.6 Flash; Zak no quiere la prueba a ciegas con DeepSeek V4.1
   Flash por ahora · la cura de una pieza compartida por las dos caras va en las dos (la burbuja); la Matriz no se tocó ·
   al instalar en el iPhone se espera 2 minutos como máximo; si la Mac no lo ve, se detiene y Zak compila en Xcode (el
@@ -1104,7 +1278,7 @@ página: el maestro crece de a una línea por lección.
   · la caja negra anota `espejo-seguir-cede` y `espejo-seguir-agota` · un cuerpo de 8 MB pasa la plataforma (sonda con
   llave inválida). Lecciones 0-duoseptuagies y 0-terseptuagies; detalle en [[referencia-probar-espejo]],
   [[integrar-desde-worktree]] y [[feedback-iphone-no-esperar]].
-- 🧬 **Versión del sistema:** app de la Mac 1.1.53 · `oraculo-chat` v1.55 · `EV_Oraculo` v6.27 · protocolo v69.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 #### 2026-09-27 → 2026-10-09 · ESCÁNER: LA APP QUE NO SE TRABA, LA BIENVENIDA EXPRÉS, LAS TIENDAS 1.1.6 Y LA SALA DE LOS CV
 

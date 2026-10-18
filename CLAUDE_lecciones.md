@@ -1741,7 +1741,63 @@ gracias». Quien escribió esos textos conocía el juego por dentro y escribió 
 **Hermanas.** 0-quinseptuagies (lo que se publica no cuenta lo que se tiene que descubrir) · 0-undeseptuagies (el ganador se busca dentro del
 gusto de Zak) · 0-septtricies (un brief prestado no es el norte del dueño).
 
+### Paso 0-duodeoctogies · «Variantes de estilo» cambian cómo se ve, no cómo funciona
+
+**Regla.** Cuando Zak pide variantes de estilo de algo visual (subtítulos, portadas, botones, un personaje), cada variante
+cambia la apariencia: la letra, el color, el contorno, la textura, el relieve. La mecánica (cómo entra, qué se resalta,
+cuánto texto se ve) se deja fija, y más si ya hay una que le gustó. Si el pedido admite dos lecturas que llevan a trabajos
+distintos, se enseña una muestra corta de cada lectura antes de producir todas.
+
+**Por qué.** El 2026-10-17, en EM-003, Zak pidió «3 variantes de subtítulos para ver qué estilo sellamos». Recibió tres
+maneras de resaltar (karaoke, palabra a palabra y un resaltador con píldora), casi con la misma letra, y contestó: «¡Pero
+quería variantes de estilos diferentes! No resaltado diferente… lo diferente será el estilo, o sea cómo se ven los
+subtítulos, la letra». La ronda se rehízo: se guardó la B y salieron cuatro letras sobre ella (neón, calcomanía,
+mayúsculas y volumen); selló B4 Volumen.
+
+**Hermanas.** 0-duotricies (lo que se pide para una superficie no se aplica a las dos) · 0-septtricies (un brief prestado
+no es el norte del dueño) · 0-undeseptuagies (el ganador se busca dentro del gusto de Zak).
+
+### Paso 0-undeoctogies · El nombre o la duración de una grabación no prueban lo que trae
+
+**Regla.** Antes de sumar, copiar, indexar o dar por buena una grabación, se verifica su contenido: se transcribe (o se
+escuchan tramos) y se buscan las marcas donde empieza cada sesión («This transmission has been titled», «this
+transmission is»). Para saber si dos archivos son la misma charla se comparan el tamaño idéntico o las palabras, nunca
+solo la duración ni el título.
+
+**Por qué.** El 2026-10-17 y 18, en la sala de la biblioteca de Bashar: (1) un video de YouTube llamado «[Full Episode]
+… The University of Earth - July 01, 2026», de 6 h, resultó una compilación: solo 1 h 19 era esa sesión; a la 1:18:41
+empezaba «Matters of the heart» (2022) y a la 3:37:39 «No More Secrets» (2025), que ya teníamos. Se habría pasado a la
+carpeta principal como la sesión de 2026 y habría duplicado dos sesiones en el índice. (2) Al buscar copias escondidas
+por duración, 113 caras de cinta distintas medían exactamente 2,821 s: la duración daba falsos duplicados por cientos.
+Las copias de verdad (Social Experiment Step 3 tres veces) se confirmaron por tamaño idéntico y por el mismo número de
+palabras.
+
+**Hermanas.** 0-octies (el material se lee entero) · 0-quatervicies (un archivo que promete N cosas se abre y se
+cuentan) · 0-duodevicies (un «no hay nada» se confirma por otra vía).
+
+### Paso 0-octogies · Una llave guardada a ciegas se mide antes de usarla
+
+**Regla.** Cuando Zak guarda una llave en el llavero con el aviso oculto (`security add-generic-password … -w`), antes
+de usarla se mide su largo sin mostrarla (`v="$(security find-generic-password -s <servicio> -w)"; echo ${#v}`) y se
+compara con lo esperado. El aviso oculto corta en 128 caracteres: una llave más larga se guarda desde el portapapeles con
+`-w "$(pbpaste)"`, que tampoco la deja en pantalla ni en el historial.
+
+**Por qué.** El 2026-10-18 la llave de Instagram, de más de 128 caracteres, quedó cortada justo en 128 y Meta respondió
+«Failed to decrypt» (código 190). Ese error se lee como «llave vencida o mal generada» y manda a Zak a generar otra en
+Meta for Developers, cuando el problema estaba en cómo se guardó. Medir el largo tomó un comando y dio la causa exacta;
+la clave secreta de 32 caracteres sí había entrado completa.
+
+**Hermanas.** 0-sexies (una verificación que falla acusa primero a lo nuestro) · 0-quinquadragies (las llaves en el
+llavero de la Mac) · 0-vicies-semel (la causa se anuncia después de probarla).
+
 ### Changelog del protocolo
+
+- **v74 (2026-10-18, sala de la biblioteca de Bashar):** dos lecciones. **0-undeoctogies**: el nombre o la duración de
+  una grabación no prueban lo que trae. **0-octogies**: una llave guardada a ciegas se mide antes de usarla.
+
+- **v73 (2026-10-17, sala de EM-003):** una lección de la sala de la emisión «La brújula» (estilo Tripulante, subtítulos
+  sellados y una versión por red). **0-duodeoctogies**: «variantes de estilo» de algo visual cambian cómo se ve, no cómo
+  funciona.
 
 - **v72 (2026-10-17, segunda tanda):** una lección más de la sala de la compra, de lo que Zak corrigió al revisar el muro y la página.
   **0-septseptuagies**: lo que vende un juego habla en grande y en positivo, sin nombres internos, detalles chicos ni negaciones.

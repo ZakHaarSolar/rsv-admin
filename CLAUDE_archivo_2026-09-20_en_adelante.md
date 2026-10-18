@@ -4,6 +4,82 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-17 · TERRA CRISTAL A LA VENTA: LA VERSIÓN GRATIS HASTA LEMURIA, EL MURO DE COMPRA Y LUDUS CERO AL DÍA
+
+- ✅ **Resuelto:** la versión gratis de Terra Cristal llega a la puerta de Lemuria y ahí sale el muro de compra (299 MXN, pago único; la
+  cuenta de Red Solar Viva se pide solo al desbloquear; el pago es Stripe, con el producto y su precio creados en vivo por la función, sin
+  Grokbot); el Motor regala el juego completo; el juego se llama solo Terra Cristal y vive en play.redsolarviva.com/terra-cristal/ (la ruta de
+  -pixel3 se quitó) · Ludus Cero: la portada A1 (la L de CRISTAL a la medida de sus vecinas y la garza de frente, como su torso), la historia
+  nueva sin spoilers, seis capturas, el avance, el tráiler premium para todo juego y la mica que no se despega · consultas: el sueldo de Zak,
+  qué carpeta darle a otra sala, la telemetría que falta, el primer reto, 299 o 349 y cuánto puede ganar el juego · **segunda tanda** (lo que
+  Zak vio al revisarlo): la C de CRISTAL en la proporción de la T, los pies de foto que dicen lo que es, el muro por capítulos con la cuenta de
+  Ludus Cero y «sin compras dentro del juego», «¿Qué te detuvo?», «Terra Cristal es tuyo» épico, Lemuria de fondo sin los vecinos del estilo
+  viejo, la telemetría del muro, de la salida y de los errores con su vista en el Motor, el atajo `?admin=1&antes_del_muro=1` y el prompt de la
+  sala de RESISTIR.
+- 📁 **Archivos:**
+  - `terra-cristal-pixel3`: `compra.ts` v1.1, `muro.ts` v1.3, `telemetria.ts` v1.0, `bitacora.ts` v1.6, `partida.ts` v2.29, `demo.ts` v1.1,
+    `textos.ts` v1.56, `juego.ts` v1.19, `main.ts` v1.21, los ganchos de `batalla.ts`, `public/compra/lemuria2.png`, `herramientas/compra.ts`,
+    `herramientas/telemetria.ts`, el banco del Motor (`datos.ts` v1.3, `fotos.mjs` v1.2), `web.mjs` v3.19, `web_lago.mjs` v1.6, `Docs/COMPRA.md` y
+    `Docs/PROPUESTAS_COMPRA.md`.
+  - `Code`: `SimuladoresHub.tsx` v3.7, `RSV_SolarSimuladoresShell.tsx` v4.7, `MI_TerraCristal.tsx` v1.5 · `rsv-web`: `vercel.json` y
+    `public/ludus/` (la portada v4, `tc-v2-*.png` y el avance v2).
+  - `Ludus Cero/portadas/terra-cristal/`: las portadas A1 corregida, A2 y B, las capturas y la página `pagina/` (puerto 8881).
+- 🗄️ **Migraciones SQL aplicadas:** `20261017_juegos_compras.sql` (`juego_compras` y `juego_checkouts`; Zak queda como dueño).
+- 🔌 **Edge functions deployed:** `juego-compra` v1.2 (estado, checkout y verifica; de administrador, estado_de y regala) · `admin-action` v1.66
+  (Batallas suma el muro, la salida y los errores: `_shared/terraMuro.ts` v1.1, `terraAparatos.ts` v1.2, `terraBatallas.ts` v1.2).
+- ⏳ **Pendiente:** abrir la sala de RESISTIR, la D y el regalo a los hermanos (los tres en Pendientes vivos).
+- 💡 **Decisiones:** el corte en la puerta de Lemuria · 299 MXN pago único con todo lo que venga (reemplaza los 249) y, en Steam, 24.99 USD ·
+  la cuenta solo al desbloquear · `/terra-cristal-pixel3` fuera · la portada A1 · nada de spoilers en lo público · **299 sellado y se queda**
+  · el primer reto se resiste (la A) en su propia sala · lo que vende el juego habla en grande y en positivo · la cuenta se llama de Ludus Cero.
+- 🔧 **Patrones nuevos:**
+  - El cobro de un juego en dos puertas: el constructor del lugar desvía y `vaA` detiene; así la partida nunca anota un lugar de pago.
+  - Stripe sin webhook: se verifica al volver, los pagos abiertos se cierran al preguntar el estado y el muro pregunta otra vez al abrirse.
+  - El producto y su precio los crea la función con un id fijo y una llave fija (cambiar el precio es una llave nueva).
+  - Los precios reales de Steam por país salen de `store.steampowered.com/api/appdetails?appids=<id>&cc=mx`
+    ([[referencia_precios_steam]]).
+  - Un arreglo de arte hecho con IA va por partes: la geometría con código y lo redibujado sobre su recorte.
+  - Publicar el juego con otra sala trabajando en él: se le pregunta quién publica y se pide su aviso de inactividad.
+  - La telemetría nueva va en la bitácora de la partida (que ya viaja al Motor) con registros opcionales que no cambian el contrato; y lo que
+    el servidor suma se lee de las columnas que su consulta de verdad trae (las filas de Batallas traían solo `batallas`).
+  - Lecciones 0-quinseptuagies, 0-sexseptuagies y 0-septseptuagies.
+- 🧬 **Versión del sistema:** `juego-compra` v1.2 · `admin-action` v1.66 · `muro.ts` v1.3 · `SimuladoresHub.tsx` v3.7 · protocolo v72.
+
+#### 2026-10-14 · LUDUS CERO: EL TOWER DEFENSE NUEVO, DE TRES PROPUESTAS CON LORE A PRISMA TD
+
+- ✅ **Resuelto:** se leyeron completos los 9 libros de Zak (y los 2 de Aqua'Riia, como inspiración) y se entregaron
+  tres tower defense con lore de los Códices, cada uno con escena viva y sonido (Jardín Cuántico, Cantera y Ruido Cero;
+  https://claude.ai/artifact/C1Z4gdzgjE6azfkZcrkUjB). Zak los descartó y eligió su propia idea, con una imagen de
+  interfaz: **PRISMA TD**. Su diseño completo quedó en texto (v2): la regla de la luz, prismas y haces, figuras, Campaña,
+  Espectro (roguelite), Laboratorio, jugo, pantalla completa, biblia de arte, Steam y hoja de ruta. Quedó también el
+  proyecto con su `CLAUDE.md` y el prompt de la Sala 1.
+- 📁 **Archivos:**
+  - `Ludus Cero/prisma/`: `CLAUDE.md`, `.claude/settings.json`, `Docs/DISEÑO.md` v2, `Docs/PROXIMA_SALA.md` y
+    `Docs/referencia_interfaz.jpg`.
+  - `Ludus Cero/Propuestas Tower Defense/`: `index.html` v1.0, `estudio/*.js` v1.0, `servidor.py`, `construir.py` y
+    `publicar/`.
+  - `.claude/launch.json`: servidor `propuestas-td` (puerto 8875).
+- ⏳ **Pendiente:** nada de esta sala. El juego se construye en su propia sala (ver 🔮).
+- 💡 **Decisiones:**
+  - En los juegos de Ludus Cero manda la jugabilidad: el lore de los Códices va en segundo plano y basta el sello de
+    Ludus Cero (Zak: «no me gustaron para nada»).
+  - **PRISMA TD:** el norte es ser el tower defense del momento en Steam y tan profundo como Terra Cristal. El detalle
+    va sobre la velocidad. Pantalla completa sin marco desde la primera ejecución. La referencia se sigue tal cual en
+    composición y color, con un pixel art mucho más detallado.
+  - **La regla de la luz:** cada figura es inmune a lo que refleja y a cada color lo mata su complementario; las blancas
+    se abren con el Refractor y las oscuras no se ven sin luz.
+  - **Espectro (roguelite)** es el motor de horas, porque hoy pegan los roguelites: Emberward debutó en el número 2 del
+    Steam 250 en septiembre de 2026.
+- 🔧 **Patrones nuevos:**
+  - Nueve lectores en paralelo, uno por libro, cada uno con un digesto orientado a diseño.
+  - Escenas vivas de propuestas con un motor mínimo y sonido sintetizado, medido con un render fuera de línea (la
+    liberación pica en -8 dB y los toques de torre van en -40).
+  - Las escenas se balancean contando sus resultados en Node (120 s simulados) antes de verlas.
+  - La paleta de una imagen se mide sin PIL: `sips` a BMP y lectura en Python.
+  - Lección 0-quaterseptuagies.
+- 🧬 **Versión del sistema:** protocolo v70.
+- 🧭 **Su arranque ya se ejecutó** (la Sala 1 de PRISMA TD quedó hecha el 2026-10-14): su 🔮 salió de aquí al cerrar la sala de
+  la compra del 2026-10-17, porque solo la sala más reciente lleva 🔮; lo que sigue vive en `Ludus Cero/prisma/Docs/PROXIMA_SALA.md`.
+
 #### 2026-10-08 → 2026-10-10 · ESPEJO: ENTRAR EN LO ÚLTIMO, EL SEGUIMIENTO QUE AGUANTA LA INERCIA, HASTA 8 FOTOS Y LA VOZ QUE NO DESELLA RITUALES
 
 - ✅ **Resuelto:** **pedir por voz un ritual ya sellado lo deja sellado** (la voz leía `checked` y la consulta trae `today`;
