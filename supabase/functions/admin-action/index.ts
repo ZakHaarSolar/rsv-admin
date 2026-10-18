@@ -1,3 +1,4 @@
+// Red Solar Viva · admin-action v1.69 — 🜂 LA APP SE MIDE MES CON MES (2026-10-18): rutea admin_telemetria_resumen (Motor → Telemetría: activos, cohortes, uso por función, muertas, recorridos, embudo, muro, suscripciones, errores, tiempos, costo de IA y «¿Qué te faltó?») y admin_telemetria_persona (una persona por dentro). Migración 20261018d_telemetria; sin ella responde falta_migracion con su nombre.
 // Red Solar Viva · admin-action v1.68 — 🜂 EL MURO DE SINTONÍA SE MIDE (auditoría de precios 2026-10-18): rutea admin_muro_resumen (Motor → Onboarding → «El muro de Sintonía»: cuántas personas ven el muro y cuál, qué plan eligen, quién paga, en la app o en la web, «¿Qué te detuvo?» y el aviso del semanal al mensual). Migración 20261018_muro_eventos; sin ella responde falta_migracion con su nombre.
 // Red Solar Viva · admin-action v1.67 — 🜂 TERRA CRISTAL: EL PRIMER RETO SE RESISTE (Sala RESISTIR, 2026-10-17): el modo «batallas» suma las `resistidas` de cada batalla (con _shared/terraBatallas.ts v1.3) y cuentan como terminadas.
 // Red Solar Viva · admin-action v1.66 — 🜂 TERRA CRISTAL: el muro de la compra, la salida y los errores se leen de su bitácora (las filas de las batallas traían solo `batallas`: la suma salía en cero), con _shared/terraMuro.ts v1.1 y _shared/terraAparatos.ts v1.2. Sin migración.
@@ -217,6 +218,10 @@ const ADMIN_RPCS: Record<string, string | null> = {
     get_onb_sessions: "p_admin_clerk_id",
     // v1.68 — El muro de Sintonía, junto al embudo (migración 20261018_muro_eventos).
     admin_muro_resumen: "p_admin_clerk_id",
+    // v1.69 — Motor → Telemetría: el mes en números y una persona por dentro
+    // (migración 20261018d_telemetria).
+    admin_telemetria_resumen: "p_admin_clerk_id",
+    admin_telemetria_persona: "p_admin_clerk_id",
     delete_onb_funnel_recent: "p_admin_clerk_id",
     get_observatorio_camara_admin: "p_clerk_id",
     get_alias_nodos_sesion_admin: "p_clerk_id",
@@ -557,6 +562,8 @@ const MIGRACION_DE: Record<string, string> = {
     admin_campana_versiones: "20261008c_campana_versiones",
     admin_campana_set_landing: "20261008c_campana_versiones",
     admin_muro_resumen: "20261018_muro_eventos",
+    admin_telemetria_resumen: "20261018d_telemetria",
+    admin_telemetria_persona: "20261018d_telemetria",
 }
 const FALTA_OBJETO = new Set(["PGRST202", "42883", "42P01"])
 

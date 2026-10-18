@@ -1,3 +1,4 @@
+// Red Solar Viva · revenuecat-webhook v1.8 — LO QUE AVISA LA TIENDA SE GUARDA (telemetría mes con mes, 2026-10-18): cada evento (compra, renovación, baja, expiración, cambio de plan, problema de cobro) queda en suscripcion_eventos con producto, tienda, país, moneda, precio y entorno, una vez por id. Va antes del filtro de prueba (SANDBOX se guarda marcado). Sin la migración 20261018d_telemetria, el insert falla en silencio y todo sigue igual.
 // Red Solar Viva · revenuecat-webhook v1.7 — TRANSFER anónimo→anónimo ya no deja pagando como Explorador. Si el evento no trae user_ de Clerk, se resuelve por alias, email ($email), transferred_from y filas rc_user_* ya ligadas. El alta de F22 (mensual 2026-09-15) se escribió en $RCAnonymousID:a5c216… sin user_id y el Motor no la veía. | v1.6 — no pisa rc_user_* con $RCAnonymousID. | v1.5 leftover — TRANSFER re-liga stripe_customer_id al clerk destino (SIWA / $RCAnonymousID). | v1.4 leftover: CICLO SEMANAL SIN CRISTALES (decisión 2026-08-02): el ciclo semanal de Sintonía (sintonia_solar_weekly) da el Escáner completo pero YA NO emite los 2 Cristales de Extracción — esos viven SOLO en el ciclo mensual.
 // Red Solar Viva · revenuecat-webhook v1.3 — AUDITORÍA 2026-07-24 · PARTE 2: las compras SANDBOX (TestFlight / license testers de Play) ya NO conceden membresía ni Cristales. Llegaban a este mismo endpoint con el mismo Authorization y eran indistinguibles de una compra real: escribían status=active con la membresía completa y emitían los 2 Cristales del mes. Interruptor para QA propio: secrets set REVENUECAT_ALLOW_SANDBOX=true + redeploy (y unset al terminar). El evento TEST del dashboard sigue pasando siempre. + PRODUCT_GROUP_MAP suma sintonia_solar_weekly (faltaba: solo funcionaba por el default legacy).
 // ════════════════════════════════════════════════════════════════════
@@ -215,6 +216,51 @@ async function emitCristales(
         }
     } catch (e) {
         console.error("❌ [cristales] excepción:", (e as Error).message)
+    }
+}
+
+/* v1.8 — 🜂 LO QUE AVISA LA TIENDA SE GUARDA (telemetría 2026-10-18). Hasta hoy una
+   renovación solo movía las fechas de `subscriptions`: no quedaba cuántas hubo, ni las
+   bajas, ni los cambios de plan, ni el país. `suscripcion_eventos` (migración
+   20261018d_telemetria) guarda cada evento una vez (índice único por id). Sin la
+   migración el insert falla en silencio y todo sigue igual. */
+function cuentaDelEvento(event: any): string | null {
+    const ids = [
+        event?.app_user_id,
+        event?.original_app_user_id,
+        ...(Array.isArray(event?.aliases) ? event.aliases : []),
+    ]
+    const u = ids.find((x) => typeof x === "string" && x.startsWith("user_"))
+    return u || null
+}
+
+async function guardarEvento(event: any) {
+    try {
+        const tipo = String(event?.type || "")
+        if (!tipo || tipo === "TEST" || tipo === "SUBSCRIBER_ALIAS") return
+        const num = (v: unknown) => (typeof v === "number" && Number.isFinite(v) ? v : null)
+        const { error } = await supabase.from("suscripcion_eventos").insert({
+            ocurrio: msToISO(event.event_timestamp_ms) || msToISO(event.purchased_at_ms),
+            fuente: "revenuecat",
+            evento_id: event.id ? String(event.id) : null,
+            tipo,
+            clerk_user_id: cuentaDelEvento(event),
+            producto: event.product_id || null,
+            producto_nuevo: event.new_product_id || null,
+            periodo: event.period_type || null,
+            tienda: event.store || null,
+            pais: event.country_code || null,
+            moneda: event.currency || null,
+            precio: num(event.price_in_purchased_currency),
+            precio_usd: num(event.price),
+            entorno: event.environment || null,
+            motivo: event.cancel_reason || event.expiration_reason || null,
+        })
+        if (error && !/duplicate key/i.test(error.message)) {
+            console.warn("[suscripcion_eventos] no se guardó:", error.message)
+        }
+    } catch (e) {
+        console.warn("[suscripcion_eventos] excepción:", (e as Error).message)
     }
 }
 
@@ -661,6 +707,11 @@ serve(async (req: Request) => {
     } catch (e) {
         console.warn("[revenuecat-webhook] dedupe no disponible, se procesa:", e)
     }
+
+    /* v1.8 — cada evento de la tienda queda guardado para la medición mes con mes
+       (renovaciones, bajas, cambios de plan, país y precio). Va antes del filtro de
+       prueba: las de SANDBOX se guardan marcadas y el Motor no las cuenta. */
+    await guardarEvento(event)
 
     /* ── AUDITORÍA 2026-07-24 · PARTE 2 · compras de PRUEBA ──────────────
        RevenueCat manda a ESTE mismo endpoint, con el mismo Authorization,

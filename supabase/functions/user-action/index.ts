@@ -1,3 +1,7 @@
+// Red Solar Viva · user-action v1.54 — LA APP SE MIDE MES CON MES (2026-10-18): rutea record_telemetria (el
+// lote de la medición: sesiones, capas, pasos, salidas, errores, tiempos y las respuestas de «¿Qué te faltó?»;
+// nunca texto de la persona). El id verificado lo pone el gateway; sin sesión, la app usa
+// record_telemetria_anon directo. Migración 20261018d_telemetria.
 // Red Solar Viva · user-action v1.53 — SOPORTE QUE SE VE (2026-10-18): rutea close_my_support_ticket (la
 // persona cierra SU caso desde la conversación; la función solo cierra casos propios y deja resolved_by = su
 // id para que el Motor sepa que lo cerró ella). Migración 20261018b_soporte_cerrar.
@@ -214,6 +218,10 @@ const USER_RPCS: Record<string, string> = {
     record_nav_event: "p_clerk_user_id",
     // v1.52 — Medición del muro de Sintonía (id inyectado). Migración 20261018_muro_eventos.
     record_muro_evento: "p_clerk_user_id",
+    // v1.54 — La medición mes con mes (lib/telemetria): UN lote por envío con los días,
+    // capas, pasos, salidas, errores y tiempos del aparato (id inyectado; el aparato y el
+    // lote viajan en params). Migración 20261018d_telemetria.
+    record_telemetria: "p_clerk_user_id",
     // Sella el recorrido del onboarding (registrado con un id anónimo del
     // aparato, ANTES de que existiera sesión) con la cuenta recién creada.
     // El id del Tripulante lo inyecta el gateway desde el token verificado.
