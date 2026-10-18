@@ -671,8 +671,8 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   crea una cuenta en resend.com con ese correo, copia su API key y la guarda en el llavero con
   `security add-generic-password -U -a rsv -s rsv-resend -w "$(pbpaste)"`; la sala siguiente la sube con
   `supabase secrets set RESEND_API_KEY=…` y el código ya la usa sola. **Falta que Zak decida** las imágenes del Espejo
-  para quien no paga: 0 (hoy) o 2 en toda la vida (recomendado: 2, en cuanto la app diga que son de Sintonía; ese texto
-  se le encargó a la sala del muro). Por revisar: `send-push` usa el canal de pruebas de Apple (no existe el secreto
+  para quien no paga: 0 (hoy) o 2 en toda la vida (recomendado: 2; la app ya dice que son de Sintonía y abre el muro:
+  escaner-app `a632420`, en la web desde el 2026-10-18 y en el teléfono con la siguiente versión de tienda). Por revisar: `send-push` usa el canal de pruebas de Apple (no existe el secreto
   `APNS_HOST`), así que las notificaciones quizá no lleguen a quien instaló la app de la tienda.
 - **Consulta respondida el 2026-10-17 · emisiones de consciencia: un reel diario sin pagar publicidad** (Zak: «una
   emisión constante de reels de calidad… con código… con un lenguaje como el de Bashar, hecho nuestro»). Vive en
