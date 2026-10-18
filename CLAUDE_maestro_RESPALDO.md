@@ -635,19 +635,24 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   mensaje, 0.02); bajar a 399/129 pediría 21 % más suscriptores para ganar lo mismo y a 299/99, 63 %; subir arriesga la
   entrada, que es el punto sensible. De cada 499 en la tienda llegan unos 355, no 366: Apple cobra IVA sobre su comisión
   y retiene 2.5 % de ISR a una persona física (sin el RFC cargado, 20 % y llegarían unos 279); el semanal deja unos 106 y
-  la web unos 398. Meta: unas 91 suscripciones activas (mitad semanal) o 98 con las herramientas del negocio. El hueco
-  está antes del muro (28 de 44 cuentas sin plan nunca usaron nada) y en la distribución (sostener 91 pide unas 67 altas
-  al mes). Descartado: bajar el precio y mover la escalera (el mensual ahorra 23 % contra un mes de semanal; la banda
-  sana del semanal es de 139 a 169). **Falta que Zak:** confirme su RFC en App Store Connect y Play Console; active la
-  recarga automática de OpenRouter (la caída del 5 al 8 de octubre coincidió con la baja del único suscriptor mensual);
-  diga de qué producto de Stripe cuelga el enlace del semanal (la función de Stripe le daría Cristales o lo contaría como
-  Inmersión); decida si el segundo Cristal puede ser un Códice (detrás de un Cristal hay una sola Meditación); y dé el sí
-  a una sala que cierre los huecos de gasto (imágenes del Espejo sin membresía, voz sin sesión, el contador gratis que se
-  brinca con mensajes simultáneos, la membresía que se da por buena si la base no contesta, el dictado sin tope) y lo que
-  se ve distinto a lo que se cobra (el Escáner viejo de redsolarviva.com/escaner muestra 599/399/199 y cobra Sintonía; el
-  muro promete Calibraciones y Navegante). Después: aviso de semanal a mensual en la 3.ª renovación, contar el muro con
-  un «¿Qué te detuvo?», precios a mano fuera de México, anual de 2,990 cuando haya 3 mensuales activos y el Radar gratis
-  una vez al mes como prueba.
+  la web unos 398. Meta: unas 92 suscripciones activas (mitad semanal) o 97 con las herramientas del negocio (Clerk cuesta
+  35 USD al mes según sus facturas: en el Motor está anotado dos veces, 440 y 855). El hueco está antes del muro (28 de 44
+  cuentas sin plan nunca usaron nada) y en la distribución (sostener 92 pide unas 68 altas al mes). Descartado: bajar el
+  precio, mover la escalera (el mensual ahorra 23 % contra un mes de semanal; banda sana del semanal de 139 a 169) y
+  bajar los precios de fuera de México (están en línea con ChatGPT Plus de cada tienda: Colombia 99,900 los dos; EE. UU. y
+  Argentina 22.99 contra 19.99). La recarga automática de OpenRouter ya está activa (2026-10-18). El semanal de Stripe
+  cuelga del mismo producto que el mensual, así que en la web hoy daría Cristales. **Arrancaron dos salas el 2026-10-18:**
+  «Cerrar huecos de gasto y cobros del Escáner» (servidor y web: imágenes sin membresía, voz sin sesión, contador gratis,
+  membresía que falla abierta, dictado sin tope, tope por dinero, respaldo si OpenRouter falla, el semanal de Stripe sin
+  Cristales, el selector viejo de redsolarviva.com/escaner con 599/399/199) y «Muro honesto y paso del semanal al
+  mensual» (la app: quitar Calibraciones y Navegante del muro, precio de la tienda, aviso a la 3.ª renovación semanal,
+  contar el muro con «¿Qué te detuvo?»); su estado vive en sus propias salas. **Falta que Zak:** confirme su RFC en App
+  Store Connect y Play Console; se dé de alta en el SAT con la actividad (su constancia dice «Sin obligaciones fiscales»),
+  de preferencia con contador; archive el precio de 599 en Stripe y desactive los enlaces que la sala le diga que ya no se
+  usan; deje una sola línea de Clerk en el Motor; le escriba a F22 (dejó de usar el Espejo en la caída, volvió del 9 al 14,
+  su suscripción venció el 15 y abrió la app el 16; sin aviso push) con un mes de regalo; y decida la regla del segundo
+  Cristal o agregue Meditaciones. Después: anual de 2,990 cuando haya 3 mensuales activos y el Radar gratis una vez al
+  mes como prueba.
 - **Consulta respondida el 2026-10-17 · emisiones de consciencia: un reel diario sin pagar publicidad** (Zak: «una
   emisión constante de reels de calidad… con código… con un lenguaje como el de Bashar, hecho nuestro»). Vive en
   `Escaner Vibracional/Emisiones/` con su `CLAUDE.md` (la rutina completa). Hecho: el transcriptor con el reconocedor de
@@ -690,7 +695,11 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   Cero» va en los créditos); Facebook fuera por ahora (opcional: una página con el compartir automático de Instagram).
   Recomendado: **quitar la barra de arriba de Red viva** (los «nodos en línea» son inventados y se leen como dato real,
   repite «Emisión 004», tapa la galería de la escena y sale en la cuadrícula del perfil). Falta el sí de Zak para eso y
-  para pedir a las salas de estilo las 6 emisiones de la rotación.
+  para pedir a las salas de estilo las 6 emisiones de la rotación. **Métricas vivas desde el 2026-10-18** (diaria a las
+  9:05): EM-003 a las 10 h, 75 vistas, 74 % de omisión y 6.9 s de promedio; ojo al comparar, el mejor reel de la cuenta
+  (2,045, junio) fue publicidad y la extraterrestre (670) se empujó con historia en la cuenta de Zak. Prompt para la sala
+  de EM-004 (quitar la barra y subtítulos B4 con colores de Red viva) entregado a Zak para pegar. Registro de Steamworks
+  (100 USD) más adelante; RFC cargado y recarga automática de OpenRouter ya hechos.
 - **Biblioteca de Bashar (2026-10-17 y 18):** comparada con el catálogo público de tv.bashar.org (780 programas, 431
   sesiones completas): nos faltan 47 sesiones completas (27 de 2025 y 2026), 9 grupos en inglés y los 108 grupos
   japoneses, y 12 están incompletas. La lista, con enlaces: `/Volumes/Crucial 4TB/Kingston KC3000/Awaken/Bashar
