@@ -666,11 +666,9 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   instrucciones (muestras lado a lado en `Escaner Vibracional/Precios/RESPALDO_ESPEJO_MUESTRAS_2026-10-18.md`), y cada
   falla de OpenRouter manda una notificación a los teléfonos del Arquitecto (probada: llegó al iPhone y al Android), una
   cada 30 minutos como máximo, diciendo si contestó el respaldo o si la persona se quedó sin reflejo. Para apagarlo:
-  `update app_flags set value = false where key = 'espejo_respaldo';` en SQL Editor. **Para que el aviso llegue también
-  por correo a zakhaarsol@pm.me falta una llave** (Proton solo manda desde Pipedream y Supabase bloquea su puerto): Zak
-  crea una cuenta en resend.com con ese correo, copia su API key y la guarda en el llavero con
-  `security add-generic-password -U -a rsv -s rsv-resend -w "$(pbpaste)"`; la sala siguiente la sube con
-  `supabase secrets set RESEND_API_KEY=…` y el código ya la usa sola. **Falta que Zak decida** las imágenes del Espejo
+  `update app_flags set value = false where key = 'espejo_respaldo';` en SQL Editor. Zak lo probó: le llegó. **Por ahora solo la
+  notificación** (decisión de Zak): el correo a zakhaarsol@pm.me se suma al mudar Pipedream, con la misma llave de
+  Resend (el código ya la usa sola en cuanto exista `RESEND_API_KEY`). **Falta que Zak decida** las imágenes del Espejo
   para quien no paga: 0 (hoy) o 2 en toda la vida (recomendado: 2; la app ya dice que son de Sintonía y abre el muro:
   escaner-app `a632420`, en la web desde el 2026-10-18 y en el teléfono con la siguiente versión de tienda). Por revisar: `send-push` usa el canal de pruebas de Apple (no existe el secreto
   `APNS_HOST`), así que las notificaciones quizá no lleguen a quien instaló la app de la tienda.
@@ -833,7 +831,8 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   versión que use subprotocolos y subirla (revisar en diciembre), o escribir el socket a mano como la voz de salida.
   Los guiones de voz de los anuncios del Espejo (`voz_espejo.mjs`) también usan la forma vieja.
 - **Pipedream Workflows se apaga el 2027-03-31** (borra todo el 2027-04-30): mudar sus 3 flujos de correo vivos
-  (bienvenidas, Sello del Primer Ciclo y padrón con sus bajas) a funciones de Supabase. Zak: «luego lo enlazamos»;
+  (bienvenidas, Sello del Primer Ciclo y padrón con sus bajas) a funciones de Supabase. Al mudarlos, sumar el correo del aviso del
+  respaldo del Espejo (`_shared/avisoRespaldo.ts` ya lo manda con `RESEND_API_KEY`; Zak lo pidió el 2026-10-18). Zak: «luego lo enlazamos»;
   falta el cuándo. Trampas y plan en [[pendiente_migrar_pipedream]].
 
 ### 🟣 Códices de Luz · lo que necesita tu decisión

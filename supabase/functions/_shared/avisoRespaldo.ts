@@ -1,3 +1,4 @@
+// _shared/avisoRespaldo.ts v1.1 — la hora sale en 24 h («04:46»): con «a.m.» el aviso terminaba en «a.m..» (lo vio Zak en la prueba). El correo se suma cuando se mude Pipedream (decisión de Zak, 2026-10-18).
 // _shared/avisoRespaldo.ts v1.0 — 🜂 EL AVISO CUANDO OPENROUTER FALLA (Zak 2026-10-18: «si llega un fallback, ¿hay forma de
 // que me llegue un email de aviso o algo… para ver de inmediato qué sucede? Es respaldo, pero la idea es que DeepSeek funcione»).
 //
@@ -61,7 +62,7 @@ export async function avisarRespaldo(a: AvisoRespaldo): Promise<{ push: number; 
             })
             if (v && v.ok === false) return { push: 0, correo: false, omitido: "ya_avisado" }
         }
-        const hora = new Date().toLocaleTimeString("es-MX", { timeZone: "America/Cancun", hour: "2-digit", minute: "2-digit" })
+        const hora = new Date().toLocaleTimeString("es-MX", { timeZone: "America/Cancun", hour: "2-digit", minute: "2-digit", hourCycle: "h23" })
         const titulo = `${a.prueba ? "Prueba · " : ""}${a.respondio ? "El Espejo está usando el respaldo" : "El Espejo no pudo responder"}`
         const cuerpo = a.respondio
             ? `OpenRouter ${a.motivo} a las ${hora}. Contestó Claude Haiku 5.5. Revisa el saldo y el estado de OpenRouter.`
