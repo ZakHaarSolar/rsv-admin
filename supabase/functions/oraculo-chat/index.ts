@@ -1,3 +1,4 @@
+// Red Solar Viva · oraculo-chat v1.59 — 🜂 EL AVISO CUANDO OPENROUTER FALLA (Zak 2026-10-18: «que me llegue un aviso… para ver de inmediato qué sucede; es respaldo, pero la idea es que DeepSeek funcione»). Cada vez que OpenRouter no escribe el reflejo (401/402/408/429/5xx, red, dos silencios seguidos o el corte por tiempo) sale _shared/avisoRespaldo.ts: notificación a los teléfonos del Arquitecto y correo a zakhaarsol@pm.me en cuanto exista RESEND_API_KEY, uno cada 30 minutos como máximo, diciendo si contestó el respaldo. Los dos silencios seguidos también llaman al respaldo. El respaldo quedó ENCENDIDO por pedido de Zak (app_flags.espejo_respaldo, 2026-10-18 09:28 UTC).
 // Red Solar Viva · oraculo-chat v1.58 — 🜂 LOS HUECOS DE GASTO SE CIERRAN (auditoría de precios 2026-10-18). (1) LAS 3 DE CORTESÍA SE RESERVAN EN UN SOLO PASO: `reservar_cortesia_espejo` suma y verifica antes de llamar al modelo (mensajes simultáneos ya no pasan todos) y `devolver_cortesia_espejo` regresa la respuesta si el turno no entregó nada; sin la migración 20261018 se usa el camino anterior. (2) LA MEMBRESÍA FALLA CERRADA (_shared/membresia.ts): si la base no contesta, el turno no corre y se pide reintentar, nunca se trata a nadie como miembro a ciegas. (3) EL RESTO DEL PROFUNDO SIEMPRE SE ANOTA (los topes en 0 = cobro sin revisar ventana): cerca del tope ya no se perdía nada. (4) TOPE POR DINERO: 'oraculo-dinero' en millonésimas de dólar, 0.40 USD al día y 4 al mes por persona (10 veces el Arquitecto), con el costo real que reporta OpenRouter (`usage.include`); y 'oraculo-web', 20 búsquedas en internet al día por persona en la Matriz (pasado el tope, el reflejo sale sin red). (5) RESPALDO PROPUESTO, APAGADO: con app_flags.espejo_respaldo en true, si OpenRouter contesta 401/402/408/429/5xx o no contesta, el reflejo lo escribe Claude Haiku 5.5 con las mismas instrucciones (`respaldo: true` en la respuesta). Se enciende solo con el sí de Zak (Motor → Pruebas A/B).
 // Red Solar Viva · oraculo-chat v1.57 — el tope de un mensaje sube a 40,000 caracteres (un artículo pegado entero cabe) y el rechazo devuelve { largo, tope }.
 // Red Solar Viva · oraculo-chat v1.56 — el Espejo acepta mensajes de hasta 14,000 caracteres, igual que la Matriz (antes 4,000: un artículo pegado volvía como "Tu nodo perdió su enlace").
@@ -294,6 +295,7 @@ import {
     CLAUDE_MODEL,
     PRECIO_HAIKU_MILLON,
 } from "../_shared/claudeHaiku.ts"
+import { avisarRespaldoSinEsperar } from "../_shared/avisoRespaldo.ts"
 
 const CORS_HEADERS = {
     "Access-Control-Allow-Origin": "*",
@@ -3153,23 +3155,31 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
                             emitirMarcado(intento.texto)
                     }
                     if (intento.estado === "http") {
-                        if (
-                            esFallaDeCanal(intento.status) &&
-                            !emitido &&
-                            (await intentarRespaldo(
-                                `dio ${intento.status}`,
-                                emitirMarcado
-                            ))
-                        )
-                            return { ok: true }
+                        if (esFallaDeCanal(intento.status) && !emitido) {
+                            const motivo = `dio ${intento.status}`
+                            const escrito = await intentarRespaldo(motivo, emitirMarcado)
+                            /* v1.59 — el Arquitecto se entera al momento, haya
+                               contestado o no el respaldo. */
+                            avisarRespaldoSinEsperar({ motivo, respondio: escrito })
+                            if (escrito) return { ok: true }
+                        }
                         return {
                             soft: "El canal del Oráculo está saturado en este instante. Respira, vuelve a preguntar en un momento y la señal se reabrirá.",
                         }
                     }
-                    if (intento.estado === "vacio")
+                    if (intento.estado === "vacio") {
+                        /* v1.59 — dos silencios seguidos (el normal y el
+                           vainilla) también son un canal que no contestó. */
+                        if (!emitido) {
+                            const motivo = "devolvió vacío dos veces"
+                            const escrito = await intentarRespaldo(motivo, emitirMarcado)
+                            avisarRespaldoSinEsperar({ motivo, respondio: escrito })
+                            if (escrito) return { ok: true }
+                        }
                         return {
                             soft: "El canal devolvió silencio dos veces seguidas. No es tu consulta: es el proveedor del reflejo. Vuelve a enviarla en un momento.",
                         }
+                    }
                     /* v1.51 — lo que se guarda y se devuelve sale sin rayas ni voseo. */
                     reply = pulirEspejo(intento.texto, deviceLang)
                     return { ok: true }
@@ -3182,15 +3192,16 @@ Terreno técnico por defecto: lo de vanguardia y el máximo apalancamiento, siem
                     /* La red se cayó antes de la primera palabra: el respaldo
                        puede contestar. Un corte por tiempo no entra (ya se
                        gastaron 55 s de la espera de la persona). */
-                    if (
-                        !cortado &&
-                        !emitido &&
-                        (await intentarRespaldo(
-                            "no contestó",
-                            emitirMarcado
-                        ).catch(() => false))
-                    )
-                        return { ok: true }
+                    if (!emitido) {
+                        const motivo = cortado ? "tardó más de lo permitido" : "no contestó"
+                        const escrito = cortado
+                            ? false
+                            : await intentarRespaldo(motivo, emitirMarcado).catch(() => false)
+                        /* v1.59 — un corte por tiempo tampoco deja reflejo:
+                           también se avisa, aunque ahí no entra el respaldo. */
+                        avisarRespaldoSinEsperar({ motivo, respondio: escrito })
+                        if (escrito) return { ok: true }
+                    }
                     return {
                         soft: cortado
                             ? "El canal tardó más de lo normal y se cerró. Vuelve a enviar tu señal: casi siempre reabre al instante."

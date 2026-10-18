@@ -1,3 +1,4 @@
+// Red Solar Viva · espejo-imagen v2.9 — 🜂 LA MATRIZ PARA QUIEN NO PAGA (Zak 2026-10-18): el carril Ráfaga también mira la membresía; quien paga sigue con 30 rápidas al día y quien no paga tiene 12 en toda su vida (las que caben en sus 3 respuestas gratis), en la ventana 'espejo-imagen-rafaga-gratis'. Antes una cuenta gratis podía pedir 30 al día pegándole a la función directo.
 // Red Solar Viva · espejo-imagen v2.8 — 🜂 LAS IMÁGENES DEL ESPEJO SON DE SINTONÍA (auditoría de precios 2026-10-18: "solo pide sesión, no membresía"; gratis y Sintonía tenían las mismas 2 al día y es lo más caro por pieza, 0.54 MXN). El carril del Espejo pide membresía con la señal canónica (_shared/membresia.ts) y quien no paga recibe 403 { error:"cupo", motivo:"membresia" }: la app publicada ya entiende "cupo" (apaga el modo imágenes y no vuelve a prometer), y `motivo` deja que una versión nueva abra el muro de Sintonía. Perilla IMAGENES_GRATIS_DE_POR_VIDA (hoy 0): con 2, quien no paga tiene 2 en toda su vida. Si la base no contesta: 503, nunca se regala la imagen. El carril Ráfaga queda igual (sesión y sus 30 al día).
 // Red Solar Viva · espejo-imagen v2.7 — 🜂 EL ESTILO DE LA CASA SALE DEL
 // CARRIL RÁFAGA (Zak 2026-08-19: "no le pongas estilo, deja que nos dé el
@@ -56,6 +57,9 @@ const RAFAGA_LIMIT_DAY = 30
    cuentan en su propia ventana del gobernador ('espejo-imagen-gratis'), de diez
    años, que el borrado de una charla no toca. */
 const IMAGENES_GRATIS_DE_POR_VIDA = 0
+/* 🜂 v2.9 — las rápidas de la Matriz para quien no paga: las que caben en sus
+   3 respuestas gratis (2 o 3 cada una), con margen. */
+const IMAGENES_RAFAGA_GRATIS_DE_POR_VIDA = 12
 const VENTANA_DE_POR_VIDA = 10 * 365 * 86400
 const MODELO_RAFAGA = "fal-ai/flux/schnell"
 const MODELO_ESPEJO = "fal-ai/flux-2-pro"
@@ -195,13 +199,22 @@ Deno.serve(async (req) => {
        llegó" y el modo sigue encendido para el siguiente reflejo). Quien no
        paga recibe `cupo` (la palabra que la app publicada ya sabe leer: apaga
        el modo y no vuelve a prometer) más `motivo: "membresia"`, para que una
-       versión nueva pueda abrir el muro de Sintonía en vez del aviso del día. */
-    if (!esRafaga) {
+       versión nueva pueda abrir el muro de Sintonía en vez del aviso del día.
+       🜂 v2.9 — LA MATRIZ TAMBIÉN MIRA LA MEMBRESÍA (Zak 2026-10-18: «¿está
+       bien lo de la Matriz o propones reducir tope?»). Quien paga sigue con
+       sus 30 rápidas al día. Quien no paga tiene las que caben en sus 3
+       respuestas gratis (2 o 3 por respuesta: 12 en toda su vida, con
+       margen), en su propia ventana; antes podía pedir 30 al día pegándole a
+       la función directo (~50 MXN al mes por cuenta). */
+    {
         const m = await resolverMembresia(clerkUserId)
         if (m.carril === "desconocido")
             return fail(503, "membresia_no_verificada")
         if (m.carril === "free") {
-            if (IMAGENES_GRATIS_DE_POR_VIDA <= 0 || !supaUrl || !supaKey)
+            const deVida = esRafaga
+                ? IMAGENES_RAFAGA_GRATIS_DE_POR_VIDA
+                : IMAGENES_GRATIS_DE_POR_VIDA
+            if (deVida <= 0 || !supaUrl || !supaKey)
                 return new Response(
                     JSON.stringify({ error: "cupo", motivo: "membresia" }),
                     { status: 403, headers: jHeaders }
@@ -214,10 +227,10 @@ Deno.serve(async (req) => {
                     Authorization: `Bearer ${supaKey}`,
                 },
                 body: JSON.stringify({
-                    p_edge: `${EDGE_NAME}-gratis`,
+                    p_edge: `${EDGE_NAME}${esRafaga ? "-rafaga" : ""}-gratis`,
                     p_user_key: clerkUserId,
                     p_cost: 1,
-                    p_user_limit: IMAGENES_GRATIS_DE_POR_VIDA,
+                    p_user_limit: deVida,
                     p_user_window_seconds: VENTANA_DE_POR_VIDA,
                 }),
             }).catch(() => null)
