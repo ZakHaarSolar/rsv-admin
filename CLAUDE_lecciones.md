@@ -1831,7 +1831,61 @@ sala; la copia limpia con el `project.json` copiado creó el proyecto «publicar
 **Hermanas.** 0-undevicies (tu propia automatización puede deshacer lo que publicaste) · 0-sexquinquagies (lo que
 entrega otro no se toca mientras trabaja) · 0-nonies (publicar cierra con la verificación en vivo).
 
+### Paso 0-teroctogies · La memoria de una función de Supabase no es caché
+
+**Regla.** Lo que una función de Supabase guarda en una variable del módulo no sobrevive al siguiente pedido en
+producción: cada pedido puede caer en una instancia nueva. Lo que tiene que durar entre pedidos (una muestra ya pagada,
+un resultado caro) va a Storage o a la base; la memoria queda solo como atajo dentro de la misma instancia. Antes de
+prometer «se paga una vez», se mide en producción con varios pedidos seguidos y una cabecera que diga si hubo acierto.
+
+**Por qué.** El 2026-10-18, en la sala de los huecos de gasto, la muestra de la tarjeta de voces se guardó en memoria
+para pagarla una sola vez. El banco local (un solo proceso) decía «1 síntesis de 3»; en producción, seis pedidos seguidos
+dieron seis síntesis y cero aciertos. Con el bucket privado `voz-muestras` la primera tarda de 6 a 7 s y las demás salen
+en menos de 1 s, gratis.
+
+**Hermanas.** 0-nonies (una verificación que no pudo correr no pasó) · 0-duodecies (la lógica pura verificada no prueba
+la máquina asíncrona) · 0-sexdecies (lo que mide y lo que ocurre tienen que ser el mismo objeto).
+
+### Paso 0-quateroctogies · Una regla nueva del servidor no exige lo que la app publicada no manda
+
+**Regla.** Antes de exigir algo nuevo en el servidor (una sesión, un campo, una membresía), se busca cómo lo llama la
+app que ya está en los teléfonos y en la Mac: si no lo manda, exigirlo la rompe hasta la siguiente versión de tienda. El
+hueco se cierra por otro lado (tope por persona o por IP, copia guardada, una respuesta que el cliente viejo ya sabe leer)
+y se le pide a la sala de la app que lo mande, para poder exigirlo después.
+
+**Por qué.** El 2026-10-18 la tarea pedía exigir la sesión en los tres modos abiertos de la voz. Dos eran sondas internas y
+se cerraron; la tercera, la muestra de la tarjeta de voces, la pide la app publicada sin token: exigirlo habría dejado
+muda esa tarjeta en iPhone, Android, Mac y web. Se le puso tope y copia guardada, y la sala del muro recibió el pedido
+del token. Igual con las imágenes: el rechazo a quien no paga dice «cupo», la palabra que la app vieja ya entiende (apaga
+el modo), más `motivo: "membresia"` para la versión nueva.
+
+**Hermanas.** 0-duotricies (lo que se pide para una superficie no se aplica a las dos) · 0-quater (un fallo que Zak no
+puede leer es un viaje perdido) · 0-vicies (un atajo que decide no preguntar falla hacia el camino largo).
+
+### Paso 0-quinoctogies · Un contador se reserva en un solo paso, y lo ya entregado se anota sin revisar el tope
+
+**Regla.** Un límite que se lee al empezar y se escribe al terminar no es un límite: varios pedidos simultáneos leen el
+mismo número y pasan todos. Se reserva antes de gastar, sumando y verificando en un solo paso dentro de la base
+(`INSERT … ON CONFLICT … DO UPDATE … WHERE`, o un candado por persona), y se devuelve si el turno no entregó nada. Al
+revés, lo que ya se entregó se anota siempre, sin revisar la ventana: si el cobro final revisa el mismo tope que la
+entrada, cerca del tope se pierde. Y la prueba de un contador se hace con concurrencia real, no con pedidos en fila.
+
+**Por qué.** El 2026-10-18, en un Postgres real con 20 conexiones: con el camino viejo del Espejo, 20 mensajes gratis
+simultáneos pasaron los 20 y el contador quedó en 1; con `reservar_cortesia_espejo`, pasaron 3. El gobernador sin
+candado dejó pasar más de 5 con tope 5; con el candado, 5 exactos. Y el resto del reflejo profundo (7 de sus 8) se
+cobraba con el tope de la entrada: con 145 de 150 la reserva decía «no cabe» y no se anotaba, así que ese profundo
+costaba 1.
+
+**Hermanas.** 0-undecies (el dato de prueba se parece al real en la dimensión que importa: aquí, la concurrencia) ·
+0-septvicies (el testigo de una etapa se suelta al final de la etapa) · 0-tervicies (un cierre asíncrono comprueba que el
+recurso siga siendo suyo).
+
 ### Changelog del protocolo
+
+- **v77 (2026-10-18, sala de los huecos de gasto):** tres lecciones. **0-teroctogies**: la memoria de una función de
+  Supabase no es caché; lo que debe durar va a Storage o a la base. **0-quateroctogies**: una regla nueva del servidor no
+  exige lo que la app publicada no manda. **0-quinoctogies**: un contador se reserva en un solo paso, y lo ya entregado
+  se anota sin revisar el tope. Sin cambios en los pasos: la sala sigue la nota «Sin 🔮 propio» que estrenó la v75.
 
 - **v76 (2026-10-18, sala del muro de Sintonía):** una lección. **0-duooctogies**: una web compartida se publica desde
   lo guardado, comprobando que lo vivo es su ancestro, y con el enlace correcto del proyecto.

@@ -4,6 +4,39 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-18 · II · PRECIOS: LA AUDITORÍA DE SINTONÍA, LO QUE DE VERDAD LLEGA DE CADA PAGO Y TRES SALAS DE ARREGLOS
+
+- ✅ **Resuelto:** auditoría de precios completa de Sintonía Solar (valor y calibración de lo gratis, costo real por
+  persona y por suscriptor, valor percibido, semanal contra mensual, riesgos, suscripciones para los 33,500) con
+  recomendación: **499 al mes y 149 a la semana se quedan**; página con simulador · consultas de Zak: F22 (volvió tras la
+  caída, usa la app en español, nunca aceptó avisos push; regalo de un mes enviado), el alta en el SAT («Sin obligaciones
+  fiscales»), los precios de fuera de México (en línea con ChatGPT Plus de cada tienda: se quedan), Stripe (el 777 solo en
+  un comentario; el 599 activo sin nadie), Clerk (35 USD al mes), cuándo paga Apple (817.74 MXN el 29 de octubre) · las dos
+  personas que pagan lo hacen fuera de México (euros y dólares) · tres salas de arreglos arrancadas: «Cerrar huecos de
+  gasto y cobros del Escáner», «Muro honesto y paso del semanal al mensual» y «Avisos de soporte que se ven».
+- 📁 **Archivos:** `Escaner Vibracional/Precios/AUDITORIA_PRECIOS_2026-10-18.md` (nuevo) · `Escaner
+  Vibracional/Precios/pagina.html` v1.2 (nuevo; https://claude.ai/artifact/2DMQ8rSKRbQznv4UZ7p2kL) · memoria
+  `proyecto_precio_sintonia`. Sin código, precios ni SQL tocados: a la base solo consultas de lectura.
+- ⏳ **Pendiente:** lo de Zak (alta en el SAT, archivar el 599 y los enlaces que no se usan, Meditaciones nuevas, que F22 acepte el regalo) en Pendientes vivos; las tres salas llevan su propio estado.
+- 💡 **Decisiones:** 499 y 149 se quedan en México y fuera · para toda meta de dinero se usa ~355 por mensual en tienda (no
+  366) · meta de 92 a 97 suscripciones activas · el precio solo se mueve con 50 o más personas en el muro desde el último
+  cambio (o si la mitad de los «¿Qué te detuvo?» dice «el precio») · anual de 2,990 cuando haya 3 mensuales activos ·
+  el Radar gratis una vez al mes, como prueba.
+- 🔧 **Patrones nuevos:**
+  - El embudo real se mide con SQL de solo lectura por la API de gestión: `oraculo_usage.muro_intentos` (cuenta el muro
+    del Espejo desde el 2026-08-09), `edge_spend_ledger` por función y por cuenta, `onb_funnel` y `operational_expenses`;
+    el gasto de OpenRouter, con GET `/api/v1/credits` y `/api/v1/key` (no cuestan).
+  - Apple con una persona física en México: cobra IVA sobre su comisión y retiene 2.5 % de ISR (sin RFC, 20 %); en el
+    informe de pagos sale como «Impuestos y ajustes» y las ventas van por región (zona euro, América en dólares, México).
+  - Los precios de una app en cada país salen de su página pública de la App Store (`apps.apple.com/<país>/app/id<id>`);
+    la referencia de costumbre es ChatGPT Plus en la misma tienda.
+  - Un PDF se lee en la Mac sin poppler con un guion de Swift y PDFKit (la herramienta de lectura pide poppler).
+  - Un correo `privaterelay.appleid.com` solo recibe de remitentes registrados en Apple Developer (Sign in with Apple for
+    Email Communication); para escribirle a esa persona, el caso de soporte.
+  - Lección 0-unoctogies.
+- 🧬 **Versión del sistema:** `pagina.html` v1.2 · protocolo v75.
+- 🧭 Sin 🔮 propio: el arranque vivo sigue siendo el 🔮 de la Biblioteca de Bashar, aquí abajo.
+
 #### 2026-10-18 · BIBLIOTECA DE BASHAR: LO QUE NOS FALTA, LAS SESIONES SUELTAS, LAS MÉTRICAS DE INSTAGRAM Y EL PLAN MAESTRO
 
 - ✅ **Resuelto:** la transcripción del disco medida (1,832 grabaciones, 1,398 h) con sus copias escondidas · el catálogo
