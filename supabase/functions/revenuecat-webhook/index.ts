@@ -1,3 +1,4 @@
+// Red Solar Viva · revenuecat-webhook v1.9 — EL CÓDICE NUNCA ABRE SINTONÍA (2026-10-19, candado pedido por Zak al revisar la compra del Códice en Android): el Códice se reconoce por su nombre BASE (Google Play puede pegarle la opción de compra, «codice_luz:buy», como a las suscripciones su plan) y TODOS sus eventos se quedan en su rama, que solo concede en compras; una compra única (NON_RENEWING_PURCHASE) de cualquier otro producto ya no escribe membresía. Antes, un Códice con el nombre cambiado caía al default 'sintonia' con status active y sin fecha de fin: Sintonía para siempre por 399 (y un reembolso suyo, CANCELLATION, también escribía una fila activa).
 // Red Solar Viva · revenuecat-webhook v1.8 — LO QUE AVISA LA TIENDA SE GUARDA (telemetría mes con mes, 2026-10-18): cada evento (compra, renovación, baja, expiración, cambio de plan, problema de cobro) queda en suscripcion_eventos con producto, tienda, país, moneda, precio y entorno, una vez por id. Va antes del filtro de prueba (SANDBOX se guarda marcado). Sin la migración 20261018d_telemetria, el insert falla en silencio y todo sigue igual.
 // Red Solar Viva · revenuecat-webhook v1.7 — TRANSFER anónimo→anónimo ya no deja pagando como Explorador. Si el evento no trae user_ de Clerk, se resuelve por alias, email ($email), transferred_from y filas rc_user_* ya ligadas. El alta de F22 (mensual 2026-09-15) se escribió en $RCAnonymousID:a5c216… sin user_id y el Motor no la veía. | v1.6 — no pisa rc_user_* con $RCAnonymousID. | v1.5 leftover — TRANSFER re-liga stripe_customer_id al clerk destino (SIWA / $RCAnonymousID). | v1.4 leftover: CICLO SEMANAL SIN CRISTALES (decisión 2026-08-02): el ciclo semanal de Sintonía (sintonia_solar_weekly) da el Escáner completo pero YA NO emite los 2 Cristales de Extracción — esos viven SOLO en el ciclo mensual.
 // Red Solar Viva · revenuecat-webhook v1.3 — AUDITORÍA 2026-07-24 · PARTE 2: las compras SANDBOX (TestFlight / license testers de Play) ya NO conceden membresía ni Cristales. Llegaban a este mismo endpoint con el mismo Authorization y eran indistinguibles de una compra real: escribían status=active con la membresía completa y emitían los 2 Cristales del mes. Interruptor para QA propio: secrets set REVENUECAT_ALLOW_SANDBOX=true + redeploy (y unset al terminar). El evento TEST del dashboard sigue pasando siempre. + PRODUCT_GROUP_MAP suma sintonia_solar_weekly (faltaba: solo funcionaba por el default legacy).
@@ -166,8 +167,10 @@ function mapEventToStatus(
         case "UNCANCELLATION":
         case "PRODUCT_CHANGE":
         case "SUBSCRIPTION_EXTENDED":
-        case "NON_RENEWING_PURCHASE":
             return { status: "active", cancelAtPeriodEnd: false, write: true }
+        /* v1.9 — NON_RENEWING_PURCHASE ya no está aquí: una compra única no es
+           una membresía (cae al default: no escribe). El Códice, la única que
+           existe, tiene su rama propia en handleSubscriptionEvent. */
         case "CANCELLATION":
             // Apagó auto-renew pero conserva acceso hasta expirar.
             return { status: "active", cancelAtPeriodEnd: true, write: true }
@@ -270,6 +273,15 @@ async function guardarEvento(event: any) {
    Cada compra concede 1 Cristal de Códice server-side, idempotente por
    transacción (RPC grant_codice_cristal_from_purchase). */
 const CODICE_PRODUCT_ID = "codice_luz"
+
+/* v1.9 — El Códice se reconoce por su nombre BASE: Google Play puede pegarle la
+   opción de compra («codice_luz:buy») igual que a las suscripciones su plan
+   («sintonia_solar_monthly:mensual»). Comparar el nombre exacto dejaba pasar esa
+   variante hacia la rama de membresías. */
+function esCodice(productId: string | null | undefined): boolean {
+    const base = String(productId || "").toLowerCase().split(":")[0].trim()
+    return base === CODICE_PRODUCT_ID
+}
 
 async function handleCodicePurchase(event: any) {
     if (
@@ -484,9 +496,23 @@ async function handleSubscriptionEvent(event: any) {
     const eventType = event.type as string
 
     // Consumible Códice de Luz → concede Cristal de Códice y NO escribe en
-    // subscriptions (no es una membresía).
-    if ((event.product_id || null) === CODICE_PRODUCT_ID) {
+    // subscriptions (no es una membresía). v1.9: por nombre base, y TODOS sus
+    // eventos (también un reembolso) se quedan en su rama.
+    if (esCodice(event.product_id)) {
         await handleCodicePurchase(event)
+        return
+    }
+
+    /* v1.9 — Una compra ÚNICA nunca abre una membresía. Hoy la única que existe
+       es el Códice (arriba); cualquier otra que llegue sin regla propia se anota
+       y no toca `subscriptions` (antes caía al default 'sintonia', status active
+       y sin fecha de fin = Sintonía para siempre). */
+    if (eventType === "NON_RENEWING_PURCHASE") {
+        console.warn(
+            `⚠️ Compra única sin regla (${event.product_id || "?"}) · user ${
+                event.app_user_id || "?"
+            } — no abre membresía`
+        )
         return
     }
 
