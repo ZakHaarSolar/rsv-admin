@@ -1,3 +1,4 @@
+// Red Solar Viva · espejo-voz v3.8 — 🜂 LAS MARCAS DE SONIOX LLEGAN A LA APP Y CAEN EN SU LETRA (2026-10-20). Nunca llegaron: X-RSV-Marcas y X-RSV-Marca-Cada no estaban en Access-Control-Expose-Headers, así que el navegador las escondía y la app siempre estimó (en el cofre de la Mac de Zak ninguna parte de Soniox trae marcas). Medido con Soniox real (sonda temporal, Margo y Bennett): sus marcas van sobre su texto PREPROCESADO, que vuelve espacio cada salto (dos saltos de párrafo, un solo espacio) y deja lo demás uno a uno; contadas como si fueran el texto, cada párrafo corría el resalte una letra. Tres cambios: (1) el canal guarda también los `characters` y `alinearMarcas` casa cada uno con su lugar en el texto de la parte; (2) un ancla cada 2 letras en vez de 20 (con los tiempos reales: la estimación queda a 8.2 letras de la voz en promedio y hasta 25; las anclas cada 20, a 2.2 y hasta 11; alineadas cada 2, a 0.6 y hasta 2; unos 730 bytes por parte); (3) se exponen y se mandan SOLO a quien las pide con `marcas_v2: true`: las versiones de tienda leen marcas desde agosto y nunca recibieron una, así que siguen estimando como hoy. Y la limpieza se repite hasta quedar estable: un «Título:» seguido de párrafo volvía a fundirse en la segunda pasada y corría una letra la parte (1 de 101 partes de 20 reflejos reales).
 // Red Solar Viva · espejo-voz v3.7 — 🜂 EL CUPO DE SONIOX SE ESPERA, NO SE CRUZA (Zak 2026-10-20: con la escucha automática y Margo, a media lectura, en «Y ahí sí vas a poder elegir», entró la voz de Goku y siguió así). Medido en su Mac: la escucha automática pidió CUATRO síntesis en 2.7 s (el primer tramo dos veces, el segundo y el resto), Soniox atiende TRES a la vez por cuenta (el canal y el REST comparten ese cupo) y a la cuarta le respondió 429; la v3.6 no reintentaba un 429 y caía directo a Fish, cuya voz por defecto es el clon de Goku. Ahora cada intento dice qué pasó (estado y error_type de Soniox): un cupo lleno (limit_exceeded, conexiones o canales al tope) se espera con respiro creciente hasta 60 s y un tropiezo pasajero (408, 5xx, canal caído) hasta 10 s, siempre con el MISMO proveedor; cruzar a Fish queda como último recurso, se anota en los registros de la función y la respuesta lo dice en X-RSV-Cruce (expuesta, como X-RSV-Proveedor, X-RSV-Voz-Nombre y X-RSV-Esperas) para que la app no guarde ese audio bajo la voz pedida. El canal ya no se cierra en audio_end: espera terminated, que es cuando Soniox suelta el lugar.
 // Red Solar Viva · espejo-voz v3.6 — 🜂 LOS MODOS SIN PASE SE CIERRAN (auditoría de precios 2026-10-18). (1) Las sondas `marcas` y `voces` sintetizaban sin sesión ni tope: ahora piden la sesión del Arquitecto y tienen su ventana ('espejo-voz-sonda', 30 al día). (2) La `muestra` de la tarjeta de voces la piden la app publicada SIN token, así que exigirlo la dejaría muda: se sirve de una copia guardada por voz e idioma (la frase es fija; en memoria y en el bucket privado `voz-muestras`, porque en producción cada pedido cae en una instancia nueva) y solo sintetiza cuando no existe, con tope por persona, por IP y global ('espejo-voz-muestra'). (3) La membresía falla CERRADA (_shared/membresia.ts): si la base no contesta, la lectura no se cobra como miembro; responde 503 con la frase legible en `error` (la app publicada la muestra tal cual).
 // Red Solar Viva · espejo-voz v3.5 — el WebSocket de Soniox se autentica con el subprotocolo ["soniox-api-key", llave] y ya no manda api_key en el primer mensaje (la forma vieja deja de servir el 2027-01-15). Sin header Authorization: en Deno es inestable y junto con el subprotocolo Soniox responde 400. El REST no cambia.
@@ -306,8 +307,52 @@ const SONIOX_WS_URL = "wss://tts-rt.soniox.com/tts-websocket"
    El resalte avanza por grupos desde la v4.2, así que esa resolución es de
    sobra, y con delta en centésimas y base 36 una parte completa ocupa unos
    doscientos bytes: entra holgada en una cabecera y el audio sigue viajando
-   como bytes crudos, sin tocar una línea del reproductor del cliente. */
-const MARCA_CADA = 20
+   como bytes crudos, sin tocar una línea del reproductor del cliente.
+   🜂 v3.8 — cada 2, no cada 20. Con los tiempos reales de Soniox, interpolar
+   entre anclas separadas 20 letras deja el resalte hasta 11 letras lejos de
+   la voz en las pausas; cada 2, hasta 2 (0.6 en promedio). Una parte de 700
+   letras ocupa unos 730 bytes y el cliente lee el espaciado de la cabecera. */
+const MARCA_CADA = 2
+
+/* 🜂 v3.8 — LAS MARCAS DE SONIOX SE CASAN CON EL TEXTO. Soniox fecha su texto
+   PREPROCESADO, no el que le mandamos: vuelve un espacio cada salto (dos
+   saltos de párrafo, uno solo) y quita lo que no sabe pronunciar, como los
+   emojis; no devuelve ninguna correspondencia (medido el 2026-10-20 con Margo
+   y Bennett: 432 letras de texto, 429 suyas, y sin espacios coinciden todas).
+   Aquí cada carácter suyo se busca en el texto de la parte a partir del
+   anterior: un espacio suyo cubre la racha entera de espacios y saltos, y lo
+   que quitó toma el tiempo del siguiente que sí dijo. Devuelve el inicio de
+   CADA letra del texto que la app conoce, que es en lo que ella cuenta. */
+function alinearMarcas(
+    texto: string,
+    caracteres: string[],
+    tiempos: number[]
+): number[] {
+    const n = texto.length
+    const t: number[] = new Array(n).fill(Number.NaN)
+    let i = 0
+    for (let j = 0; j < caracteres.length && i < n; j++) {
+        const c = String(caracteres[j] ?? "").normalize("NFC")
+        const ts = Number(tiempos[j]) || 0
+        if (!c) continue
+        if (/^\s+$/.test(c)) {
+            if (/\s/.test(texto[i])) while (i < n && /\s/.test(texto[i])) t[i++] = ts
+            continue
+        }
+        let k = i
+        while (k < n && k - i <= 8 && !texto.startsWith(c, k)) k++
+        if (k < n && texto.startsWith(c, k)) {
+            for (let x = i; x < k + c.length; x++) t[x] = ts
+            i = k + c.length
+        } else t[i++] = ts
+    }
+    let ultimo = 0
+    for (let x = 0; x < n; x++) {
+        if (Number.isNaN(t[x])) t[x] = ultimo
+        else ultimo = t[x]
+    }
+    return t
+}
 
 function marcasCompactas(tiempos: number[]): string {
     /* Delta en centésimas de segundo, base 36. Monótono creciente, así que
@@ -328,7 +373,7 @@ function marcasCompactas(tiempos: number[]): string {
    en Fish. Ahora vuelve el estado y el error_type que manda Soniox, y quien
    llama decide si espera, insiste o se rinde. */
 type IntentoSoniox =
-    | { ok: true; audio: Uint8Array; tiempos: number[] }
+    | { ok: true; audio: Uint8Array; tiempos: number[]; caracteres: string[] }
     | { ok: false; status: number; tipo: string; detalle: string }
 
 /* Cuánto se le espera a Soniox antes de rendirse, por clase de tropiezo. Un
@@ -394,6 +439,9 @@ async function sonioxPorCanal(
         }
         const trozos: Uint8Array[] = []
         const tiempos: number[] = []
+        /* v3.8 — sus caracteres, en el mismo orden que los tiempos. */
+        const caracteres: string[] = []
+        let sinCaracteres = false
         let listo = false
         let finAudio = false
         let reloj: number | undefined
@@ -408,7 +456,7 @@ async function sonioxPorCanal(
                 audio.set(t, off)
                 off += t.length
             }
-            return { ok: true, audio, tiempos }
+            return { ok: true, audio, tiempos, caracteres: sinCaracteres ? [] : caracteres }
         }
         const terminar = (v: IntentoSoniox) => {
             if (listo) return
@@ -482,9 +530,19 @@ async function sonioxPorCanal(
                     trozos.push(u)
                 }
                 const ts = m.timestamps
-                if (ts?.character_start_times_seconds)
+                if (ts?.character_start_times_seconds) {
                     for (const t of ts.character_start_times_seconds)
                         tiempos.push(Number(t) || 0)
+                    /* Si un cuadro no trae sus caracteres (o no cuadran), no
+                       se adivina: se usan los tiempos tal cual. */
+                    const cs = ts.characters
+                    if (
+                        Array.isArray(cs) &&
+                        cs.length === ts.character_start_times_seconds.length
+                    )
+                        for (const c of cs) caracteres.push(String(c ?? ""))
+                    else sinCaracteres = true
+                }
                 /* 🜂 v3.7 — audio_end dice que ya no viene más audio, pero el
                    lugar en el cupo se suelta con `terminated` (la documentación
                    de Soniox pide no dar el canal por terminado antes). Cerrar en
@@ -1017,7 +1075,24 @@ function jsonResponse(status: number, body: any) {
    Leído en voz alta, eso son asteriscos y gatos sueltos. Se limpia acá para
    que la voz reciba prosa, no marcas. También caen los marcadores ⟦IMG⟧ que
    la lectura de una imagen deja incrustados en el mensaje. */
+/* 🜂 v3.8 — LA LIMPIEZA SE REPITE HASTA QUEDAR ESTABLE. La app manda el
+   texto ya limpio y aquí se limpia otra vez; si una pasada deja algo que la
+   siguiente todavía cambia, la parte que lee la voz y la que cuenta la app
+   dejan de ser la misma y cada marca cae corrida. Medido con 20 reflejos
+   reales de la Mac de Zak: en 1 de 101 partes un «Título:» seguido de
+   párrafo se fundía recién en la segunda pasada. Dos o tres pasadas bastan
+   siempre; el espejo de la app (src/lib/vozLimpieza.ts) hace lo mismo. */
 function limpiarParaVoz(raw: string): string {
+    let t = limpiarUnaVez(raw)
+    for (let k = 0; k < 3; k++) {
+        const otra = limpiarUnaVez(t)
+        if (otra === t) break
+        t = otra
+    }
+    return t
+}
+
+function limpiarUnaVez(raw: string): string {
     return (
         (raw || "")
             /* 🜂 v1.8 — PRIMERO los caracteres INVISIBLES (word joiner,
@@ -1786,7 +1861,7 @@ Deno.serve(async (req: Request) => {
             if (r.ok) {
                 const audio = new Uint8Array(await r.arrayBuffer())
                 return audio.length
-                    ? { ok: true, audio, tiempos: [] }
+                    ? { ok: true, audio, tiempos: [], caracteres: [] }
                     : { ok: false, status: 0, tipo: "rest_vacio", detalle: "" }
             }
             const cuerpo = await r.text().catch(() => "")
@@ -1865,13 +1940,31 @@ Deno.serve(async (req: Request) => {
     const esperas = `${intentos}/${esperadoMs}`
 
     if (sonio?.ok) {
-        const marcas = sonio.tiempos.length ? marcasCompactas(sonio.tiempos) : ""
+        /* 🜂 v3.8 — las marcas viajan solo a quien las pide en su forma nueva
+           (`marcas_v2`): casadas con el texto de la parte, un ancla cada 2
+           letras y EXPUESTAS, porque sin eso el navegador las esconde. Las
+           versiones de tienda no las piden así y siguen estimando como hasta
+           hoy: leen marcas desde agosto y nunca recibieron una, así que ese
+           camino suyo nunca se probó con marcas de verdad. */
+        const conMarcas = body?.marcas_v2 === true && sonio.tiempos.length > 0
+        const marcas = conMarcas
+            ? marcasCompactas(
+                  sonio.caracteres.length === sonio.tiempos.length
+                      ? alinearMarcas(textoParte, sonio.caracteres, sonio.tiempos)
+                      : sonio.tiempos
+              )
+            : ""
         /* El cupo ya quedó reservado arriba y solo se devuelve si algo falla:
            no hay nada que confirmar acá. */
         return new Response(sonio.audio, {
             status: 200,
             headers: {
                 ...CORS_HEADERS,
+                ...(marcas
+                    ? {
+                          "Access-Control-Expose-Headers": `${CORS_HEADERS["Access-Control-Expose-Headers"]}, X-RSV-Marcas, X-RSV-Marca-Cada`,
+                      }
+                    : {}),
                 "Content-Type": "audio/mpeg",
                 "Cache-Control": "no-store",
                 "X-RSV-Voz": "principal",
@@ -1882,8 +1975,8 @@ Deno.serve(async (req: Request) => {
                 "X-RSV-Partes": String(partes.length),
                 "X-RSV-Parte": String(usaPartes ? pedida : 0),
                 "X-RSV-Esperas": esperas,
-                /* Un ancla cada 20 caracteres, delta en centésimas, base 36.
-                   El cliente reconstruye sumando. */
+                /* Un ancla cada MARCA_CADA letras del texto de la parte,
+                   delta en centésimas, base 36. El cliente reconstruye sumando. */
                 ...(marcas
                     ? {
                           "X-RSV-Marcas": marcas,
