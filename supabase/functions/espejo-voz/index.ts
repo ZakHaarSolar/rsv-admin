@@ -1,3 +1,4 @@
+// Red Solar Viva · espejo-voz v3.7 — 🜂 EL CUPO DE SONIOX SE ESPERA, NO SE CRUZA (Zak 2026-10-20: con la escucha automática y Margo, a media lectura, en «Y ahí sí vas a poder elegir», entró la voz de Goku y siguió así). Medido en su Mac: la escucha automática pidió CUATRO síntesis en 2.7 s (el primer tramo dos veces, el segundo y el resto), Soniox atiende TRES a la vez por cuenta (el canal y el REST comparten ese cupo) y a la cuarta le respondió 429; la v3.6 no reintentaba un 429 y caía directo a Fish, cuya voz por defecto es el clon de Goku. Ahora cada intento dice qué pasó (estado y error_type de Soniox): un cupo lleno (limit_exceeded, conexiones o canales al tope) se espera con respiro creciente hasta 60 s y un tropiezo pasajero (408, 5xx, canal caído) hasta 10 s, siempre con el MISMO proveedor; cruzar a Fish queda como último recurso, se anota en los registros de la función y la respuesta lo dice en X-RSV-Cruce (expuesta, como X-RSV-Proveedor, X-RSV-Voz-Nombre y X-RSV-Esperas) para que la app no guarde ese audio bajo la voz pedida. El canal ya no se cierra en audio_end: espera terminated, que es cuando Soniox suelta el lugar.
 // Red Solar Viva · espejo-voz v3.6 — 🜂 LOS MODOS SIN PASE SE CIERRAN (auditoría de precios 2026-10-18). (1) Las sondas `marcas` y `voces` sintetizaban sin sesión ni tope: ahora piden la sesión del Arquitecto y tienen su ventana ('espejo-voz-sonda', 30 al día). (2) La `muestra` de la tarjeta de voces la piden la app publicada SIN token, así que exigirlo la dejaría muda: se sirve de una copia guardada por voz e idioma (la frase es fija; en memoria y en el bucket privado `voz-muestras`, porque en producción cada pedido cae en una instancia nueva) y solo sintetiza cuando no existe, con tope por persona, por IP y global ('espejo-voz-muestra'). (3) La membresía falla CERRADA (_shared/membresia.ts): si la base no contesta, la lectura no se cobra como miembro; responde 503 con la frase legible en `error` (la app publicada la muestra tal cual).
 // Red Solar Viva · espejo-voz v3.5 — el WebSocket de Soniox se autentica con el subprotocolo ["soniox-api-key", llave] y ya no manda api_key en el primer mensaje (la forma vieja deja de servir el 2027-01-15). Sin header Authorization: en Deno es inestable y junto con el subprotocolo Soniox responde 400. El REST no cambia.
 // Red Solar Viva · espejo-voz v3.4 — 🜂 LA VOZ NO CAMBIA DE PERSONA A MEDIA
@@ -236,9 +237,13 @@ const CORS_HEADERS = {
         "authorization, x-client-info, apikey, content-type",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     /* Sin esto el navegador esconde los headers propios y el device-QA no
-       podría leer qué voz sonó ni en qué matiz. */
+       podría leer qué voz sonó ni en qué matiz.
+       🜂 v3.7 — también QUIÉN habló, si hubo cruce y cuánto se esperó: sin
+       eso la app no distingue el audio de respaldo del que pidió y lo guarda
+       bajo la voz equivocada. Las versiones publicadas no las leen, así que
+       sumarlas no les cambia nada. */
     "Access-Control-Expose-Headers":
-        "X-RSV-Voz, X-RSV-Voz-Swap, X-RSV-Matiz, X-RSV-Partes, X-RSV-Parte",
+        "X-RSV-Voz, X-RSV-Voz-Swap, X-RSV-Matiz, X-RSV-Partes, X-RSV-Parte, X-RSV-Proveedor, X-RSV-Voz-Nombre, X-RSV-Cruce, X-RSV-Esperas",
 }
 
 const FISH_TTS_URL = "https://api.fish.audio/v1/tts"
@@ -317,31 +322,99 @@ function marcasCompactas(tiempos: number[]): string {
     return out.join(".")
 }
 
+/* 🜂 v3.7 — CADA INTENTO DICE QUÉ PASÓ. Antes el canal solo decía «salió» o
+   null, y con un null no hay cómo distinguir un cupo lleno (se cura esperando
+   unos segundos) de una llave rota (no se cura nunca): por eso un 429 acababa
+   en Fish. Ahora vuelve el estado y el error_type que manda Soniox, y quien
+   llama decide si espera, insiste o se rinde. */
+type IntentoSoniox =
+    | { ok: true; audio: Uint8Array; tiempos: number[] }
+    | { ok: false; status: number; tipo: string; detalle: string }
+
+/* Cuánto se le espera a Soniox antes de rendirse, por clase de tropiezo. Un
+   cupo lleno se vacía solo en cuanto termina alguna síntesis en curso (la
+   más larga que mandamos ronda los 37 s), así que se le dan 60: cubre una
+   tanda entera y el escalón del respiro; un tropiezo pasajero que no se cura
+   en 10 s ya no es un tropiezo. Con la síntesis encima, el peor caso ronda
+   los 105 s, lejos del límite de 150 s de la función. */
+const ESPERA_CUPO_MS = 60000
+const ESPERA_PASAJERO_MS = 10000
+
+/* Respiro creciente con un poco de azar, para que dos partes rechazadas al
+   mismo tiempo no vuelvan a chocar al mismo tiempo: 0.7, 1.2, 2, 3.4, 5.8 s
+   y de ahí 6 s, cada uno ±20 %. */
+function respiroSoniox(intento: number): number {
+    const base = Math.min(6000, 700 * Math.pow(1.7, Math.max(0, intento - 1)))
+    return Math.round(base * (0.8 + Math.random() * 0.4))
+}
+
+/* Los nombres son los de la documentación de errores de Soniox
+   (error_type): se decide por ellos y por el estado, nunca por el mensaje. */
+function claseFalloSoniox(f: {
+    status: number
+    tipo: string
+}): "cupo" | "pasajero" | "fijo" {
+    const t = (f.tipo || "").toLowerCase()
+    if (
+        f.status === 429 ||
+        t === "limit_exceeded" ||
+        t === "max_concurrent_connections_reached" ||
+        t === "max_concurrent_streams_reached"
+    )
+        return "cupo"
+    if (t === "voice_failed") return "fijo"
+    if (f.status === 0 || f.status === 408 || f.status >= 500) return "pasajero"
+    return "fijo"
+}
+
 /* Sintetiza por WebSocket y devuelve audio + tiempo de inicio de CADA
-   carácter. Devuelve null si el canal no llegó a buen puerto: el llamador
-   cae al REST de siempre, que no da marcas pero nunca falla por esto. */
-async function sintetizarConMarcas(
+   carácter. Si el canal no llega a buen puerto devuelve el motivo: el
+   llamador decide entre esperar (cupo, tropiezo) o caer al REST de siempre,
+   que no da marcas pero no depende de este canal. */
+async function sonioxPorCanal(
     key: string,
     modelo: string,
     voz: string,
     idioma: string,
     texto: string,
     velocidad?: number
-): Promise<{ audio: Uint8Array; tiempos: number[] } | null> {
+): Promise<IntentoSoniox> {
     return await new Promise((resolve) => {
         let ws: WebSocket
         try {
             ws = new WebSocket(SONIOX_WS_URL, ["soniox-api-key", key])
-        } catch {
-            resolve(null)
+        } catch (e) {
+            resolve({
+                ok: false,
+                status: 0,
+                tipo: "canal_no_abre",
+                detalle: String(e).slice(0, 160),
+            })
             return
         }
         const trozos: Uint8Array[] = []
         const tiempos: number[] = []
         let listo = false
-        const cerrar = (v: { audio: Uint8Array; tiempos: number[] } | null) => {
+        let finAudio = false
+        let reloj: number | undefined
+        let gracia: number | undefined
+        const conAudio = (): IntentoSoniox => {
+            const total = trozos.reduce((n, t) => n + t.length, 0)
+            if (!total)
+                return { ok: false, status: 0, tipo: "canal_vacio", detalle: "" }
+            const audio = new Uint8Array(total)
+            let off = 0
+            for (const t of trozos) {
+                audio.set(t, off)
+                off += t.length
+            }
+            return { ok: true, audio, tiempos }
+        }
+        const terminar = (v: IntentoSoniox) => {
             if (listo) return
             listo = true
+            if (reloj !== undefined) clearTimeout(reloj)
+            if (gracia !== undefined) clearTimeout(gracia)
             try {
                 ws.close()
             } catch {}
@@ -349,8 +422,21 @@ async function sintetizarConMarcas(
         }
         /* Un canal que no responde no puede colgar la lectura: 45 s es más
            del doble de lo que tarda la parte más larga que mandamos. */
-        const reloj = setTimeout(() => cerrar(null), 45000)
-        const sid = `rsv-${Date.now().toString(36)}`
+        reloj = setTimeout(
+            () =>
+                terminar(
+                    finAudio
+                        ? conAudio()
+                        : {
+                              ok: false,
+                              status: 0,
+                              tipo: "canal_reloj",
+                              detalle: "45 s sin terminar",
+                          }
+                ),
+            45000
+        )
+        const sid = `rsv-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`
         ws.onopen = () => {
             try {
                 ws.send(
@@ -368,17 +454,25 @@ async function sintetizarConMarcas(
                 ws.send(
                     JSON.stringify({ text: texto, text_end: true, stream_id: sid })
                 )
-            } catch {
-                clearTimeout(reloj)
-                cerrar(null)
+            } catch (e) {
+                terminar({
+                    ok: false,
+                    status: 0,
+                    tipo: "canal_envio",
+                    detalle: String(e).slice(0, 160),
+                })
             }
         }
         ws.onmessage = (ev) => {
             try {
                 const m = JSON.parse(String(ev.data))
-                if (m.error_code) {
-                    clearTimeout(reloj)
-                    cerrar(null)
+                if (m.error_code || m.error_type) {
+                    terminar({
+                        ok: false,
+                        status: Number(m.error_code) || 0,
+                        tipo: String(m.error_type || ""),
+                        detalle: String(m.error_message || "").slice(0, 200),
+                    })
                     return
                 }
                 if (m.audio) {
@@ -391,32 +485,52 @@ async function sintetizarConMarcas(
                 if (ts?.character_start_times_seconds)
                     for (const t of ts.character_start_times_seconds)
                         tiempos.push(Number(t) || 0)
-                if (m.audio_end || m.terminated) {
-                    clearTimeout(reloj)
-                    const total = trozos.reduce((n, t) => n + t.length, 0)
-                    if (!total) {
-                        cerrar(null)
-                        return
-                    }
-                    const audio = new Uint8Array(total)
-                    let off = 0
-                    for (const t of trozos) {
-                        audio.set(t, off)
-                        off += t.length
-                    }
-                    cerrar({ audio, tiempos })
+                /* 🜂 v3.7 — audio_end dice que ya no viene más audio, pero el
+                   lugar en el cupo se suelta con `terminated` (la documentación
+                   de Soniox pide no dar el canal por terminado antes). Cerrar en
+                   audio_end dejaba la cuenta un instante más llena de lo que
+                   estaba; se espera terminated con una gracia corta. */
+                if (m.terminated) {
+                    terminar(conAudio())
+                    return
+                }
+                if (m.audio_end && !finAudio) {
+                    finAudio = true
+                    gracia = setTimeout(() => terminar(conAudio()), 2500)
                 }
             } catch {}
         }
-        ws.onerror = () => {
-            clearTimeout(reloj)
-            cerrar(null)
-        }
-        ws.onclose = () => {
-            clearTimeout(reloj)
-            cerrar(null)
-        }
+        ws.onerror = () =>
+            terminar(
+                finAudio
+                    ? conAudio()
+                    : { ok: false, status: 0, tipo: "canal_error", detalle: "" }
+            )
+        ws.onclose = (ev: any) =>
+            terminar(
+                finAudio
+                    ? conAudio()
+                    : {
+                          ok: false,
+                          status: 0,
+                          tipo: "canal_cerrado",
+                          detalle: `código ${ev?.code ?? "?"}${ev?.reason ? ` · ${String(ev.reason).slice(0, 120)}` : ""}`,
+                      }
+            )
     })
+}
+
+/* La sonda de marcas sigue hablando como antes: audio y tiempos, o nada. */
+async function sintetizarConMarcas(
+    key: string,
+    modelo: string,
+    voz: string,
+    idioma: string,
+    texto: string,
+    velocidad?: number
+): Promise<{ audio: Uint8Array; tiempos: number[] } | null> {
+    const r = await sonioxPorCanal(key, modelo, voz, idioma, texto, velocidad)
+    return r.ok ? { audio: r.audio, tiempos: r.tiempos } : null
 }
 const SONIOX_MODEL = Deno.env.get("SONIOX_MODEL") || "tts-rt-v2"
 const DEFAULT_MODEL = "s2.1-pro"
@@ -1663,78 +1777,154 @@ Deno.serve(async (req: Request) => {
        cambia para nadie. Y si el canal falla, cae al REST de siempre: la
        lectura no puede depender de una mejora del resalte. */
     const quiereMarcas = body?.marcas === true && usaSoniox
-    let marcas = ""
-    if (quiereMarcas) {
-        const conMarcas = await sintetizarConMarcas(
-            SONIOX_KEY,
-            SONIOX_MODEL,
-            cat.voz,
-            lang === "en" ? "en" : "es",
-            textoParte,
-            cat.speed
-        )
-        if (conMarcas && conMarcas.tiempos.length) {
-            marcas = marcasCompactas(conMarcas.tiempos)
-            /* El cupo ya quedó reservado arriba y solo se devuelve si algo
-               falla, igual que en el camino normal: no hay nada que
-               confirmar acá. */
-            return new Response(conMarcas.audio, {
-                status: 200,
-                headers: {
-                    ...CORS_HEADERS,
-                    "Content-Type": "audio/mpeg",
-                    "Cache-Control": "no-store",
-                    "X-RSV-Voz": "principal",
-                    "X-RSV-Proveedor": "soniox",
-                    "X-RSV-Voz-Nombre": cat.voz,
-                    "X-RSV-Partes": String(partes.length),
-                    "X-RSV-Parte": String(usaPartes ? pedida : 0),
-                    /* Un ancla cada 20 caracteres, delta en centésimas,
-                       base 36. El cliente reconstruye sumando. */
-                    "X-RSV-Marcas": marcas,
-                    "X-RSV-Marca-Cada": String(MARCA_CADA),
-                },
-            })
+
+    /* La puerta REST de Soniox, contada como un intento más: dice qué pasó
+       igual que el canal (estado y error_type), para decidir con lo mismo. */
+    const sonioxRest = async (): Promise<IntentoSoniox> => {
+        try {
+            const r = await sintetizarSoniox()
+            if (r.ok) {
+                const audio = new Uint8Array(await r.arrayBuffer())
+                return audio.length
+                    ? { ok: true, audio, tiempos: [] }
+                    : { ok: false, status: 0, tipo: "rest_vacio", detalle: "" }
+            }
+            const cuerpo = await r.text().catch(() => "")
+            let tipo = ""
+            try {
+                tipo = String(JSON.parse(cuerpo)?.error_type || "")
+            } catch {}
+            return { ok: false, status: r.status, tipo, detalle: cuerpo.slice(0, 300) }
+        } catch (e: any) {
+            return {
+                ok: false,
+                status: 0,
+                tipo: "rest_red",
+                detalle: String(e?.message ?? e).slice(0, 160),
+            }
         }
     }
 
+    /* 🜂 v3.7 — UNA PARTE NO CAMBIA DE PROVEEDOR POR UN CUPO LLENO (Zak
+       2026-10-20). Soniox atiende tres síntesis a la vez por cuenta, y el
+       canal y el REST cuentan en el mismo cupo; la escucha automática llegó a
+       pedir cuatro en menos de tres segundos. La cuarta recibía 429, la v3.6
+       no reintentaba un 429 y la parte salía en Fish: la voz de Goku en medio
+       de una lectura de Margo. Un cupo lleno no es una caída: se vacía solo en
+       cuanto termina cualquiera de las síntesis en curso. Por eso aquí se
+       espera con respiro creciente y se insiste con el MISMO proveedor (hasta
+       60 s por cupo, 10 s por tropiezo pasajero); solo una llave, un saldo o
+       una voz rotos se rinden en el acto. El cupo de la persona ya quedó
+       reservado arriba: los reintentos no cobran de nuevo. */
+    let sonio: IntentoSoniox | null = null
+    let intentos = 0
+    let esperadoMs = 0
+    if (usaSoniox) {
+        let porCanal = quiereMarcas
+        let esperaCupo = 0
+        let esperaPasajero = 0
+        for (;;) {
+            intentos++
+            sonio = porCanal
+                ? await sonioxPorCanal(
+                      SONIOX_KEY,
+                      SONIOX_MODEL,
+                      cat.voz,
+                      lang === "en" ? "en" : "es",
+                      textoParte,
+                      cat.speed
+                  )
+                : await sonioxRest()
+            if (sonio.ok) break
+            const clase = claseFalloSoniox(sonio)
+            if (clase === "fijo") break
+            /* Un canal que se cae sin decir por qué (red, apretón de manos
+               rechazado) no amerita espera: se prueba en el acto la puerta
+               REST, que no depende del canal. Sin marcas, pero con la voz. */
+            if (porCanal && sonio.status === 0) {
+                porCanal = false
+                continue
+            }
+            const espera = respiroSoniox(intentos)
+            if (clase === "cupo") {
+                if (esperaCupo + espera > ESPERA_CUPO_MS) break
+                esperaCupo += espera
+            } else {
+                if (esperaPasajero + espera > ESPERA_PASAJERO_MS) break
+                esperaPasajero += espera
+            }
+            esperadoMs += espera
+            await new Promise((res) => setTimeout(res, espera))
+        }
+        if (sonio.ok && intentos > 1)
+            console.log(
+                `[espejo-voz] Soniox respondió tras ${intentos} intentos y ${esperadoMs} ms de espera`,
+                JSON.stringify({ voz: cat.voz, parte: usaPartes ? pedida : 0 })
+            )
+    }
+    const esperas = `${intentos}/${esperadoMs}`
+
+    if (sonio?.ok) {
+        const marcas = sonio.tiempos.length ? marcasCompactas(sonio.tiempos) : ""
+        /* El cupo ya quedó reservado arriba y solo se devuelve si algo falla:
+           no hay nada que confirmar acá. */
+        return new Response(sonio.audio, {
+            status: 200,
+            headers: {
+                ...CORS_HEADERS,
+                "Content-Type": "audio/mpeg",
+                "Cache-Control": "no-store",
+                "X-RSV-Voz": "principal",
+                "X-RSV-Proveedor": "soniox",
+                "X-RSV-Voz-Nombre": cat.voz,
+                "X-RSV-Voz-Swap": puedeIntercambiar ? "1" : "0",
+                "X-RSV-Matiz": plana ? "plana" : "actuacion",
+                "X-RSV-Partes": String(partes.length),
+                "X-RSV-Parte": String(usaPartes ? pedida : 0),
+                "X-RSV-Esperas": esperas,
+                /* Un ancla cada 20 caracteres, delta en centésimas, base 36.
+                   El cliente reconstruye sumando. */
+                ...(marcas
+                    ? {
+                          "X-RSV-Marcas": marcas,
+                          "X-RSV-Marca-Cada": String(MARCA_CADA),
+                      }
+                    : {}),
+            },
+        })
+    }
+    /* Lo que Soniox no pudo dar y por qué, en una línea: viaja en X-RSV-Cruce
+       y en los registros. Vacío = la voz pedida vive en Fish (no hay cruce). */
+    const cruce =
+        usaSoniox && sonio && !sonio.ok
+            ? `${claseFalloSoniox(sonio)}:${sonio.status}:${sonio.tipo || "-"}`.slice(0, 80)
+            : ""
+
     try {
-        let r = usaSoniox ? await sintetizarSoniox() : await sintetizar(voiceId)
-        let usoRespaldo = false
+        let r = await sintetizar(voiceId)
+        let usoRespaldo = !!cruce
+        if (cruce)
+            console.warn(
+                "[espejo-voz] cruce a Fish como último recurso",
+                JSON.stringify({
+                    voz: cat.voz,
+                    parte: usaPartes ? pedida : 0,
+                    motivo: cruce,
+                    detalle: sonio && !sonio.ok ? sonio.detalle.slice(0, 160) : "",
+                    intentos,
+                    esperadoMs,
+                    fish: r.status,
+                })
+            )
 
-        /* 🜂 Si Soniox se cae, la lectura NO se cae con él: se reintenta por
-           Fish, que sigue vivo y con saldo. Un proveedor nuevo con un día de
-           vida no puede ser un punto único de falla.
-
-           🜂 v3.4 — PERO PRIMERO SE LE DA OTRA OPORTUNIDAD AL MISMO PROVEEDOR
-           (Zak 2026-08-14: "entró la voz de Goku y nosotros habíamos mandado
-           la de Bennett; y cuando comenzó la parte práctica volvió a Bennett").
-           Cada parte de una lectura larga se pide por separado, así que un
-           tropiezo suelto de Soniox en la parte 3 hacía que ESA parte —y solo
-           esa— sonara con la voz clonada de Fish, y la 4 volviera a la de
-           siempre. Cambiar de timbre a media lectura no se lee como
-           "degradó con gracia": se lee como que la app se rompió.
-           Un transitorio no es una negativa: se respira 600 ms y se insiste
-           con el MISMO proveedor, que es lo que conserva la voz. Solo si
-           Soniox está de verdad caído se cruza a Fish, porque mudo sigue
-           siendo peor que distinto. Los errores que no son transitorios
-           (llave, saldo, cuota) no se reintentan: sería quemar una llamada
-           para el mismo error. */
-        if (
-            usaSoniox &&
-            !r.ok &&
-            r.status !== 401 &&
-            r.status !== 402 &&
-            r.status !== 429
-        ) {
-            await new Promise((res) => setTimeout(res, 600))
-            const segundo = await sintetizarSoniox().catch(() => null)
-            if (segundo) r = segundo
-        }
-        if (usaSoniox && !r.ok && FISH_KEY) {
-            r = await sintetizar(voiceId)
-            usoRespaldo = true
-        }
+        /* 🜂 Si Soniox se cae, la lectura NO se cae con él: la parte sale por
+           Fish, que sigue vivo y con saldo, porque mudo sigue siendo peor que
+           distinto. Pero cambiar de timbre a media lectura se lee como que la
+           app se rompió (Zak 2026-08-14 y 2026-10-20), así que eso pasa solo
+           después de la espera de arriba: la v3.4 respiraba 600 ms una vez y
+           un 429 cruzaba en el acto; la v3.7 espera el cupo y el tropiezo con
+           el mismo proveedor y deja el cruce, dicho en X-RSV-Cruce, como
+           último recurso. */
 
         /* Reintento con la VOZ DE RESPALDO solo si el problema es de la voz
            (4xx que no sea de llave/saldo/cuota). Un 401/402/429 se propaga tal
@@ -1761,15 +1951,17 @@ Deno.serve(async (req: Request) => {
                real"): un 401 de llave, un 402 de saldo y un 422 de voz
                inexistente se diagnostican de un tiro, sin adivinar. */
             return jsonResponse(502, {
-                error: usaSoniox && !usoRespaldo ? "soniox_tts_failed" : "fish_tts_failed",
+                error: "fish_tts_failed",
                 status: r.status,
                 /* El motivo REAL del proveedor llega entero a la pantalla: un
                    nombre de voz mal escrito, una llave inválida o un tope de
                    la cuenta se diagnostican de un tiro, sin adivinar. */
                 detail: detail.slice(0, 400),
-                proveedor: usaSoniox && !usoRespaldo ? "soniox" : "fish",
+                proveedor: "fish",
                 voz: cat.voz || voiceId,
                 tried_fallback: usoRespaldo,
+                /* v3.7 — y por qué no respondió Soniox, si era su voz. */
+                ...(cruce ? { soniox: cruce } : {}),
             })
         }
 
@@ -1790,15 +1982,20 @@ Deno.serve(async (req: Request) => {
                 "X-RSV-Voz": usoRespaldo ? "respaldo" : "principal",
                 /* 🜂 v3.0 — QUIÉN habló de verdad. Sin esto, un fallo de
                    Soniox que cae a Fish suena parecido y nadie se entera de
-                   que el carril nuevo está muerto. */
-                "X-RSV-Proveedor": usaSoniox && !usoRespaldo ? "soniox" : "fish",
-                "X-RSV-Voz-Nombre": usaSoniox && !usoRespaldo ? cat.voz : "fish",
+                   que el carril nuevo está muerto. Desde la v3.7 aquí solo
+                   llega Fish: lo de Soniox sale arriba. */
+                "X-RSV-Proveedor": "fish",
+                "X-RSV-Voz-Nombre": "fish",
                 "X-RSV-Voz-Swap": puedeIntercambiar ? "1" : "0",
                 "X-RSV-Matiz": plana ? "plana" : "actuacion",
                 /* v1.5 — cuántos trozos tiene el reflejo completo: con esto el
                    cliente sabe, ya sonando la parte 0, cuántas le faltan. */
                 "X-RSV-Partes": String(partes.length),
                 "X-RSV-Parte": String(usaPartes ? pedida : 0),
+                "X-RSV-Esperas": esperas,
+                /* 🜂 v3.7 — la voz pedida era de Soniox y esta parte salió en
+                   Fish: la app no la guarda bajo esa voz y lo anota. */
+                ...(cruce ? { "X-RSV-Cruce": cruce } : {}),
             },
         })
     } catch (err: any) {
