@@ -4,6 +4,56 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-18 · V · TELEMETRÍA: LA APP SE MIDE MES CON MES, «¿QUÉ TE FALTÓ?» Y MOTOR → TELEMETRÍA
+
+- ✅ **Resuelto:** la app junta por día y manda en lotes sesiones, uso real, capas (también la Sonda y las pestañas de
+  escritorio), pasos, entradas, salidas, errores y tiempos, nunca texto · el servidor reconstruye las acciones con lo que ya
+  guarda (vale para las versiones viejas) y tiene historia desde marzo · «¿Qué te faltó?» al irse sin usar el Espejo, un
+  Decodificador o la Sonda, con su puente al soporte («Algo no funcionó», sala propia) · Ajustes → «Mejorar el Escáner» la
+  apaga y borrar la cuenta la borra · cada evento de RevenueCat queda guardado · Motor → Telemetría con su guía (sala
+  propia) y el §9 del plan maestro apunta ahí · etiquetas de privacidad de App Store y Play actualizadas por Zak · Mac
+  1.1.56 publicada con la medición (sala de versiones).
+- 📁 **Archivos:** escaner-app `786312c` (lib/telemetria v1.0, PreguntaSalida v1.0, dict tele, EV_Shared v2.51 y 10 más) ·
+  admin `da81b4e`/`3dd1c31`/`9775630` y `admin/supabase/pruebas/telemetria/` · Code `c84c92b` (MI_Telemetria v1.1, salas
+  hijas) · PLAN_MAESTRO v1.3.
+- 🗄️ **Migraciones SQL aplicadas:** `✅ 20261018d_telemetria.sql` (13 tablas tele_* y suscripcion_eventos, lotes,
+  reconstrucción, mantenimiento con pg_cron, lectura del Motor, borrado de cuenta; verificada: 423 días, 59 personas).
+- 🔌 **Edge functions deployed:** user-action v1.54 (`record_telemetria`) · admin-action v1.69 · revenuecat-webhook v1.8.
+- ⏳ **Pendiente:** el sí de Zak para mandar la 1.1.7 a App Store y Google Play (hasta entonces los teléfonos solo aportan
+  acciones reconstruidas) · pegar `20261018f` (salas de seguridad y soporte).
+- 💡 **Decisiones:** la casa se excluye con `_tele_casa()` (una sola lista para todo panel nuevo) · retención: uso por
+  persona 120 días, días y globales 400 · la medición no entra a la fila de sinConexion · los números que mandan los
+  próximos 6 meses: cuentas nuevas al mes (hoy ~6) y día 30 (hoy 0) · 10,000 en 2 años ~1 %, en 10 años ~10 %.
+- 🔧 **Patrones nuevos:**
+  - Banco: `window.__bancoTele`, `&teleFalta`, `window.__telemetria()`, `__telemetriaEnviar()`.
+  - Una capa de encima nueva lleva `cerrarNav` al cerrarse y, si es de valor, `marcarValor`; una capa nueva entra sola al
+    catálogo y se le pone nombre en `tele_catalogo`.
+  - Una función de producción que hay que extender se copia con `pg_get_functiondef` y se suma solo el bloque nuevo.
+  - Lección 0-septoctogies.
+- 🧬 **Versión del sistema:** telemetria v1.0 · user-action v1.54 · admin-action v1.69 · protocolo v79.
+- 🧭 Sin 🔮 propio: el arranque vivo sigue siendo el 🔮 de Emisiones, aquí abajo.
+
+#### 2026-10-17 → 2026-10-18 · EMISIONES: DE LOS FONDOS CON LETRAS A LA ANIMACIÓN, BENNETT, EL DISCO DE BASHAR Y LAS PRIMERAS TRES
+
+- ✅ **Resuelto:** nació `Escaner Vibracional/Emisiones/` (su `CLAUDE.md`, `PLAN.md`, guía de voz v0, revisor anti-copia,
+  registro). Ronda 1 de estilos (8 fondos con letras) rechazada por Zak; ronda 2 de 8 estilos de animación con narración
+  (https://claude.ai/artifact/1Z9sdyEUZLxavohCSpKhQM): Zak y Aqua eligieron 1 Tripulante, 2 Red viva, 3 Cuento de luz.
+  Bennett sellada. EM-003 (Tripulante), EM-004 (Red viva) y EM-005 (Cuento de luz) producidas, una sala cada una, en
+  `salida/`. Disco de Bashar transcrito leyendo directo: 1,822 archivos, 1,380 h, 11.38 millones de palabras (7 fallidos
+  en `fallidos.tsv`); 2,403 textos del disco importados; buscador local de toda la biblioteca.
+- 📁 **Archivos:** `Emisiones/herramientas/` (oido.swift, transcribir.py v1.2, importar_textos.py, texto_pdf.swift,
+  indexar.py v1.1, buscar.py, revisar.py v1.1, narrar.mjs, mezclar.py, audicion.mjs), `animacion/` (comun.js v1.4,
+  lab.js, GUION_VISUAL.md, 8 estilos), `laboratorio/` (ronda 1), `salida/EM-001..006` (guiones y voces listos).
+- ⏳ **Pendiente:** que Zak publique EM-003/004/005 y anote sus números; la destilación (ver 🔮).
+- 💡 **Decisiones:** las emisiones explican con animación, nunca con un fondo fijo (prueba sin sonido); destilación bajo
+  demanda (buscador + mapa + parrilla), nunca leer todo; 30 a 40 s por emisión; música de Zak'Haar, voz Bennett.
+- 🔧 **Patrones nuevos:** el reconocedor de voz de la Mac transcribe gratis a ~150x (la primera corrida del día es lenta;
+  a veces se congela: tope por tramo y lista de fallidos); un disco externo se lee directo con caffeinate -ims; estilos
+  de animación como sistemas (biblia al inicio del archivo, escenas aparte); ocho ayudantes en paralelo con base, ejemplo
+  y revisión en vuelo. Lección 0-sexoctogies.
+- 🧬 **Versión del sistema:** protocolo v78.
+- (Su 🔮 se retiró el 2026-10-20: las transcripciones y el índice ya terminaron y el estado vive en `Escaner Vibracional/Emisiones/CLAUDE.md`.)
+
 #### 2026-10-18 · IV · HUECOS DE GASTO: LO GRATIS YA NO GASTA SIN TOPE, LA WEB COBRA LO QUE MUESTRA Y EL ESPEJO TIENE RESPALDO QUE AVISA
 
 - ✅ **Resuelto:** las 3 respuestas gratis del Espejo se reservan en un solo paso (20 mensajes simultáneos: antes pasaban

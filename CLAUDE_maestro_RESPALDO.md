@@ -627,6 +627,32 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 
 ### 🔵 Escáner · lo que necesita tu decisión
 
+- **Consulta respondida el 2026-10-20 · las voces del Espejo, su exactitud y el botón de la esquina** (sala de la voz en
+  escritorio). Bennett, Owen, Cordelia y Margo son de Soniox (`tts-rt-v2`, su único modelo vigente; el v1 se retiró el 31
+  de agosto) y Goku es un clon en Fish Audio (S2.1 Pro), que además es el respaldo. Exactitud: la dan las voces de Soniox,
+  que marcan cada letra (en el banco el texto va a 1 a 6 letras de la voz); Goku solo estima (hasta ~3 palabras). **Inworld
+  TTS-2 Flash** (salió el 9 de agosto): 15 USD por millón de caracteres (≈0.75 a 0.90 USD la hora en español, contra 0.70 de
+  Soniox), marcas por palabra y por letra atadas al texto original, español de primer nivel con acento mexicano, arriba de
+  Soniox en el ranking público de oído (lugar 12 contra 21, medido casi todo en inglés): recomendado probarlo a ciegas antes
+  de migrar (tarjeta «Prueba a ciegas: Inworld Flash contra Soniox»). **Descartado:** Fish Drama 3 para leer el Espejo (sube
+  de 10 a 50 USD por millón el 12 de noviembre, cada tramo es una toma distinta y sus marcas salen por otra ruta, por
+  segmentos y sin probar en español) y volver «Inicio» el botón de abajo a la derecha (es la única puerta al Espejo en
+  computadora y el Radar ya es la primera pestaña de arriba). **Falta que Zak** diga si arranca la prueba de Inworld y si
+  lleva la voz afinada al celular (tarjeta «Llevar la voz afinada del Espejo al celular»; ahí, la Presencia con voz
+  probablemente se descuadra porque manda el texto crudo, como pasaba en computadora). El salto de Margo a Goku lo arregla su
+  propia sala («Consistencia de la voz del Espejo», causa medida: la escucha automática pidió 4 síntesis en 2.7 s, Soniox
+  atiende 3 y la cuarta cayó a Fish); su estado y la Mac 1.1.59 viven ahí.
+
+- **Construido el 2026-10-18 · la telemetría mes con mes** (sala «Telemetría del Escáner»; Zak: que leyendo la información
+  cada mes la app llegue a las 10,000 suscripciones y nada quede muerto). La app junta por día y manda en lotes sesiones,
+  capas, pasos, salidas, errores, tiempos y «¿Qué te faltó?» (nunca texto; se apaga en Ajustes → «Mejorar el Escáner»); el
+  servidor reconstruye las acciones con lo que ya guarda (también para las versiones de tienda viejas), guarda cada evento
+  de RevenueCat y la foto de cada mes; Motor → Telemetría con su guía (sala «panel-telemetria»), conectado al §9 del plan
+  maestro. Publicado: funciones, web de la app y Mac 1.1.56; migración ✅ pegada; etiquetas de privacidad de
+  App Store y Play actualizadas. **Falta que Zak** dé el sí para mandar la 1.1.7 a las tiendas (lista en la sala «Mac
+  1.1.56 y tiendas 1.1.7»): sin ella, de los teléfonos solo cuentan las acciones reconstruidas. Primera lectura del
+  panel: el 1 de noviembre, con su guía. Detalle en `escaner-app/CLAUDE.md`
+  y [[proyecto_telemetria_escaner]].
 - **Consulta respondida el 2026-10-18 · el precio de Sintonía** (auditoría completa en
   `Escaner Vibracional/Precios/AUDITORIA_PRECIOS_2026-10-18.md`; página con simulador:
   https://claude.ai/artifact/2DMQ8rSKRbQznv4UZ7p2kL). **Recomendado: 499 MXN al mes y 149 a la semana se quedan**
@@ -713,8 +739,19 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   min en un canal nuevo **Escáner Vibracional** (no en Fotón Cero, que queda para las series; «una producción de Fotón
   Cero» va en los créditos); Facebook fuera por ahora (opcional: una página con el compartir automático de Instagram).
   Recomendado: **quitar la barra de arriba de Red viva** (los «nodos en línea» son inventados y se leen como dato real,
-  repite «Emisión 004», tapa la galería de la escena y sale en la cuadrícula del perfil). Falta el sí de Zak para eso y
-  para pedir a las salas de estilo las 6 emisiones de la rotación. **Métricas vivas desde el 2026-10-18** (diaria a las
+  repite «Emisión 004», tapa la galería de la escena y sale en la cuadrícula del perfil); ya se quitó (EM-004 v2.1).
+  **Seis emisiones nuevas listas el 2026-10-18** (Zak: 3 Tripulante y 3 Red viva, de 27 a 31 s, con el gancho en el cuadro
+  0): EM-006 a EM-011 en `Emisiones/salida/`, con su orden de publicación en el `CLAUDE.md` de Emisiones; falta que Zak
+  las vea y las programe. **Consulta respondida el 2026-10-19 · los largos de YouTube:** van en el canal Escáner
+  Vibracional (Shorts con la versión de TikTok), de 6 a 8 min y después de 8 a 12; recomendado el Tripulante como columna
+  (personaje, historia, cara en la miniatura) con tramos de Red viva para explicar el mecanismo, porque Red viva sola
+  cansa en minutos; los Shorts eligen el tema, no el formato del largo (miden cosas distintas). **Zak dijo sí
+  (2026-10-19):** los dos primeros así, en horizontal 1920x1080, uno por semana, **los sábados a las 11:00 am de Cancún
+  (10:00 am del centro)**, y se ajusta con las métricas. El motor de largos se construye en su sala («Motor de largos
+  horizontales para YouTube», `Emisiones/largos/motor/`), sin hacer aún el primer episodio. Se piden
+  cuando termine la sala que funde las bibliotecas. Pendiente: la prueba de un Short privado en el teléfono para decidir
+  si YouTube usa la versión de TikTok o una propia con los subtítulos más arriba.
+  **Métricas vivas desde el 2026-10-18** (diaria a las
   9:05): EM-003 a las 10 h, 75 vistas, 74 % de omisión y 6.9 s de promedio; ojo al comparar, el mejor reel de la cuenta
   (2,045, junio) fue publicidad y la extraterrestre (670) se empujó con historia en la cuenta de Zak. Prompt para la sala
   de EM-004 (quitar la barra y subtítulos B4 con colores de Red viva) entregado a Zak para pegar. Registro de Steamworks
@@ -898,7 +935,7 @@ la mano de Zak:
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v77 (2026-10-18)
+## 🜂 Protocolo de Cierre de Sesión · v81 (2026-10-20)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -1076,6 +1113,10 @@ memorias.
 - **0-teroctogies** · La memoria de una función de Supabase no es caché: cada pedido puede caer en una instancia nueva; lo que debe durar va a Storage o a la base, y el «se paga una vez» se mide en producción.
 - **0-quateroctogies** · Una regla nueva del servidor no exige lo que la app publicada no manda: el hueco se cierra por otro lado (tope, copia guardada, la respuesta que el cliente viejo ya lee) y se le pide al cliente nuevo.
 - **0-quinoctogies** · Un contador se reserva en un solo paso antes de gastar y se devuelve si no se usó; lo ya entregado se anota sin revisar el tope.
+- **0-sexoctogies** · Una propuesta visual para una serie se juzga sin sonido: si solo funciona por las letras sobre un fondo, no es un estilo; lo que se repite decenas de veces tiene que contar cada idea con escenas que cambian.
+- **0-septoctogies** · Lo que mide no es lo que la persona hizo: la medición no entra a su fila ni a su aviso, y lo que se manda al ocultarse lleva un tope por envío.
+- **0-duodenonagies** · Lo que pasa el revisor en un idioma puede ser copia en otro: la frase clave se revisa en cada idioma en que va a sonar, antes de sellarla.
+- **0-undenonagies** · La prueba del motor reproduce el caso que falló (contenedor con scroll, texto largo, sombras): la manera vieja tiene que fallar en ella, o su «pasa» no vale.
 
 ### Paso 1 — Test de continuidad
 
@@ -1217,37 +1258,93 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v77 (2026-10-18). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v81 (2026-10-20). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
 
+#### 2026-10-20 · LA VOZ DEL ESPEJO EN LA COMPUTADORA: VELOCIDAD Y ✕, LA FRASE QUE SUENA SIN RESTOS Y LA PRESENCIA QUE HABLA SOLA
+
+- ✅ **Resuelto:** la píldora de lectura y la barra del shell con velocidad (0.75x a 2x, al instante y recordada; un clic
+  pasa a la siguiente y la tarjeta se abre al acercar el cursor) y con ✕ · la frase que suena en oro, con su banda centrada
+  en las letras, una por renglón y sin restos en Safari · responder dentro de la Presencia no se sale y el orbe baja al
+  centro · el sigilo de la esquina se aparta en la Presencia · con la escucha automática la Presencia habla sola en
+  computadora: letras grandes, cada palabra con las marcas reales de Soniox, lo leído se atenúa, «Sintonizando la voz · N %»,
+  y releer en Presencia un reflejo que ya suena entra a esa lectura · Mac 1.1.57 y 1.1.58 publicadas. Todo solo en
+  computadora (regla 0-duotricies): el teléfono quedó igual.
+- 📁 **Archivos:** escaner-app `b311c25`, `b12ac12` (Mac 1.1.57), `0529440` y `205a63f` (Mac 1.1.58): EV_Oraculo v6.34,
+  EV_VozPill v1.3, espejoVozFish v2.28, vozFondo v1.2, sensory v2.16, EV_Rafaga v5.36, EspejoVozMiniBar v1.3,
+  AppShellDesktop v3.7, espejo es/en v1.30, banco/espejo v1.5 y banco/datos v1.9.
+- ⏳ **Pendiente:** las dos tarjetas propuestas (la voz afinada al celular y la prueba a ciegas de Inworld Flash contra
+  Soniox) · la sala «Consistencia de la voz del Espejo (Margo → Goku)» sigue abierta y saca la Mac 1.1.59.
+- 💡 **Decisiones:** la Cámara de Conversación no obedece a la velocidad (es un diálogo) · a velocidad distinta de 1x la
+  Presencia lee por el elemento de audio (el motor de la app volvería aguda la voz) y solo se pierde el latido del orbe con
+  la voz · en computadora la Presencia manda el texto limpio a la voz (el crudo descuadraba el conteo de partes) · el botón
+  de la esquina se queda como puerta del Espejo · las opciones de velocidad son cinco, con 1.25x como primer paso.
+- 🔧 **Patrones nuevos:**
+  - En Safari, `CSS.highlights` no repinta bien al mover o borrar un resalte dentro de un contenedor con scroll: el color va
+    en `::highlight`, la banda en una capa propia detrás del texto (`data-rsv-bandas`, con `isolation`), y el mensaje se
+    repinta entero alternando un fondo invisible en cada cambio de frase. La pantalla se toca solo cuando cambia la frase.
+  - La banda centrada sale de medir la letra real con canvas (`fontBoundingBox*` y `actualBoundingBox*`): de la altura de
+    una «H» al fondo de una «g», con el mismo aire arriba y abajo.
+  - Banco: voz falsa del Espejo (`&espejo&vozCps=N`, `&vozLenta`, `&sinMarcas`, `window.__bancoVoz`, `window.__vozReloj()`);
+    para que suene sin gesto, Chrome sin ventana con `--autoplay-policy=no-user-gesture-required` y sin `&mudo`. En
+    desarrollo, StrictMode desmonta de ensayo: un corte de voz al desmontar espera un instante y verifica que no volvió.
+  - Lección 0-undenonagies.
+- 🧬 **Versión del sistema:** Mac 1.1.58 · espejoVozFish v2.28 · EV_Oraculo v6.34 · protocolo v81.
+- 🧭 Sin 🔮 propio: el arranque vivo sigue siendo el 🔮 de Emisiones (LG-002), aquí abajo.
+
+#### 2026-10-19 → 2026-10-20 · EMISIONES: LG-001, EL PRIMER LARGO DE YOUTUBE, EN CUATRO SALAS Y TRES IDIOMAS DE ENTRADA
+
+- ✅ **Resuelto:** LG-001 «Hoy ya cambiaste de realidad (y no lo notaste)» (6:10, español con pista en inglés) de la
+  propuesta al paquete en una noche: guion de 1,008 palabras, Bennett, Epidemic con Zak'Haar de firma, 340 efectos (31
+  nuevos, 573 créditos), 4 salas de escenas en paralelo, miniaturas propias y los arreglos que pidió Zak (el papalote, el
+  reflejo, el logo de la app, el rodillo). Grok lo subió y lo programó para el martes 20 a las 3:00 pm. Casting de 4
+  personajes (Axo, Lucio, Ocho, Balam: https://claude.ai/artifact/GzMuJ4nSPwD1ZPasGKqjzH); por ahora se queda el Tripulante.
+- 📁 **Archivos:** `Emisiones/largos/LG-001/`, `largos/SERIE.md`, `largos/PROMPT_LARGO_NUEVO.md`, `largos/ENTREGA.md`
+  v1.1, `largos/PROMPT_GROK.md` v1.1, `largos/motor/` (largo.py v1.3 con `paquete`, sfx.py v1.1, miniatura.js v1.2,
+  BIBLIA v1.3), plantillas Tripulante v2.2 y Red viva v3.2, `casting/`, `ideas/PROMPT_SERIE_INFANTIL.md`.
+- ⏳ **Pendiente:** enseñarle el portugués al motor y medir de qué red vienen las descargas (dos tarjetas de sala en la sala
+  de Emisiones); LG-002 con `largos/PROMPT_LARGO_NUEVO.md`; la serie infantil de Fotón Cero (su sala ya corre).
+- 💡 **Decisiones:** cada largo es independiente; dos por semana (miércoles 3:00 pm y sábados 11:00 am, Cancún); tres
+  idiomas de entrada en el mismo video (español, inglés y portugués de Brasil); se entrega en `salida/SUBIR/` con nombres
+  fijos y Grok lo sube con «Long Nuevo».
+- 🔧 **Patrones nuevos:** las salas de escenas no piden efectos (cada una deja `pedidos-<sala>.json` y la que dirige pide una
+  vez); lo que no pinta escenas va fuera de `utileria/` (la huella lee toda la carpeta). Lección 0-duodenonagies.
+- 🧬 **Versión del sistema:** protocolo v80.
+- 🔮 **Cómo arrancar la próxima Sala de Comando:** abrir la sala en `Escaner Vibracional/Emisiones` y pegar el contenido de
+  `largos/PROMPT_LARGO_NUEVO.md` con el número LG-002 (sale el sábado 24 de octubre a las 11:00 am si la propuesta se
+  aprueba a más tardar el miércoles).
+
+#### 2026-10-18 · V · TELEMETRÍA: LA APP SE MIDE MES CON MES, «¿QUÉ TE FALTÓ?» Y MOTOR → TELEMETRÍA
+
+- ⏳ **Pendiente:** el sí de Zak para mandar la 1.1.7 a App Store y Google Play (hasta entonces los teléfonos solo aportan
+  acciones reconstruidas) · pegar `20261018f` (salas de seguridad y soporte).
+- 💡 **Decisiones:** la casa se excluye con `_tele_casa()` (una sola lista para todo panel nuevo) · retención: uso por
+  persona 120 días, días y globales 400 · la medición no entra a la fila de sinConexion · los números que mandan los
+  próximos 6 meses: cuentas nuevas al mes (hoy ~6) y día 30 (hoy 0) · 10,000 en 2 años ~1 %, en 10 años ~10 %.
+- 🔧 **Patrones nuevos:**
+  - Banco: `window.__bancoTele`, `&teleFalta`, `window.__telemetria()`, `__telemetriaEnviar()`.
+  - Una capa de encima nueva lleva `cerrarNav` al cerrarse y, si es de valor, `marcarValor`; una capa nueva entra sola al
+    catálogo y se le pone nombre en `tele_catalogo`.
+  - Una función de producción que hay que extender se copia con `pg_get_functiondef` y se suma solo el bloque nuevo.
+  - Lección 0-septoctogies.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+
+#### 2026-10-17 → 2026-10-18 · EMISIONES: DE LOS FONDOS CON LETRAS A LA ANIMACIÓN, BENNETT, EL DISCO DE BASHAR Y LAS PRIMERAS TRES
+
+- 💡 **Decisiones:** las emisiones explican con animación, nunca con un fondo fijo (prueba sin sonido); destilación bajo
+  demanda (buscador + mapa + parrilla), nunca leer todo; 30 a 40 s por emisión; música de Zak'Haar, voz Bennett.
+- 🔧 **Patrones nuevos:** el reconocedor de voz de la Mac transcribe gratis a ~150x (la primera corrida del día es lenta;
+  a veces se congela: tope por tramo y lista de fallidos); un disco externo se lee directo con caffeinate -ims; estilos
+  de animación como sistemas (biblia al inicio del archivo, escenas aparte); ocho ayudantes en paralelo con base, ejemplo
+  y revisión en vuelo. Lección 0-sexoctogies.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`; su 🔮 se retiró el 2026-10-20 (el estado vive en
+  `Escaner Vibracional/Emisiones/CLAUDE.md`).
+
 #### 2026-10-18 · IV · HUECOS DE GASTO: LO GRATIS YA NO GASTA SIN TOPE, LA WEB COBRA LO QUE MUESTRA Y EL ESPEJO TIENE RESPALDO QUE AVISA
 
-- ✅ **Resuelto:** las 3 respuestas gratis del Espejo se reservan en un solo paso (20 mensajes simultáneos: antes pasaban
-  los 20, ahora 3) y se devuelven si el turno no entrega nada · la membresía falla cerrada en el Espejo, la voz y las
-  imágenes · las imágenes del Espejo son de Sintonía y la Matriz para quien no paga queda en 12 rápidas en toda su vida ·
-  las sondas de la voz solo para el Arquitecto y la muestra de voz con tope y guardada (de 6 s a menos de 1) · el resto
-  del reflejo profundo siempre se anota · tope por dinero (0.40 USD al día y 4 al mes por persona, con el costo real de
-  OpenRouter) y 20 búsquedas en internet al día · la prueba de dictado con tope · el semanal de la web sin Cristales ·
-  redsolarviva.com cobra lo que muestra (selector con 499 y 149 y su enlace cada uno, muros en 499, el Portal sin el 777
-  y con el selector) · el respaldo del Espejo (Claude Haiku 5.5) con muestras lado a lado, **encendido** por pedido de
-  Zak · el aviso cuando OpenRouter falla (notificación al teléfono, probada) · el inventario de enlaces de pago (Zak
-  desactivó el Decodificador 199 y la Inmersión 1,111 y archivó el 599) · el texto de las imágenes para quien no paga,
-  encargado a la sala del muro.
-- 📁 **Archivos:** admin `5df5a20` y `d785ebf`: oraculo-chat v1.59, espejo-voz v3.6, espejo-imagen v2.9,
-  dictado-fidelidad v1.1, stripe-webhook v2.6 con `ciclo.ts` v1.0, `_shared/membresia.ts` v1.0,
-  `_shared/claudeHaiku.ts` v1.1, `_shared/avisoRespaldo.ts` v1.0 · Code `9bb3634`: PlanSelector v1.2, EV_Shared v2.30,
-  EV_Freemium v2.7, BeneficiosSintonia v1.6, EV_Decoder v1.49, PortalInduccionEscaner v2.15 · `Escaner
-  Vibracional/Precios/RESPALDO_ESPEJO_MUESTRAS_2026-10-18.md` · memorias `referencia_banco_funciones_edge` y
-  `feedback_un_solo_deploy`.
-- 🗄️ **Migraciones SQL aplicadas:** `20261018_huecos_de_gasto.sql` (Zak la pegó): `reservar_cortesia_espejo`,
-  `devolver_cortesia_espejo` y el candado por persona en `reserve_edge_spend` (misma firma). Además
-  `app_flags.espejo_respaldo = true`, puesto por Claude a pedido de Zak.
-- 🔌 **Edge functions deployed:** oraculo-chat v1.59 · espejo-voz v3.6 (crea solo el bucket privado `voz-muestras`) ·
-  espejo-imagen v2.9 · dictado-fidelidad v1.1 · stripe-webhook v2.6.
-- ⏳ **Pendiente:** el correo del aviso (una llave de Resend) y las imágenes gratis (0 o 2), en Pendientes vivos.
 - 💡 **Decisiones:** se corrigió el selector viejo en vez de redirigir /escaner (el mismo selector vive en la tienda de
   Códices y en el muro de Navegante, y el menú de la web lleva al Escáner viejo) · la muestra de voz sigue sin pedir
   sesión porque la app publicada no la manda · el rechazo de imágenes a quien no paga usa «cupo», que la app vieja ya
@@ -1261,31 +1358,10 @@ página: el maestro crece de a una línea por lección.
   - Un enlace de pago se identifica sin la llave de Stripe abriendo su página: dice producto, precio e intervalo.
   - Una notificación real se prueba con una función temporal con nonce que se borra al terminar.
   - Lecciones 0-teroctogies, 0-quateroctogies y 0-quinoctogies.
-- 🧬 **Versión del sistema:** oraculo-chat v1.59 · espejo-voz v3.6 · espejo-imagen v2.9 · stripe-webhook v2.6 ·
-  protocolo v77.
-- 🧭 Sin 🔮 propio: el arranque vivo sigue siendo el 🔮 de la Biblioteca de Bashar, aquí abajo.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 #### 2026-10-18 · III · EL MURO DE SINTONÍA: DICE SOLO LO QUE LA APP DA, SE MIDE Y LLEVA DEL SEMANAL AL MENSUAL
 
-- ✅ **Resuelto:** el muro y la lista de beneficios sin Calibraciones ni Navegante y con los topes reales (150 respuestas
-  del Espejo y 120 lecturas de cada Decodificador al día, 30 rachas, 1,000 notas, 60 fotos), los Cristales solo con el
-  mensual · el precio de la tienda del aparato donde había «499 MXN» fijo y el aviso de compra con la tienda real (Google
-  Play en Android, tarjeta en la web) · a la 3.ª renovación semanal, el aviso «Llevas 3 semanas… con el mensual pagas $499
-  en lugar de unos $646 y recibes tus Cristales» con «Pasarme al mensual» · el semanal reconocido en Android con el plan
-  base pegado y el cambio de plan sin cobro doble (Google Play dice a cuál reemplaza; otra tienda se detiene con aviso) ·
-  cada muro medido (27 puertas: visto, plan, intento, compra, cancelada, error, cerrado, restaurado) con «¿Qué te detuvo?»
-  de un toque · Motor → Onboarding «El muro de Sintonía» (personas, intentos, pagos en la app y en la web, motivos, aviso
-  semanal) verificado en vivo con la sesión de Zak · de paso: «Tu plan» del Espejo carga en el teléfono y abre la
-  compuerta de membresía.
-- 📁 **Archivos:** escaner-app `465e784`: `lib/muroTelemetria.ts` v1.0, `lib/sintoniaTienda.ts` v1.0,
-  `components/AvisoSemanalMensual.tsx` v1.0, `components/escaner/MuroMotivo.tsx` v1.0, `lib/revenuecat.ts` v1.4,
-  PlanSelector v2.5, PaywallV2 v1.7, EV_Freemium v2.13, BeneficiosSintonia v1.13, EV_Oraculo v6.30, EV_Decoder v1.83,
-  EscanerVibracional v13.139, 16 puertas con `muro=`, diccionarios (freemium v1.4, pw2 v1.1 y más), banco (tienda falsa)
-  · Code `19056ff`/`f2b5722`: `MI_Muro.tsx` v1.1, `MotorDeIntervencion.tsx` v5.6 · admin `6680b1b`/`359f67b`.
-- 🗄️ **Migraciones SQL aplicadas:** `✅ 20261018_muro_eventos.sql` (tabla `muro_eventos`, `record_muro_evento`,
-  `record_muro_evento_anon`, `admin_muro_resumen`; Zak la pegó; probada antes en PGlite 0.2.17 con 24 comprobaciones).
-- 🔌 **Edge functions deployed:** user-action v1.52 (ruta `record_muro_evento`) · admin-action v1.68 (`admin_muro_resumen`).
-- ⏳ **Pendiente:** nada de esta sala; los datos llegan con el próximo muro (web ya; teléfono con la versión de tienda).
 - 💡 **Decisiones:** «¿Qué te detuvo?» solo a quien no es miembro, una vez al día · el aviso semanal solo donde se cobra,
   sin otra capa encima y de nuevo a las 3 semanas tras «Ahora no» · un pago web se atribuye al último muro donde tocó
   comprar · fuera de las cuentas de la casa (admin y excluidas).
@@ -1296,7 +1372,7 @@ página: el maestro crece de a una línea por lección.
   - Una capa que no avisa con `rsv-overlay-open` se detecta en la pantalla: portal de body fijo, z ≥ 1000, que recibe
     toques y cubre casi todo (no por su opacidad: su entrada empieza en 0).
   - Lección 0-duooctogies.
-- 🧬 **Versión del sistema:** revenuecat v1.4 · PaywallV2 v1.7 · MI_Muro v1.1 · protocolo v76.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 #### 2026-10-18 · II · PRECIOS: LA AUDITORÍA DE SINTONÍA, LO QUE DE VERDAD LLEGA DE CADA PAGO Y TRES SALAS DE ARREGLOS
 
@@ -1335,18 +1411,7 @@ página: el maestro crece de a una línea por lección.
     una, se quita y se reintenta; la llave se renueva cada 7 días (Meta exige que tenga 24 h).
   - Lecciones 0-undeoctogies y 0-octogies.
 - *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
-- 🔮 **Cómo arrancar la próxima Sala de Comando:** abrir la sala en `Escaner Vibracional/Emisiones` y pegar: «Sala
-  Biblioteca de Emisiones, la destilación. 0) Si la llave de Instagram ya está completa (su largo pasa de 128), corre
-  `herramientas/metricas_instagram.py estado`, `diario` e `instalar`. 1) Revisa que la transcripción terminó:
-  `pgrep -f transcribir.py` vacío y `biblioteca/bashar/transcripciones/disco/catalogo.tsv` con ~1,833 líneas; si no, di
-  el avance y para. 2) Corre `python3 herramientas/indexar.py` y reporta el tamaño (fuentes, pasajes y palabras por tipo);
-  al indexar, junta las transcripciones idénticas por sus palabras (la duración no sirve; confirmadas: Social Experiment
-  Step 3 tres veces y Step 5 y 6 dos veces). 3) Arma `biblioteca/mapa.md`: de 150 a 300 conceptos, cada uno con su
-  definición en nuestras palabras, sus 3 a 5 mejores fuentes con `buscar.py` (título y minuto), los conceptos
-  relacionados y si los Códices lo tocan (`--tipo zak`); por familias en paralelo y sin leer transcripciones completas.
-  4) Arma `biblioteca/parrilla.md`: 90 ideas, 30 por estilo (Tripulante, Red viva, Cuento de luz), cada una con gancho,
-  tesis, formato, concepto y por qué le queda al estilo, sin repetir el registro ni las muestras de la biblia; cada
-  gancho pasa `revisar.py --texto`. 5) Actualiza `CLAUDE.md` y reporta.»
+- 🧭 Su 🔮 (la destilación) pasó a la entrada de Emisiones del 2026-10-17 → 2026-10-18, que es la más reciente.
 
 #### 2026-10-17 · II · EMISIONES: EM-003 «LA BRÚJULA» EN TRIPULANTE, LOS SUBTÍTULOS SELLADOS Y UNA VERSIÓN POR RED
 

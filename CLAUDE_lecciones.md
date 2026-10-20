@@ -1912,7 +1912,51 @@ pregunta qué le dice ese mecanismo a la persona. Todo envío disparado por un e
 reconectar) lleva un intervalo mínimo y no pierde datos al saltarse. Hermanas: 0-septuagies (lo hecho sin red sube con su
 fecha), 0-undevicies (tu automatización puede deshacer lo tuyo).
 
+### Paso 0-duodenonagies · Lo que pasa el revisor en un idioma puede ser copia en otro
+
+**Regla.** Una frase que va a sonar en varios idiomas (la frase láser de un largo, un lema, un título) se revisa contra la
+fuente en CADA idioma en que va a sonar, y antes de sellarla: que no sea copia en español no dice nada de su versión en
+inglés.
+
+**Por qué.** En LG-001 (Emisiones, 2026-10-19) la frase láser «No cambias el mundo: cambias de mundo» pasó el revisor en
+español y Zak la aprobó en la propuesta. Al escribir la pista en inglés, el revisor de 16 millones de palabras la bloqueó:
+«You don't change the world you're on» es una frase que Bashar repite en seis sesiones. Hubo que reescribirla
+(«You're not changing the world. You're changing worlds.») y cambiar un capítulo que ya había salido con la frase vieja.
+
+**Cómo se aplica.** La propuesta trae la frase láser en todos los idiomas del episodio y cada una pasa su revisor antes de
+enseñársela a Zak; si un idioma no tiene revisor propio (el portugués), se compara su traducción palabra por palabra con
+las fuentes de los otros. Hermanas: 0-undeoctogies (el nombre no prueba lo que trae), 0-decies (se enumera contra la
+fuente, no de memoria).
+
+### Paso 0-undenonagies · La prueba del motor reproduce el caso que falló, no uno que pasa
+
+**Regla.** Cuando un defecto depende del motor (cómo Safari pinta, repinta o compone), la página de prueba copia del caso
+real lo que importa: el contenedor con scroll, el texto largo de varios párrafos, la tipografía, el alto de línea y las
+sombras. Y corre la manera vieja junto a la nueva en la misma pantalla: si la vieja no falla ahí, la prueba no sirve y su
+«pasa» no vale para el arreglo.
+
+**Por qué.** El 2026-10-20 (sala de la voz en escritorio) la frase dorada de la voz del Espejo dejaba la última frase
+pintada en la app de la Mac al volver a escuchar. Una página mínima en el Safari del simulador (un párrafo corto, sin
+scroll) mostró que borrar el resalte del registro no repintaba y que vaciarlo sí; ese arreglo salió en la 1.1.57. Esa misma
+noche Zak mandó capturas: seguían quedando franjas finas sobre renglones ya leídos y frases enteras en dorado. La página
+mínima no tenía lo que disparaba el resto del defecto, el texto largo dentro de un contenedor con scroll. Rehecha con esas
+condiciones (tres columnas: la manera publicada, más un repintado forzado, y bandas propias con repintado), la publicada
+mostró los mismos restos que las capturas y las dos alternativas salieron limpias. La 1.1.58 llevó la tercera.
+
+**Cómo se aplica.** Antes de escribir el arreglo, la prueba reproduce el defecto con el código viejo (si no lo reproduce,
+le falta una condición del caso real: búscala en las capturas). Las alternativas corren lado a lado en el mismo motor y con
+el mismo reloj, y se fotografían en varios momentos (durante, al terminar y al empezar de nuevo). Hermanas: 0-undecies (el
+dato de prueba se parece al real en la dimensión que importa), 0-septies (un arreglo se prueba también contra la versión
+vieja), 0-tricies (lo afinado para un motor puede tumbar al otro).
+
 ### Changelog del protocolo
+
+- **v81 (2026-10-20, sala de la voz en escritorio):** una lección. **0-undenonagies**: la prueba del motor reproduce el
+  caso que falló (contenedor con scroll, texto largo, sombras) y la manera vieja tiene que fallar en ella; el encabezado del
+  protocolo vuelve a decir la versión vigente (se había quedado en v79).
+
+- **v80 (2026-10-20, sala de Emisiones, LG-001):** una lección. **0-duodenonagies**: lo que pasa el revisor en un idioma
+  puede ser copia en otro; la frase clave se revisa en cada idioma en que va a sonar, antes de sellarla.
 
 - **v79 (2026-10-18, sala de telemetría):** una lección. **0-septoctogies**: lo que mide no es lo que la persona hizo; la
   medición no entra a su fila ni a su aviso, y lo que se manda al ocultarse lleva un tope por envío.
