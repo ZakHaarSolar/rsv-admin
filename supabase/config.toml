@@ -40,3 +40,11 @@ enabled = true
 verify_jwt = false
 import_map = "./functions/revenuecat-webhook/deno.json"
 entrypoint = "./functions/revenuecat-webhook/index.ts"
+
+[functions.luzy-lista]
+enabled = true
+# verify_jwt = false → holaluzy.com (la página de Luzy) llama sin sesión: es la lista de
+# papás. La defensa está en el código: el campo trampa y el freno por conexión.
+# Deploy SIEMPRE con --no-verify-jwt.
+verify_jwt = false
+entrypoint = "./functions/luzy-lista/index.ts"
