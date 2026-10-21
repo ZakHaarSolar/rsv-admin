@@ -8,7 +8,7 @@ import { readFileSync } from "node:fs"
 import { createServer } from "node:http"
 import { spawn } from "node:child_process"
 
-const [MIGRACION, FUNCION] = process.argv.slice(2)
+const [MIGRACION, FUNCION, PORTUGUES] = process.argv.slice(2)   // PORTUGUES: 20261021_luzy_portugues.sql (opcional)
 const LLAVE = "llave-de-servicio-de-prueba", PUERTO_BASE = 54399, FN = "http://127.0.0.1:8000/"
 let fallas = 0
 const ok = (c, m) => { if (!c) { fallas++; console.log("✗", m) } else console.log("✓", m) }
@@ -17,6 +17,7 @@ const espera = (ms) => new Promise((r) => setTimeout(r, ms))
 const db = new PGlite()
 await db.exec(`CREATE ROLE anon; CREATE ROLE authenticated; CREATE ROLE service_role; GRANT USAGE ON SCHEMA public TO service_role;`)
 await db.exec(readFileSync(MIGRACION, "utf8"))
+if (PORTUGUES) await db.exec(readFileSync(PORTUGUES, "utf8"))
 
 // el PostgREST de mentira: /rest/v1/rpc/luzy_apuntar con argumentos por nombre, como service_role
 const base = createServer(async (req, res) => {
@@ -84,6 +85,12 @@ try {
     const en = await manda({ ...base0, lista: "libro", idioma: "en", correo: "dad@email.com" })
     const fe = await fila("dad@email.com")
     ok(en.j?.ok === true && fe?.libro === true && fe.idioma === "en" && fe.aviso === "en-2026-10-20", "en inglés: libro, idioma en, aviso en-2026-10-20")
+
+    if (PORTUGUES) {
+        const pt = await manda({ ...base0, idioma: "pt", correo: "mae@email.com.br" })
+        const fp = await fila("mae@email.com.br")
+        ok(pt.j?.ok === true && fp?.idioma === "pt" && fp.aviso === "pt-2026-10-21", "en portugués: idioma pt y el aviso pt-2026-10-21")
+    }
 
     // el freno: 20 por hora desde la misma conexión
     const res = []

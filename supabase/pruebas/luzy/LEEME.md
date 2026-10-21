@@ -14,8 +14,11 @@ Dos pruebas, las dos en un Postgres real (PGlite 0.2.17, sin Docker):
 
     mkdir -p /tmp/pg && cd /tmp/pg && npm init -y && npm install @electric-sql/pglite@0.2.17
     cp "<esta carpeta>"/*.mjs /tmp/pg/
-    node prueba.mjs "<ruta a migrations>/20261020_luzy_lista.sql"
-    node prueba-funcion.mjs "<ruta a migrations>/20261020_luzy_lista.sql" "<ruta a functions>/luzy-lista/index.ts"
+    node prueba.mjs "<ruta a migrations>/20261020_luzy_lista.sql" "<ruta a migrations>/20261021_luzy_portugues.sql"
+    node prueba-funcion.mjs "<ruta a migrations>/20261020_luzy_lista.sql" "<ruta a functions>/luzy-lista/index.ts" "<ruta a migrations>/20261021_luzy_portugues.sql"
+
+La migración del portugués (`20261021_luzy_portugues.sql`) es opcional en las dos: se pega encima de la primera, con la
+lista ya llena, y revisa que la columna idioma acepte 'pt', que se guarde así y que lo demás siga igual.
 
 Terminan en «TODO BIEN» o en «FALLAS: n». La 0.3 de PGlite se cae con RAISE dentro de plpgsql: usar la 0.2.17.
 PGlite tiene una sola conexión: dos envíos «juntos» van en fila; en producción los forma en fila `pg_advisory_xact_lock`.

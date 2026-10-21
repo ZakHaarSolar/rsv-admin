@@ -7,6 +7,7 @@ import { PGlite } from "@electric-sql/pglite"
 import { readFileSync } from "node:fs"
 
 const MIGRACION = process.argv[2]
+const PORTUGUES = process.argv[3]   // 20261021_luzy_portugues.sql (opcional)
 let fallas = 0
 const ok = (c, m) => { if (!c) { fallas++; console.log("✗", m) } else console.log("✓", m) }
 const texto = readFileSync(MIGRACION, "utf8")
@@ -98,6 +99,26 @@ let negado = false
 try { await db.exec(`set role anon; select public.luzy_apuntar('anon@correo.com', 'libro', 'es', 'x', 'ha');`) } catch { negado = true }
 await db.exec(`reset role`)
 ok(negado && !(await fila("anon@correo.com")), "como la llave pública no puede")
+
+// el portugués (20261021_luzy_portugues), encima de lo anterior y con la lista ya llena
+if (PORTUGUES) {
+    const pt = readFileSync(PORTUGUES, "utf8")
+    const antesPt = await cuantas()
+    await db.exec(pt)
+    await db.exec(pt)
+    ok(true, "la migración del portugués corre dos veces sin error")
+    const c = (await db.query(`select pg_get_constraintdef(oid) d from pg_constraint where conname = 'luzy_lista_idioma_check'`)).rows
+    ok(c.length === 1 && /'pt'/.test(c[0].d), "la columna idioma acepta 'pt' (una sola regla)")
+    const rpt = await apuntar("mae@email.com.br", "boletin", "pt", "hpt")
+    const fp = await fila("mae@email.com.br")
+    ok(rpt.ok === true && fp?.idioma === "pt" && fp.aviso === "pt-2026-10-20", "en portugués: se guarda con idioma pt")
+    await apuntar("pai@email.com", "libro", "fr", "hpt2")
+    ok((await fila("pai@email.com"))?.idioma === "es", "un idioma que no es es, en ni pt sigue quedando en es")
+    ok(await cuantas() === antesPt + 2, "lo que ya estaba en la lista sigue ahí")
+    const p2 = (await db.query(`select has_function_privilege('anon', 'public.luzy_apuntar(text,text,text,text,text,integer,integer,integer)', 'EXECUTE') fa,
+        has_function_privilege('service_role', 'public.luzy_apuntar(text,text,text,text,text,integer,integer,integer)', 'EXECUTE') fs`)).rows[0]
+    ok(p2.fa === false && p2.fs === true, "los permisos siguen igual (solo service_role)")
+}
 
 console.log(fallas ? `FALLAS: ${fallas}` : "TODO BIEN")
 await db.close()

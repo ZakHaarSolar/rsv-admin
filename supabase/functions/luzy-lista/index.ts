@@ -1,4 +1,4 @@
-// Red Solar Viva · luzy-lista v1.0 · LA LISTA DE LUZY: EL BOLETÍN DE PAPÁS Y EL AVISO DEL LIBRO (holaluzy.com, 2026-10-20)
+// Red Solar Viva · luzy-lista v1.1 · LA LISTA DE LUZY: EL BOLETÍN DE PAPÁS Y EL AVISO DEL LIBRO (holaluzy.com, 2026-10-21)
 // =====================================================================
 // La página de Luzy (una producción de Fotón Cero) manda aquí el correo de mamá, papá o quien cuida, para el boletín de
 // papás o para el aviso del primer libro. Sin sesión y sin llaves en la página: esta función corre con la llave de
@@ -6,8 +6,10 @@
 // contesta «listo» y no se guarda nada) y un freno por conexión (20 por hora, 60 al día y 600 por hora en total) con una
 // huella de la IP que se saca aquí, con el secreto de la función y el día: la base nunca ve la IP. El correo no se escribe
 // en los registros de la función.
+// v1.1 (2026-10-21): también en portugués de Brasil (holaluzy.com/pt): idioma "pt" y su aviso de privacidad (pt-2026-10-21).
+// Con la migración 20261021_luzy_portugues se guarda como 'pt'; sin ella, luzy_apuntar lo guarda como 'es' (no falla).
 //
-//   POST (text/plain o application/json) { correo, lista: "boletin" | "libro", idioma: "es" | "en", mayor: true, pagina_web: "" }
+//   POST (text/plain o application/json) { correo, lista: "boletin" | "libro", idioma: "es" | "en" | "pt", mayor: true, pagina_web: "" }
 //   → 200 { ok: true } · 400 { error: "correo" | "lista" | "mayor" | "cuerpo" } · 403 { error: "origen" } · 405 · 413
 //     · 429 { error: "freno" | "freno_general" } · 503 { error: "falta_migracion", migracion } · 500 { error: "servidor" }
 //
@@ -23,8 +25,8 @@
 // deno-lint-ignore-file no-explicit-any
 const ORIGENES = [/^https:\/\/(www\.)?holaluzy\.com$/, /^https:\/\/holaluzy(-[a-z0-9-]+)?\.vercel\.app$/, /^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/]
 const MIGRACION = "20261020_luzy_lista"
-/** La versión del aviso de privacidad que acepta quien se apunta (holaluzy.com/privacidad y /en/privacy). */
-const AVISO = "2026-10-20"
+/** La versión (fecha) del aviso de privacidad que acepta quien se apunta: /privacidad, /en/privacy y /pt/privacidade. */
+const AVISO: Record<string, string> = { es: "2026-10-20", en: "2026-10-20", pt: "2026-10-21" }
 const FRENO = { hora: 20, dia: 60, globalHora: 600 }
 const MAX_CUERPO = 4096
 const CORREO = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
@@ -81,7 +83,7 @@ Deno.serve(async (req: Request) => {
     const lista = b.lista === "boletin" || b.lista === "libro" ? b.lista : null
     if (!lista) return json(400, { error: "lista" })
     if (b.mayor !== true) return json(400, { error: "mayor" })
-    const idioma = b.idioma === "en" ? "en" : "es"
+    const idioma = b.idioma === "en" || b.idioma === "pt" ? b.idioma : "es"
 
     const ip = (req.headers.get("cf-connecting-ip") || req.headers.get("x-real-ip") || (req.headers.get("x-forwarded-for") || "").split(",")[0] || "").trim()
     const llave = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
@@ -91,7 +93,7 @@ Deno.serve(async (req: Request) => {
             method: "POST",
             headers: { apikey: llave, Authorization: `Bearer ${llave}`, "Content-Type": "application/json" },
             body: JSON.stringify({
-                p_correo: correo, p_lista: lista, p_idioma: idioma, p_aviso: `${idioma}-${AVISO}`, p_huella: await huella(ip || "sin-ip"),
+                p_correo: correo, p_lista: lista, p_idioma: idioma, p_aviso: `${idioma}-${AVISO[idioma]}`, p_huella: await huella(ip || "sin-ip"),
                 p_limite_hora: FRENO.hora, p_limite_dia: FRENO.dia, p_limite_global_hora: FRENO.globalHora,
             }),
         })
