@@ -86,3 +86,13 @@ Founder-engineer team of two in Cancún, Mexico, bootstrapped, building for Span
   título ya se ve. El mismo lector ahora la describe como «sitio activo con información de productos».
 - **Siguiente paso de Zak:** volver a aplicar con el enlace especial del correo de rechazo, desde zakhaar@redsolarviva.com,
   con los mismos datos (dominio redsolarviva.com, facturación 01A6FF-E87869-821613).
+- **Segundo rechazo, 2026-10-21:** «we could not verify information about your company's founding team»; piden un sitio que
+  muestre claramente al equipo fundador, la dirección y el personal clave. Causa: la portada solo mostraba «Zak'Haar Solar» y
+  «Aqua'Riia» con cargos esotéricos, y el solicitante es Diego Soto Borja Almeida. **Arreglo publicado el mismo día:** pestaña
+  Equipo (computadora y celular) y página redsolarviva.com/equipo/ (bilingüe y legible sin código) con «Diego Soto Borja
+  Almeida · Zak'Haar · Fundador y director general» y «Aqua'Riia · Cofundadora · Experiencia y contenido», lo que
+  construimos, la historia y el contacto; los fundadores también en la fachada y en los datos de la organización.
+- **Regla oficial que importa:** Google revisa si el sitio es contenido hecho con IA y puede rechazar por eso. Los retratos
+  de la portada son de IA: la página del equipo lleva monogramas hasta tener fotos reales.
+- **Antes de reaplicar (recomendado):** fotos reales de Zak y de Aqua'Riia; si Aqua'Riia acepta, su nombre legal junto al
+  artístico; un LinkedIn de Zak. Luego reaplicar con el enlace especial del segundo correo y los mismos datos.
