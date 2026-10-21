@@ -96,3 +96,4 @@ Founder-engineer team of two in Cancún, Mexico, bootstrapped, building for Span
   de la portada son de IA: la página del equipo lleva monogramas hasta tener fotos reales.
 - **Antes de reaplicar (recomendado):** fotos reales de Zak y de Aqua'Riia; si Aqua'Riia acepta, su nombre legal junto al
   artístico; un LinkedIn de Zak. Luego reaplicar con el enlace especial del segundo correo y los mismos datos.
+- **Completado el 2026-10-21 (rsv-web 12f537f):** fotos reales de los dos, Andrea Díaz Luengas (Aqua'Riia) con nombre legal y el LinkedIn de Diego (linkedin.com/in/diego-soto-borja-almeida-b73498434). Listo para reaplicar.
