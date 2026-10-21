@@ -4,6 +4,28 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-19 → 2026-10-20 · EMISIONES: LG-001, EL PRIMER LARGO DE YOUTUBE, EN CUATRO SALAS Y TRES IDIOMAS DE ENTRADA
+
+- ✅ **Resuelto:** LG-001 «Hoy ya cambiaste de realidad (y no lo notaste)» (6:10, español con pista en inglés) de la
+  propuesta al paquete en una noche: guion de 1,008 palabras, Bennett, Epidemic con Zak'Haar de firma, 340 efectos (31
+  nuevos, 573 créditos), 4 salas de escenas en paralelo, miniaturas propias y los arreglos que pidió Zak (el papalote, el
+  reflejo, el logo de la app, el rodillo). Grok lo subió y lo programó para el martes 20 a las 3:00 pm. Casting de 4
+  personajes (Axo, Lucio, Ocho, Balam: https://claude.ai/artifact/GzMuJ4nSPwD1ZPasGKqjzH); por ahora se queda el Tripulante.
+- 📁 **Archivos:** `Emisiones/largos/LG-001/`, `largos/SERIE.md`, `largos/PROMPT_LARGO_NUEVO.md`, `largos/ENTREGA.md`
+  v1.1, `largos/PROMPT_GROK.md` v1.1, `largos/motor/` (largo.py v1.3 con `paquete`, sfx.py v1.1, miniatura.js v1.2,
+  BIBLIA v1.3), plantillas Tripulante v2.2 y Red viva v3.2, `casting/`, `ideas/PROMPT_SERIE_INFANTIL.md`.
+- ⏳ **Pendiente:** enseñarle el portugués al motor y medir de qué red vienen las descargas (dos tarjetas de sala en la sala
+  de Emisiones); LG-002 con `largos/PROMPT_LARGO_NUEVO.md`; la serie infantil de Fotón Cero (su sala ya corre).
+- 💡 **Decisiones:** cada largo es independiente; dos por semana (miércoles 3:00 pm y sábados 11:00 am, Cancún); tres
+  idiomas de entrada en el mismo video (español, inglés y portugués de Brasil); se entrega en `salida/SUBIR/` con nombres
+  fijos y Grok lo sube con «Long Nuevo».
+- 🔧 **Patrones nuevos:** las salas de escenas no piden efectos (cada una deja `pedidos-<sala>.json` y la que dirige pide una
+  vez); lo que no pinta escenas va fuera de `utileria/` (la huella lee toda la carpeta). Lección 0-duodenonagies.
+- 🧬 **Versión del sistema:** protocolo v80.
+- 🔮 **Cómo arrancar la próxima Sala de Comando:** abrir la sala en `Escaner Vibracional/Emisiones` y pegar el contenido de
+  `largos/PROMPT_LARGO_NUEVO.md` con el número LG-002 (sale el sábado 24 de octubre a las 11:00 am si la propuesta se
+  aprueba a más tardar el miércoles).
+
 #### 2026-10-18 · V · TELEMETRÍA: LA APP SE MIDE MES CON MES, «¿QUÉ TE FALTÓ?» Y MOTOR → TELEMETRÍA
 
 - ✅ **Resuelto:** la app junta por día y manda en lotes sesiones, uso real, capas (también la Sonda y las pestañas de

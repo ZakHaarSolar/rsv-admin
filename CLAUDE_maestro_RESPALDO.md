@@ -460,6 +460,7 @@ proyecto guarde lo suyo en SU carpeta y que la sala se abra ahí dentro.
 | **Aplicaciones** (los CV de Zak y las solicitudes de Red Solar Viva) | `admin/aplicaciones/CLAUDE.md` ✅ hecho (2026-10-09) | abrir `admin/aplicaciones` |
 | **PRISMA TD** (el tower defense de Ludus Cero) | `Ludus Cero/prisma/CLAUDE.md` ✅ hecho (2026-10-14) | abrir `Ludus Cero/prisma` |
 | **Emisiones** (los reels de consciencia del Escáner, sin publicidad) | `Escaner Vibracional/Emisiones/CLAUDE.md` ✅ hecho (2026-10-17) | abrir `Escaner Vibracional/Emisiones` |
+| **Luzy** (la serie para niños de Fotón Cero) | `Fotón Cero/Luzy/CLAUDE.md` ✅ hecho (2026-10-20) | abrir `Fotón Cero/Luzy` |
 
 Este archivo se queda como **índice del ecosistema**: quién es Zak, cómo se le habla, dónde vive cada proyecto,
 los destinos de publicación y el protocolo de cierre. Lo que sea de un solo proyecto baja a su carpeta.
@@ -493,6 +494,10 @@ Detalle en [[referencia_version_en_tienda]].
 
 ### ⚪ Ecosistema · el plan maestro
 
+- **Sala pedida el 2026-10-21 · redsolarviva.com en español e inglés** (todo el sitio público, no solo Equipo), el selector
+  ES · EN en la esquina superior derecha para todo el sitio, Equipo sin la barra de desplazamiento del marco y Códices de
+  Luz que entre parejo (hoy llega por pedazos y se mueve). **Falta que Zak abra la sala** en la carpeta `Code` y pegue
+  `Code/Docs/PROXIMA_SALA_SITIO_BILINGUE.md` (trae el contexto, lo que no se toca y cómo publicar sin pisar a otras salas).
 - **Consulta respondida el 2026-10-18 · la estrategia maestra, los años al norte y la mina de oro** (IA, robots,
   energía solar, espacio; el tuit de Elon Musk). Todo vive en `PLAN_MAESTRO.md` v1.1. Etapa 1: 33,500 MXN al mes con los
   productos (unas 85 a 90 suscripciones); hasta cumplirla, 70 % del tiempo a distribuir y nada nuevo. Steam para Terra
@@ -788,12 +793,15 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   a los 6 meses), un año de Team y ofertas de socios (ElevenLabs incluida). 🜂 **Cuando Zak diga que ya los aceptaron, se
   borra todo esto:** este pendiente, la memoria `proyecto-claude-for-startups` (sala del escaner-app) y el registro del
   incidente en la entrada del 2026-10-07 · II del historial.
-- **Google for Startups Cloud: rechazada el 2026-10-09 por «sitio inactivo» y REENVIADA el mismo día; esperando respuesta** (3 a 5 días hábiles a Proton). Se reaplicó con el
-  enlace especial del correo, desde zakhaar@redsolarviva.com y con los mismos datos (nivel Start, hasta 2,000 USD,
-  facturación 01A6FF-E87869-821613). Causa medida: redsolarviva.com entregaba un HTML vacío y la portada pasaba segundos en
-  negro. Arreglado y publicado el mismo día (rsv-web c9ab219): fachada con quiénes somos y los productos que se funde en
-  el sistema solar. 🜂 **No quitar la fachada de `rsv-web/index.html`:** es lo que leen los revisores y buscadores. Si
-  aprueban: Nano Banana por Vertex AI (no llaves de AI Studio). Datos en `admin/aplicaciones/2026-10 Google for Startups Cloud/`.
+- **Google for Startups Cloud: tercera solicitud enviada el 2026-10-21; esperando respuesta** (3 a 5 días hábiles, llega a
+  Proton). Nivel Start, hasta 2,000 USD, facturación 01A6FF-E87869-821613, desde zakhaar@redsolarviva.com. Rechazos: el
+  2026-10-09 por «sitio inactivo» (curado con la fachada legible sin código) y el 2026-10-21 por «no pudimos verificar al
+  equipo fundador» (curado con la pestaña Equipo y la ficha con fotos reales, nombres legales y artísticos y el LinkedIn de
+  Zak). **Cuando llegue la respuesta:** abrir una sala en `Red Solar Viva` y pegar
+  `admin/aplicaciones/2026-10 Google for Startups Cloud/PROMPT_RESULTADO.md` con el correo de Google al final. 🜂 **No quitar
+  la fachada de `rsv-web/index.html` ni la ficha `rsv-web/public/equipo/ficha.html`** (/equipo es una capa del sitio que la
+  monta en un marco): es lo que leen los revisores y buscadores. Si aprueban: Nano Banana por Vertex AI (no llaves de AI
+  Studio). Detalle en `aplicacion.md` de esa carpeta y [[referencia_requisitos_programas]].
 - **Consulta respondida el 2026-10-17 · Basis Fellowship** (50,000 USD sin acciones, de los cofundadores de Orbit, empresa de
   neurociencia; basisfellowship.org/apply): legítima y sin riesgo (no pide pagos ni datos bancarios); 1 a 3 % de ser fellow,
   menos de 1 % si la telequinesis va como hecho. Textos en inglés en `admin/aplicaciones/2026-10 Basis Fellowship/aplicacion.md`:
@@ -906,12 +914,36 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   prompt de la Sala 1 en `Docs/PROXIMA_SALA.md`. **Descartadas** las tres propuestas con lore de los Códices (Jardín
   Cuántico, Cantera y Ruido Cero, https://claude.ai/artifact/C1Z4gdzgjE6azfkZcrkUjB): «no me gustaron para nada»; el lore
   va en segundo plano. Quedan abiertos el precio y el idioma por defecto, sin bloquear la construcción.
-
 ### 🟤 Fotón Cero · lo que necesita tu mano
 
 🜂 **Su estado y su bitácora viven en `fotoncero/CLAUDE.md` y `fotoncero/Docs/BITACORA.md`.** Aquí solo lo que necesita
 la mano de Zak:
 
+- **Luzy, la serie animada para niños de Fotón Cero (consulta, sala de personajes y sala del piloto, 2026-10-20).**
+  Vive en `Fotón Cero/Luzy/` (su `CLAUDE.md`; `Fotón Cero/serie-infantil` es un atajo al nombre viejo que se borra al
+  archivar la sala de personajes; `fotoncero/` sigue siendo la web). Manda la directiva de Zak, `Docs/NORTE.md`: niños de
+  3 a 6 años, episodios de 5 a 7 min, narrador con voz de abuelo. **Luzy es un farolito de papel** con la luz tibia en el
+  pecho, diseñado por Zak y dibujado con código (estilo de libro ilustrado, distinto al del Escáner); Lito, plan Z. Canal
+  creado: **Luzy, @holaluzy** (falta poner la descripción nueva en positivo: `Docs/PROMPT_GROK_CANAL.md` v1.1). Dominio
+  comprado: holaluzy.com. **Piloto 1, «La estrella que se cayó», en producción** en su sala (narra Salvatore, voz de abuelo
+  de ElevenLabs, en español e inglés); el motor de la serie quedó completo y probado en `Fotón Cero/Luzy/motor/` (copia
+  fija del de los largos, sin nada del Escáner; bitácora en `Fotón Cero/Luzy/Docs/BITACORA.md`). Libro: KDP primero,
+  tapa blanda de 8.5 x 8.5 pulgadas y 32 páginas a color. Marca (`Docs/MARCAS_IMPI.md` v1.1): **LUZY BOOM** (antros de
+  Guadalajara) está registrada en la clase 41 hasta 2033, riesgo medio; la 16, 9 y 28 se ven libres. Orden de Zak:
+  Terra Cristal y Ludus Cero, luego Fotón Cero; recomendado sumar Luzy en la 16 a la primera ronda y la 41 como marca
+  mixta tras consultar a un abogado. Escáner Vibracional ya está registrado. Monetización: reporte en `reports/` y página
+  https://claude.ai/artifact/WSci1Br69kkZ8tCMU9uoTy. **Falta que Zak** verifique el teléfono del canal (la pista en
+  inglés), fije el horario propuesto (miércoles 5:00 pm y sábados 9:00 am de Cancún), decida si corre la prueba de 90 días
+  y pase al bot la descripción nueva del canal. **holaluzy.com** (sala de la página, 2026-10-20 y 21): publicada en español,
+  inglés y portugués, con el boletín de papás y el aviso del libro (tabla `luzy_lista`, función `luzy-lista`; admin
+  `f571baf` y `70ab49c`); falta el reenvío de hola@holaluzy.com (el aviso dice zak@redsolarviva.com mientras tanto). El
+  episodio 1 ya dejó de decir «para dormir» en YouTube (Grok, 2026-10-21): Luzy es para relajarse, no para dormir.
+  **Sellado por Zak el 2026-10-21 (en `Fotón Cero/Luzy/Docs/NORTE.md` v1.1):** la serie tendrá **4 temporadas de 26
+  episodios (104)**: la 1, LZ-001 a LZ-026; la 2, LZ-027 a LZ-052; la 3, LZ-053 a LZ-078; la 4, LZ-079 a LZ-104. **Cada
+  episodio dura entre 6 y 7 minutos, sí o sí, desde LZ-002.** **La calidad de cada output tiene que alcanzar para vender
+  la licencia de Luzy a televisoras y plataformas grandes** (Netflix, Prime Video, Paramount, Disney+ o las más grandes
+  nacidas en YouTube): al final de cada output corre un validador de calidad y, si un episodio no llega, se le avisa a
+  Zak de inmediato con el porqué y lo que requiere cambiar.
 - **Consulta respondida el 2026-10-07 · por qué Everything You Dream suena opaco:** el video que salió de DaVinci lleva en
   los dos lados el canal IZQUIERDO de la canción, 3 dB más bajo (la pista o el clip están en mono); el derecho nunca
   entra, y los efectos de la nave suenan al nivel de la música (0:18, 0:35, 0:45 a 0:58, 1:31, 2:19). fotoncero.com ya
@@ -932,10 +964,12 @@ la mano de Zak:
   escanervibracional.com (luduscero.com en celular cae en la Holoteca del Escáner), Zak'Haar nunca como nombre visible. Por qué: el fundador que lee respuestas premia al constructor con nombre real (igual que en Slack y el CV), y un
   movimiento que maneja dinero necesita un responsable con nombre. Cuando Zak Cero tenga su propia cadencia, se le da cuenta
   propia en X. Nunca nombrar al cliente de micro1. Falta el sí de Zak.
+  **Consulta respondida el 2026-10-10 · el correo del bot de Grok (mail.grokbot.com):** zakhaar («zak» ya estaba tomado);
+  el nombre real queda para los correos que escribe Zak en persona y Zak Cero para un correo propio cuando crezca.
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v81 (2026-10-20)
+## 🜂 Protocolo de Cierre de Sesión · v82 (2026-10-21)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -1117,6 +1151,7 @@ memorias.
 - **0-septoctogies** · Lo que mide no es lo que la persona hizo: la medición no entra a su fila ni a su aviso, y lo que se manda al ocultarse lleva un tope por envío.
 - **0-duodenonagies** · Lo que pasa el revisor en un idioma puede ser copia en otro: la frase clave se revisa en cada idioma en que va a sonar, antes de sellarla.
 - **0-undenonagies** · La prueba del motor reproduce el caso que falló (contenedor con scroll, texto largo, sombras): la manera vieja tiene que fallar en ella, o su «pasa» no vale.
+- **0-nonagies** · Lo que lee un revisor va en el primer byte (empresa, productos, equipo con nombre legal y contacto, leído sin código antes de aplicar); lo que entra a la navegación no recarga.
 
 ### Paso 1 — Test de continuidad
 
@@ -1258,11 +1293,41 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v81 (2026-10-20). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v82 (2026-10-21). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
+
+#### 2026-10-07 → 2026-10-21 · SOLICITUDES: GOOGLE FOR STARTUPS (LA FACHADA Y EL EQUIPO), BASIS Y EL NOMBRE EN X
+
+- ✅ **Resuelto:** la solicitud de Google for Startups Cloud de punta a punta (cuenta de Google de la empresa, Zak como
+  administrador de la facturación con zakhaar@redsolarviva.com, tres envíos) · redsolarviva.com legible sin código: la
+  fachada con la empresa, los productos, los fundadores y el contacto, vestida de cielo y que se funde en el sistema solar ·
+  la pestaña **Equipo** en computadora y celular, dentro del sitio y sin recarga, con la ficha bilingüe (fotos reales,
+  Diego Soto Borja Almeida · Zak'Haar y Andrea Díaz Luengas · Aqua'Riia, el LinkedIn de Zak, lo que construimos, la historia
+  y el contacto); /team, /about y /nosotros llevan ahí · Basis Fellowship enviada (BF-2026-2P3AN4) con sus textos en inglés
+  · consultas: el nombre visible en X y su bio, el correo del bot de Grok y si el dinero de Basis es libre.
+- 📁 **Archivos:** rsv-web (c9ab219 a d9318a5): `index.html` v1.5, `public/equipo/ficha.html` v1.3 con `diego.jpg` y
+  `aqua-riia.jpg`, `vercel.json`, `public/robots.txt` y `public/sitemap.xml` · Code (2cad1fd a la del menú del celular):
+  `Domo` v5.15, `NavegadorEstacion` v4.29, `SolarNav` v1.11, `Docs/PROXIMA_SALA_SITIO_BILINGUE.md` · admin: las carpetas
+  `aplicaciones/2026-10 Google for Startups Cloud/` (con `PROMPT_RESULTADO.md`) y `aplicaciones/2026-10 Basis Fellowship/`.
+- ⏳ **Pendiente:** la respuesta de Google y la sala del sitio bilingüe; los dos en Pendientes vivos, con su arranque listo.
+- 💡 **Decisiones:** las solicitudes van como Red Solar Viva, con el correo y la cuenta de Google del dominio · en el sitio,
+  nombre legal y nombre artístico juntos, y fotos reales en el equipo · Equipo es una capa del sitio y la ficha para
+  revisores es otra puerta al mismo contenido · en X, «Diego Soto» con @zakcero · la telequinesis, en las becas, como
+  experimento con su prueba (cámara de vacío), nunca como hecho.
+- 🔧 **Patrones nuevos:**
+  - Fachada en el HTML que se retira cuando el título del héroe ya se ve, vigilada con reloj y no con cuadros (en una pestaña
+    oculta se queda), con cielo y órbitas que solo animan `transform` y `opacity` (el hilo principal trabajó 1 ms en 2 s).
+  - Ficha estática montada en un marco dentro del Domo; sus enlaces de la casa navegan arriba con `rsvNavigate`.
+  - El sitio se prueba con un lector sin código (`curl` quitando etiquetas, y WebFetch) y con Chrome sin ventana por CDP
+    (clic en la barra, toque real en el menú, `window.__marca` para saber si hubo recarga).
+  - Publicación de prueba (`vercel build` y `vercel deploy --prebuilt`) antes de la de producción, desde la copia limpia.
+  - Lección 0-nonagies.
+- 🧬 **Versión del sistema:** rsv-web `index.html` v1.5 · ficha v1.3 · Domo v5.15 · protocolo v82.
+- 🧭 Sin 🔮 propio: los arranques viven en `admin/aplicaciones/2026-10 Google for Startups Cloud/PROMPT_RESULTADO.md` y
+  `Code/Docs/PROXIMA_SALA_SITIO_BILINGUE.md`; el arranque vivo de Emisiones (LG-002) sigue más abajo.
 
 #### 2026-10-20 · LA VOZ DEL ESPEJO EN LA COMPUTADORA: VELOCIDAD Y ✕, LA FRASE QUE SUENA SIN RESTOS Y LA PRESENCIA QUE HABLA SOLA
 
@@ -1297,25 +1362,15 @@ página: el maestro crece de a una línea por lección.
 
 #### 2026-10-19 → 2026-10-20 · EMISIONES: LG-001, EL PRIMER LARGO DE YOUTUBE, EN CUATRO SALAS Y TRES IDIOMAS DE ENTRADA
 
-- ✅ **Resuelto:** LG-001 «Hoy ya cambiaste de realidad (y no lo notaste)» (6:10, español con pista en inglés) de la
-  propuesta al paquete en una noche: guion de 1,008 palabras, Bennett, Epidemic con Zak'Haar de firma, 340 efectos (31
-  nuevos, 573 créditos), 4 salas de escenas en paralelo, miniaturas propias y los arreglos que pidió Zak (el papalote, el
-  reflejo, el logo de la app, el rodillo). Grok lo subió y lo programó para el martes 20 a las 3:00 pm. Casting de 4
-  personajes (Axo, Lucio, Ocho, Balam: https://claude.ai/artifact/GzMuJ4nSPwD1ZPasGKqjzH); por ahora se queda el Tripulante.
-- 📁 **Archivos:** `Emisiones/largos/LG-001/`, `largos/SERIE.md`, `largos/PROMPT_LARGO_NUEVO.md`, `largos/ENTREGA.md`
-  v1.1, `largos/PROMPT_GROK.md` v1.1, `largos/motor/` (largo.py v1.3 con `paquete`, sfx.py v1.1, miniatura.js v1.2,
-  BIBLIA v1.3), plantillas Tripulante v2.2 y Red viva v3.2, `casting/`, `ideas/PROMPT_SERIE_INFANTIL.md`.
-- ⏳ **Pendiente:** enseñarle el portugués al motor y medir de qué red vienen las descargas (dos tarjetas de sala en la sala
-  de Emisiones); LG-002 con `largos/PROMPT_LARGO_NUEVO.md`; la serie infantil de Fotón Cero (su sala ya corre).
 - 💡 **Decisiones:** cada largo es independiente; dos por semana (miércoles 3:00 pm y sábados 11:00 am, Cancún); tres
   idiomas de entrada en el mismo video (español, inglés y portugués de Brasil); se entrega en `salida/SUBIR/` con nombres
   fijos y Grok lo sube con «Long Nuevo».
 - 🔧 **Patrones nuevos:** las salas de escenas no piden efectos (cada una deja `pedidos-<sala>.json` y la que dirige pide una
   vez); lo que no pinta escenas va fuera de `utileria/` (la huella lee toda la carpeta). Lección 0-duodenonagies.
-- 🧬 **Versión del sistema:** protocolo v80.
 - 🔮 **Cómo arrancar la próxima Sala de Comando:** abrir la sala en `Escaner Vibracional/Emisiones` y pegar el contenido de
   `largos/PROMPT_LARGO_NUEVO.md` con el número LG-002 (sale el sábado 24 de octubre a las 11:00 am si la propuesta se
   aprueba a más tardar el miércoles).
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
 
 #### 2026-10-18 · V · TELEMETRÍA: LA APP SE MIDE MES CON MES, «¿QUÉ TE FALTÓ?» Y MOTOR → TELEMETRÍA
 

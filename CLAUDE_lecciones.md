@@ -1949,7 +1949,31 @@ el mismo reloj, y se fotografían en varios momentos (durante, al terminar y al 
 dato de prueba se parece al real en la dimensión que importa), 0-septies (un arreglo se prueba también contra la versión
 vieja), 0-tricies (lo afinado para un motor puede tumbar al otro).
 
+### Paso 0-nonagies · Lo que lee un revisor va en el primer byte; lo que usa la persona no recarga
+
+**Regla.** Un sitio que tiene que aprobar un revisor (créditos, becas, tiendas, buscadores) se lee con un lector sin código
+antes de mandar la solicitud: la empresa, los productos, el equipo con el nombre legal del solicitante y el contacto tienen
+que estar en el HTML que entrega el servidor, no después del código. Y al agregarlo, la persona no lo paga: lo que entra a la
+navegación vive dentro del sitio (sin recarga) y la versión para el revisor es otra puerta al mismo contenido.
+
+**Por qué.** Google for Startups rechazó dos veces a Red Solar Viva. El 2026-10-09, por «sitio inactivo»: el sitio entero lo
+pinta un paquete de 3 MB y el HTML venía vacío (un lector sin código lo llamó «página cascarón»). El 2026-10-21, por «no
+pudimos verificar al equipo fundador»: la portada decía «Zak'Haar Solar» con cargos esotéricos y el solicitante es Diego Soto
+Borja Almeida. La primera versión de Equipo fue una página propia: cada vuelta a Origen recargaba la casa y enseñaba la
+fachada, y Zak sintió que se trababa. Se volvió una capa del Domo que monta la ficha en un marco, y la ficha sola sigue
+legible sin código.
+
+**Cómo se aplica.** Antes de cualquier solicitud que nombre un sitio: `curl` quitando etiquetas (y WebFetch) y leer lo que
+sale; el nombre legal del solicitante aparece igual que en el formulario; fotos reales (Google revisa contenido hecho con
+IA). Lo que se agrega a la barra o al menú vive dentro del sitio; lo estático para revisores se enlaza desde la fachada.
+Hermanas: 0-unseptuagies (lo que tiene que verse nace visible), 0-nonies (el código de estado no prueba el contenido),
+0-duotricies (lo que se pide para una superficie no se aplica a las dos).
+
 ### Changelog del protocolo
+
+- **v82 (2026-10-21, sala de las solicitudes):** una lección. **0-nonagies**: lo que lee un revisor va en el primer byte
+  (empresa, productos, equipo con nombre legal y contacto, comprobado con un lector sin código) y lo que se agrega a la
+  navegación no recarga (la ficha para el revisor es otra puerta al mismo contenido).
 
 - **v81 (2026-10-20, sala de la voz en escritorio):** una lección. **0-undenonagies**: la prueba del motor reproduce el
   caso que falló (contenedor con scroll, texto largo, sombras) y la manera vieja tiene que fallar en ella; el encabezado del
