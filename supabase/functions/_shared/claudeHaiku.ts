@@ -1,3 +1,4 @@
+// _shared/claudeHaiku.ts v1.2 — 🜂 UNA SEGUNDA LLAVE DE RESPALDO (Zak 2026-10-23: «¿podemos usar ese 2do API si el primero falla, para cualquier cosa?»). Si existe el secreto ANTHROPIC_API_KEY_RESPALDO (la llave de la segunda cuenta), cada llamada que falle con la primera por saldo, llave, límite, caída o red se repite UNA vez con la segunda. Sin el secreto, todo igual que antes. Lo usan los Decodificadores, el respaldo del Espejo y chat-respuestas.
 // _shared/claudeHaiku.ts v1.1 — 🜂 suma claudeConversacion(): el RESPALDO del Espejo (oraculo-chat v1.58) cuando OpenRouter no contesta. Texto libre, charla completa, sin pensamiento; claudeJson no cambia.
 // _shared/claudeHaiku.ts v1.0 — 🜂 EL CARRIL PRIMARIO DE LOS DECODIFICADORES (Zak 2026-10-08)
 // Claude Haiku 5.5 contesta primero en decode-dream y decode-matter; si algo falla,
@@ -22,7 +23,36 @@ export const CLAUDE_MODEL = "claude-haiku-5-5"
 const TIMEOUT_MS = 30000
 
 const KEY = Deno.env.get("ANTHROPIC_API_KEY") || ""
+const KEY2 = Deno.env.get("ANTHROPIC_API_KEY_RESPALDO") || ""
 const client = KEY ? new Anthropic({ apiKey: KEY, maxRetries: 1, timeout: TIMEOUT_MS }) : null
+const client2 = KEY2 && KEY2 !== KEY ? new Anthropic({ apiKey: KEY2, maxRetries: 1, timeout: TIMEOUT_MS }) : null
+
+/* 🜂 v1.2 — ¿Este error lo arregla otra cuenta? Sí: saldo agotado (400 con «credit balance»), llave
+   rechazada (401/403), límite (429), caída (5xx, 529) o red. No: un pedido mal armado (otro 400),
+   que fallaría igual con la segunda. */
+function loArreglaOtraCuenta(e: unknown): boolean {
+    if (!(e instanceof Anthropic.APIError) || e.status === undefined) return true
+    if (e.status === 400) return /credit|balance|billing/i.test(String(e.message || ""))
+    return e.status === 401 || e.status === 403 || e.status === 429 || e.status >= 500
+}
+
+/* Crea el mensaje con la primera llave y, si falla por algo que otra cuenta arregla, con la segunda. */
+async function crear(
+    tag: string,
+    params: Anthropic.MessageCreateParamsNonStreaming,
+    opciones?: Anthropic.RequestOptions
+): Promise<Anthropic.Message> {
+    const primero = client || client2
+    if (!primero) throw new Error("sin_llave")
+    try {
+        return await primero.messages.create(params, opciones)
+    } catch (e) {
+        if (!client2 || primero === client2 || !loArreglaOtraCuenta(e)) throw e
+        const status = e instanceof Anthropic.APIError ? e.status : "red"
+        console.warn(`[${tag}] la primera llave falló (${status}) → segunda cuenta`)
+        return await client2.messages.create(params, opciones)
+    }
+}
 
 export async function claudeJson(opts: {
     tag: string
@@ -31,10 +61,10 @@ export async function claudeJson(opts: {
     schema: Record<string, unknown>
     maxTokens: number
 }): Promise<string | null> {
-    if (!client) return null
+    if (!client && !client2) return null
     const t0 = Date.now()
     try {
-        const r = await client.messages.create({
+        const r = await crear(opts.tag, {
             model: CLAUDE_MODEL,
             max_tokens: opts.maxTokens,
             system: opts.system,
@@ -78,7 +108,7 @@ export async function claudeConversacion(opts: {
     maxTokens: number
     timeoutMs?: number
 }): Promise<{ texto: string; tokensEntrada: number; tokensSalida: number } | null> {
-    if (!client) return null
+    if (!client && !client2) return null
     const t0 = Date.now()
     const limpios: Array<{ role: "user" | "assistant"; content: string }> = []
     for (const t of opts.turnos) {
@@ -92,7 +122,8 @@ export async function claudeConversacion(opts: {
     while (limpios.length && limpios[limpios.length - 1].role !== "user") limpios.pop()
     if (!limpios.length) return null
     try {
-        const r = await client.messages.create(
+        const r = await crear(
+            opts.tag,
             {
                 model: CLAUDE_MODEL,
                 max_tokens: opts.maxTokens,
