@@ -4,6 +4,67 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-07 → 2026-10-21 · SOLICITUDES: GOOGLE FOR STARTUPS (LA FACHADA Y EL EQUIPO), BASIS Y EL NOMBRE EN X
+
+- ✅ **Resuelto:** la solicitud de Google for Startups Cloud de punta a punta (cuenta de Google de la empresa, Zak como
+  administrador de la facturación con zakhaar@redsolarviva.com, tres envíos) · redsolarviva.com legible sin código: la
+  fachada con la empresa, los productos, los fundadores y el contacto, vestida de cielo y que se funde en el sistema solar ·
+  la pestaña **Equipo** en computadora y celular, dentro del sitio y sin recarga, con la ficha bilingüe (fotos reales,
+  Diego Soto Borja Almeida · Zak'Haar y Andrea Díaz Luengas · Aqua'Riia, el LinkedIn de Zak, lo que construimos, la historia
+  y el contacto); /team, /about y /nosotros llevan ahí · Basis Fellowship enviada (BF-2026-2P3AN4) con sus textos en inglés
+  · consultas: el nombre visible en X y su bio, el correo del bot de Grok y si el dinero de Basis es libre.
+- 📁 **Archivos:** rsv-web (c9ab219 a d9318a5): `index.html` v1.5, `public/equipo/ficha.html` v1.3 con `diego.jpg` y
+  `aqua-riia.jpg`, `vercel.json`, `public/robots.txt` y `public/sitemap.xml` · Code (2cad1fd a la del menú del celular):
+  `Domo` v5.15, `NavegadorEstacion` v4.29, `SolarNav` v1.11, `Docs/PROXIMA_SALA_SITIO_BILINGUE.md` · admin: las carpetas
+  `aplicaciones/2026-10 Google for Startups Cloud/` (con `PROMPT_RESULTADO.md`) y `aplicaciones/2026-10 Basis Fellowship/`.
+- ⏳ **Pendiente:** la respuesta de Google y la sala del sitio bilingüe; los dos en Pendientes vivos, con su arranque listo.
+- 💡 **Decisiones:** las solicitudes van como Red Solar Viva, con el correo y la cuenta de Google del dominio · en el sitio,
+  nombre legal y nombre artístico juntos, y fotos reales en el equipo · Equipo es una capa del sitio y la ficha para
+  revisores es otra puerta al mismo contenido · en X, «Diego Soto» con @zakcero · la telequinesis, en las becas, como
+  experimento con su prueba (cámara de vacío), nunca como hecho.
+- 🔧 **Patrones nuevos:**
+  - Fachada en el HTML que se retira cuando el título del héroe ya se ve, vigilada con reloj y no con cuadros (en una pestaña
+    oculta se queda), con cielo y órbitas que solo animan `transform` y `opacity` (el hilo principal trabajó 1 ms en 2 s).
+  - Ficha estática montada en un marco dentro del Domo; sus enlaces de la casa navegan arriba con `rsvNavigate`.
+  - El sitio se prueba con un lector sin código (`curl` quitando etiquetas, y WebFetch) y con Chrome sin ventana por CDP
+    (clic en la barra, toque real en el menú, `window.__marca` para saber si hubo recarga).
+  - Publicación de prueba (`vercel build` y `vercel deploy --prebuilt`) antes de la de producción, desde la copia limpia.
+  - Lección 0-nonagies.
+- 🧬 **Versión del sistema:** rsv-web `index.html` v1.5 · ficha v1.3 · Domo v5.15 · protocolo v82.
+- 🧭 Sin 🔮 propio: los arranques viven en `admin/aplicaciones/2026-10 Google for Startups Cloud/PROMPT_RESULTADO.md` y
+  `Code/Docs/PROXIMA_SALA_SITIO_BILINGUE.md`; el arranque vivo de Emisiones (LG-002) sigue más abajo.
+
+#### 2026-10-20 · LA VOZ DEL ESPEJO EN LA COMPUTADORA: VELOCIDAD Y ✕, LA FRASE QUE SUENA SIN RESTOS Y LA PRESENCIA QUE HABLA SOLA
+
+- ✅ **Resuelto:** la píldora de lectura y la barra del shell con velocidad (0.75x a 2x, al instante y recordada; un clic
+  pasa a la siguiente y la tarjeta se abre al acercar el cursor) y con ✕ · la frase que suena en oro, con su banda centrada
+  en las letras, una por renglón y sin restos en Safari · responder dentro de la Presencia no se sale y el orbe baja al
+  centro · el sigilo de la esquina se aparta en la Presencia · con la escucha automática la Presencia habla sola en
+  computadora: letras grandes, cada palabra con las marcas reales de Soniox, lo leído se atenúa, «Sintonizando la voz · N %»,
+  y releer en Presencia un reflejo que ya suena entra a esa lectura · Mac 1.1.57 y 1.1.58 publicadas. Todo solo en
+  computadora (regla 0-duotricies): el teléfono quedó igual.
+- 📁 **Archivos:** escaner-app `b311c25`, `b12ac12` (Mac 1.1.57), `0529440` y `205a63f` (Mac 1.1.58): EV_Oraculo v6.34,
+  EV_VozPill v1.3, espejoVozFish v2.28, vozFondo v1.2, sensory v2.16, EV_Rafaga v5.36, EspejoVozMiniBar v1.3,
+  AppShellDesktop v3.7, espejo es/en v1.30, banco/espejo v1.5 y banco/datos v1.9.
+- ⏳ **Pendiente:** las dos tarjetas propuestas (la voz afinada al celular y la prueba a ciegas de Inworld Flash contra
+  Soniox) · la sala «Consistencia de la voz del Espejo (Margo → Goku)» sigue abierta y saca la Mac 1.1.59.
+- 💡 **Decisiones:** la Cámara de Conversación no obedece a la velocidad (es un diálogo) · a velocidad distinta de 1x la
+  Presencia lee por el elemento de audio (el motor de la app volvería aguda la voz) y solo se pierde el latido del orbe con
+  la voz · en computadora la Presencia manda el texto limpio a la voz (el crudo descuadraba el conteo de partes) · el botón
+  de la esquina se queda como puerta del Espejo · las opciones de velocidad son cinco, con 1.25x como primer paso.
+- 🔧 **Patrones nuevos:**
+  - En Safari, `CSS.highlights` no repinta bien al mover o borrar un resalte dentro de un contenedor con scroll: el color va
+    en `::highlight`, la banda en una capa propia detrás del texto (`data-rsv-bandas`, con `isolation`), y el mensaje se
+    repinta entero alternando un fondo invisible en cada cambio de frase. La pantalla se toca solo cuando cambia la frase.
+  - La banda centrada sale de medir la letra real con canvas (`fontBoundingBox*` y `actualBoundingBox*`): de la altura de
+    una «H» al fondo de una «g», con el mismo aire arriba y abajo.
+  - Banco: voz falsa del Espejo (`&espejo&vozCps=N`, `&vozLenta`, `&sinMarcas`, `window.__bancoVoz`, `window.__vozReloj()`);
+    para que suene sin gesto, Chrome sin ventana con `--autoplay-policy=no-user-gesture-required` y sin `&mudo`. En
+    desarrollo, StrictMode desmonta de ensayo: un corte de voz al desmontar espera un instante y verifica que no volvió.
+  - Lección 0-undenonagies.
+- 🧬 **Versión del sistema:** Mac 1.1.58 · espejoVozFish v2.28 · EV_Oraculo v6.34 · protocolo v81.
+- 🧭 Sin 🔮 propio: el arranque vivo sigue siendo el 🔮 de Emisiones (LG-002), aquí abajo.
+
 #### 2026-10-19 → 2026-10-20 · EMISIONES: LG-001, EL PRIMER LARGO DE YOUTUBE, EN CUATRO SALAS Y TRES IDIOMAS DE ENTRADA
 
 - ✅ **Resuelto:** LG-001 «Hoy ya cambiaste de realidad (y no lo notaste)» (6:10, español con pista en inglés) de la
@@ -987,3 +1048,313 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
   prompt); salió de aquí al cerrar la sala de Fotón Cero, porque solo la sala más reciente lleva 🔮.
 
 *Archivada completa el 2026-10-07 · II, al entrar la sala de Claude for Startups.*
+
+---
+
+### Resúmenes que salieron del maestro en el barrido del 2026-10-23
+
+> Cada uno tiene su entrada completa más arriba en este archivo; se guardan tal cual por las notas que se les sumaron
+> después en el maestro (🧭, 🔮).
+
+##### Resumen · 2026-10-19 → 2026-10-20 · EMISIONES: LG-001, EL PRIMER LARGO DE YOUTUBE, EN CUATRO SALAS Y TRES IDIOMAS DE ENTRADA
+
+- 💡 **Decisiones:** cada largo es independiente; dos por semana (miércoles 3:00 pm y sábados 11:00 am, Cancún); tres
+  idiomas de entrada en el mismo video (español, inglés y portugués de Brasil); se entrega en `salida/SUBIR/` con nombres
+  fijos y Grok lo sube con «Long Nuevo».
+- 🔧 **Patrones nuevos:** las salas de escenas no piden efectos (cada una deja `pedidos-<sala>.json` y la que dirige pide una
+  vez); lo que no pinta escenas va fuera de `utileria/` (la huella lee toda la carpeta). Lección 0-duodenonagies.
+- 🔮 **Cómo arrancar la próxima Sala de Comando:** abrir la sala en `Escaner Vibracional/Emisiones` y pegar el contenido de
+  `largos/PROMPT_LARGO_NUEVO.md` con el número LG-002 (sale el sábado 24 de octubre a las 11:00 am si la propuesta se
+  aprueba a más tardar el miércoles).
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+
+##### Resumen · 2026-10-18 · V · TELEMETRÍA: LA APP SE MIDE MES CON MES, «¿QUÉ TE FALTÓ?» Y MOTOR → TELEMETRÍA
+
+- ⏳ **Pendiente:** el sí de Zak para mandar la 1.1.7 a App Store y Google Play (hasta entonces los teléfonos solo aportan
+  acciones reconstruidas) · pegar `20261018f` (salas de seguridad y soporte).
+- 💡 **Decisiones:** la casa se excluye con `_tele_casa()` (una sola lista para todo panel nuevo) · retención: uso por
+  persona 120 días, días y globales 400 · la medición no entra a la fila de sinConexion · los números que mandan los
+  próximos 6 meses: cuentas nuevas al mes (hoy ~6) y día 30 (hoy 0) · 10,000 en 2 años ~1 %, en 10 años ~10 %.
+- 🔧 **Patrones nuevos:**
+  - Banco: `window.__bancoTele`, `&teleFalta`, `window.__telemetria()`, `__telemetriaEnviar()`.
+  - Una capa de encima nueva lleva `cerrarNav` al cerrarse y, si es de valor, `marcarValor`; una capa nueva entra sola al
+    catálogo y se le pone nombre en `tele_catalogo`.
+  - Una función de producción que hay que extender se copia con `pg_get_functiondef` y se suma solo el bloque nuevo.
+  - Lección 0-septoctogies.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+
+##### Resumen · 2026-10-17 → 2026-10-18 · EMISIONES: DE LOS FONDOS CON LETRAS A LA ANIMACIÓN, BENNETT, EL DISCO DE BASHAR Y LAS PRIMERAS TRES
+
+- 💡 **Decisiones:** las emisiones explican con animación, nunca con un fondo fijo (prueba sin sonido); destilación bajo
+  demanda (buscador + mapa + parrilla), nunca leer todo; 30 a 40 s por emisión; música de Zak'Haar, voz Bennett.
+- 🔧 **Patrones nuevos:** el reconocedor de voz de la Mac transcribe gratis a ~150x (la primera corrida del día es lenta;
+  a veces se congela: tope por tramo y lista de fallidos); un disco externo se lee directo con caffeinate -ims; estilos
+  de animación como sistemas (biblia al inicio del archivo, escenas aparte); ocho ayudantes en paralelo con base, ejemplo
+  y revisión en vuelo. Lección 0-sexoctogies.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`; su 🔮 se retiró el 2026-10-20 (el estado vive en
+  `Escaner Vibracional/Emisiones/CLAUDE.md`).
+
+##### Resumen · 2026-10-18 · IV · HUECOS DE GASTO: LO GRATIS YA NO GASTA SIN TOPE, LA WEB COBRA LO QUE MUESTRA Y EL ESPEJO TIENE RESPALDO QUE AVISA
+
+- 💡 **Decisiones:** se corrigió el selector viejo en vez de redirigir /escaner (el mismo selector vive en la tienda de
+  Códices y en el muro de Navegante, y el menú de la web lleva al Escáner viejo) · la muestra de voz sigue sin pedir
+  sesión porque la app publicada no la manda · el rechazo de imágenes a quien no paga usa «cupo», que la app vieja ya
+  entiende, más `motivo: "membresia"` · el respaldo escribe con las mismas instrucciones, sin la directiva de búsqueda,
+  y entra también con dos silencios seguidos · el aviso sale con cada falla de OpenRouter, conteste o no el respaldo, uno
+  cada 30 minutos.
+- 🔧 **Patrones nuevos:**
+  - Banco de funciones: el `index.ts` real de cada una con `fetch` y `Deno.serve` falsos y Clerk con un par de llaves
+    propio, contra la versión de `git show HEAD:` ([[referencia_banco_funciones_edge]]).
+  - SQL con concurrencia real sin Docker: `embedded-postgres` y `pg` en el bloc, 20 conexiones a la vez.
+  - Un enlace de pago se identifica sin la llave de Stripe abriendo su página: dice producto, precio e intervalo.
+  - Una notificación real se prueba con una función temporal con nonce que se borra al terminar.
+  - Lecciones 0-teroctogies, 0-quateroctogies y 0-quinoctogies.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+
+##### Resumen · 2026-10-18 · III · EL MURO DE SINTONÍA: DICE SOLO LO QUE LA APP DA, SE MIDE Y LLEVA DEL SEMANAL AL MENSUAL
+
+- 💡 **Decisiones:** «¿Qué te detuvo?» solo a quien no es miembro, una vez al día · el aviso semanal solo donde se cobra,
+  sin otra capa encima y de nuevo a las 3 semanas tras «Ahora no» · un pago web se atribuye al último muro donde tocó
+  comprar · fuera de las cuentas de la casa (admin y excluidas).
+- 🔧 **Patrones nuevos:**
+  - Banco: `&sinPlan`, `&tienda=ios|android` (+ `&usd`, `&semanal=N`, `&pegado`, `&otraTienda`, `&compra=`),
+    `window.__bancoMuro`, `__bancoCompras`, `__bancoAbrirMuro()`; `src/lib/platform.ts` se cambia al resolver.
+  - Una migración se prueba sin Postgres local con PGlite (la 0.3 se cae con RAISE dentro de plpgsql: usar la 0.2.17).
+  - Una capa que no avisa con `rsv-overlay-open` se detecta en la pantalla: portal de body fijo, z ≥ 1000, que recibe
+    toques y cubre casi todo (no por su opacidad: su entrada empieza en 0).
+  - Lección 0-duooctogies.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+
+##### Resumen · 2026-10-18 · II · PRECIOS: LA AUDITORÍA DE SINTONÍA, LO QUE DE VERDAD LLEGA DE CADA PAGO Y TRES SALAS DE ARREGLOS
+
+- 💡 **Decisiones:** 499 y 149 se quedan en México y fuera · para toda meta de dinero se usa ~355 por mensual en tienda (no
+  366) · meta de 92 a 97 suscripciones activas · el precio solo se mueve con 50 o más personas en el muro desde el último
+  cambio (o si la mitad de los «¿Qué te detuvo?» dice «el precio») · anual de 2,990 cuando haya 3 mensuales activos ·
+  el Radar gratis una vez al mes, como prueba.
+- 🔧 **Patrones nuevos:**
+  - El embudo real se mide con SQL de solo lectura por la API de gestión: `oraculo_usage.muro_intentos` (cuenta el muro
+    del Espejo desde el 2026-08-09), `edge_spend_ledger` por función y por cuenta, `onb_funnel` y `operational_expenses`;
+    el gasto de OpenRouter, con GET `/api/v1/credits` y `/api/v1/key` (no cuestan).
+  - Apple con una persona física en México: cobra IVA sobre su comisión y retiene 2.5 % de ISR (sin RFC, 20 %); en el
+    informe de pagos sale como «Impuestos y ajustes» y las ventas van por región (zona euro, América en dólares, México).
+  - Los precios de una app en cada país salen de su página pública de la App Store (`apps.apple.com/<país>/app/id<id>`);
+    la referencia de costumbre es ChatGPT Plus en la misma tienda.
+  - Un PDF se lee en la Mac sin poppler con un guion de Swift y PDFKit (la herramienta de lectura pide poppler).
+  - Un correo `privaterelay.appleid.com` solo recibe de remitentes registrados en Apple Developer (Sign in with Apple for
+    Email Communication); para escribirle a esa persona, el caso de soporte.
+  - Lección 0-unoctogies.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+- 🧭 Sin 🔮 propio: el arranque vivo sigue siendo el 🔮 de la Biblioteca de Bashar, aquí abajo.
+
+##### Resumen · 2026-10-18 · BIBLIOTECA DE BASHAR: LO QUE NOS FALTA, LAS SESIONES SUELTAS, LAS MÉTRICAS DE INSTAGRAM Y EL PLAN MAESTRO
+
+- 💡 **Decisiones:** la lista de faltantes se mide contra tv.bashar.org (en lo antiguo, la colección supera a la
+  plataforma) · lo de la Mac se copia, lo suelto del mismo disco se mueve y nada se borra · el conocimiento de Bashar se
+  usa destilado y en voz propia: sin modelo entrenado ni voz clonada · uso personal de la biblioteca: página propia con
+  selector, sin gastar el plan · distribuir antes que construir (70/30) hasta los 33,500 MXN · la llave de Instagram vive
+  solo en el llavero.
+- 🔧 **Patrones nuevos:**
+  - El catálogo de una tienda Uscreen se lee sin cuenta: `sitemap.xml`, las tarjetas de
+    `/categories/<id>/search?format=turbo_stream&page=N` y el JSON-LD de cada programa ([[referencia_catalogo_bashar_tv]]).
+  - Copias escondidas: la duración no sirve (113 caras de cinta distintas miden 2,821 s); el tamaño idéntico y las
+    palabras, sí. Para saber qué trae un video largo, se transcribe y se busca «transmission has been titled».
+  - Métricas de Instagram con inicio de sesión de Instagram (sin página de Facebook): se piden juntas y, si Meta rechaza
+    una, se quita y se reintenta; la llave se renueva cada 7 días (Meta exige que tenga 24 h).
+  - Lecciones 0-undeoctogies y 0-octogies.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+- 🧭 Su 🔮 (la destilación) pasó a la entrada de Emisiones del 2026-10-17 → 2026-10-18, que es la más reciente.
+
+##### Resumen · 2026-10-17 · II · EMISIONES: EM-003 «LA BRÚJULA» EN TRIPULANTE, LOS SUBTÍTULOS SELLADOS Y UNA VERSIÓN POR RED
+
+- 💡 **Decisiones:** subtítulos de la serie: B4 Volumen · cada emisión sale en dos versiones: Instagram sin música
+  (subtítulos en y 1570, portada con la frase en y 1490) y TikTok con la música de Zak'Haar (subtítulos en y 1440 y su
+  portada), cada una con su descripción · la voz a -14 LUFS · del estilo Tripulante solo se reescriben las escenas.
+- 🔧 **Patrones nuevos:**
+  - Un estilo de animación en dos archivos: la biblioteca (biblia, motor y utilería) y las escenas de la emisión;
+    `B.claves` mueve la cámara y lo que vive en pantalla (la estrella lejana) y `B.tiempos` ancla todo a la voz.
+  - Nada le cruza la cara a un personaje: la señal sale de arriba de su cabeza y la onda de la mano que apunta. La capa
+    de brillo suma: pecho, peldaño y destello juntos se queman.
+  - Subtítulos en frases cortas por costo mínimo (puntuación, 3 a 5 palabras, nunca terminar en «de», «la», «que»; en un
+    renglón, una palabra larga sola vale como énfasis); `estilos/99-frases.js` las vuelca para revisarlas.
+  - La cuadrícula de Instagram muestra el 3:4 del centro (y 240 a 1680); TikTok tapa de 320 a 400 px abajo y unos 120 a
+    la derecha.
+  - Lección 0-duodeoctogies.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+
+##### Resumen · 2026-10-17 · TERRA CRISTAL A LA VENTA: LA VERSIÓN GRATIS HASTA LEMURIA, EL MURO DE COMPRA Y LUDUS CERO AL DÍA
+
+- 💡 **Decisiones:** el corte en la puerta de Lemuria · 299 MXN pago único con todo lo que venga (reemplaza los 249) y, en Steam, 24.99 USD ·
+  la cuenta solo al desbloquear · `/terra-cristal-pixel3` fuera · la portada A1 · nada de spoilers en lo público · **299 sellado y se queda**
+  · el primer reto se resiste (la A) en su propia sala · lo que vende el juego habla en grande y en positivo · la cuenta se llama de Ludus Cero.
+- 🔧 **Patrones nuevos:**
+  - El cobro de un juego en dos puertas: el constructor del lugar desvía y `vaA` detiene; así la partida nunca anota un lugar de pago.
+  - Stripe sin webhook: se verifica al volver, los pagos abiertos se cierran al preguntar el estado y el muro pregunta otra vez al abrirse.
+  - El producto y su precio los crea la función con un id fijo y una llave fija (cambiar el precio es una llave nueva).
+  - Los precios reales de Steam por país salen de `store.steampowered.com/api/appdetails?appids=<id>&cc=mx`
+    ([[referencia_precios_steam]]).
+  - Un arreglo de arte hecho con IA va por partes: la geometría con código y lo redibujado sobre su recorte.
+  - Publicar el juego con otra sala trabajando en él: se le pregunta quién publica y se pide su aviso de inactividad.
+  - La telemetría nueva va en la bitácora de la partida (que ya viaja al Motor) con registros opcionales que no cambian el contrato; y lo que
+    el servidor suma se lee de las columnas que su consulta de verdad trae (las filas de Batallas traían solo `batallas`).
+  - Lecciones 0-quinseptuagies, 0-sexseptuagies y 0-septseptuagies.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+
+##### Resumen · 2026-10-14 · LUDUS CERO: EL TOWER DEFENSE NUEVO, DE TRES PROPUESTAS CON LORE A PRISMA TD
+
+- 💡 **Decisiones:** en los juegos de Ludus Cero manda la jugabilidad y el lore de los Códices va en segundo plano ·
+  PRISMA TD: ser el tower defense del momento en Steam y tan profundo como Terra Cristal, el detalle sobre la velocidad y
+  pantalla completa sin marco · la regla de la luz (cada figura es inmune a lo que refleja y la mata su complementario) ·
+  Espectro (roguelite) como motor de horas.
+- 🔧 **Patrones nuevos:** lectores en paralelo, uno por libro · escenas vivas de propuestas con motor mínimo y sonido
+  medido fuera de línea · el balance se cuenta en Node antes de verlas · la paleta de una imagen se mide con `sips` a
+  BMP. Lección 0-quaterseptuagies.
+- 🧭 **Su arranque ya se ejecutó** (la Sala 1 de PRISMA TD quedó hecha el 2026-10-14); lo que sigue vive en
+  `Ludus Cero/prisma/Docs/PROXIMA_SALA.md`.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+
+##### Resumen · 2026-10-08 → 2026-10-10 · ESPEJO: ENTRAR EN LO ÚLTIMO, EL SEGUIMIENTO QUE AGUANTA LA INERCIA, HASTA 8 FOTOS Y LA VOZ QUE NO DESELLA RITUALES
+
+- 💡 **Decisiones:** el ojo del Espejo sigue siendo Gemini 3.6 Flash; Zak no quiere la prueba a ciegas con DeepSeek V4.1
+  Flash por ahora · la cura de una pieza compartida por las dos caras va en las dos (la burbuja); la Matriz no se tocó ·
+  al instalar en el iPhone se espera 2 minutos como máximo; si la Mac no lo ve, se detiene y Zak compila en Xcode (el
+  proyecto de iOS queda con el código copiado).
+- 🔧 **Patrones nuevos:** banco del Espejo (`&espejo`, `&prueba=espejo&pasos=…`, `&mudo`; con `&conservar` el servidor
+  falso recuerda la charla) que corre sola y pinta su resultado · el motor de Safari sin ventana: `xcrun simctl boot` +
+  `openurl` + `io screenshot` (iPad = cara de computadora, iPhone = teléfono) · inercia del trackpad por CDP con los pasos
+  a ritmo fijo y su `timestamp` · leer el localStorage de la app de la Mac (sqlite en UTF-16LE, solo las claves necesarias)
+  · la caja negra anota `espejo-seguir-cede` y `espejo-seguir-agota` · un cuerpo de 8 MB pasa la plataforma (sonda con
+  llave inválida). Lecciones 0-duoseptuagies y 0-terseptuagies; detalle en [[referencia-probar-espejo]],
+  [[integrar-desde-worktree]] y [[feedback-iphone-no-esperar]].
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+
+##### Resumen · 2026-09-27 → 2026-10-09 · ESCÁNER: LA APP QUE NO SE TRABA, LA BIENVENIDA EXPRÉS, LAS TIENDAS 1.1.6 Y LA SALA DE LOS CV
+
+- 💡 **Decisiones:** la bienvenida se recorta, no se quita (el aviso médico es obligatorio y la pantalla de elección
+  manda a cada quien a lo que vio en el video) · la oferta de Sintonía aparece al llegar a un límite real · se saltó la
+  1.1.5 · los CV dicen solo lo comprobable, uno por puesto, y la sala de los CV se abre en `admin/aplicaciones`.
+- 🔧 **Patrones nuevos:** vigía de `requestAnimationFrame` en `index.html` · lo que tiene que verse nace visible ·
+  `CapaSegura` (velo, frontera de errores) · caja negra `rsv_caja_negra` que se lee del iPhone por `devicectl`
+  ([[referencia_leer_caja_negra_iphone]], [[proyecto_robustez_arranque_escaner]]) · la vista previa oculta como
+  laboratorio de reloj detenido · generador de CV de una sola fuente. Lección 0-unseptuagies.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+
+##### Resumen · 2026-10-08 · II · LA APP SIN INTERNET: TODO ABRE SIN RED Y LO HECHO SIN CONEXIÓN SE SINCRONIZA SOLO
+
+- 💡 **Decisiones:** lo que necesita al servidor para pensar o subir archivos sigue pidiendo red (Espejo, Decodificadores,
+  fotos y notas de voz, sesión, pagos, nombre y foto, invitaciones y notas compartidas) · una escritura sin regla, sin red,
+  responde null como siempre (nada se finge hecho) · los límites del plan se aplican igual sin red · lo creado y borrado
+  sin red no sube nada.
+- 🔧 **Patrones nuevos:** `lib/sinConexion` (identidad recordada solo si la sesión no responde; `sesionCaida()` distinto de
+  «la sesión aún carga»; caché de lecturas en IndexedDB; fila con reglas, compactación, ids provisionales y `extras` que se
+  quitan si el servidor responde PGRST202) · revivir Clerk con `useClerk().loadClerkJS()` (clerk-react no reintenta solo)
+  · las imágenes de R2 se guardan con `fetch(url, { cache: "reload" })` (la copia que dejó un `<img>` sin CORS no se puede
+  leer) · banco con `&sinRed&conservar`, `window.__bancoVolverRed()` y `window.__bancoSinMigracion` · una función con
+  permiso solo de servicio se verifica desde fuera sin ejecutarla: «permission denied» (42501) prueba que la firma existe y
+  PGRST202 que no · si Zak reporta algo sin red, la caja negra anota `sin-red-anota`, `sin-red-subidas`, `sin-red-negada`,
+  `sin-red-abandona` y `sesion-revive`. Lección 0-septuagies.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+
+##### Resumen · 2026-10-08 · PUBLICIDAD: EL ESPEJO EN DOS COMERCIALES, LA CAMPAÑA VIVA EN INSTAGRAM Y LAS CONSULTAS DE JUEGOS
+
+- 💡 **Decisiones:** el Espejo de la noche va primero, solo y solo en Instagram · las promociones se hacen desde
+  instagram.com en la computadora (en la app de iOS Apple cobra 30 %) · las siguientes pruebas usan el mismo público ·
+  las propuestas de juego se buscan dentro del gusto de Zak · Terra Cristal pasa al frente de Lúcido.
+- 🔧 **Patrones nuevos:** en esta cuenta de Meta, optimizar a Lead obliga a ubicaciones automáticas (Ventas no ofrece
+  Lead y Tráfico ni deja fijar la edad): solo Instagram es promocionar el Reel · el píxel se comprueba con la función
+  pública de la landing y su llave · dos tomas de Blender que comparten cuadros se pisan los renders · un fundido entre
+  dos capas solo cuando ya coinciden. Lecciones 0-duodeseptuagies y 0-undeseptuagies; detalle en
+  [[proyecto_publicidad_pagada]] y [[proyecto_sonora]].
+- 🧭 **Su arranque ya se ejecutó** (la página nueva con versiones está en vivo y los videos 05 a 08 entregados): su 🔮
+  salió de aquí al cerrar la sala del 2026-10-09, porque solo la sala más reciente lleva 🔮; lo que sigue de la campaña
+  vive en Pendientes vivos y en [[proyecto_publicidad_pagada]].
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+
+##### Resumen · 2026-10-07 · II · CLAUDE FOR STARTUPS, LUDUS CERO EN EL SISTEMA SOLAR Y LOS CÓDICES QUE SE LEEN SIN INTERNET
+
+- 💡 **Decisiones:** aplicar como Red Solar Viva (el correo debe ser del dominio del sitio; escanervibracional.com no
+  tiene correo) · nada de Console ni cuentas por agentes remotos · Ludus Cero vive en play.redsolarviva.com hasta que haya
+  ingresos y el planeta apunta directo a play (con redirección la barra termina en play igual) · los Códices se guardan
+  solos y un avance pendiente de este aparato gana al reabrir · la protección de propiedad de GoDaddy no hace falta (basta
+  el candado del dominio y los dos pasos).
+- 🔧 **Patrones nuevos:** `useTripulanteId` (el último Tripulante del aparato cuando la sesión no responde) · prueba sin
+  red en el banco con interruptores dentro del servidor falso (`window.__bancoOffline`, `&sinSesion`, `&conservar`) y
+  `navigator.onLine` sobrescrito por CDP, porque cortar la red también corta el servidor de desarrollo · la landing se
+  prueba con la medición bloqueada (`Network.setBlockedURLs`) para no ensuciar la campaña · copias ligeras de portadas
+  por slug, las mismas en la web y en la app. Lecciones 0-sexsexagies y 0-septsexagies.
+- 🧭 **Su arranque** (salió de aquí al cerrar la sala de publicidad del 2026-10-08, porque solo la sala más reciente
+  lleva 🔮; el estado vive en Pendientes vivos y en la memoria `proyecto-claude-for-startups`): si Zak trae el resultado de la revisión,
+  seguir el pendiente vivo; si ya los aceptaron, borrar ese pendiente, la memoria `proyecto-claude-for-startups` y el
+  registro del incidente de esta entrada.
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+
+##### Resumen · 2026-10-07 · FOTÓN CERO: SU SALA PROPIA, EL INSTRUMENTO QUE SUENA Y EL AUDIO QUE VOLVIÓ AL ESTÉREO
+
+- 💡 **Decisiones:** Fotón Cero vive en su propia casa y Red Solar Viva solo la señala · los videos van desde R2 en tres
+  calidades y una obra que cambia sube con nombre nuevo (`-vN`), para que la caché nunca sirva la vieja · sin
+  descripciones de episodio · la portada sin placas: manda el astrolabio · el sonido nace encendido y la sala de
+  proyección calla por dentro · las salas de Fotón Cero se abren en la carpeta `fotoncero`.
+- 🔧 **Patrones nuevos:** nunca máscara ni filtro CSS sobre un `<video>` (Chrome con tarjeta gráfica lo pinta por bloques
+  y parpadea en negro; el Chrome sin ventana no lo ve): penumbras como capa encima y el video aparece hasta pintar su
+  primer cuadro · bucles de ida y vuelta y más lentos cuando la toma se desplaza, arrancando después de la transición
+  anterior · la matriz de canales de un audio se mide por mínimos cuadrados contra el master alineado · efectos
+  decodificados fuera de línea (sin avisos) que despiertan con el primer gesto, afinados con análisis de frecuencias ·
+  intención antes de abrir una tarjeta (el cursor frena: 12 px por 100 ms o 420 ms quieto) · puente temporal de subida
+  a R2 que solo firma un prefijo y se borra al terminar · con `cleanUrls` el respaldo de la SPA va a `/index`. Lecciones
+  0-tersexagies, 0-quatersexagies y 0-quinsexagies; detalle en [[proyecto_foton_cero_sala]] y [[feedback_todo_vivo]].
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+
+##### Resumen · 2026-10-04 · IV · LÚCIDO: SIN MARCO, PASOS PROPIOS Y LA PÁGINA QUE SELLÓ LUZ DE CINE Y A TONALLI
+
+- 💡 **Decisiones (Zak):** nivel 3 «luz de cine» (640 x 360 con la luz a resolución completa, la receta de Terra
+  Cristal) · Tonalli de protagonista · selector con Tonalli, Teyolia y Temictli, Ollin fuera · el arte HD fue solo para
+  verlo · cuatro direcciones · orden: el nivel 3 y los personajes, la propuesta 3 y luego la 1 (las épocas, que le
+  encantaron); después la 2, la 4 y la 5 · las salas de Lúcido se abren en la carpeta `Ludus Cero/lucido`.
+- 🔧 **Patrones nuevos:** personajes esculpidos con campos de distancia que dan a la vez el pixel de cada nivel (contorno
+  del color de cada parte y línea donde algo pasa por delante), las ocho vistas, la caminata y el arte HD · un
+  comparador honesto pinta «hoy» con el motor real · la curva de dificultad se mide por sala con el bot
+  (`prueba.ts dificultad`) · el volumen de un sonido nuevo se mide contra lo aprobado con OfflineAudioContext · fotos por
+  sección (una página completa con muchos lienzos de WebGL se atora). Detalle en [[proyecto_juego_pixel]].
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+
+##### Resumen · 2026-10-04 · III · ESCRITORIO PASO A PASO: LA COMUNIDAD COMO HERRAMIENTA, ESCAPE QUE CIERRA Y EL LOGO QUE SUENA
+
+- 💡 **Decisiones:** la experiencia de escritorio se transforma pantalla por pantalla con la gramática de
+  `ComunidadEscritorio.tsx` (hairlines, un solo acento para estado, sin degradados animados ni brackets, monogramas con
+  iniciales) y el celular conserva su forma · Eliminar es «para mí», como WhatsApp, y vive en la base · Escape nunca
+  saca la app de la Mac de pantalla completa (para salir quedan el botón verde y Control+Cmd+F) · mi burbuja en
+  escritorio: cian claro plano con tinta oscura.
+- 🔧 **Patrones nuevos:** banco de pruebas de escritorio con sesión y servidor falsos (`escaner-app/banco/`, servidor
+  `banco-escritorio`, `?capa=comunidad&rapido&claro&sinOcultar`) y `banco/captura.mjs` (fotos nítidas con Chrome sin
+  ventana, mudo) · pila de Escape (`lib/pilaEscape`): lo que se abre apila su cierre · en el motor de la Mac un Escape
+  que la página no atiende llega a la ventana nativa y la saca de pantalla completa (se marca atendido en captura) · la
+  ventana de la Mac nace oculta un instante: lo que se dispara al arrancar espera a verse · un gesto del trackpad (rueda
+  horizontal) mueve la burbuja directo en la página, sin renders. Detalle en [[proyecto_escritorio_paso_a_paso]] y
+  [[feedback_ventanas_de_prueba_mac]].
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+
+##### Resumen · 2026-10-04 · II · NAVEGANTE: SINFONÍA, ODISEA, LA CONSTELACIÓN Y LUDUS CERO PREMIUM CON EL TRÁILER
+
+- 💡 **Decisiones:** Resonancia descartada por ahora · la Red no late en cada pulso · del tema en pantalla solo el
+  nombre (a nadie le interesa si está en Do o en Re) · VOLVER no vive dentro de las membranas: la casa LUDUS CERO solo
+  en la constelación · los guardianes no se regalan abiertos · el banner abre el juego y solo CONOCER baja · los
+  sonidos del juego salen de su propia síntesis, en la tonalidad de cada canción.
+- 🔧 **Patrones nuevos:** controles que se apagan con el mouse quieto, nunca bajo el cursor ni en pantallas táctiles ·
+  modo cine en un portal a `document.body` moviendo el mismo `<video>` (Domo crea su propio contexto de apilamiento) ·
+  un `scrollIntoView` suave que se corrige al detenerse (las fotos lazy de arriba lo empujan) · tomas para una página
+  pintadas con el motor real (`estudio-red-viva.mjs`, 3840 como máximo) · un lote de bots contra producción en dos
+  carriles · todo bot con `--mute-audio` y `process.on("exit")`. Detalle en [[proyecto_navegante_arte]] y
+  [[proyecto_ludus_hub]].
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+
+##### Resumen · 2026-10-04 · TRÁILER DE NAVEGANTE PARA STEAM: 94 SEGUNDOS CON EL MOTOR REAL Y SU SEGUNDA PASADA
+
+- 💡 **Decisiones:** 16:9 1920×1080 a 60 (el formato de Steam) · la tarjeta final dice «Empieza gratis ·
+  play.redsolarviva.com» (tutorial y Membrana 1 libres; si llega a Steam solo cambia `tomas/s23_final.js`) · narrador
+  grave de tráiler y una voz distinta por personaje · los letreros llevan la tipografía del logo (Orbitron) y el
+  filamento de la Red · donde la voz habla de la música del juego, suena la del juego.
+- 🔧 **Patrones nuevos:** tráiler pintado con el motor del juego (copia parchada con cámara, render por CDP en paralelo
+  y una bitácora de eventos que pone cada sonido en su cuadro) · ayudantes por grupo de tomas con contrato y una toma de
+  ejemplo · música de ElevenLabs con un trozo por acto y su compás medido · la música se aparta solo en la banda de la
+  voz (+6 dB) y las voces se igualan en su lugar · en ffmpeg 8 cada etapa va a su archivo. Detalle en
+  [[proyecto_trailer_navegante]] y [[feedback_trailers_juego]].
+- *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
