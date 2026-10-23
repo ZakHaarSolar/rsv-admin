@@ -1,9 +1,11 @@
-// admin/supabase/functions/chat-respuestas/index.ts v1.0 — 🜂 ¿LO CONTESTÉ? (Zak 2026-10-23)
+// admin/supabase/functions/chat-respuestas/index.ts v1.1 — 🜂 HACIA ABAJO Y HACIA ARRIBA (Zak 2026-10-23): la misma lectura dice también a qué mensaje anterior contesta el tocado («contesta»), y sirve para tus mensajes (las respuestas de la otra persona). Entrada v2 en nucleo.ts; la v1 de la app 1.1.64 sigue entendiéndose.
+// v1.0 — 🜂 ¿LO CONTESTÉ? (Zak 2026-10-23)
 // Al tocar un mensaje del otro en el chat de la Comunidad, la app muestra debajo qué mensajes
 // tuyos lo contestan: los que lo citaron (los sabe sola) y los que lo contestan sin citarlo,
 // que decide esta función leyendo el contexto con Claude Haiku 5.5 (lógica en nucleo.ts).
 //
-//   POST { token, objetivo, antes, despues, idioma }  →  { respuestas: [{ q, seguridad }] } | { error }
+//   POST { token, v: 2, objetivo, antes, despues, idioma }  →  { respuestas, contesta } | { error }
+//   (cada lista: [{ q, seguridad }]; la v1 solo lee «respuestas»)
 //
 // · El texto lo manda la app (ya descifrado en pantalla, solo el tramo necesario, sin
 //   nombres ni ids). Nada se guarda: ni el texto ni el resultado.
@@ -68,15 +70,17 @@ Deno.serve(async (req) => {
     if (!gate.ok) return json({ error: gate.error }, gate.status)
 
     const pedido: Pedido = {
+        v: body?.v,
         idioma: body?.idioma,
         objetivo: body?.objetivo || { texto: "" },
         antes: body?.antes || [],
         despues: body?.despues || [],
     }
-    if (!normalizar(pedido).candidatos.length) return json({ respuestas: [] })
+    const n = normalizar(pedido)
+    if (!n.abajo.length && !n.arriba.length) return json({ respuestas: [], contesta: [] })
     if (!(await reservar(gate.userId))) return json({ error: "limite" }, 429)
 
-    const respuestas = await decidir(pedido)
-    if (!respuestas) return json({ error: "ia" }, 503)
-    return json({ respuestas })
+    const lectura = await decidir(pedido)
+    if (!lectura) return json({ error: "ia" }, 503)
+    return json(lectura)
 })
