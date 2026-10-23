@@ -146,7 +146,7 @@ haya cambiado. Antes de "arreglar" algo que se ve inerte en el preview:
    congelado.)
 2. Si el código depende de rAF o de una animación para algo **funcional**
    (no cosmético), darle una **ruta directa** de red de seguridad: mejora
-   el producto en device Y vuelve la feature verificable acá.
+   el producto en device Y vuelve la feature verificable aquí.
 
 **Por qué.** El 2026-07-27 · II el botón de "volver al final" del Espejo
 parecía no hacer nada en el preview; el handler corría bien y el
@@ -180,8 +180,8 @@ saldo, un secreto sin cargar, una función sin desplegar, un permiso denegado):
 esos casos son indistinguibles entre sí desde afuera y el Tripulante no tiene
 consola.
 
-**Es el reverso del Paso 0.** El Paso 0 dice "no iteres a ciegas, pedí el dato
-concreto". Este dice: **construí el producto para que ese dato exista sin que
+**Es el reverso del Paso 0.** El Paso 0 dice "no iteres a ciegas, pide el dato
+concreto". Este dice: **construye el producto para que ese dato exista sin que
 haya que pedirlo.**
 
 🜂 **Y el motivo tiene que existir EN SU IDIOMA.** Un mensaje que una librería
@@ -214,8 +214,8 @@ sin nada que leer.
 
 Cuando un pedido mezcla **algo que Zak puede disfrutar o usar de inmediato**
 (letras, prompts, copy, textos, un análisis) con **trabajo largo de
-construcción**, entregá lo consumible en el PRIMER movimiento, como archivo o
-mensaje propio, y recién después te sumergís en lo demás.
+construcción**, entrega lo consumible en el PRIMER movimiento, como archivo o
+mensaje propio, y solo después te sumerges en lo demás.
 
 No es cortesía: convierte el tiempo de construcción en tiempo útil para él.
 Mientras yo compilo, él ya está escuchando, leyendo o pegando. Y si la sala se
@@ -273,7 +273,7 @@ conteo (`(salida.match(/frase/g) || []).length`) es mejor evidencia que un diff
 a ojo, y si el bug depende del tiempo, el test espera de verdad.
 
 **Por qué.** El 2026-07-30 el dictado del Agradecimiento se arregló y los 6
-casos pasaron a la primera. Recién al re-correr el caso de Zak contra la lógica
+casos pasaron a la primera. Solo al re-correr el caso de Zak contra la lógica
 anterior —que devolvió exactamente 3 copias, idéntico a lo que él había
 pegado— quedó demostrado que el fix atacaba el bug y no otra cosa. Sin ese
 paso, "los tests pasan" no dice nada.
@@ -324,7 +324,7 @@ ensucia la memoria del Espejo. Se arreglaron los dos; leyendo solo el síntoma s
 habría arreglado uno.
 
 **Cómo se ve:** antes de zambullirse en la causa del síntoma, una pasada por el
-material preguntando "¿hay algo raro acá que Zak no nombró?". Si aparece, se
+material preguntando "¿hay algo raro aquí que Zak no nombró?". Si aparece, se
 nombra y se decide: se arregla ahora si es de la misma familia, o entra a
 Pendientes vivos.
 
@@ -407,7 +407,7 @@ caso al principio.
 ### Paso 0-terdecies — Una consulta respondida ATERRIZA o se evapora
 
 Zak mezcla tareas de código con **consultas** ("esta es una consulta, dime qué
-opinas"): si conviene tal feature, qué proponés para tal problema, por qué algo
+opinas"): si conviene tal feature, qué propones para tal problema, por qué algo
 está como está. Esas respuestas no producen código, así que no dejan rastro
 solo — y el análisis se repite desde cero tres salas después.
 
@@ -459,7 +459,7 @@ segunda es de infraestructura: **antes de automatizar cualquier cosa sobre un
 
 ### Paso 0-quindecies — La MÉTRICA puede estar hecha a la medida de lo viejo
 
-Cuando midas una mejora contra un control, revisá que la métrica no esté
+Cuando midas una mejora contra un control, revisa que la métrica no esté
 definida en los términos del diseño ANTERIOR. Un arnés puede correr bien, con el
 dato correcto y el control correcto, y aun así dar un veredicto invertido porque
 lo que cuenta es lo que el diseño viejo hacía por naturaleza.
@@ -478,7 +478,7 @@ misma comparación dio 4.52 contra 0.38. El código nuevo siempre estuvo bien; l
 regla que lo juzgaba estaba escrita con la forma del anterior.
 
 Hermano del **0-sexies** (una verificación que falla acusa al código): ahí el
-riesgo es descartar un fallo real; acá es **creerle a un fallo inventado por la
+riesgo es descartar un fallo real; aquí es **creerle a un fallo inventado por la
 propia vara**.
 
 ### Paso 0-duodevicies — Un "NO HAY NADA" se confirma por otra vía antes de construir encima
@@ -488,13 +488,13 @@ ausente) se siente como un dato y no lo es: es la respuesta más fácil de dar
 para un sistema roto. Una consulta que falla se nota; una que contesta
 `[]` con toda confianza, no.
 
-**Regla: antes de tomar una decisión de arquitectura sobre un vacío, confirmalo
+**Regla: antes de tomar una decisión de arquitectura sobre un vacío, confírmalo
 por un camino distinto.** El segundo camino tiene que ser de otra naturaleza:
 si el primero fue una API, que el segundo sea la pantalla, el archivo en disco,
 el bundle publicado o una consulta directa. Repetir la misma llamada no
 confirma nada.
 
-Y al revés: **si el vacío es sospechosamente conveniente, sospechá más.** "No
+Y al revés: **si el vacío es sospechosamente conveniente, sospecha más.** "No
 hay configuración que rescatar" es justo lo que uno quiere oír antes de una
 migración.
 
@@ -508,12 +508,12 @@ leer. Lo destapó Zak comparando pantallas: logo ausente, portadas en blanco,
 tipografías cambiadas. La API nunca dijo "no pude"; dijo "no hay".
 
 Hermano del **0-nonies** (una verificación que NO PUDO correr no es una que
-pasó): ahí el síntoma es que no hubo respuesta; acá la respuesta llegó, limpia,
+pasó): ahí el síntoma es que no hubo respuesta; aquí la respuesta llegó, limpia,
 y era mentira.
 
 ### Paso 0-sexdecies — Lo que MIDE y lo que OCURRE tienen que ser el mismo objeto
 
-Cuando dos sistemas trabajan sobre "el mismo" texto, imagen o señal, comprobá
+Cuando dos sistemas trabajan sobre "el mismo" texto, imagen o señal, comprueba
 que sea LITERALMENTE el mismo objeto y no dos versiones que alguien limpió,
 recortó o normalizó por el camino. Si uno mide sobre A y el otro ejecuta sobre
 B, el desfase no aparece de golpe: **se acumula en proporción a cuánto
@@ -534,7 +534,7 @@ derivaba justo en los párrafos con negrita y volvía a cuadrar al cerrar cada
 parte. Ninguna cantidad de afinar el adelanto lo habría arreglado.
 
 Hermano del **0-quindecies** (la métrica hecha a la medida de lo viejo): ahí
-la vara está mal; acá los dos relojes miden mundos distintos.
+la vara está mal; aquí los dos relojes miden mundos distintos.
 
 ### Paso 0-septdecies — Una instrucción del sistema jamás viaja en el campo del usuario
 
@@ -554,8 +554,8 @@ estaba mal era qué se medía.
 ### Paso 0-undevicies — Tu propia automatización puede DESHACER lo que acabas de hacer
 
 Cuando una acción tuya dispara otra automática (un push que despliega, un
-guardado que sincroniza, un commit que corre un hook), preguntate qué
-reconstruye esa segunda desde cero y qué NO va a incluir. Si lo que acabás de
+guardado que sincroniza, un commit que corre un hook), pregúntate qué
+reconstruye esa segunda desde cero y qué NO va a incluir. Si lo que acabas de
 publicar vive fuera de la fuente que ella lee, lo va a borrar — y no en el
 momento, sino un minuto después, cuando ya reportaste éxito.
 
@@ -583,7 +583,7 @@ declarar publicada y verificada. Pasó DOS veces el mismo día, la segunda ya
 sabiendo la causa.
 
 Hermano del **0-nonies** (una verificación que no corrió no es una que pasó):
-ahí el problema es medir de menos; acá es medir bien y que el mundo cambie
+ahí el problema es medir de menos; aquí es medir bien y que el mundo cambie
 después de la medida.
 
 ### Paso 0-vicies — Un ATAJO que decide no preguntar falla hacia el camino largo
@@ -611,7 +611,7 @@ puerta. Y no salió por una prueba dirigida: salió porque mi propia verificaci�
 usó una frase que mencionaba una cámara.
 
 Hermano del **0-decies** (un catálogo que promete cobertura total se enumera
-contra la fuente): ahí el riesgo es cubrir de menos; acá es capturar de más.
+contra la fuente): ahí el riesgo es cubrir de menos; aquí es capturar de más.
 
 ### Paso 0-vicies-semel — La causa se ANUNCIA después de probarla, no antes
 
@@ -826,7 +826,7 @@ Dos movimientos, y los dos se hacen sobre el texto, no pidiéndole al modelo:
    por alguien" en una sola bolsa: un juego de dados con premio de comida
    "repetía" el pago silencioso de la fila. Misma idea = mismo gesto Y misma
    mecánica; el premio no cuenta.
-2. **Ejecutar del lado de acá la regla que el modelo debía cumplir y no
+2. **Ejecutar de este lado la regla que el modelo debía cumplir y no
    cumplía.** La regla decía "con menos de cinco, la que sobrevive entra"; el
    modelo, con el ranking vacío, no la metía. Se mete en código.
 
@@ -1969,7 +1969,49 @@ IA). Lo que se agrega a la barra o al menú vive dentro del sitio; lo estático 
 Hermanas: 0-unseptuagies (lo que tiene que verse nace visible), 0-nonies (el código de estado no prueba el contenido),
 0-duotricies (lo que se pide para una superficie no se aplica a las dos).
 
+### Paso 0-unnonagies · Un modelo de imagen con poco espacio ignora «no tapes eso»
+
+**Regla.** Para meter un personaje en una imagen que ya está aprobada (capturas, banners), la IA solo integra: luz, sombra,
+color. Si el espacio libre es chico, el prompt «no tapes el teléfono» no basta: se le enseña solo la parte libre (recorte) o
+se pega al personaje con código en su lugar exacto y se le pide solo la luz. Después, todo lo que no es el personaje vuelve
+de la original pixel por pixel, con los contornos protegidos medidos (no a ojo) y ninguna luz nueva junto a ellos.
+
+**Por qué.** En las capturas con Pulso (2026-10-22), «Entorno» y «Frecuencia» salieron cuatro veces con Pulso encima de la
+pantalla aunque el prompt lo prohibía. El recorte y la composición guiada lo resolvieron a la primera. Un contorno trazado a
+ojo iba 39 px por dentro del marco y dejó pasar un brillo con orillas rectas.
+
+**Cómo se aplica.** `Escaner Vibracional/Pulso HD/herramientas/capturas.py` y `guia.py`; contar los pixeles cambiados en lo
+protegido (tiene que dar cero). Hermanas: 0-sexseptuagies (el arte con IA se arregla por partes), 0-sexies.
+
+### Paso 0-duononagies · Lo que el modelo lee como instrucción, lo imita: toda instrucción va en tú
+
+**Regla.** Todo lo que el modelo lee como instrucción (el maestro, el CLAUDE.md de cada proyecto, estas lecciones, las
+memorias, los prompts de arranque) se escribe en el registro en que se le pide hablar: español neutro de México, con tú.
+Una regla que prohíbe el voseo, rodeada de imperativos en voseo, lo enseña igual: al actuar, el modelo copia la forma de la
+instrucción que tiene enfrente, no la prohibición que leyó en otra sección. El voseo solo aparece dentro de la regla que
+lo nombra, como ejemplo de lo prohibido.
+
+**Por qué.** Zak pidió cero voseo el 2026-08-14 y la memoria ya existía, pero el voseo se siguió colando en los reportes.
+El 2026-10-23 el maestro aún tenía 18 líneas de instrucciones en voseo: 14 dentro de este protocolo («Respondé
+internamente», «Borrá», «sos vos») y 4 fuera, entre ellas la frase que la regla del SQL manda decirle a Zak tal cual
+(«Pegá el contenido de…»); estas lecciones tenían 21 líneas con voseo, «acá» o el «recién» rioplatense. Es la 0-duovicies
+con otra cara: la prohibición vivía en una sección y su contraria, en cada paso que el modelo ejecuta.
+
+**Cómo se aplica.** Una instrucción nueva o corregida pasa por el mismo filtro que un reporte. Al cerrar una sala que tocó
+instrucciones, se barre lo editado buscando imperativos con tilde en la última vocal (como «pegá»), presentes en -ás, -és
+o -ís, pronombres pegados sin tilde (como «marcalo») y las palabras «vos», «sos» y «acá»; solo pueden quedar los ejemplos
+de la regla. Hermanas: 0-duovicies (dos órdenes contrarias: gana la que está pegada al dato) y 0-unquadragies (lo que
+vivió semanas en silencio pide su centinela).
+
 ### Changelog del protocolo
+
+- **v84 (2026-10-23, sala del voseo):** el protocolo pasa a tú (14 líneas en voseo de los pasos 1 a 3, que el modelo
+  imitaba) y una lección. **0-duononagies**: lo que el modelo lee como instrucción, lo imita; toda instrucción va en tú y
+  el voseo solo como ejemplo dentro de su regla. El mismo barrido fuera del protocolo (la directiva maestra, los
+  sellos, los logs y la frase del SQL) y en estas lecciones; los CLAUDE.md de los proyectos ya estaban limpios.
+
+- **v83 (2026-10-22, sala Pulso HD):** una lección. **0-unnonagies**: con poco espacio, el modelo de imagen ignora «no
+  tapes eso»; recorte o composición guiada, y lo demás vuelve pixel por pixel.
 
 - **v82 (2026-10-21, sala de las solicitudes):** una lección. **0-nonagies**: lo que lee un revisor va en el primer byte
   (empresa, productos, equipo con nombre legal y contacto, comprobado con un lector sin código) y lo que se agrega a la
@@ -2267,7 +2309,7 @@ Hermanas: 0-unseptuagies (lo que tiene que verse nace visible), 0-nonies (el có
   señales, se descarta lo que suene a otra cosa, y se prueba con los casos que
   NO debe capturar.
 - **v33 (2026-08-14):** Paso 0-undevicies — tu propia automatización puede
-  DESHACER lo que acabás de hacer. El `git push` de la regla de oro disparó el
+  DESHACER lo que acabas de hacer. El `git push` de la regla de oro disparó el
   auto-despliegue de Vercel, que reconstruye sin los instalables y se llevó
   producción por delante un minuto después de una publicación verificada; la
   app quedó diciendo "No se pudo consultar el servidor de versiones". Cuando

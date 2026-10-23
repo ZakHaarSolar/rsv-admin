@@ -717,7 +717,9 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   («La espiral») no va en la app: lo que comparten es la espiral del pecho. **Falta que Zak** dibuje a mano la hoja modelo de
   Pulso (cuando pueda; el registro del personaje, cuando haya capital). Los Shorts de emociones también pasan a Pulso desde el
   lote siguiente (Zak eligió A el 2026-10-22; abajo). La serie se queda en `Escaner Vibracional/Emisiones/` (comparte motor,
-  biblioteca, voz y métricas con los Shorts y su trabajo es la app); Fotón Ce- **Decidido por Zak el 2026-10-22 · Pulso también en los Shorts** («vamos a cambiar a Pulso a partir de los próximos
+  biblioteca, voz y métricas con los Shorts y su trabajo es la app); Fotón Cero va en los créditos («Una producción de
+  Fotón Cero»).
+- **Decidido por Zak el 2026-10-22 · Pulso también en los Shorts** («vamos a cambiar a Pulso a partir de los próximos
   shorts»): la A del jurado (7 de 7, https://claude.ai/artifact/DwiAAjvvuzGKARFNMojpYg), con su condición: dirigirlo para el
   celular antes de su primer Short (con la actuación prestada del Tripulante, a ciegas su emoción se leía 4.9 contra 7.3). La
   sala «Pulso dirigido» lo dejó en `Escaner Vibracional/Emisiones/plantillas/pulso/` (biblioteca v1.4: `B.modoShort` y la
@@ -725,8 +727,8 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   prefieren** (https://claude.ai/artifact/5GE9u5tNoFihKkkXBp2Epp). Entra con el siguiente Short de estilo Tripulante del
   próximo lote (EM-011 sale el viernes 23 con el Tripulante); ya publicado manda la alarma de sus primeros 8 Shorts. Todo en
   `Emisiones/CLAUDE.md` («Pulso en los Shorts»). Lección: un jurado a ciegas se corre con agentes de solo lectura, las
-  imágenes fuera del proyecto y la sala parada fuera de la carpeta del jurado (ven su ruta).
-rimer intento salió 6 a 1.
+  imágenes fuera del proyecto y la sala parada fuera de la carpeta del jurado (ven su ruta): con las notas a la vista, el
+  primer intento salió 6 a 1.
 - **Consulta respondida el 2026-10-22 · Alux contra Kurzgesagt:** Alux vive de su archivo (sus más vistos tienen de 8 a 10
   años; hoy, de 13 a 54 mil por video con 5.1 M de suscriptores); Kurzgesagt saca millones porque cada video es un evento.
   YouTube reparte video por video, no por suscriptores. Esperado, con mucha incertidumbre: de cientos a pocos miles por
@@ -1103,7 +1105,7 @@ con e.firma, 2,813.77 MXN por clase. Pasos, costos y fuentes: `Fotón Cero/Luzy/
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v83 (2026-10-22)
+## 🜂 Protocolo de Cierre de Sesión · v84 (2026-10-23)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -1287,6 +1289,7 @@ memorias.
 - **0-undenonagies** · La prueba del motor reproduce el caso que falló (contenedor con scroll, texto largo, sombras): la manera vieja tiene que fallar en ella, o su «pasa» no vale.
 - **0-nonagies** · Lo que lee un revisor va en el primer byte (empresa, productos, equipo con nombre legal y contacto, leído sin código antes de aplicar); lo que entra a la navegación no recarga.
 - **0-unnonagies** · Un modelo de imagen con poco espacio ignora «no tapes eso»: se le enseña solo la parte libre o se coloca al personaje con código y se le pide solo la luz; lo demás vuelve pixel por pixel.
+- **0-duononagies** · Lo que el modelo lee como instrucción, lo imita: toda instrucción (maestro, CLAUDE.md, lecciones, memorias) va en tú, y el voseo solo como ejemplo dentro de su regla.
 
 ### Paso 1 — Test de continuidad
 
@@ -1428,7 +1431,7 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v83 (2026-10-22). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v84 (2026-10-23). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
