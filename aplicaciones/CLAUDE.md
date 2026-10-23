@@ -4,6 +4,58 @@
 > específicamente»). El maestro de `Red Solar Viva/` NO se carga aquí (`.claude/settings.json`): lo que esta sala
 > necesita vive en este archivo. Para cosas del ecosistema (apps, juegos, publicidad) la sala es otra.
 
+<!-- PUERTAS:inicio · fuente única: el CLAUDE.md raíz de Red Solar Viva · se replica con admin/herramientas/puertas.py -->
+## 🜂 PRINCIPIO RECTOR DE TODAS LAS PUERTAS
+
+> **No estamos construyendo productos: estamos abriendo puertas a una misma frecuencia. Cada puerta es una forma
+> distinta de decir lo mismo: tú ya eres la luz que buscas. Solo necesitas entrar.**
+>
+> Zak, 2026-10-23 · la raíz de todos los proyectos, aplicable a todo.
+
+Todo lo que creamos, ya sea una serie, un álbum, una app, un juego, un video o un producto, es una puerta de entrada a
+una misma frecuencia: la coherencia, la expansión, la luz que cada ser ya lleva dentro.
+
+**Reglas para cada puerta:**
+
+1. **Todas llevan al mismo centro.** No importa desde dónde entre la persona: el destino final es siempre el mismo. La
+   experiencia de sentirse más claro, más ligero, más conectado con su propia luz.
+2. **Cada puerta tiene su carácter, pero todas comparten la firma.** La firma es: calidez, claridad, profundidad sin
+   solemnidad, ciencia que abre a la mirada, belleza que invita a sentir. Cada puerta puede expresar esa firma a su
+   manera, pero nunca perderla.
+3. **Ninguna puerta se abre antes de tiempo.** Cada proyecto tiene su momento de madurez. No se lanza algo solo porque
+   está «casi listo»: se lanza cuando su coherencia interna está completa. La prisa rompe la puerta.
+4. **Toda puerta es un servicio, no una captura.** Quien entra debe sentir que encontró un regalo, no que fue atrapado.
+   El llamado a la acción siempre es una oferta, nunca una urgencia. Siempre después de la experiencia, nunca antes.
+5. **Toda puerta respeta el ritmo de quien llega.** No se exige nada: se invita. El que no está listo, pasa de largo sin
+   sentirse mal. El que está listo, encuentra su camino con naturalidad.
+6. **Cada puerta deja una semilla.** Quien entra, aunque no se quede, se lleva algo: una frase, una sensación, una
+   pregunta que lo acompaña. Eso es lo que hace que la frecuencia siga expandiéndose más allá de la puerta.
+7. **Las puertas se abren escalonadamente.** No todas al mismo tiempo. Se abren cuando su momento llega, y cuando una
+   puerta nueva se abre, no compite con las anteriores: las complementa. Cada puerta es una forma distinta de llegar al
+   mismo lugar.
+8. **Todo lo que se crea debe poder nombrarse como puerta.** Antes de lanzar algo, preguntamos: ¿esto es una puerta?
+   ¿Lleva al centro? ¿Es un servicio? ¿Está maduro? Si la respuesta es sí a todo, se abre. Si no, espera.
+
+**Cómo lo aplica Claude en cada sala:**
+
+- **Las cuatro preguntas de la regla 8 van en toda propuesta de algo nuevo y antes de abrir cualquier puerta** (un
+  proyecto, una serie, un juego, una página, una pieza que sale al público por primera vez), con su respuesta en una
+  línea del reporte. Si alguna es «no», se dice qué le falta y esa puerta espera. Un arreglo de lo que ya está abierto
+  no espera.
+- **El llamado llega después de la experiencia y como oferta:** sin cuentas regresivas, sin escasez inventada y sin
+  culpa en el «Ahora no» ni en ningún botón para decir que no.
+- **Cada pieza cierra con su semilla:** la frase, la sensación o la pregunta que se lleva quien se va, aunque no compre
+  ni se quede.
+- **Todo lo que sale hacia afuera lleva la firma de la regla 2**, y una puerta nueva se presenta como complemento de las
+  que ya están abiertas, nunca como competencia. El orden en que se abren lo da `PLAN_MAESTRO.md`, en la raíz.
+- **Si un pedido o la regla de un proyecto choca con este principio**, esa parte no se construye a ciegas: se termina
+  lo demás y en el reporte se dice en una línea qué regla toca, para que Zak decida.
+
+*Este bloque es idéntico en el CLAUDE.md raíz y en el de cada proyecto que no carga la raíz. Se cambia solo en la raíz
+(`/Users/diego/Documents/Red Solar Viva/CLAUDE.md`) y se replica con
+`python3 "/Users/diego/Documents/Red Solar Viva/admin/herramientas/puertas.py" --escribir`.*
+<!-- PUERTAS:fin -->
+
 ## Quién es Zak y cómo se le habla
 
 Diego Soto Borja Almeida, firma artística **Zak'Haar**. Mexicano, vive en Cancún (UTC-5). Correo de los CV:
