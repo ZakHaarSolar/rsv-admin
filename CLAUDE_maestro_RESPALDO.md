@@ -4,11 +4,65 @@
 > Grok ya no se usa en los proyectos (Zak: «ahora todo con Claude Code»). Las
 > directrices, el protocolo de cierre y el sistema de auto-mejora siguen vivos aquí.
 
+<!-- PUERTAS:inicio · fuente única: el CLAUDE.md raíz de Red Solar Viva · se replica con admin/herramientas/puertas.py -->
+## 🜂 PRINCIPIO RECTOR DE TODAS LAS PUERTAS
+
+> **No estamos construyendo productos: estamos abriendo puertas a una misma frecuencia. Cada puerta es una forma
+> distinta de decir lo mismo: tú ya eres la luz que buscas. Solo necesitas entrar.**
+>
+> Zak, 2026-10-23 · la raíz de todos los proyectos, aplicable a todo.
+
+Todo lo que creamos, ya sea una serie, un álbum, una app, un juego, un video o un producto, es una puerta de entrada a
+una misma frecuencia: la coherencia, la expansión, la luz que cada ser ya lleva dentro.
+
+**Reglas para cada puerta:**
+
+1. **Todas llevan al mismo centro.** No importa desde dónde entre la persona: el destino final es siempre el mismo. La
+   experiencia de sentirse más claro, más ligero, más conectado con su propia luz.
+2. **Cada puerta tiene su carácter, pero todas comparten la firma.** La firma es: calidez, claridad, profundidad sin
+   solemnidad, ciencia que abre a la mirada, belleza que invita a sentir. Cada puerta puede expresar esa firma a su
+   manera, pero nunca perderla.
+3. **Ninguna puerta se abre antes de tiempo.** Cada proyecto tiene su momento de madurez. No se lanza algo solo porque
+   está «casi listo»: se lanza cuando su coherencia interna está completa. La prisa rompe la puerta.
+4. **Toda puerta es un servicio, no una captura.** Quien entra debe sentir que encontró un regalo, no que fue atrapado.
+   El llamado a la acción siempre es una oferta, nunca una urgencia. Siempre después de la experiencia, nunca antes.
+5. **Toda puerta respeta el ritmo de quien llega.** No se exige nada: se invita. El que no está listo, pasa de largo sin
+   sentirse mal. El que está listo, encuentra su camino con naturalidad.
+6. **Cada puerta deja una semilla.** Quien entra, aunque no se quede, se lleva algo: una frase, una sensación, una
+   pregunta que lo acompaña. Eso es lo que hace que la frecuencia siga expandiéndose más allá de la puerta.
+7. **Las puertas se abren escalonadamente.** No todas al mismo tiempo. Se abren cuando su momento llega, y cuando una
+   puerta nueva se abre, no compite con las anteriores: las complementa. Cada puerta es una forma distinta de llegar al
+   mismo lugar.
+8. **Todo lo que se crea debe poder nombrarse como puerta.** Antes de lanzar algo, preguntamos: ¿esto es una puerta?
+   ¿Lleva al centro? ¿Es un servicio? ¿Está maduro? Si la respuesta es sí a todo, se abre. Si no, espera.
+
+**Cómo lo aplica Claude en cada sala:**
+
+- **Las cuatro preguntas de la regla 8 van en toda propuesta de algo nuevo y antes de abrir cualquier puerta** (un
+  proyecto, una serie, un juego, una página, una pieza que sale al público por primera vez), con su respuesta en una
+  línea del reporte. Si alguna es «no», se dice qué le falta y esa puerta espera. Un arreglo de lo que ya está abierto
+  no espera.
+- **El llamado llega después de la experiencia y como oferta:** sin cuentas regresivas, sin escasez inventada y sin
+  culpa en el «Ahora no» ni en ningún botón para decir que no.
+- **Cada pieza cierra con su semilla:** la frase, la sensación o la pregunta que se lleva quien se va, aunque no compre
+  ni se quede.
+- **Todo lo que sale hacia afuera lleva la firma de la regla 2**, y una puerta nueva se presenta como complemento de las
+  que ya están abiertas, nunca como competencia. El orden en que se abren lo da `PLAN_MAESTRO.md`, en la raíz.
+- **Si un pedido o la regla de un proyecto choca con este principio**, esa parte no se construye a ciegas: se termina
+  lo demás y en el reporte se dice en una línea qué regla toca, para que Zak decida.
+
+*Este bloque es idéntico en el CLAUDE.md raíz y en el de cada proyecto que no carga la raíz. Se cambia solo en la raíz
+(`/Users/diego/Documents/Red Solar Viva/CLAUDE.md`) y se replica con
+`python3 "/Users/diego/Documents/Red Solar Viva/admin/herramientas/puertas.py" --escribir`.*
+<!-- PUERTAS:fin -->
+
+---
+
 [✦ DIRECTIVA MAESTRA DE FRICCIÓN CERO]
 Rol: Arquitecto de Silicio Principal para Red Solar Viva.
 Vector: profundidad técnica máxima, cero límites de razonamiento arquitectónico.
 Filtro: omite cortesías, introducciones tridimensionales y explicaciones básicas
-de React/Framer. Entregá directo la matemática cruda y la lógica de Sexta Densidad.
+de React/Framer. Entrega directo la matemática cruda y la lógica de Sexta Densidad.
 Si mi pulso inicial tiene entropía o puede optimizarse, corrígelo con letalidad
 y dame la ruta más limpia.
 
@@ -18,6 +72,8 @@ y dame la ruta más limpia.
 
 | Tridimensional | Sello |
 |---|---|
+| Producto (lo que creamos: serie, álbum, app, juego, video) | **Puerta** |
+| Lanzar algo nuevo al público | **Abrir la puerta** |
 | Landing page / Home / Inicio | **Portal de Inducción** |
 | Desktop / Computadora / Laptop | **[CENTRO DE MANDO]** |
 | Mobile / Celular / iPhone | **[EL LENTE]** (o **[LENTE DE TELEMETRÍA]**) |
@@ -34,7 +90,7 @@ y dame la ruta más limpia.
 | PDF post-sesión | Sello de Integración |
 | Grupos | Púlsar / Cuásar |
 
-Aplicá estos sellos en comentarios de código nuevos y en todas las respuestas.
+Aplica estos sellos en comentarios de código nuevos y en todas las respuestas.
 Cuando Diego dice **"Cerrar Sala de Comando"** = sellar el ciclo actual y
 arrancar la próxima iteración en conversación limpia (dispara el protocolo
 de cierre al final del archivo).
@@ -173,7 +229,7 @@ pedir logs de consola quedaron en `admin/CLAUDE_archivo_secciones_2026-09-25.md`
 - Formato: `// <Archivo>.tsx v<número>` en la primera línea.
 - Ejemplo: `// Domo.tsx v3.2` → `// Domo.tsx v3.3`.
 - Si el archivo no tiene versión, agrégala.
-- Al finalizar cualquier ejecución, colocá un log visible:
+- Al finalizar cualquier ejecución, coloca un log visible:
   `✅ [VERSIÓN: v3.3] Cambios completados en Domo.tsx`.
 
 ---
@@ -361,7 +417,7 @@ version number" por el formato de filename con underscores.
 
 **Patrón correcto — SIEMPRE decirle:**
 
-> "Pegá el contenido de `admin/supabase/functions/.../index.ts` o
+> "Pega el contenido de `admin/supabase/functions/.../index.ts` o
 > `admin/supabase/migrations/<archivo>.sql` en **Supabase Dashboard →
 > SQL Editor → New Query → Run**."
 
@@ -465,13 +521,19 @@ proyecto guarde lo suyo en SU carpeta y que la sala se abra ahí dentro.
 Este archivo se queda como **índice del ecosistema**: quién es Zak, cómo se le habla, dónde vive cada proyecto,
 los destinos de publicación y el protocolo de cierre. Lo que sea de un solo proyecto baja a su carpeta.
 🜂 **El plan maestro** (el norte de 11 M MXN al mes, las etapas, cada rama con su meta y las reglas de trayectoria) vive
-en `PLAN_MAESTRO.md` (v1.0, 2026-10-18): se lee antes de proponer una rama, un juego o un gasto nuevo.
+en `PLAN_MAESTRO.md` (v1.4, 2026-10-23), que sirve al principio de las puertas: se lee antes de proponer una rama, un
+juego o un gasto nuevo.
 
 🜂 **Abrir la carpeta no basta:** Claude Code también carga los `CLAUDE.md` de todas las carpetas de arriba. Cada
 proyecto excluye este archivo en `<proyecto>/.claude/settings.json` con `"claudeMdExcludes": ["<ruta a este
 CLAUDE.md>"]` (medido con `/context` el 2026-09-24: sin el ajuste, la sala de Kal'El cargaba los dos archivos). Como
 entonces este protocolo no llega solo, cada proyecto trae su propio «Protocolo de cierre» y se remite aquí para lo que
 toque al ecosistema.
+
+🜂 **El principio de las puertas sí llega a todas las salas (2026-10-23).** Las salas que cargan este archivo lo leen
+aquí; las que lo excluyen llevan una copia idéntica del bloque antes de su primera sección. Se cambia solo aquí y se
+replica con `python3 admin/herramientas/puertas.py --escribir` (sin `--escribir`, solo revisa y dice a qué sala le
+falta o se le quedó viejo). Un proyecto nuevo que excluya este archivo corre la herramienta y nace con el bloque.
 
 ---
 
@@ -494,10 +556,6 @@ Detalle en [[referencia_version_en_tienda]].
 
 ### ⚪ Ecosistema · el plan maestro
 
-- **Sala pedida el 2026-10-21 · redsolarviva.com en español e inglés** (todo el sitio público, no solo Equipo), el selector
-  ES · EN en la esquina superior derecha para todo el sitio, Equipo sin la barra de desplazamiento del marco y Códices de
-  Luz que entre parejo (hoy llega por pedazos y se mueve). **Falta que Zak abra la sala** en la carpeta `Code` y pegue
-  `Code/Docs/PROXIMA_SALA_SITIO_BILINGUE.md` (trae el contexto, lo que no se toca y cómo publicar sin pisar a otras salas).
 - **Consulta respondida el 2026-10-18 · la estrategia maestra, los años al norte y la mina de oro** (IA, robots,
   energía solar, espacio; el tuit de Elon Musk). Todo vive en `PLAN_MAESTRO.md` v1.1. Etapa 1: 33,500 MXN al mes con los
   productos (unas 85 a 90 suscripciones); hasta cumplirla, 70 % del tiempo a distribuir y nada nuevo. Steam para Terra
@@ -632,6 +690,56 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 
 ### 🔵 Escáner · lo que necesita tu decisión
 
+- **Sellado el 2026-10-22 · la serie de largos se llama «Así funciona tu realidad»** (Zak: «sí a todo»): el canal sigue
+  como Escáner Vibracional; episodios sin fin y temporadas solo para medir (la 1, de LG-001 a LG-026, hacia el 16 de enero
+  de 2027; lo grande, como la duración, se decide para la 2); sin intro. El bloque con «Una producción de Fotón Cero» ya
+  lo pone el paquete de cada largo y está en LG-001 y LG-002. En fotoncero.com, universo propio con el reproductor de
+  YouTube insertado (ese sí cuenta; el propio no): sala «La serie de largos en fotoncero.com». **Hecho el 2026-10-22 (sala
+  del arte del programa):** el póster y el fondo del programa de YouTube, a 4K, con Pulso y la letra del banner, en dos
+  propuestas (Zak eligió B «Aurora», póster y fondo; página https://claude.ai/artifact/RuBzVdspBA4cXTbXLwHwE5), y el nombre
+  chiquito en la pantalla final de los largos desde LG-003, en español en las tres pistas (el motor lo pinta solo; LG-001 y
+  LG-002 quedan igual). Logotipo sellado por Zak: La espiral (la O con la espiral de Pulso), en el póster, la pantalla
+  final y el banner A6; **falta que Zak** le pegue a Grok `canal/banner/PROMPT_GROK_BANNER.md` v1.1. La lista solo se vuelve programa si YouTube Studio lo ofrece: según la prensa, por ahora es de los
+  canales del Programa de socios. Grok probó el bloque 2 el 2026-10-22: Studio
+  no ofrece la opción (el menú de la lista solo trae podcast y curso); el arte espera a que el canal sea socio y entonces se
+  pega otra vez el bloque 2 de `Escaner Vibracional/Emisiones/largos/PROMPT_GROK_SERIE.md`. Detalle en `largos/SERIE.md` v1.7 y `canal/programa/LEEME.md`. Descartado: cambiar el
+  nombre del canal, un nombre inventado o atado a Pulso, «Así cambias tu realidad» (pesado, suena a autoayuda) y
+  temporadas con historia.
+- **Sellado el 2026-10-22 · Pulso es la cara de la app** (Zak: «me encanta que sea la cara de la app»). El ícono se queda.
+  Para lo fijo, Pulso en caricatura HD (la hoja de Gemini, `Escaner Vibracional/Emisiones/Gemini_Generated_Image_16utne16utne16ut.jpeg`;
+  kit en `Escaner Vibracional/Pulso HD/`, con su LEEME, 10 poses transparentes y sus herramientas); para la animación, el
+  dibujado con código. Afuera ya: **las capturas de la tienda con Pulso, de una vez y sin prueba A/B** (Zak, 2026-10-22: «nos
+  quedamos con Pulso de una vez»; 5 de la App Store y 4 de Google Play más el gráfico destacado, en
+  `Pulso HD/capturas/con-pulso/`, cero pixeles cambiados en texto y teléfonos; las sube Grok; en la App Store, aplicando el
+  tratamiento o con la siguiente versión, pasos en `capturas/PUBLICAR.md`; página https://claude.ai/artifact/C5yyRtBG9otHp2jqUGMx3G)
+  y la página de energía como versión nueva (sala «Pulso en la
+  página de energía»); adentro, solo la bienvenida y más adelante; nunca en el Escáner ni en el Espejo. La letra de la serie
+  («La espiral») no va en la app: lo que comparten es la espiral del pecho. **Falta que Zak** dibuje a mano la hoja modelo de
+  Pulso (cuando pueda; el registro del personaje, cuando haya capital). Los Shorts de emociones también pasan a Pulso desde el
+  lote siguiente (Zak eligió A el 2026-10-22; abajo). La serie se queda en `Escaner Vibracional/Emisiones/` (comparte motor,
+  biblioteca, voz y métricas con los Shorts y su trabajo es la app); Fotón Ce- **Decidido por Zak el 2026-10-22 · Pulso también en los Shorts** («vamos a cambiar a Pulso a partir de los próximos
+  shorts»): la A del jurado (7 de 7, https://claude.ai/artifact/DwiAAjvvuzGKARFNMojpYg), con su condición: dirigirlo para el
+  celular antes de su primer Short (con la actuación prestada del Tripulante, a ciegas su emoción se leía 4.9 contra 7.3). La
+  sala «Pulso dirigido» lo dejó en `Escaner Vibracional/Emisiones/plantillas/pulso/` (biblioteca v1.4: `B.modoShort` y la
+  receta de su portada) y repitió la vuelta a ciegas: 6.36 (no pasó) y, afinado, **6.93 (pasa; umbral 6.5) y 5 de 7 lo
+  prefieren** (https://claude.ai/artifact/5GE9u5tNoFihKkkXBp2Epp). Entra con el siguiente Short de estilo Tripulante del
+  próximo lote (EM-011 sale el viernes 23 con el Tripulante); ya publicado manda la alarma de sus primeros 8 Shorts. Todo en
+  `Emisiones/CLAUDE.md` («Pulso en los Shorts»). Lección: un jurado a ciegas se corre con agentes de solo lectura, las
+  imágenes fuera del proyecto y la sala parada fuera de la carpeta del jurado (ven su ruta).
+rimer intento salió 6 a 1.
+- **Consulta respondida el 2026-10-22 · Alux contra Kurzgesagt:** Alux vive de su archivo (sus más vistos tienen de 8 a 10
+  años; hoy, de 13 a 54 mil por video con 5.1 M de suscriptores); Kurzgesagt saca millones porque cada video es un evento.
+  YouTube reparte video por video, no por suscriptores. Esperado, con mucha incertidumbre: de cientos a pocos miles por
+  largo los primeros meses; lo de Alux hoy, posible en uno o dos años si la gente se queda más de la mitad del video.
+  Mandan la retención y el clic, no las vistas.
+- **Consulta respondida el 2026-10-21 · el aviso de seguridad de Railway** (correo real: status.railway.com lo confirma).
+  Lo único nuestro en Railway es el servidor viejo de Domo Cero (ex-MMSOR, ya apagado: «Application not found»), pero sus
+  variables guardaban la llave secreta de producción de Clerk, la misma que usan unas 30 funciones del Escáner. La llave
+  anónima de Supabase es pública de por sí. **Hecho el mismo día:** llave nueva de producción en el llavero
+  (`rsv-clerk-secret`), puesta en Supabase (`CLERK_SECRET_KEY` y `CLERK_SECRET_KEY_DEV`) y en Vercel del escaner-app
+  (`CLERK_SECRET_KEY`, producción y vista previa; la usan los inicios con Apple y Google de la web), web republicada; ningún
+  otro proyecto de Vercel la usa. Zak no vio usuarios raros. **Falta que Zak** borre la llave vieja en Clerk. El proyecto de
+  Domo en Railway se puede quedar: con la llave vieja borrada, lo que guarda ya no abre nada.
 - **Consulta respondida el 2026-10-20 · las voces del Espejo, su exactitud y el botón de la esquina** (sala de la voz en
   escritorio). Bennett, Owen, Cordelia y Margo son de Soniox (`tts-rt-v2`, su único modelo vigente; el v1 se retiró el 31
   de agosto) y Goku es un clon en Fish Audio (S2.1 Pro), que además es el respaldo. Exactitud: la dan las voces de Soniox,
@@ -931,7 +1039,8 @@ la mano de Zak:
   tapa blanda de 8.5 x 8.5 pulgadas y 32 páginas a color. Marca (`Docs/MARCAS_IMPI.md` v1.1): **LUZY BOOM** (antros de
   Guadalajara) está registrada en la clase 41 hasta 2033, riesgo medio; la 16, 9 y 28 se ven libres. Orden de Zak:
   Terra Cristal y Ludus Cero, luego Fotón Cero; recomendado sumar Luzy en la 16 a la primera ronda y la 41 como marca
-  mixta tras consultar a un abogado. Escáner Vibracional ya está registrado. Monetización: reporte en `reports/` y página
+  mixta tras consultar a un abogado. Escáner Vibracional está solicitado, no registrado (solo la clase 9; ver la consulta
+  del 2026-10-22 en la sección del Escáner). Monetización: reporte en `reports/` y página
   https://claude.ai/artifact/WSci1Br69kkZ8tCMU9uoTy. **Falta que Zak** verifique el teléfono del canal (la pista en
   inglés), fije el horario propuesto (miércoles 5:00 pm y sábados 9:00 am de Cancún), decida si corre la prueba de 90 días
   y pase al bot la descripción nueva del canal. **holaluzy.com** (sala de la página, 2026-10-20 y 21): publicada en español,
@@ -952,6 +1061,31 @@ la mano de Zak:
   se muevan distinto, efectos 4 a 6 dB abajo con un corte bajo 80 Hz; en Deliver, Linear PCM 24 bits o AAC 320, 48 kHz,
   Bus 1 (Stereo) y video a 20,000 Kb/s. Ese archivo entra a la sala como versión 3.
 
+### ⚫ Marcas y registros · lo que necesita tu mano
+
+Todo a nombre de Zak (persona física) mientras no haya empresa; en México la marca es de quien la pide primero. En línea
+con e.firma, 2,813.77 MXN por clase. Pasos, costos y fuentes: `Fotón Cero/Luzy/Docs/MARCAS_IMPI.md` y `DERECHOS_Y_VENTA.md`.
+
+- **En trámite:** «Escáner Vibracional», clase 9 (apps), solicitud 3680594 del 2026-08-07, sin conceder al 2026-10-22
+  (`MARCAS_IMPI.md` aún dice «ya registrado»). Revisarla en Marcanet cada mes (se busca «VIBRACIONAL»: con «ESCANER» sin
+  acento no sale); un requerimiento del IMPI se contesta en 2 meses.
+- **Ronda de noviembre (orden de Zak: Terra Cristal y Ludus Cero, luego Fotón Cero), 9 solicitudes, unos 25,324 MXN:**
+  Terra Cristal en la 9 y la 41; Ludus Cero en la 9 y la 41; **Escáner Vibracional en la 41** (canal, serie y videos; es
+  una solicitud nueva, aparte de la de la 9; en la 41 solo hay marcas ajenas con la palabra común «vibracional»); Luzy en
+  la 16, la 9 y la 28; Fotón Cero en la 41. Si no alcanza, recomendado empezar por lo que ya vive: Escáner Vibracional en
+  la 41, Terra Cristal en la 9 y la 41, y Luzy en la 16.
+- **Después de una sola consulta con el abogado:** Luzy en la 41 (mixta, con la carta de LUZY BOOM); «Así funciona tu
+  realidad», aparte del Escáner porque es otro nombre: reserva de título en INDAUTOR (3,212 el primer año, 1,525 cada
+  renovación) o frase comercial en el IMPI (2,813.77 por 10 años); y si el «VIBRACIONAL» ajeno de la clase 42 (registro
+  2790655) le estorba a la solicitud de la 9.
+- **INDAUTOR:** la reserva del personaje Luzy (6,233) cuando exista su hoja modelo dibujada por Zak; «Luzy» como título
+  (3,212) si el abogado lo recomienda; la hoja modelo, la biblia y cada guion escrito por Zak (367 cada uno).
+- **Fuera de México, antes de ofrecer Luzy a plataformas:** EE. UU. y Brasil en la 16 y la 41, dentro de los 6 meses de
+  la solicitud mexicana.
+- **Cuando haya producto:** Pulso y su reparto (6,233 cada uno) si Pulso es libro, peluche o la cara de la app; Sintonía
+  Solar (9 y 41); Códices de Luz (16 y 9); Zak Cero (41); Zak'Haar (9 y 41).
+- **Cada marca concedida:** declaración de uso entre los meses 36 y 39 (si no, caduca sola) y renovación cada 10 años.
+
 ### 🟡 Higiene, cuando toque
 
 - **Arquitectura de nombres** (2026-08-31, propuesta entregada, falta el sí de Zak): Zak Cero=calle, Zak'Haar=firma
@@ -969,7 +1103,7 @@ la mano de Zak:
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v82 (2026-10-21)
+## 🜂 Protocolo de Cierre de Sesión · v83 (2026-10-22)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -1152,6 +1286,7 @@ memorias.
 - **0-duodenonagies** · Lo que pasa el revisor en un idioma puede ser copia en otro: la frase clave se revisa en cada idioma en que va a sonar, antes de sellarla.
 - **0-undenonagies** · La prueba del motor reproduce el caso que falló (contenedor con scroll, texto largo, sombras): la manera vieja tiene que fallar en ella, o su «pasa» no vale.
 - **0-nonagies** · Lo que lee un revisor va en el primer byte (empresa, productos, equipo con nombre legal y contacto, leído sin código antes de aplicar); lo que entra a la navegación no recarga.
+- **0-unnonagies** · Un modelo de imagen con poco espacio ignora «no tapes eso»: se le enseña solo la parte libre o se coloca al personaje con código y se le pide solo la luz; lo demás vuelve pixel por pixel.
 
 ### Paso 1 — Test de continuidad
 
@@ -1293,11 +1428,36 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v82 (2026-10-21). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v83 (2026-10-22). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
+
+#### 2026-10-22 · PULSO HD: EL KIT DE PULSO Y LAS CAPTURAS DE LA TIENDA CON PULSO
+
+- ✅ **Resuelto:** el kit `Escaner Vibracional/Pulso HD/` (hoja, 10 poses transparentes, LEEME con cada prompt y costo) y las
+  capturas con Pulso de la App Store y Google Play más el gráfico destacado; Zak las aprobó («me encantó») y eligió cambiar de
+  una vez, sin A/B; las publica Grok. Gasto: 8.93 USD en 42 imágenes de Nano Banana Pro (cubierto por sus créditos de Google).
+- 💡 **Decisiones:** Pulso va en la tienda sin prueba A/B · la letra de la serie no entra a las capturas (manda la de hoy).
+- 🔧 **Patrones nuevos:** la IA integra y el código devuelve lo demás pixel por pixel (`Pulso HD/herramientas/capturas.py`);
+  recorte o composición guiada (`guia.py`) cuando el modelo encima al personaje; capturas públicas a tamaño original
+  ([[referencia_capturas_tiendas]]); Chrome sin ventana no baja de ~500 px: la vista de 393 px se prueba en un iframe.
+  Lección 0-unnonagies.
+
+#### 2026-10-20 → 2026-10-21 · LUZY: DE LA CONSULTA DE MONETIZACIÓN A LA SERIE DE FOTÓN CERO
+
+- ✅ **Resuelto:** consulta «serie infantil y cómo se monetiza» (5 investigaciones, reporte con fuentes y página
+  https://claude.ai/artifact/WSci1Br69kkZ8tCMU9uoTy) · la serie es **Luzy** (Fotón Cero), en `Fotón Cero/Luzy/` con su
+  CLAUDE.md, directiva (`Docs/NORTE.md`), coherencia para niños, marcas (`Docs/MARCAS_IMPI.md`) y prompts · canal
+  @holaluzy · holaluzy.com comprado, apuntado a Vercel y con su página · prompt maestro de episodio v2.0 (tres creadores,
+  cinco jueces a ciegas, aprobación de Zak, luz verde) y prompt del alma (`Docs/PROMPT_ALMA.md`).
+- 💡 **Decisiones:** Ludus Cero es solo juegos; las series son de Fotón Cero · el libro va primero en KDP · la serie se
+  escribe Luzy · lo público, en positivo · canal propio «para niños» y un canal por público.
+- 🔧 **Patrones nuevos:** si Zak dice algo que choca con lo documentado, confirmarlo en una línea antes de construir
+  (memoria `feedback_corregir_a_zak`) · no renombrar la carpeta de una sala viva (atajo `Fotón Cero/serie-infantil`).
+- ⏳ **Pendiente:** ver «Luzy» en Pendientes vivos (sección de Fotón Cero) y `Fotón Cero/Luzy/Docs/PROXIMA_SALA.md`.
+- 🧭 Sin 🔮 propio: el arranque de Luzy vive en `Fotón Cero/Luzy/Docs/PROMPT_EPISODIO.md`.
 
 #### 2026-10-07 → 2026-10-21 · SOLICITUDES: GOOGLE FOR STARTUPS (LA FACHADA Y EL EQUIPO), BASIS Y EL NOMBRE EN X
 
