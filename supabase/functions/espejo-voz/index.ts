@@ -1,3 +1,4 @@
+// Red Solar Viva · espejo-voz v3.9 — 🜂 ESCUCHAR SUENA PRONTO Y LO YA HECHO NO SE REPITE (Zak 2026-10-23: «se tarda mucho y se queda sintonizando; la primera se quitó y le tuve que picar dos veces»). Medido ese día: una primera parte de 700 caracteres tardó 31 s en sintetizarse; la app de la Mac se reinició para actualizarse justo cuando la voz llegaba, y el segundo toque volvió a sintetizar las mismas dos partes (otros 29 s y el doble en el registro de gasto). (1) Con `arranque: true` (la app desde espejoVozFish v2.33) el corte da una primera parte de 120 a 200 caracteres, una segunda de hasta 2.2 veces la primera y una tercera de hasta 1.2 veces las dos, y de ahí 700: simulado con 20 reflejos reales, el primer sonido baja de 22.6 s a 8.6 s sin silencios entre partes; sin la bandera, el corte de siempre (versiones de tienda). (2) Cada parte de Soniox se guarda con sus marcas en el bucket privado `voz-partes` (se crea solo) y una parte ya hecha se sirve de ahí al instante y sin cobrar (X-RSV-Guardada: 1, expuesta). La llave es la huella del texto con el modelo, la voz, el idioma y la velocidad.
 // Red Solar Viva · espejo-voz v3.8 — 🜂 LAS MARCAS DE SONIOX LLEGAN A LA APP Y CAEN EN SU LETRA (2026-10-20). Nunca llegaron: X-RSV-Marcas y X-RSV-Marca-Cada no estaban en Access-Control-Expose-Headers, así que el navegador las escondía y la app siempre estimó (en el cofre de la Mac de Zak ninguna parte de Soniox trae marcas). Medido con Soniox real (sonda temporal, Margo y Bennett): sus marcas van sobre su texto PREPROCESADO, que vuelve espacio cada salto (dos saltos de párrafo, un solo espacio) y deja lo demás uno a uno; contadas como si fueran el texto, cada párrafo corría el resalte una letra. Tres cambios: (1) el canal guarda también los `characters` y `alinearMarcas` casa cada uno con su lugar en el texto de la parte; (2) un ancla cada 2 letras en vez de 20 (con los tiempos reales: la estimación queda a 8.2 letras de la voz en promedio y hasta 25; las anclas cada 20, a 2.2 y hasta 11; alineadas cada 2, a 0.6 y hasta 2; unos 730 bytes por parte); (3) se exponen y se mandan SOLO a quien las pide con `marcas_v2: true`: las versiones de tienda leen marcas desde agosto y nunca recibieron una, así que siguen estimando como hoy. Y la limpieza se repite hasta quedar estable: un «Título:» seguido de párrafo volvía a fundirse en la segunda pasada y corría una letra la parte (1 de 101 partes de 20 reflejos reales).
 // Red Solar Viva · espejo-voz v3.7 — 🜂 EL CUPO DE SONIOX SE ESPERA, NO SE CRUZA (Zak 2026-10-20: con la escucha automática y Margo, a media lectura, en «Y ahí sí vas a poder elegir», entró la voz de Goku y siguió así). Medido en su Mac: la escucha automática pidió CUATRO síntesis en 2.7 s (el primer tramo dos veces, el segundo y el resto), Soniox atiende TRES a la vez por cuenta (el canal y el REST comparten ese cupo) y a la cuarta le respondió 429; la v3.6 no reintentaba un 429 y caía directo a Fish, cuya voz por defecto es el clon de Goku. Ahora cada intento dice qué pasó (estado y error_type de Soniox): un cupo lleno (limit_exceeded, conexiones o canales al tope) se espera con respiro creciente hasta 60 s y un tropiezo pasajero (408, 5xx, canal caído) hasta 10 s, siempre con el MISMO proveedor; cruzar a Fish queda como último recurso, se anota en los registros de la función y la respuesta lo dice en X-RSV-Cruce (expuesta, como X-RSV-Proveedor, X-RSV-Voz-Nombre y X-RSV-Esperas) para que la app no guarde ese audio bajo la voz pedida. El canal ya no se cierra en audio_end: espera terminated, que es cuando Soniox suelta el lugar.
 // Red Solar Viva · espejo-voz v3.6 — 🜂 LOS MODOS SIN PASE SE CIERRAN (auditoría de precios 2026-10-18). (1) Las sondas `marcas` y `voces` sintetizaban sin sesión ni tope: ahora piden la sesión del Arquitecto y tienen su ventana ('espejo-voz-sonda', 30 al día). (2) La `muestra` de la tarjeta de voces la piden la app publicada SIN token, así que exigirlo la dejaría muda: se sirve de una copia guardada por voz e idioma (la frase es fija; en memoria y en el bucket privado `voz-muestras`, porque en producción cada pedido cae en una instancia nueva) y solo sintetiza cuando no existe, con tope por persona, por IP y global ('espejo-voz-muestra'). (3) La membresía falla CERRADA (_shared/membresia.ts): si la base no contesta, la lectura no se cobra como miembro; responde 503 con la frase legible en `error` (la app publicada la muestra tal cual).
@@ -244,7 +245,7 @@ const CORS_HEADERS = {
        bajo la voz equivocada. Las versiones publicadas no las leen, así que
        sumarlas no les cambia nada. */
     "Access-Control-Expose-Headers":
-        "X-RSV-Voz, X-RSV-Voz-Swap, X-RSV-Matiz, X-RSV-Partes, X-RSV-Parte, X-RSV-Proveedor, X-RSV-Voz-Nombre, X-RSV-Cruce, X-RSV-Esperas",
+        "X-RSV-Voz, X-RSV-Voz-Swap, X-RSV-Matiz, X-RSV-Partes, X-RSV-Parte, X-RSV-Proveedor, X-RSV-Voz-Nombre, X-RSV-Cruce, X-RSV-Esperas, X-RSV-Guardada",
 }
 
 const FISH_TTS_URL = "https://api.fish.audio/v1/tts"
@@ -718,6 +719,20 @@ const unidades = (n: number) => Math.max(1, Math.ceil(n / CHARS_POR_UNIDAD))
    Partirlas por la mitad parte la espera por la mitad; el resto se sintetiza
    mientras suena la anterior. DEBE coincidir con SEG_CHARS_ESPEJO del cliente. */
 const SEG_CHARS = 700
+/* 🜂 v3.9 — EL ARRANQUE CORTO (Zak 2026-10-23: "se tarda mucho y se queda
+   sintonizando"). Medido ese día: una primera parte de 700 tardó 31 s en
+   sintetizarse antes de que sonara nada. Con `arranque: true` en el pedido la
+   primera parte mide hasta 200 caracteres y nunca menos de 120 si el texto da
+   para más (un titular solo dejaba un silencio mientras llegaba la segunda);
+   la segunda, hasta 2.2 veces la primera; la tercera, hasta 1.2 veces las dos
+   juntas; de ahí, 700. Simulado con 20 reflejos reales: el primer sonido baja
+   de 22.6 s a 8.6 s y no queda silencio entre partes. DEBE coincidir con
+   segmentarEspejo del cliente (espejoVozFish v2.33). Sin la bandera (las
+   versiones de tienda), el corte de siempre. */
+const ARRANQUE_PRIMERA = 200
+const ARRANQUE_MINIMO = 120
+const ARRANQUE_K1 = 2.2
+const ARRANQUE_K2 = 1.2
 
 /* ── PERILLAS DE GASTO (con su costo en MXN al lado) ──────────────────────
    v1.3 — DOS carriles por membresía:
@@ -840,6 +855,119 @@ async function guardarMuestra(
     } catch (e) {
         console.warn("[espejo-voz] la muestra no se guardó:", String(e).slice(0, 160))
     }
+}
+
+/* ── 🜂 v3.9 · LO YA SINTETIZADO NO SE PAGA NI SE ESPERA DOS VECES ─────────
+   (Zak 2026-10-23: "la primera cuando le piqué se puso sintonizando y se
+   quitó; le tuve que picar dos veces"). Medido en su Mac y aquí: la app se
+   reinició para actualizarse 31 s después del toque, justo cuando la voz
+   llegaba; el aparato no alcanzó a guardarla y el segundo toque volvió a
+   sintetizar las mismas dos partes (otros 29 s y el doble de gasto, en el
+   registro de gasto). Ahora cada parte de Soniox se guarda también aquí
+   (bucket privado `voz-partes`, se crea solo), con sus marcas, y una parte ya
+   hecha se sirve de ahí en un instante y sin cobrar: un segundo toque, otro
+   aparato o la misma lectura después de un reinicio suenan sin esperar. La
+   llave es la huella del texto de la parte con el modelo, la voz, el idioma y
+   la velocidad: cambiar cualquiera la regenera. Las marcas viajan en un
+   archivo hermano (`.m`) que se sube ANTES que el audio: si el audio está, su
+   parte está completa. */
+const BUCKET_PARTES = "voz-partes"
+async function huellaParte(datos: Record<string, unknown>): Promise<string> {
+    const h = await crypto.subtle.digest(
+        "SHA-256",
+        new TextEncoder().encode(JSON.stringify(datos))
+    )
+    return Array.from(new Uint8Array(h))
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join("")
+}
+async function leerParteGuardada(
+    ruta: string
+): Promise<{ audio: Uint8Array<ArrayBuffer>; marcas: string } | null> {
+    const url = Deno.env.get("SUPABASE_URL")
+    const h = cabecerasServicio()
+    if (!url || !h) return null
+    try {
+        const [ra, rm] = await Promise.all([
+            fetch(`${url}/storage/v1/object/${BUCKET_PARTES}/${ruta}.mp3`, {
+                headers: h,
+                signal: AbortSignal.timeout(4000),
+            }),
+            fetch(`${url}/storage/v1/object/${BUCKET_PARTES}/${ruta}.m`, {
+                headers: h,
+                signal: AbortSignal.timeout(4000),
+            }),
+        ])
+        const marcas = rm.ok ? (await rm.text().catch(() => "")).trim() : ""
+        if (!rm.ok) await rm.body?.cancel().catch(() => null)
+        if (!ra.ok) {
+            await ra.body?.cancel().catch(() => null)
+            return null
+        }
+        const audio = new Uint8Array(await ra.arrayBuffer())
+        return audio.length > 1000 ? { audio, marcas } : null
+    } catch {
+        return null
+    }
+}
+async function subirAlBucket(
+    bucket: string,
+    ruta: string,
+    cuerpo: Uint8Array<ArrayBuffer> | string,
+    tipo: string
+): Promise<boolean> {
+    const url = Deno.env.get("SUPABASE_URL")
+    const h = cabecerasServicio()
+    if (!url || !h) return false
+    const subir = () =>
+        fetch(`${url}/storage/v1/object/${bucket}/${ruta}`, {
+            method: "POST",
+            headers: { ...h, "Content-Type": tipo, "x-upsert": "true" },
+            body: cuerpo,
+        })
+    try {
+        let r = await subir()
+        if (!r.ok && (r.status === 400 || r.status === 404)) {
+            await r.body?.cancel().catch(() => null)
+            /* el bucket todavía no existe: se crea privado y se reintenta */
+            await fetch(`${url}/storage/v1/bucket`, {
+                method: "POST",
+                headers: { ...h, "Content-Type": "application/json" },
+                body: JSON.stringify({ id: bucket, name: bucket, public: false }),
+            })
+                .then((x) => x.body?.cancel())
+                .catch(() => null)
+            r = await subir()
+        }
+        if (!r.ok) {
+            console.warn(
+                "[espejo-voz] la parte no se guardó:",
+                r.status,
+                (await r.text().catch(() => "")).slice(0, 160)
+            )
+            return false
+        }
+        await r.body?.cancel().catch(() => null)
+        return true
+    } catch (e) {
+        console.warn("[espejo-voz] la parte no se guardó:", String(e).slice(0, 160))
+        return false
+    }
+}
+async function guardarParte(
+    ruta: string,
+    audio: Uint8Array<ArrayBuffer>,
+    marcas: string
+): Promise<void> {
+    if (marcas && !(await subirAlBucket(BUCKET_PARTES, `${ruta}.m`, marcas, "text/plain")))
+        return
+    await subirAlBucket(BUCKET_PARTES, `${ruta}.mp3`, audio, "audio/mpeg")
+}
+/* Lo que sigue después de responder (guardar) no detiene la respuesta. */
+function enSegundoPlano(p: Promise<unknown>): void {
+    const er = (globalThis as any).EdgeRuntime
+    if (er?.waitUntil) er.waitUntil(p)
+    else void p
 }
 
 /* Gobernador de gasto compartido (misma RPC de la ola E / Parte 3-4).
@@ -1245,8 +1373,28 @@ function dirigirVoz(
    por párrafo (la unidad natural del Espejo) y, si un párrafo solo ya excede,
    por frontera de oración. Un corte a media frase se oiría como un tropiezo,
    que es exactamente lo que la lectura por partes viene a evitar. */
-function segmentar(texto: string, maxChars: number): string[] {
-    if (texto.length <= maxChars) return [texto]
+function segmentar(
+    texto: string,
+    maxChars: number,
+    /* 🜂 v3.9 — con arranque, la escalera de arriba (ESPEJO EXACTO de
+       segmentarEspejo del cliente); sin él, el corte de siempre. */
+    arranque = false
+): string[] {
+    const tope = (trozos: string[]) => {
+        if (!arranque) return maxChars
+        if (trozos.length === 0) return ARRANQUE_PRIMERA
+        if (trozos.length === 1)
+            return Math.min(maxChars, Math.floor(ARRANQUE_K1 * trozos[0].length))
+        if (trozos.length === 2)
+            return Math.min(
+                maxChars,
+                Math.floor(ARRANQUE_K2 * (trozos[0].length + trozos[1].length))
+            )
+        return maxChars
+    }
+    const minimo = (trozos: string[]) =>
+        arranque && trozos.length === 0 ? ARRANQUE_MINIMO : 0
+    if (texto.length <= tope([])) return [texto]
 
     const trozos: string[] = []
     let actual = ""
@@ -1259,20 +1407,34 @@ function segmentar(texto: string, maxChars: number): string[] {
     for (const parrafo of texto.split(/\n{2,}/)) {
         const p = parrafo.trim()
         if (!p) continue
-        if (p.length > maxChars) {
-            /* Párrafo gigante: se parte por oraciones (el punto/interrogación
-               de cierre se conserva con su frase). */
-            empujar()
+        /* Cabe entero: se suma a la parte. */
+        if (actual.length + (actual ? 2 : 0) + p.length <= tope(trozos)) {
+            actual += (actual ? "\n\n" : "") + p
+            continue
+        }
+        /* No cabe. Si lo que llevo no llega al mínimo (un titular solo), el
+           párrafo se parte en frases y sigue llenando; si no, lo que llevo se
+           cierra. Un párrafo que solo ya rebasa el tope también se parte por
+           oraciones (el punto de cierre se conserva con su frase). */
+        const falta = actual.length < minimo(trozos)
+        if (!falta) empujar()
+        if (falta || p.length > tope(trozos)) {
             const frases = p.match(/[^.!?…]+[.!?…]+[\s]*|[^.!?…]+$/g) || [p]
+            let sep = actual ? "\n\n" : ""
             for (const f of frases) {
-                if (actual.length + f.length > maxChars && actual) empujar()
-                actual += f
+                if (
+                    actual &&
+                    actual.length + sep.length + f.length > tope(trozos) &&
+                    actual.length >= minimo(trozos)
+                )
+                    empujar()
+                actual += (actual ? sep : "") + f
+                sep = ""
             }
             empujar()
             continue
         }
-        if (actual.length + p.length + 2 > maxChars && actual) empujar()
-        actual += (actual ? "\n\n" : "") + p
+        actual = p
     }
     empujar()
     return trozos.length ? trozos : [texto]
@@ -1700,7 +1862,7 @@ Deno.serve(async (req: Request) => {
        publicado sigue funcionando igual). Con `part` se devuelve solo ese
        trozo + el header X-RSV-Partes, para que el cliente nuevo empiece a
        sonar en segundos y precargue el resto mientras reproduce. */
-    const partes = segmentar(text, SEG_CHARS)
+    const partes = segmentar(text, SEG_CHARS, body?.arranque === true)
     const pedida = Number(body?.part)
     const usaPartes = Number.isInteger(pedida) && pedida >= 0
     if (usaPartes && pedida >= partes.length) {
@@ -1726,6 +1888,56 @@ Deno.serve(async (req: Request) => {
             error: avisoMembresiaNoVerificada(lang),
             codigo: "membresia_no_verificada",
         })
+
+    /* 🜂 v3.9 — ¿esta parte ya se sintetizó? Se sirve guardada, al instante
+       y sin cobrar (solo las voces de Soniox: lo de Fish es el respaldo y no
+       se guarda bajo la voz pedida). */
+    const rutaParte = usaSoniox
+        ? `${String(cat.voz).toLowerCase().replace(/[^a-z0-9-]/g, "") || "voz"}/${await huellaParte(
+              {
+                  v: 1,
+                  modelo: SONIOX_MODEL,
+                  voz: cat.voz,
+                  lang: lang === "en" ? "en" : "es",
+                  speed: cat.speed ?? null,
+                  texto: textoParte,
+              }
+          )}`
+        : ""
+    if (rutaParte) {
+        const guardada = await leerParteGuardada(rutaParte)
+        if (guardada) {
+            const conMarcas = body?.marcas_v2 === true && !!guardada.marcas
+            return new Response(guardada.audio, {
+                status: 200,
+                headers: {
+                    ...CORS_HEADERS,
+                    ...(conMarcas
+                        ? {
+                              "Access-Control-Expose-Headers": `${CORS_HEADERS["Access-Control-Expose-Headers"]}, X-RSV-Marcas, X-RSV-Marca-Cada`,
+                          }
+                        : {}),
+                    "Content-Type": "audio/mpeg",
+                    "Cache-Control": "no-store",
+                    "X-RSV-Voz": "principal",
+                    "X-RSV-Proveedor": "soniox",
+                    "X-RSV-Voz-Nombre": cat.voz,
+                    "X-RSV-Voz-Swap": "0",
+                    "X-RSV-Matiz": plana ? "plana" : "actuacion",
+                    "X-RSV-Partes": String(partes.length),
+                    "X-RSV-Parte": String(usaPartes ? pedida : 0),
+                    "X-RSV-Esperas": "0/0",
+                    "X-RSV-Guardada": "1",
+                    ...(conMarcas
+                        ? {
+                              "X-RSV-Marcas": guardada.marcas,
+                              "X-RSV-Marca-Cada": String(MARCA_CADA),
+                          }
+                        : {}),
+                },
+            })
+        }
+    }
     /* Sello del instante ANTES de reservar: acota el reembolso a la fila
        propia si la síntesis no llega a producir audio (v1.4). */
     const marcaReserva = new Date(Date.now() - 1000).toISOString()
@@ -1946,14 +2158,23 @@ Deno.serve(async (req: Request) => {
            versiones de tienda no las piden así y siguen estimando como hasta
            hoy: leen marcas desde agosto y nunca recibieron una, así que ese
            camino suyo nunca se probó con marcas de verdad. */
+        /* 🜂 v3.9 — las marcas se calculan siempre que el canal las dio (se
+           guardan con la parte aunque este pedido no las quiera) y viajan solo
+           a quien las pide en su forma nueva. */
+        const marcasDeLaParte =
+            sonio.tiempos.length > 0
+                ? marcasCompactas(
+                      sonio.caracteres.length === sonio.tiempos.length
+                          ? alinearMarcas(textoParte, sonio.caracteres, sonio.tiempos)
+                          : sonio.tiempos
+                  )
+                : ""
         const conMarcas = body?.marcas_v2 === true && sonio.tiempos.length > 0
-        const marcas = conMarcas
-            ? marcasCompactas(
-                  sonio.caracteres.length === sonio.tiempos.length
-                      ? alinearMarcas(textoParte, sonio.caracteres, sonio.tiempos)
-                      : sonio.tiempos
-              )
-            : ""
+        const marcas = conMarcas ? marcasDeLaParte : ""
+        /* 🜂 v3.9 — se guarda después de responder: la próxima vez sale al
+           instante y sin cobrar. */
+        if (rutaParte)
+            enSegundoPlano(guardarParte(rutaParte, sonio.audio.slice(), marcasDeLaParte))
         /* El cupo ya quedó reservado arriba y solo se devuelve si algo falla:
            no hay nada que confirmar acá. */
         return new Response(sonio.audio, {
