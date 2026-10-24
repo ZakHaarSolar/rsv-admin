@@ -2175,8 +2175,31 @@ Lúcido directo. La primera se cerró ahí mismo (AppNavegacionMobile v2.76); la
 Domo, vercel.json y los shells), ábrelas en un Chrome sin ventana sin sesión, en teléfono y computadora, y anota cuál
 queda abierta y dónde se cierra. Hermanas: 0-duotricies, 0-vicies, 0-nonies.
 
+### Paso 0-centies-ter · Una selección que «no se deja» puede estar hecha y escondida: la causa es la geometría
+
+**Regla.** Cuando en el iPhone mantener presionado «no selecciona» en una parte de la pantalla, primero se pregunta si la
+selección existe: `selectionchange` y `getSelection()` leídos desde fuera (un receptor local con `sendBeacon`). Si existe
+y no se ve, el teléfono la da por oculta por la forma del texto, no por una capa encima. En el Safari del iPhone, el
+texto dentro de un trozo en línea que empieza a media altura de un bloque largo, cuando ese bloque ya empezó arriba de
+la pantalla, se queda sin resaltado, sin manijas y sin Copiar. El texto que se debe poder seleccionar va en bloques (un
+renglón, un párrafo, un elemento de lista), nunca en trozos en línea dentro de un bloque largo.
+
+**Por qué.** El 2026-10-24, en la sala del recorte y el copiar del Espejo, Zak no podía seleccionar en la parte de arriba
+del Espejo y el Copiar salía solo a veces; la franja crecía con lo largo de la charla y lo seleccionado desaparecía al
+bajar y volvía al subir. Se descartaron una por una la máscara del scroller, la cabecera, las capas de bandas, las
+palabras espejo, `isolation` y la animación de entrada: la falla seguía en una copia fija de la página y se fue solo al
+volver bloques los renglones (EV_Oraculo v6.43). Una página mínima con el mismo dibujo la reprodujo fuera de la app.
+
+**Cómo se aplica.** Toques largos reales en el simulador, la selección leída desde fuera y una copia fija (el `outerHTML`
+mandado al receptor y servido aparte) partida con `quitar`, `espaciar`, `solo` y `css` hasta que la falla desaparece;
+antes de medir, recargar si se tocó un campo con letra menor a 16 px (Safari acerca la página). Hermanas: 0-sexagies,
+0-undenonagies, 0-quatertricies.
+
 ### Changelog del protocolo
 
+- **v91 (2026-10-24, sala del recorte y el copiar del Espejo):** una lección. **0-centies-ter**: una selección que el
+  iPhone «no deja» puede estar hecha y escondida; el texto seleccionable va en bloques, y se caza con la selección leída
+  desde fuera y una copia fija de la página partida a mano.
 - **v90 (2026-10-24, sala de Ludus Cero en celular):** una lección. **0-centies-bis**: un candado se prueba por todas
   sus puertas (direcciones directas, páginas viejas, celular y computadora), no solo por la de enfrente.
 

@@ -4,6 +4,29 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-24 · LA PAUSA DE LA VOZ (LA ESCALERA POR COLCHÓN), LAS LETRAS DEL LECTOR Y EL PLAN DE VUELO QUE RESPIRA
+
+- ✅ **Resuelto:** la pausa de Aqua (2026-10-22 16:29, App Store 1.1.6: el corte de 700 dejó el primer párrafo solo y una
+  segunda parte de 627 letras que tardó 33.6 s: 20 s de silencio; ni cupo ni red) · la versión de entonces también se
+  pausaba (la voz real lee 18 letras/s, no 11) y quedó construida la escalera por colchón en la app y el servidor: cero
+  silencios en el banco con la app real y, simulado con 80 reflejos reales, 0 con pausa en día normal y 1 en lento · seis
+  letras en el lector de Códices (Clásica, Literata, Lora, Garamond, Atkinson y OpenDyslexic), también sin internet · los
+  colores del Plan de Vuelo ya no se apagan y las misiones respiran juntas al ritmo del campo (fase del reloj; responden al
+  toque) · Mac 1.1.70 y 1.1.71, web y TestFlight (2610240258 y 2610240346).
+- 📁 **Archivos:** escaner-app `bc26f85`, `f06840a`, `17b4997`, `ab8f46a`, `00bb923`: EV_PlanVuelo v1.18, LectorCodice v1.4 y
+  `public/fuentes-lector/`, codm es/en v1.5, espejoVozFish v2.35, vozCache v1.8 (g4), banco/espejo v1.11 y
+  `salas/pausas-voz/` (simulador validado, paridad y LEEME) · admin `a149f84`.
+- 🔌 **Edge functions:** espejo-voz v3.11 (versión 57): `escalera: true` corta con la escalera; `arranque` (las apps
+  instaladas antes) y sin bandera (tienda) siguen igual.
+- 💡 **Decisiones:** Zak eligió la escalera sin tocar lo que reciben las versiones de tienda (descartado darles el corte nuevo
+  desde el servidor) · el contorno del Plan de Vuelo deja de viajar y respira con el Índice de Luz.
+- 🔧 **Patrones nuevos:** simulador de Escuchar por eventos validado contra lecturas reales y el banco
+  ([[referencia-voz-tiempos-reales]]) · emparejar el registro de gasto con los registros de la función, de un día por
+  consulta · colores de una lista medidos en fotos decodificadas (ΔE y correlación de brillo entre tarjetas) · publicar
+  desde una copia con módulos propios ([[publicar-desde-copia-limpia]]). Lecciones 0-undecenties, 0-centies y
+  0-centies-semel.
+- ⏳ **Pendiente:** las opciones B y C de la voz (Pendientes vivos, sección del Escáner).
+
 #### 2026-10-23 → 2026-10-24 · LA MÚSICA DEL ESCÁNER: TRES ÁLBUMES POR CAPA, LUEGO MÚSICA CONTINUA CON REPRODUCTOR
 
 - ✅ **Resuelto:** Lumeria, Códigos Aurora y Donde la Tierra aún Canta suenan en la app (27 canciones, 29 experiencias):
