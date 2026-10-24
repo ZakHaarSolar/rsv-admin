@@ -1438,3 +1438,31 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
   recorte o composición guiada (`guia.py`) cuando el modelo encima al personaje; capturas públicas a tamaño original
   ([[referencia_capturas_tiendas]]); Chrome sin ventana no baja de ~500 px: la vista de 393 px se prueba en un iframe.
   Lección 0-unnonagies.
+
+#### 2026-10-23 → 2026-10-24 · COMUNIDAD Y ESPEJO: ¿LO CONTESTÉ?, LA TERMINAL DE ALTA COHERENCIA, PALABRAS LIMITANTES Y EMOCIONES, TESTFLIGHT
+
+- ✅ **Resuelto:** ¿Lo contesté? en el chat de la Comunidad (tocar cualquier mensaje: abajo quién lo contestó y arriba a
+  qué contesta, con cita en cian o por el contexto en dorado; Claude Haiku lee el tramo) · el Espejo de la computadora
+  como terminal (⌘K y «/», ⌘↵ desde fuera de la caja, atajos de escucha, seguimiento, voces, Presencia) · palabras
+  limitantes (~370 frases es/en con su frase que expande) y emociones nombradas (12 emociones, apagadas de fábrica) en el
+  Espejo y en el chat, solo sobre tus palabras · Goku fuera del selector y del respaldo · la Comunidad de escritorio se
+  cierra al picar afuera · el retrato real del avatar (Nova, Aurelia, Prisma en su etapa) en la bandeja, el chat y
+  Explorar · el Espejo del celular con interruptores ordenados, la flecha centrada y sus reflejos en la misma fila, sin el
+  orbe de comandos · la medición cuenta acciones (voces, interruptores, atajos, ¿Lo contesté?) · la ruta a TestFlight
+  (`escaner-app/a-testflight.sh`) · la segunda llave de Claude lista como respaldo · barrido del maestro (34 bloques).
+- 📁 **Archivos:** escaner-app: `RespuestasMensaje` v1.1, `lib/respuestasChat` v1.1, `Mensajes` v1.54, `AvatarNodo` v1.1,
+  `Comunidad` v1.27, `ComunidadEscritorio` v1.3, `EV_Oraculo` v6.42 (+ las emociones de la v6.44), `EV_Comandos` v1.1,
+  `EV_BajaFrecuencia` v1.3, `lib/bajaFrecuencia` v2.0, `lib/telemetria` v1.3, `EV_Rafaga` v5.37, `NodoDeVoz` v2.7,
+  `espejoVozFish` v2.34, `banco/retratos.mjs`, `herramientas/asc.mjs` · Mac 1.1.64 a 1.1.68.
+- 🗄️ **Migraciones SQL:** `20261024_telemetria_acciones` (pegada) · `20261024b_bandeja_maestria` y
+  `20261024c_tele_catalogo_espejo` (pegadas y verificadas en la base el 2026-10-24).
+- 🔌 **Funciones:** `chat-respuestas` v1.1 (nueva), `_shared/claudeHaiku` v1.2 (segunda llave), `espejo-voz` v3.10 (sin Goku).
+- 💡 **Decisiones:** los marcadores leen solo tus palabras · las emociones se nombran, no se corrigen · ninguna voz clonada
+  sin consentimiento · al iPhone por TestFlight al cierre de cada sala que lo toque (la versión visible se queda en 1.1.7) ·
+  la segunda llave de Claude se conecta cuando esa cuenta tenga créditos · Ludus Cero en el celular se hace en su sala
+  (`ludus-celular`) · PRISMA TD en pausa.
+- 🔧 **Patrones nuevos:** lectura por contexto con salida estructurada y candidatos etiquetados (`rN`/`aN`) · banco con
+  `chat-respuestas` falso y `retratos.html` · la llave de App Store Connect con papel Admin firma en la nube (la de
+  informes no sube) · una función de producción se extiende con `pg_get_functiondef` y se prueba en PGlite antes de
+  dártela · lecciones 0-septnonagies y 0-duodecenties.
+- 🧭 Sin 🔮: el arranque de las palabras espejo (las pausas de la voz) ya lo hizo la sala de las pausas de la voz.

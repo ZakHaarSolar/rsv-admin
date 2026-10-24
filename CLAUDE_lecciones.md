@@ -2158,7 +2158,27 @@ Con la fase del reloj, la correlación de brillo entre tarjetas quedó en 1.0 ta
 **Cómo se aplica.** La prueba de sincronía hace nacer piezas a destiempo, como en el uso real, y compara la serie de
 brillo de cada una (correlación entre pares). Hermanas: 0-unseptuagies, 0-undenonagies.
 
+### Paso 0-centies-bis · Un candado se prueba por todas sus puertas, no solo por la de enfrente
+
+**Regla.** Cuando algo se cierra al público («Próximamente», solo el administrador), no basta con quitar el botón de la
+página principal: se buscan y se prueban, con una sesión sin permisos, todas las puertas que llevan a lo mismo (las
+direcciones directas, las páginas viejas que siguen vivas, las rutas del celular y de la computadora, los dominios que
+redirigen). Lo que se cierra en la interfaz se cierra también en quien abre (el que arranca el juego), y la que vive en
+otro proyecto se nombra con su dirección y se manda a su sala.
+
+**Por qué.** El 2026-10-24, en la sala de Ludus Cero en celular, Zak pidió que nadie jugara Lúcido ni Navegante salvo
+él. El hub quedó cerrado y en verde, pero al probar las direcciones a mano en un iPhone simulado aparecieron dos puertas
+abiertas: la Holoteca vieja del Escáner (`/escaner/holoteca/simuladores`) todavía abría Navegante, y `/lucido/` abría
+Lúcido directo. La primera se cerró ahí mismo (AppNavegacionMobile v2.76); la segunda se mandó a su propia sala.
+
+**Cómo se aplica.** Antes de reportar un candado: lista las rutas que llegan al recurso (grep del id y de su URL en
+Domo, vercel.json y los shells), ábrelas en un Chrome sin ventana sin sesión, en teléfono y computadora, y anota cuál
+queda abierta y dónde se cierra. Hermanas: 0-duotricies, 0-vicies, 0-nonies.
+
 ### Changelog del protocolo
+
+- **v90 (2026-10-24, sala de Ludus Cero en celular):** una lección. **0-centies-bis**: un candado se prueba por todas
+  sus puertas (direcciones directas, páginas viejas, celular y computadora), no solo por la de enfrente.
 
 - **v89 (2026-10-24, sala de las pausas de la voz):** tres lecciones. **0-undecenties**: un simulador vale lo que sus
   números (cada parámetro medido y el modelo validado con un caso real antes de concluir). **0-centies**: lo que instala
