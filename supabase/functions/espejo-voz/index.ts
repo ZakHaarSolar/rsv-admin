@@ -1,3 +1,4 @@
+// Red Solar Viva · espejo-voz v3.11 — 🜂 LA ESCALERA POR COLCHÓN (Zak 2026-10-24): con `escalera: true` (la app desde espejoVozFish v2.35) cada parte de la lectura crece según la voz que ya tiene asegurada delante (la segunda hasta 1.8 veces la primera, la tercera hasta 0.7 de las dos anteriores, de ahí hasta 0.6 de las tres anteriores, 700 como mucho; ninguna de menos de 120 letras; lo que sobra de un párrafo partido queda abierto). Medido el 2026-10-24: la voz real lee ~18 letras/s y el arranque de la v3.9 todavía dejaba silencios antes de la primera parte grande (Aqua, 2026-10-22: 20 s con el corte de 700 de la tienda). Con solo `arranque` sigue el corte de la v3.9 (las apps instaladas antes) y sin nada el de 700 (tienda): lo que reciben las versiones de tienda no cambia. Las partes guardadas en `voz-partes` se identifican por su texto, así que lo ya hecho se sirve con cualquier corte.
 // Red Solar Viva · espejo-voz v3.10 — 🜂 SIN LA VOZ DE GOKU, NI DE RESPALDO (Zak 2026-10-24: «sí, quita a Goku como respaldo»; era un clon de la voz de Mario Castañeda subido por la comunidad de Fish Audio, sin su consentimiento). Goku sale del catálogo: quien la pida (una app vieja que la tenía elegida, o un reference_id de Fish de una build antigua) oye a Bennett. Y si Soniox no responde tras su espera (60 s por cupo, 10 s por tropiezo) o falta su llave, la parte ya NO cruza a Fish: se devuelve el cupo y la respuesta dice «fish_unreachable», el código que todas las versiones de la app ya traducen a «No se pudo alcanzar la voz». Una lectura que no suena es mejor que la voz de alguien sin su permiso. El código de Fish queda dormido.
 // Red Solar Viva · espejo-voz v3.9 — 🜂 ESCUCHAR SUENA PRONTO Y LO YA HECHO NO SE REPITE (Zak 2026-10-23: «se tarda mucho y se queda sintonizando; la primera se quitó y le tuve que picar dos veces»). Medido ese día: una primera parte de 700 caracteres tardó 31 s en sintetizarse; la app de la Mac se reinició para actualizarse justo cuando la voz llegaba, y el segundo toque volvió a sintetizar las mismas dos partes (otros 29 s y el doble en el registro de gasto). (1) Con `arranque: true` (la app desde espejoVozFish v2.33) el corte da una primera parte de 120 a 200 caracteres, una segunda de hasta 2.2 veces la primera y una tercera de hasta 1.2 veces las dos, y de ahí 700: simulado con 20 reflejos reales, el primer sonido baja de 22.6 s a 8.6 s sin silencios entre partes; sin la bandera, el corte de siempre (versiones de tienda). (2) Cada parte de Soniox se guarda con sus marcas en el bucket privado `voz-partes` (se crea solo) y una parte ya hecha se sirve de ahí al instante y sin cobrar (X-RSV-Guardada: 1, expuesta). La llave es la huella del texto con el modelo, la voz, el idioma y la velocidad.
 // Red Solar Viva · espejo-voz v3.8 — 🜂 LAS MARCAS DE SONIOX LLEGAN A LA APP Y CAEN EN SU LETRA (2026-10-20). Nunca llegaron: X-RSV-Marcas y X-RSV-Marca-Cada no estaban en Access-Control-Expose-Headers, así que el navegador las escondía y la app siempre estimó (en el cofre de la Mac de Zak ninguna parte de Soniox trae marcas). Medido con Soniox real (sonda temporal, Margo y Bennett): sus marcas van sobre su texto PREPROCESADO, que vuelve espacio cada salto (dos saltos de párrafo, un solo espacio) y deja lo demás uno a uno; contadas como si fueran el texto, cada párrafo corría el resalte una letra. Tres cambios: (1) el canal guarda también los `characters` y `alinearMarcas` casa cada uno con su lugar en el texto de la parte; (2) un ancla cada 2 letras en vez de 20 (con los tiempos reales: la estimación queda a 8.2 letras de la voz en promedio y hasta 25; las anclas cada 20, a 2.2 y hasta 11; alineadas cada 2, a 0.6 y hasta 2; unos 730 bytes por parte); (3) se exponen y se mandan SOLO a quien las pide con `marcas_v2: true`: las versiones de tienda leen marcas desde agosto y nunca recibieron una, así que siguen estimando como hoy. Y la limpieza se repite hasta quedar estable: un «Título:» seguido de párrafo volvía a fundirse en la segunda pasada y corría una letra la parte (1 de 101 partes de 20 reflejos reales).
@@ -735,6 +736,22 @@ const ARRANQUE_PRIMERA = 200
 const ARRANQUE_MINIMO = 120
 const ARRANQUE_K1 = 2.2
 const ARRANQUE_K2 = 1.2
+/* 🜂 v3.11 — LA ESCALERA POR COLCHÓN (Zak 2026-10-24). La voz real lee ~18
+   letras por segundo y el arranque corto seguía dejando silencios antes de la
+   primera parte grande (80 reflejos reales de Zak: 16 con pausa en día normal,
+   70 en día lento). Con `escalera: true` cada parte crece según la voz que ya
+   tiene asegurada delante: la segunda hasta 1.8 veces la primera, la tercera
+   hasta 0.7 de las dos anteriores, de ahí hasta 0.6 de las tres anteriores
+   (700 como mucho); ninguna cierra con menos de 120 letras y lo que sobra de
+   un párrafo partido queda abierto para lo que sigue. Simulado: 0 de 80 con
+   pausa en día normal y 1 de 80 en día lento. DEBE coincidir con
+   segmentarEspejo del cliente (espejoVozFish v2.35). Con solo `arranque`
+   (las apps instaladas antes) se queda el de la v3.9; sin nada (tienda), 700. */
+const ESCALERA_K1 = 1.8
+const ESCALERA_K2 = 0.7
+const ESCALERA_K3 = 0.6
+const ESCALERA_MINIMO = 120
+type CorteVoz = "tienda" | "arranque" | "escalera"
 
 /* ── PERILLAS DE GASTO (con su costo en MXN al lado) ──────────────────────
    v1.3 — DOS carriles por membresía:
@@ -1379,15 +1396,27 @@ function segmentar(
     texto: string,
     maxChars: number,
     /* 🜂 v3.9 — con arranque, la escalera de arriba (ESPEJO EXACTO de
-       segmentarEspejo del cliente); sin él, el corte de siempre. */
-    arranque = false
+       segmentarEspejo del cliente); sin él, el corte de siempre. 🜂 v3.11 —
+       "escalera", la escalera por colchón. */
+    corte: CorteVoz = "tienda"
 ): string[] {
     const tope = (trozos: string[]) => {
-        if (!arranque) return maxChars
+        if (corte === "tienda") return maxChars
         if (trozos.length === 0) return ARRANQUE_PRIMERA
-        if (trozos.length === 1)
+        const n = trozos.length
+        if (corte === "escalera") {
+            const atras = (k: number) => trozos[n - k].length
+            if (n === 1) return Math.min(maxChars, Math.floor(ESCALERA_K1 * atras(1)))
+            if (n === 2)
+                return Math.min(maxChars, Math.floor(ESCALERA_K2 * (atras(1) + atras(2))))
+            return Math.min(
+                maxChars,
+                Math.floor(ESCALERA_K3 * (atras(1) + atras(2) + atras(3)))
+            )
+        }
+        if (n === 1)
             return Math.min(maxChars, Math.floor(ARRANQUE_K1 * trozos[0].length))
-        if (trozos.length === 2)
+        if (n === 2)
             return Math.min(
                 maxChars,
                 Math.floor(ARRANQUE_K2 * (trozos[0].length + trozos[1].length))
@@ -1395,7 +1424,13 @@ function segmentar(
         return maxChars
     }
     const minimo = (trozos: string[]) =>
-        arranque && trozos.length === 0 ? ARRANQUE_MINIMO : 0
+        corte === "tienda"
+            ? 0
+            : trozos.length === 0
+              ? ARRANQUE_MINIMO
+              : corte === "escalera"
+                ? ESCALERA_MINIMO
+                : 0
     if (texto.length <= tope([])) return [texto]
 
     const trozos: string[] = []
@@ -1433,7 +1468,8 @@ function segmentar(
                 actual += (actual ? sep : "") + f
                 sep = ""
             }
-            empujar()
+            /* v3.11 — en la escalera, lo que sobra del párrafo queda abierto. */
+            if (corte !== "escalera") empujar()
             continue
         }
         actual = p
@@ -1862,7 +1898,13 @@ Deno.serve(async (req: Request) => {
        publicado sigue funcionando igual). Con `part` se devuelve solo ese
        trozo + el header X-RSV-Partes, para que el cliente nuevo empiece a
        sonar en segundos y precargue el resto mientras reproduce. */
-    const partes = segmentar(text, SEG_CHARS, body?.arranque === true)
+    /* 🜂 v3.11 — `escalera` manda sobre `arranque` (la app desde espejoVozFish
+       v2.35 manda las dos); sin ninguna, el corte de las versiones de tienda. */
+    const partes = segmentar(
+        text,
+        SEG_CHARS,
+        body?.escalera === true ? "escalera" : body?.arranque === true ? "arranque" : "tienda"
+    )
     const pedida = Number(body?.part)
     const usaPartes = Number.isInteger(pedida) && pedida >= 0
     if (usaPartes && pedida >= partes.length) {
