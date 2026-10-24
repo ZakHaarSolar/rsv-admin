@@ -2037,7 +2037,29 @@ proporcional y una parte más en la fila, quedó en 8.6 s y sin silencios (el co
 esquema de hoy en la misma tabla; y que la app y el servidor corten idéntico (prueba de paridad con los mismos textos).
 Hermanas: 0-undecies (el dato de prueba se parece al real), 0-duodecies (la lógica pura no prueba la máquina asíncrona).
 
+### Paso 0-quinnonagies · Para probar que no quedó nada, el instrumento se apunta a lo que sí está
+
+**Regla.** Un instrumento demasiado sensible no sirve para probar una ausencia: para saber si a una reconstrucción le
+falta algo, se mide lo reconstruido y se compara contra el original en los dos sentidos (lo que falta y lo que sobra),
+no el residuo. Y un sonido casi periódico (una campana, un tono) se parece a sí mismo desplazado: cada detección nueva
+exige su golpe o su arranque, no solo la correlación.
+
+**Por qué.** El 2026-10-23, al sacar la voz de Amanecer y Anochecer de sus mezclas, el transcriptor (Soniox) leyó la
+meditación entera en el residuo aunque la voz estaba restada 20 a 60 dB: normaliza el nivel y lee voz donde no se oye.
+Transcribir la voz reconstruida y compararla contra la mezcla, palabra por palabra en los dos sentidos, sí encontró lo
+que faltaba (tres frases cortas tapadas por la música) y lo que sobraba (medio «Yo soy» de un clip que Zak recortó).
+La campana de Anochecer apareció dos veces con correlación 0.92: la segunda era un fantasma de la cola de la primera,
+sin el parcial de 4.9 kHz del golpe.
+
+**Cómo se aplica.** Completitud = transcribir lo reconstruido y cruzar con lo original por tiempo y texto; exactitud =
+largo, desfase y ganancia contra el original. Para tonos, prueba de arranque (10 dB más en su banda justo después) y
+restar lo ya colocado antes de buscar el siguiente. Hermanas: 0-nonies (una verificación que no pudo correr no pasó),
+0-quaterquadragies (lo que no puedes percibir se mide con un instrumento que sí).
+
 ### Changelog del protocolo
+
+- **v86 (2026-10-24, sala de la Meditación de 6 min):** una lección. **0-quinnonagies**: para probar que no quedó nada,
+  el instrumento se apunta a lo reconstruido y se cruza en los dos sentidos; un tono que se detecta exige su golpe.
 
 - **v85 (2026-10-23, sala de las palabras espejo):** dos lecciones. **0-ternonagies**: un botón que «se quitó» sin sonar
   puede ser la app que murió en la espera (registro del sistema y registro de gasto antes de culpar al botón).
