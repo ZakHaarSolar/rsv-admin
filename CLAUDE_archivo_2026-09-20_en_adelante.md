@@ -4,6 +4,29 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-24 · LUDUS CERO EN EL CELULAR, «PRÓXIMAMENTE» SALVO EL ADMINISTRADOR Y EL PIE DE RED SOLAR VIVA
+
+- ✅ **Resuelto:** play.redsolarviva.com/simuladores en el teléfono es el hub de Ludus Cero (carrusel con Terra Cristal al
+  centro, portadas enteras, cada juego dice su dispositivo) · Terra Cristal en el teléfono ofrece «Te espera en tu
+  computadora» (luduscero.com/terra-cristal, mandar o copiar; la hoja se cierra deslizándola) · Lúcido y Navegante dicen
+  «Próximamente» y solo el administrador los juega (también en la Holoteca vieja del celular) · botones elegantes, título
+  centrado (en el celular el cubo junto a INGRESAR), tarjetas que no se enciman · el pie de Red Solar Viva (su sol con la
+  órbita y el cubo de Ludus Cero, enlace a redsolarviva.com) · sin «La Red crece». La computadora de la primera tanda quedó
+  byte por byte idéntica.
+- 📁 **Archivos:** Code `69e66a1`, `97744aa`, `3f00c62`, `55ef7ff`: SimuladoresHub v3.10, RSV_SolarSimuladoresShell v4.9,
+  Domo v5.17, AppNavegacionMobile v2.76 · bots `Ludus Cero/Navegante/herramientas/hub-ludus.mjs` v1.3 y
+  `hub-ludus-celular.mjs` v1.1 · rsv-web publicado desde copia limpia (`dpl_G79J87kT7Fq6AgfXpzo4HF6MTe59`).
+- ⏳ **Pendiente:** Zak borra en SQL Editor las tarjetas de prueba «Opj» y «Gq» del Motor (el SQL va en el reporte de la
+  sala; borrar datos queda en su mano) · siguen dos salas: «Terra Cristal en el teléfono: aviso que antoja»
+  (`terra-cristal-pixel3/`) y «Lúcido y Navegante: solo el administrador entra» (la dirección directa `/lucido/` y
+  cualquier otra puerta) · en Navegante del celular, «Selección de membranas» saca del juego (Zak lo deja para después).
+- 💡 **Decisiones:** Ludus Cero no lleva el menú de la casa en el teléfono (como en la computadora) · en un aparato de
+  puro toque, el juego que pide teclado no abre: ofrece la computadora · en localhost Lúcido y Navegante se juegan, para
+  los bots · la etiqueta dice el dispositivo («Computadora», «Celular y computadora»), sin «con teclado».
+- 🔧 **Patrones nuevos:** la cara del teléfono en una hoja de estilos que solo se inyecta ahí (`.lc-lente`), con la huella
+  del DOM de la computadora antes y después para probar que no cambió · probar como administrador con una copia de prueba
+  que se lo cree, sin publicarla · las consultas a la base van por `admin/herramientas/sql.py leer`. Lección 0-centies-bis.
+
 #### 2026-10-24 · LA PAUSA DE LA VOZ (LA ESCALERA POR COLCHÓN), LAS LETRAS DEL LECTOR Y EL PLAN DE VUELO QUE RESPIRA
 
 - ✅ **Resuelto:** la pausa de Aqua (2026-10-22 16:29, App Store 1.1.6: el corte de 700 dejó el primer párrafo solo y una

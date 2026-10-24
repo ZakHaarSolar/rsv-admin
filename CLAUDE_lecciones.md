@@ -2195,8 +2195,33 @@ mandado al receptor y servido aparte) partida con `quitar`, `espaciar`, `solo` y
 antes de medir, recargar si se tocó un campo con letra menor a 16 px (Safari acerca la página). Hermanas: 0-sexagies,
 0-undenonagies, 0-quatertricies.
 
+### Paso 0-centies-quater · La fluidez del scroll se prueba deslizando con el dedo en el iPhone
+
+**Regla.** Un arreglo de fluidez del scroll no está probado hasta que se ve en el iPhone de verdad, deslizando rápido con
+el dedo. Medir cuánto tarda cada cuadro con saltos programados (`scrollTop`) en el Safari del simulador mide el trabajo
+del hilo principal en el procesador de una Mac; el deslizamiento real lo mueve el sistema por su cuenta y le pide a la
+página pedazos de pantalla que se pintan aparte: si no llegan a tiempo, quedan huecos en blanco y renglones cortados que
+el salto programado nunca ve. El instrumento del scroll es el aparato (una compilación de prueba con interruptores que
+apaguen cada sospechoso, o la pantalla grabada mientras se desliza), y hasta verlo ahí el reporte dice «medido en el
+simulador, por confirmar en tu iPhone», nunca «resuelto».
+
+**Por qué.** El 2026-10-24, en la sala del Espejo del teléfono, la prueba de saltos en el simulador bajó de 106 a 33 ms
+por cuadro al quitar la respiración infinita de las palabras espejo, su luz, el destello en reposo, la sombra del texto y
+el sigilo que se redibujaba, y se reportó como arreglado. En TestFlight (2610240524), Zak deslizó rápido y siguió viendo
+media pantalla en blanco y un renglón cortado a la mitad justo en el borde de un pedazo. La medición era real, pero de
+otra cosa: la máscara del scroller, por ejemplo, salió «sin costo» en la prueba programada y nunca se probó con el dedo.
+
+**Cómo se aplica.** Para un síntoma de scroll en el iPhone: (1) el síntoma se ve primero en el aparato (capturas de Zak o
+la pantalla grabada); (2) se mide con algo que vea lo mismo que el usuario: deslizamientos reales en el simulador con la
+pantalla grabada y los cuadros revisados, y si el simulador no lo reproduce, una compilación de TestFlight con un panel de
+interruptores para que Zak apague una pieza a la vez; (3) lo que solo se midió en el simulador se reporta como pendiente
+de confirmar. Hermanas: 0-nonies, 0-duodecies, 0-quaterquadragies, 0-undecenties, 0-sexagies.
+
 ### Changelog del protocolo
 
+- **v92 (2026-10-24, sala del Espejo del teléfono):** una lección. **0-centies-quater**: la fluidez del scroll se prueba
+  deslizando con el dedo en el iPhone; el salto programado en el simulador no ve los pedazos que el aparato deja sin
+  pintar, y lo medido solo ahí se reporta por confirmar.
 - **v91 (2026-10-24, sala del recorte y el copiar del Espejo):** una lección. **0-centies-ter**: una selección que el
   iPhone «no deja» puede estar hecha y escondida; el texto seleccionable va en bloques, y se caza con la selección leída
   desde fuera y una copia fija de la página partida a mano.
