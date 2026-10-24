@@ -2056,7 +2056,28 @@ largo, desfase y ganancia contra el original. Para tonos, prueba de arranque (10
 restar lo ya colocado antes de buscar el siguiente. Hermanas: 0-nonies (una verificación que no pudo correr no pasó),
 0-quaterquadragies (lo que no puedes percibir se mide con un instrumento que sí).
 
+### Paso 0-sexnonagies · La música que acompaña no se corta al navegar; los cruces van en fila
+
+**Regla.** En una app la persona cambia de capa cada pocos segundos: una banda sonora que cambia de canción por capa (como
+en un juego) se oye cortada. La canción que suena termina completa y la capa donde estás decide solo la siguiente. Y todo
+cambio de canción va en fila: si llega otro mientras uno carga, se espera y entra el último; al entrar el nuevo se apaga
+TODO lo que siga sonando, no solo «el anterior».
+
+**Por qué.** El 2026-10-24 Zak probó la primera versión (cruces por capa) en su iPhone: «de A pasa a B, al ir a C se
+escucha A un segundo, o se queda callado». La causa: un cruce que llegaba mientras B cargaba tomaba a B como «la vieja» y
+A quedaba sonando sin dueño; y tres «siguiente» seguidos usaban el mismo canal y no cambiaba nada (medido en el banco).
+Con la música continua, la fila y `apagarLosDemas`, queda un solo canal sonando en cada prueba, también por el camino de
+iOS.
+
+**Cómo se aplica.** Al diseñar audio de fondo, preguntar cuánto dura cada visita a una pantalla antes de atar la música a
+ella. En el motor: un solo cambio a la vez (pedido pendiente), y la prueba cuenta cuántos elementos siguen sonando después
+de pedir cambios rápidos. Hermanas: 0-duodecies (la lógica pura no prueba la máquina asíncrona), 0-tervicies (un cierre
+asíncrono comprueba que el recurso siga siendo suyo).
+
 ### Changelog del protocolo
+
+- **v87 (2026-10-24, sala de la música del Escáner):** una lección. **0-sexnonagies**: la música que acompaña no cambia
+  de canción al navegar (la capa decide la siguiente) y los cruces van en fila, apagando todo lo demás al entrar el nuevo.
 
 - **v86 (2026-10-24, sala de la Meditación de 6 min):** una lección. **0-quinnonagies**: para probar que no quedó nada,
   el instrumento se apunta a lo reconstruido y se cruza en los dos sentidos; un tono que se detecta exige su golpe.
