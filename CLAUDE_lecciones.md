@@ -2003,7 +2003,45 @@ o -ís, pronombres pegados sin tilde (como «marcalo») y las palabras «vos», 
 de la regla. Hermanas: 0-duovicies (dos órdenes contrarias: gana la que está pegada al dato) y 0-unquadragies (lo que
 vivió semanas en silencio pide su centinela).
 
+### Paso 0-ternonagies · Un botón que «se quitó» sin sonar puede ser la app que murió en la espera
+
+**Regla.** Cuando algo que tarda (una voz, una síntesis, una descarga) se apaga sin aviso, antes de culpar al botón se
+comprueba si el proceso siguió vivo durante la espera y qué pidió al servidor: el registro del sistema de la Mac
+(`/usr/bin/log show`, buscar «appDeath» y «CHECKIN» de la app) y el registro de gasto por parte. Si la app murió, el
+arreglo no está en el botón: está en que lo que se reinicia espere a lo que está en camino y en que lo ya hecho no se
+repita.
+
+**Por qué.** El 2026-10-23 Zak reportó «se puso sintonizando y se quitó; le tuve que picar dos veces». En Chrome y en
+el banco el primer toque siempre sonaba. Los registros dijeron otra cosa: el servidor entregó la voz a los 31 s, la app de
+la Mac se reinició para actualizarse en ese mismo segundo (llevaba 63 h abierta con la actualización esperando) y el
+segundo toque pagó y esperó las mismas dos partes otra vez. La caja negra no lo vio: guarda 180 eventos y ya había rotado.
+
+**Cómo se aplica.** `/usr/bin/log show --start … --end … --style compact` (en zsh `log` es otra cosa); `proc_exit` sin
+reporte en DiagnosticReports = salida limpia (un reinicio pedido); `edge_spend_ledger` con dos filas iguales seguidas = la
+misma parte pagada dos veces. Desde espejo-voz v3.9 las partes quedan guardadas en el servidor y desde desktopTauri v1.7
+el reinicio espera a la voz. Hermanas: 0-sexies (la verificación que falla acusa primero al código), 0-duodevicies (un «no
+hay nada» se confirma por otra vía).
+
+### Paso 0-quaternonagies · Lo que va en cadena se simula con los casos reales antes de elegir los números
+
+**Regla.** Cambiar el tamaño de un eslabón de una cadena (partes de voz, lotes, tramos) cambia el ritmo de toda la
+cadena: antes de elegir los números se simula el reloj completo (cuándo se pide, cuándo llega, cuándo suena cada parte)
+con los textos reales y con un día lento, y se cuentan los silencios, no solo la primera espera.
+
+**Por qué.** El 2026-10-23, la primera idea para que Escuchar sonara antes (partes de 200 y 450) bajaba el primer sonido
+de 22.6 s a 6.7 s, pero la simulación con 20 reflejos reales mostró silencios en 11 de ellos: un titular solo quedaba como
+primera parte de 20 letras, sonaba 2 s y la segunda no estaba lista. Con un mínimo de 120 en la primera, la segunda
+proporcional y una parte más en la fila, quedó en 8.6 s y sin silencios (el corte de antes tenía dos).
+
+**Cómo se aplica.** Simular en un script con los ritmos medidos (síntesis y habla) y con uno lento; comparar contra el
+esquema de hoy en la misma tabla; y que la app y el servidor corten idéntico (prueba de paridad con los mismos textos).
+Hermanas: 0-undecies (el dato de prueba se parece al real), 0-duodecies (la lógica pura no prueba la máquina asíncrona).
+
 ### Changelog del protocolo
+
+- **v85 (2026-10-23, sala de las palabras espejo):** dos lecciones. **0-ternonagies**: un botón que «se quitó» sin sonar
+  puede ser la app que murió en la espera (registro del sistema y registro de gasto antes de culpar al botón).
+  **0-quaternonagies**: lo que va en cadena se simula con los casos reales, contando silencios, antes de elegir los números.
 
 - **v84 (2026-10-23, sala del voseo):** el protocolo pasa a tú (14 líneas en voseo de los pasos 1 a 3, que el modelo
   imitaba) y una lección. **0-duononagies**: lo que el modelo lee como instrucción, lo imita; toda instrucción va en tú y

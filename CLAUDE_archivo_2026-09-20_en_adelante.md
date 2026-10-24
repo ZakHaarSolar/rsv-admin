@@ -4,6 +4,20 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-20 → 2026-10-21 · LUZY: DE LA CONSULTA DE MONETIZACIÓN A LA SERIE DE FOTÓN CERO
+
+- ✅ **Resuelto:** consulta «serie infantil y cómo se monetiza» (5 investigaciones, reporte con fuentes y página
+  https://claude.ai/artifact/WSci1Br69kkZ8tCMU9uoTy) · la serie es **Luzy** (Fotón Cero), en `Fotón Cero/Luzy/` con su
+  CLAUDE.md, directiva (`Docs/NORTE.md`), coherencia para niños, marcas (`Docs/MARCAS_IMPI.md`) y prompts · canal
+  @holaluzy · holaluzy.com comprado, apuntado a Vercel y con su página · prompt maestro de episodio v2.0 (tres creadores,
+  cinco jueces a ciegas, aprobación de Zak, luz verde) y prompt del alma (`Docs/PROMPT_ALMA.md`).
+- 💡 **Decisiones:** Ludus Cero es solo juegos; las series son de Fotón Cero · el libro va primero en KDP · la serie se
+  escribe Luzy · lo público, en positivo · canal propio «para niños» y un canal por público.
+- 🔧 **Patrones nuevos:** si Zak dice algo que choca con lo documentado, confirmarlo en una línea antes de construir
+  (memoria `feedback_corregir_a_zak`) · no renombrar la carpeta de una sala viva (atajo `Fotón Cero/serie-infantil`).
+- ⏳ **Pendiente:** ver «Luzy» en Pendientes vivos (sección de Fotón Cero) y `Fotón Cero/Luzy/Docs/PROXIMA_SALA.md`.
+- 🧭 Sin 🔮 propio: el arranque de Luzy vive en `Fotón Cero/Luzy/Docs/PROMPT_EPISODIO.md`.
+
 #### 2026-10-07 → 2026-10-21 · SOLICITUDES: GOOGLE FOR STARTUPS (LA FACHADA Y EL EQUIPO), BASIS Y EL NOMBRE EN X
 
 - ✅ **Resuelto:** la solicitud de Google for Startups Cloud de punta a punta (cuenta de Google de la empresa, Zak como
