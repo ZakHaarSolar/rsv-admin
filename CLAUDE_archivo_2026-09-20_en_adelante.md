@@ -1372,3 +1372,15 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
   voz (+6 dB) y las voces se igualan en su lugar · en ffmpeg 8 cada etapa va a su archivo. Detalle en
   [[proyecto_trailer_navegante]] y [[feedback_trailers_juego]].
 - *Entrada completa en* `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`.
+
+<!-- ARCHIVADO 2026-10-24 desde el maestro -->
+#### 2026-10-22 · PULSO HD: EL KIT DE PULSO Y LAS CAPTURAS DE LA TIENDA CON PULSO
+
+- ✅ **Resuelto:** el kit `Escaner Vibracional/Pulso HD/` (hoja, 10 poses transparentes, LEEME con cada prompt y costo) y las
+  capturas con Pulso de la App Store y Google Play más el gráfico destacado; Zak las aprobó («me encantó») y eligió cambiar de
+  una vez, sin A/B; las publica Grok. Gasto: 8.93 USD en 42 imágenes de Nano Banana Pro (cubierto por sus créditos de Google).
+- 💡 **Decisiones:** Pulso va en la tienda sin prueba A/B · la letra de la serie no entra a las capturas (manda la de hoy).
+- 🔧 **Patrones nuevos:** la IA integra y el código devuelve lo demás pixel por pixel (`Pulso HD/herramientas/capturas.py`);
+  recorte o composición guiada (`guia.py`) cuando el modelo encima al personaje; capturas públicas a tamaño original
+  ([[referencia_capturas_tiendas]]); Chrome sin ventana no baja de ~500 px: la vista de 393 px se prueba en un iframe.
+  Lección 0-unnonagies.

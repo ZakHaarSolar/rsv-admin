@@ -2074,7 +2074,46 @@ ella. En el motor: un solo cambio a la vez (pedido pendiente), y la prueba cuent
 de pedir cambios rápidos. Hermanas: 0-duodecies (la lógica pura no prueba la máquina asíncrona), 0-tervicies (un cierre
 asíncrono comprueba que el recurso siga siendo suyo).
 
+### Paso 0-septnonagies · Lo que se pinta vivo no se repite en una lista: se retrata con su propio motor
+
+**Regla.** Una pieza viva y cara (un avatar en WebGL, una escena animada) no se monta N veces para hacer miniaturas: el
+navegador da como mucho 16 contextos 3D y el teléfono paga cada uno. Se toma su FOTO con el mismo motor (Chrome sin
+ventana, una pieza a la vez, cada etapa), se guarda chica y se muestra la foto. Y una luz que se suma (aditiva) se retrata
+sobre el cielo donde vive: sobre transparente sale gris, sin color.
+
+**Por qué.** El 2026-10-24 Zak dijo de la bandeja de Mensajes: «no veo sus avatares, solo unas bolas, no su avatar Nova,
+Aurelia…». El emblema dibujado a mano se parecía, pero no era el avatar. La primera foto de los 21 avatares a la vez salió
+con 14 en blanco (contextos agotados); la segunda, sobre transparente, gris y sin vida; la tercera, una fila por avatar,
+sobre el azul de la app, con el brillo del día pleno (con 0 Fotones del día el avatar es tenue a propósito) y encuadrada
+por etapa, sí era Nova, Aurelia y Prisma. 21 retratos de 192 px pesan 84 KB (`escaner-app/banco/retratos.mjs`).
+
+**Cómo se aplica.** Antes de pintar algo vivo en una lista, preguntar cuántas veces va a estar en pantalla. Si son más de
+dos, retrato. El retratista vive en el banco (página aparte, sin la app) y deja los archivos en `public/`. Hermanas:
+0-sexquinquagies (no tocar lo de otro mientras trabaja), 0-quaterquadragies (medir con un instrumento lo que no se ve).
+
+### Paso 0-duodecenties · Dos salas en el mismo archivo: cada una guarda solo sus pedazos
+
+**Regla.** Cuando otra sala tiene cambios sin guardar en un archivo que tú también tienes que tocar, no se espera a que
+termine ni se guarda el archivo entero: (1) se le avisa qué zonas vas a tocar y se respetan las suyas; (2) se copia el
+archivo antes de editar; (3) tu parche es la diferencia entre esa copia y tu versión, y se sube al índice con
+`git apply --cached -C1`; (4) se compila el índice solo (`git checkout-index` a una carpeta aparte) antes del commit. Así
+cada sala firma lo suyo. Publicar (Mac, web, TestFlight) espera a que el árbol esté limpio: el guion lo exige y una subida
+se llevaría el trabajo a medias de la otra sala.
+
+**Por qué.** El 2026-10-24, mientras esta sala sumaba las emociones nombradas al Espejo, la sala «Crop Fotos, copy/paste»
+tenía su v6.43 sin guardar en el mismo `EV_Oraculo.tsx`. Las dos se avisaron sus zonas por mensaje, el parche propio
+aplicó limpio sobre lo guardado y el índice compiló solo: ninguna pisó a la otra ni subió código ajeno con su nombre.
+
+**Cómo se aplica.** `git status` antes de editar un archivo grande; si aparece modificado y no es tuyo, `ListAgents` para
+saber quién trabaja y un mensaje con tus zonas. El encabezado de versión (línea 1) es de quien guarda primero. Hermanas:
+0-sexquinquagies, 0-duooctogies (publicar desde lo guardado).
+
 ### Changelog del protocolo
+
+- **v88 (2026-10-24, sala del detector de respuestas):** dos lecciones. **0-septnonagies**: lo que se pinta vivo no se
+  repite en una lista; se retrata con su propio motor (y la luz aditiva, sobre su cielo). **0-duodecenties**: dos salas en
+  el mismo archivo guardan cada una solo sus pedazos (aviso de zonas, parche propio con `git apply --cached`, índice
+  compilado aparte) y publicar espera al árbol limpio.
 
 - **v87 (2026-10-24, sala de la música del Escáner):** una lección. **0-sexnonagies**: la música que acompaña no cambia
   de canción al navegar (la capa decide la siguiente) y los cruces van en fila, apagando todo lo demás al entrar el nuevo.

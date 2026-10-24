@@ -514,14 +514,14 @@ proyecto guarde lo suyo en SU carpeta y que la sala se abra ahí dentro.
 | **Lúcido** (play.redsolarviva.com/lucido) | `Ludus Cero/lucido/CLAUDE.md` ✅ hecho (2026-10-03) | abrir `Ludus Cero/lucido` |
 | **Fotón Cero** (fotoncero.com, la sala de proyección del estudio) | `fotoncero/CLAUDE.md` ✅ hecho (2026-10-07) | abrir `fotoncero` |
 | **Aplicaciones** (los CV de Zak y las solicitudes de Red Solar Viva) | `admin/aplicaciones/CLAUDE.md` ✅ hecho (2026-10-09) | abrir `admin/aplicaciones` |
-| **PRISMA TD** (el tower defense de Ludus Cero) | `Ludus Cero/prisma/CLAUDE.md` ✅ hecho (2026-10-14) | abrir `Ludus Cero/prisma` |
+| **PRISMA TD** (el tower defense de Ludus Cero) · **en pausa, no se crece (Zak, 2026-10-24)** | `Ludus Cero/prisma/CLAUDE.md` ✅ hecho (2026-10-14) | abrir `Ludus Cero/prisma` |
 | **Emisiones** (los reels de consciencia del Escáner, sin publicidad) | `Escaner Vibracional/Emisiones/CLAUDE.md` ✅ hecho (2026-10-17) | abrir `Escaner Vibracional/Emisiones` |
 | **Luzy** (la serie para niños de Fotón Cero) | `Fotón Cero/Luzy/CLAUDE.md` ✅ hecho (2026-10-20) | abrir `Fotón Cero/Luzy` |
 
 Este archivo se queda como **índice del ecosistema**: quién es Zak, cómo se le habla, dónde vive cada proyecto,
 los destinos de publicación y el protocolo de cierre. Lo que sea de un solo proyecto baja a su carpeta.
 🜂 **El plan maestro** (el norte de 11 M MXN al mes, las etapas, cada rama con su meta y las reglas de trayectoria) vive
-en `PLAN_MAESTRO.md` (v1.5, 2026-10-23), que sirve al principio de las puertas: se lee antes de proponer una rama, un
+en `PLAN_MAESTRO.md` (v1.6, 2026-10-23), que sirve al principio de las puertas: se lee antes de proponer una rama, un
 juego o un gasto nuevo.
 
 🜂 **Abrir la carpeta no basta:** Claude Code también carga los `CLAUDE.md` de todas las carpetas de arriba. Cada
@@ -554,21 +554,6 @@ Detalle en [[referencia_version_en_tienda]].
 
 ---
 
-### ⚪ Ecosistema · el plan maestro
-
-- **Consulta respondida el 2026-10-18 · la estrategia maestra, los años al norte y la mina de oro** (IA, robots,
-  energía solar, espacio; el tuit de Elon Musk). Todo vive en `PLAN_MAESTRO.md` v1.1. Etapa 1: 33,500 MXN al mes con los
-  productos (unas 85 a 90 suscripciones); hasta cumplirla, 70 % del tiempo a distribuir y nada nuevo. Steam para Terra
-  Cristal y el inglés son los dos multiplicadores. La IA aplicada (el motor de la biblioteca como producto para autores y
-  maestros) es la primera rama candidata de la etapa 2; la energía solar, la de la etapa 3; las inversiones, con asesor
-  certificado en la etapa 2. Estimación: etapa 1 en 6 a 18 meses, etapa 2 en 2 a 4 años, el norte en 10 a 15 (6 a 8
-  con un éxito grande temprano). **Decidido (2026-10-18):** la página de Steam de Terra Cristal se abre al terminar la
-  destilación, aunque no haya tráiler (con cápsulas y 5 capturas basta; el tráiler se suma cuando haya promociones dentro
-  del juego); Ludus Cero abre TikTok, Instagram y Shorts cuando la página esté viva. Prioridades hasta la etapa 1: si
-  regresa el trabajo de anotación, va primero (de 100 a 130 mil MXN al mes con 40 h) para liquidar unos 260 mil MXN de
-  deudas; si no, el Escáner y Terra Cristal, y buscar otro proyecto como ese en la sala de aplicaciones. La auditoría de precios de Sintonía corre en su propia sala (`auditoria-precios`) y deja su
-  resultado en la sección del Escáner.
-
 ### 🟢 Terra Cristal · lo que sigue abierto
 
 🜂 **Sus reglas de construcción, su hoja de ruta y su estado NO viven aquí**: están en `terra-cristal/CLAUDE.md`
@@ -590,63 +575,7 @@ que necesita una decisión de Zak o una mano suya.
   tirando los dados → plaza común → cooperativo. **Sin construir, falta decidir cuándo.**
 - **Guardado real:** primero en el aparato y sincronizado con la cuenta del Escáner; un documento con versión y 3
   ranuras, que mañana sirve igual para Steam Cloud. Diseño en la Biblia §6. **Sin construir.**
-- **Consulta respondida el 2026-10-05 · qué hace posible el arte en código** (estilo Shining Force): 15 propuestas
-  (dos miradas Clásico y Cristal, sonido FM de Mega Drive en código, equipo visible, transición gradual, terreno que
-  recuerda, mapas enormes, editor con Steam Workshop…), su orden y sus porcentajes en `terra-cristal/Docs/PROPUESTAS_STEAM.md`.
-  A Zak le gustaron; falta que elija cuáles. **Evaluación del 2026-10-07:** con lo de la Sala 6, ~35 % que le vaya bien y ~6 %
-  de éxito global si el audio sale sin IA (las voces de ElevenLabs y la música de Suno se declaran en Steam y lo bajan a
-  ~30 % y ~4-5 %); pasa al frente de Lúcido (~5 %).
-- **Consulta respondida el 2026-10-07 · ¿el combate de la Luz es muy liviano para el jugador común?** El concepto ayuda (el
-  gancho «el táctico donde no matas: liberas»); lo que le quita emoción es el poco riesgo, que las batallas salen fáciles y que el
-  golpe suena suave. Hoy bajaría la estimación de Steam (de 30 a 20 % que le vaya bien); con tensión y peso, la sube a 35 %. Cinco
-  propuestas (el gris que avanza como mecánica, combate con peso y dificultad «Prueba», los liberados se unen, el capítulo 1 con
-  mapas grandes, la demo de Steam) en `terra-cristal-pixel3/Docs/SIGUIENTE_NIVEL.md`. Falta que Zak elija.
-- **Consulta respondida el 2026-10-12 · la música de batalla, el equilibrio, el ascenso y los mapas** (Zak: «tus propuestas para nuestro
-  archivo maestro de juego»). Sellado en `terra-cristal-pixel3/Docs/HISTORIA_Y_DINAMICAS.md` 13: todos los personajes del mapa miden 24
-  pixeles de la coronilla a los pies (la sala siguiente los pasa; Huitzil quedó más alto que Elafia y cabezón); cada unidad tiene lo suyo y
-  ningún jefe cae ante una sola; el ascenso será una unidad nueva con fanfarria y efecto; ningún pasillo de una casilla (hoy no hay).
-  Zak eligió y ya está en el juego (Sala 29 B): la música A (el tema del combate sigue donde iba; con la barra sostenida no cambia) y **el
-  Portador del Alba** de protagonista (combate, mapa a 24, encarnar y su cara). **Falta que Zak elija** los arreglos del equilibrio (el
-  Ajolote, la Garza, la Lanza de nivel 4 y la Polilla) (la Portadora del Alba ya está en el juego desde la Sala 32, y los mapas con batalla tienen sus pasos de dos casillas). El Portador quedó sellado en su versión definida (Sala 31). Los miedos
-  nuevos de la Cañada y del Puente ya están en el juego desde la Sala 28.
 
-
-
-- **Consulta respondida el 2026-10-13 · ver en qué punto va cada jugador** (Zak: «un amigo va a jugarlo, nuestro primer jugador»): sin
-  cuenta la partida vive solo en su aparato; con la cuenta de Red Solar Viva (la misma del Escáner) se guarda en la nube y se ve. **Construido
-  el mismo día:** la bitácora del viaje dentro de la partida (tiempo, sesiones, cada batalla, lo que hace, caídas, Reenlaces, afinaciones, con
-  qué juega y los últimos 150 sucesos; `terra-cristal-pixel3/src/juego/bitacora.ts`) y la pestaña «Terra Cristal» del Motor (lista, embudo
-  «Hasta dónde llegan», ficha y línea de tiempo; `Code/MI_TerraCristal.tsx`, admin-action v1.61, sin SQL). **Sala 39 (2026-10-13):** la
-  pestaña tiene Jugadores, Batallas (las que más cuestan, por manera de viajar) y Reportes (la R del juego manda la foto y el momento exacto;
-  admin-action v1.62, función `terra-cristal-reporte`); en el juego, CARGAR con su registro, GUARDAR que espera el turno y la L y la B solo con
-  `?admin=1`. **Sala 40 (2026-10-14):** el amigo todavía no aparece (ni partida ni reportes); la bitácora de cada aparato llega al Motor con
-  o sin cuenta (función `terra-cristal-bitacora`, admin-action v1.63) y la pestaña lleva el número rojo de los reportes nuevos. Zak pegó el SQL
-  de los aparatos. **Falta que Zak** abra la pestaña con su sesión de administrador, mande el juego a sus hermanos (prueba del primer capítulo,
-  en computadora con teclado). El salto que se rompe (por qué la alianza no viaja como luz en batalla) ya está en el juego. La base aguanta de 100 a 400 mil jugadores (plan Pro, 133 MB de 8 GB).
-- **Consulta respondida el 2026-10-14 · la forja, las tiendas desde Lemuria y las casas por dentro** (Zak: «una propuesta completa... que
-  mejore muchísimo la experiencia»): la forja sí funciona desde la Sala 6, pero solo en el Cenote, y el arma no se ve ni se oye crecer.
-  Propuesta: el arma que te recuerda (cambia de aspecto y habla al crecer, Afinación como ceremonia), un mineral por región que abre el
-  siguiente escalón, las armas nuevas se forjan con herencia (la vieja le pasa lo vivido) y, desde Lemuria, dos lugares como en Shining Force
-  (puesto de objetos y forja de la aldea); las casas, mapas separados empezando por el Templo de la Caracola. Detalle en
-  `terra-cristal-pixel3/Docs/HISTORIA_Y_DINAMICAS.md` 9.13 y 9.14. **Construido el mismo día (Sala 41 B):** el puesto de las perlas ×15 (la
-  Lanza de Coral, 240), «Un lugar en el mundo» en la nueva casa y el paseo del Templo libre. **Al cierre, Zak decidió: en Terra Cristal no se
-  vende nada** (fuera el puesto de las perlas y la compra del Árbol Madre; los fotones sirven para cultivar y forjar) y dejó tres salas listas en
-  `terra-cristal-pixel3/Docs/PROXIMA_SALA.md`: 42 C (despertar en Lemuria en primera persona, cultivo con luz, cámara más centrada), 42 D (el
-  arma que crece y la forja de Lemuria, con el arma de cerca de Elafia) y 42 E (por dentro: el Templo de la Caracola, luego el Salón de la Alianza).
-
-- **Consulta respondida el 2026-10-15 · ¿hasta dónde la versión gratis antes de comprar el juego?** (Sala 44 B) Recomendado: gratis el
-  Prólogo, el Capítulo 1 y el camino hasta llegar a Lemuria (unas 2 horas), igual en la web y como demo de Steam, con la partida que pasa al
-  juego completo; Next Fest una sola vez, en la edición más cercana al lanzamiento, y con la demo dentro de Steam (la web no cuenta). Por qué:
-  el combate que libera está en el Capítulo 1 y el asombro es Lemuria; los tácticos y RPG que mejor venden dan de 1 a 5 horas (Octopath
-  Traveler II 3 h, Unicorn Overlord 5 h, Metaphor) y la mitad de quienes prueban una demo de historia la juegan 14 minutos o menos (que la
-  primera batalla llegue antes de los 10). Descartado cortar en el Árbol: guarda más juego, pero se va sin ver lo que nadie más tiene. **Elegido
-  y construido el 2026-10-17:** el corte en la puerta de Lemuria (ver «la compra», abajo). Detalle y fuentes en la página de la sala (puerto
-  8870) y en `terra-cristal-pixel3/Docs/BITACORA.md`.
-- **Consulta respondida el 2026-10-16 · ¿qué hacen el Miedo y la Duda?** (Sala 46) El Miedo entra con el golpe de un miedo (de 8 a 30 %
-  según quién): la luz pega 70 % y una Magia se apaga 3 de cada 10, hasta que se quita. La Duda entra con su Magia (el Susurro, 60 %): la
-  siguiente Magia sale al 60 % y se va con ella. Se quitan con un compañero al lado, una Magia de apoyo, respirando o cuando alguien sube de
-  nivel. Detalle en `terra-cristal-pixel3/Docs/HISTORIA_Y_DINAMICAS.md` 13.18. **Falta que Zak decida si se compensa la revancha**: como subir
-  de nivel ya no cura (su regla), se gana al primer intento 22 de cada 100 (antes 47); recomendado +1 de coherencia a la alianza (33).
 - **Construido el 2026-10-17 · la compra y Terra Cristal en Ludus Cero** (sala «COMPRA Terra Cristal», abierta en `Red Solar Viva/`): lo
   gratis es el Capítulo 1 (José llegó a Lemuria a las 2 h de juego activo); al pie de la escalera de Lemuria sale el muro de compra (299 MXN,
   pago único; hoy se abre el Capítulo 2 y luego el 3, la Atlántida, hasta el 8; sin compras dentro del juego; la cuenta de Ludus Cero, solo al
@@ -663,12 +592,6 @@ que necesita una decisión de Zak o una mano suya.
   afinación pasa cuando vas por Huitzil. La revancha se gana a la primera igual que antes (22 de cada 100). Medido: de 2.6 a 2.0 minutos hasta
   moverte sin nada obligado (la mitad no se alcanza: se quedan la escena, la lección y la pregunta de Elafia). **Falta que Zak** vea la página
   (puerto 8911) y juegue el reto. Todo en `terra-cristal-pixel3/Docs/BITACORA.md`.
-- **Consulta respondida el 2026-10-17 · la telemetría, el primer reto, el precio, cuánto puede ganar y los testers** (porqués y datos en
-  `terra-cristal-pixel3/Docs/PROPUESTAS_COMPRA.md` y en la página `Ludus Cero/portadas/terra-cristal/pagina/`, puerto 8881). La telemetría del
-  muro, del «Ahora no», de dónde se va cada quien y de los errores quedó construida; faltan, si se quieren, el reloj del arranque, dónde se
-  atoran, el aparato, de dónde llegan y si vuelven. El primer reto: Zak eligió «Resistir» (la A) y la D; construidos (arriba). Lo que
-  puede ganar, terminado, en inglés y en Steam: lo más probable de 1 a 5 millones de pesos en su vida; 2 de cada 10, de 5 a 28 millones; 1 de
-  cada 20, más de 30. A los testers de familia, el juego completo regalado, pero después de que vean el muro.
 - **Construido el 2026-10-17 · las casas de Lemuria por dentro (Sala 43, siete salas en paralelo, publicada):** las diez puertas de
   Lemuria se abren (el Templo y ocho casas, cada una con su gente, su secreto, su comedia y su frase), el Salón de la Alianza bajo el
   coral turquesa (la sabia da la referencia, el Canto del Coral, la alianza vive ahí) y los peces con su propia vida, por debajo de los
@@ -676,20 +599,53 @@ que necesita una decisión de Zak o una mano suya.
   Salón (cada casa directo con `?admin=1&demo=<id>`) y vea las cinco caras de quienes más hablan en ellas (Lía, don Ramón, Atzin, la
   abuela Paciencia y Ayotl), ya publicadas; si alguna no le convence, se pide otra toma solo de esa.
 
-### 🟢 Kal'El · lo que sigue abierto
-
-🜂 **Su estado, sus pendientes y su bitácora viven en `kalel/CLAUDE.md` y `kalel/Docs/BITACORA.md`**; el plan del
-Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que necesita la mano de Zak:
-
-- **Probar Dilo y Cuentos con el micrófono de verdad** en la computadora de Kal'El: la vista previa bloquea el
-  micrófono y nunca se oyó una voz real. Si no le entiende, existe el botón del adulto (mantener presionado).
-- **Probar Explorador y Clics con el trackpad de verdad** (pellizco, dos dedos, clic derecho): solo simulados.
-- **Consulta respondida el 2026-09-24:** con trackpad de laptop, el nivel 7 de La soga pide unos 6 años y todo el juego
-  unos 7 (con mouse, medio año menos): lo difícil es sostener la presión mientras mueve el dedo. El tamaño mínimo del
-  aro quedó en pausa (Zak lo omitió).
-
 ### 🔵 Escáner · lo que necesita tu decisión
 
+- **Sellado el 2026-10-24 · los marcadores del lenguaje solo leen tus propias palabras** (Zak: «propias palabras, de
+  alguien más no»). Palabras limitantes (antes «baja frecuencia», encendidas de fábrica) y emociones nombradas (miedo,
+  tristeza, enojo… apagadas de fábrica, sin proponer cambio) en el Espejo y en el chat de la Comunidad. Y **ninguna voz
+  clonada de una persona real sin su consentimiento**: Goku (clon de Mario Castañeda en Fish Audio) salió del todo,
+  también como respaldo (espejo-voz v3.10).
+- **SQL por pegar (2026-10-24):** `admin/supabase/migrations/20261024b_bandeja_maestria.sql` (la etapa del avatar en la
+  bandeja de Mensajes; sin ella, todos salen en la etapa 2) y `20261024c_tele_catalogo_espejo.sql` (los nombres de lo
+  que mide el Espejo en Motor → Telemetría).
+- **Llave vieja de Clerk:** falta que Zak la borre en Clerk (la nueva vive en Supabase y Vercel desde el 2026-10-21, por
+  el aviso de seguridad de Railway).
+- **SAT:** falta que Zak se dé de alta con la actividad (su constancia dice «Sin obligaciones fiscales»), de preferencia
+  con contador; el RFC ya está en las dos tiendas.
+- **Segunda llave de Claude (respaldo):** el código ya la usa sola si existe `ANTHROPIC_API_KEY_RESPALDO` (los
+  Decodificadores, el respaldo del Espejo y ¿Lo contesté?); Zak avisa cuando la segunda cuenta tenga créditos (hoy 0 USD).
+- **Meditaciones (2026-10-23 y 24, sala «Meditación de 6 min»).** Hecha «La Habitación que Sostiene» (6:00, voz de Erin,
+  «Raíz que sueña en Espiral», en pistas: mezcla, voz y música alineadas al sample; `Meditaciones/Kit 4 - Habitación/`,
+  con su LEEME) y la voz sola de Amanecer y Anochecer, repuesta con sus tomas originales (`salida/publicadas/`). Desde la
+  1.1.7 el catálogo sale de la base: una Meditación nueva entra en `meditaciones_catalogo` en estado `prueba` (solo la ve
+  la cuenta de administrador, con la marca «En prueba», también en TestFlight) y con `update … set estado = 'publicada'`
+  le llega a todos sin versión de tienda (las versiones viejas siguen con su lista; escaner-app `0a4032f`, sin subir a
+  GitHub todavía: viaja con la siguiente publicación). El SQL `20261024_meditaciones_catalogo.sql` ya está pegado
+  (verificado el 2026-10-24). **Consultas respondidas el 2026-10-24:**
+  (1) se queda solo Amanecer gratis (Anochecer y La Habitación dan valor al Cristal de Meditación; el hueco de conversión
+  está antes del muro, no en lo gratis); (2) no dar un cuarto de Cristal por semana al semanal: los Cristales son la razón
+  concreta para pasar al mensual y el aviso del semanal al mensual («Llevas N semanas con Sintonía Solar… recibes tus dos
+  Cristales de Extracción cada mes», a la 3.ª renovación, solo en el teléfono donde se paga) llega con la 1.1.7; se
+  revisa cuando haya datos de ese aviso en Motor → Onboarding.
+- **Consulta del 2026-10-23 · la voz que se pausa entre partes** (Aqua, App Store 1.1.6: tras un párrafo se pausó varios
+  segundos y siguió). Sospechoso: el corte de 700 de esa versión (simulado, silencio en 2 de 20 reflejos en día normal) o una
+  espera de cupo de Soniox. La 1.1.67 lo reduce (sin silencios en día normal; en día lento todavía algunos). Se verifica en su
+  sala: `escaner-app/salas/PROMPT_PAUSAS_VOZ.md`.
+- **Construido el 2026-10-23 · la música del Escáner** (escaner-app 735e835; Zak: «que la música acompañe su experiencia…
+  como un juego»). Lumeria (escaneos), Códigos Aurora (decodificadores, lectura, visión) y Donde la Tierra aún Canta
+  (descanso, Mi Núcleo, Bitácora, sueños): las 27 canciones repartidas en 29 experiencias; baja con la voz del Espejo, calla
+  con las Meditaciones horneadas, el micrófono y los videos, y sigue debajo de los audiolibros con 4 niveles («Música de
+  fondo» del reproductor: la pista propia de antes se retiró), también con la pantalla bloqueada en iOS. Interruptor y nivel
+  en Ajustes → Sonido y Háptica; ficha en Mi Núcleo; píldora abajo a la izquierda en la computadora. **Consulta respondida:**
+  las Meditaciones por pistas (voz y música separadas y alineadas) ya funcionan: con la música encendida suena la voz encima
+  de la música que traías; sin música, la mezcla. **En vivo (a58001d):** «La Habitación que Sostiene» (6:00, voz de Erin
+  sobre «Raíz que sueña en Espiral», con el Cristal de Meditación; `Meditaciones/Kit 4 - Habitación/`), y Amanecer y
+  Anochecer del Eje también por pistas (su voz sola rescatada de las tomas originales, desfase cero). Web publicada y la Mac
+  1.1.67 ya la trae (9f0cf27, publicada por la sala de las palabras espejo). Detalle en `escaner-app/CLAUDE.md` y [[proyecto_musica_escaner]].
+  **Ya es música continua** (6c3e0dd, Mac 1.1.68: la canción no se corta al navegar, con reproductor). **Sigue en la sala** «Música del Escáner:
+  reproductor visual y fallas» (Espejo que se abre solo al volver desde Mi Núcleo, música que a veces no suena al regresar, reproductor con
+  portadas y escuchar fuera de la app). **Falta que Zak** decida si la música va en la siguiente versión de tienda.
 - **Sellado el 2026-10-22 · la serie de largos se llama «Así funciona tu realidad»** (Zak: «sí a todo»): el canal sigue
   como Escáner Vibracional; episodios sin fin y temporadas solo para medir (la 1, de LG-001 a LG-026, hacia el 16 de enero
   de 2027; lo grande, como la duración, se decide para la 2); sin intro. El bloque con «Una producción de Fotón Cero» ya
@@ -729,34 +685,6 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   `Emisiones/CLAUDE.md` («Pulso en los Shorts»). Lección: un jurado a ciegas se corre con agentes de solo lectura, las
   imágenes fuera del proyecto y la sala parada fuera de la carpeta del jurado (ven su ruta): con las notas a la vista, el
   primer intento salió 6 a 1.
-- **Consulta respondida el 2026-10-22 · Alux contra Kurzgesagt:** Alux vive de su archivo (sus más vistos tienen de 8 a 10
-  años; hoy, de 13 a 54 mil por video con 5.1 M de suscriptores); Kurzgesagt saca millones porque cada video es un evento.
-  YouTube reparte video por video, no por suscriptores. Esperado, con mucha incertidumbre: de cientos a pocos miles por
-  largo los primeros meses; lo de Alux hoy, posible en uno o dos años si la gente se queda más de la mitad del video.
-  Mandan la retención y el clic, no las vistas.
-- **Consulta respondida el 2026-10-21 · el aviso de seguridad de Railway** (correo real: status.railway.com lo confirma).
-  Lo único nuestro en Railway es el servidor viejo de Domo Cero (ex-MMSOR, ya apagado: «Application not found»), pero sus
-  variables guardaban la llave secreta de producción de Clerk, la misma que usan unas 30 funciones del Escáner. La llave
-  anónima de Supabase es pública de por sí. **Hecho el mismo día:** llave nueva de producción en el llavero
-  (`rsv-clerk-secret`), puesta en Supabase (`CLERK_SECRET_KEY` y `CLERK_SECRET_KEY_DEV`) y en Vercel del escaner-app
-  (`CLERK_SECRET_KEY`, producción y vista previa; la usan los inicios con Apple y Google de la web), web republicada; ningún
-  otro proyecto de Vercel la usa. Zak no vio usuarios raros. **Falta que Zak** borre la llave vieja en Clerk. El proyecto de
-  Domo en Railway se puede quedar: con la llave vieja borrada, lo que guarda ya no abre nada.
-- **Consulta respondida el 2026-10-20 · las voces del Espejo, su exactitud y el botón de la esquina** (sala de la voz en
-  escritorio). Bennett, Owen, Cordelia y Margo son de Soniox (`tts-rt-v2`, su único modelo vigente; el v1 se retiró el 31
-  de agosto) y Goku es un clon en Fish Audio (S2.1 Pro), que además es el respaldo. Exactitud: la dan las voces de Soniox,
-  que marcan cada letra (en el banco el texto va a 1 a 6 letras de la voz); Goku solo estima (hasta ~3 palabras). **Inworld
-  TTS-2 Flash** (salió el 9 de agosto): 15 USD por millón de caracteres (≈0.75 a 0.90 USD la hora en español, contra 0.70 de
-  Soniox), marcas por palabra y por letra atadas al texto original, español de primer nivel con acento mexicano, arriba de
-  Soniox en el ranking público de oído (lugar 12 contra 21, medido casi todo en inglés): recomendado probarlo a ciegas antes
-  de migrar (tarjeta «Prueba a ciegas: Inworld Flash contra Soniox»). **Descartado:** Fish Drama 3 para leer el Espejo (sube
-  de 10 a 50 USD por millón el 12 de noviembre, cada tramo es una toma distinta y sus marcas salen por otra ruta, por
-  segmentos y sin probar en español) y volver «Inicio» el botón de abajo a la derecha (es la única puerta al Espejo en
-  computadora y el Radar ya es la primera pestaña de arriba). **Falta que Zak** diga si arranca la prueba de Inworld y si
-  lleva la voz afinada al celular (tarjeta «Llevar la voz afinada del Espejo al celular»; ahí, la Presencia con voz
-  probablemente se descuadra porque manda el texto crudo, como pasaba en computadora). El salto de Margo a Goku lo arregla su
-  propia sala («Consistencia de la voz del Espejo», causa medida: la escucha automática pidió 4 síntesis en 2.7 s, Soniox
-  atiende 3 y la cuarta cayó a Fish); su estado y la Mac 1.1.59 viven ahí.
 
 - **Construido el 2026-10-18 · la telemetría mes con mes** (sala «Telemetría del Escáner»; Zak: que leyendo la información
   cada mes la app llegue a las 10,000 suscripciones y nada quede muerto). La app junta por día y manda en lotes sesiones,
@@ -768,40 +696,6 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   1.1.56 y tiendas 1.1.7»): sin ella, de los teléfonos solo cuentan las acciones reconstruidas. Primera lectura del
   panel: el 1 de noviembre, con su guía. Detalle en `escaner-app/CLAUDE.md`
   y [[proyecto_telemetria_escaner]].
-- **Consulta respondida el 2026-10-18 · el precio de Sintonía** (auditoría completa en
-  `Escaner Vibracional/Precios/AUDITORIA_PRECIOS_2026-10-18.md`; página con simulador:
-  https://claude.ai/artifact/2DMQ8rSKRbQznv4UZ7p2kL). **Recomendado: 499 MXN al mes y 149 a la semana se quedan**
-  (ya están así en la App Store, Google Play y la web; no hay nada que mover hoy). Por qué: el precio no frena (desde que
-  el muro del Espejo se cuenta, el 9 de agosto, las 2 personas que gastaron sus 3 preguntas gratis pagaron el mismo día,
-  las dos por el semanal aunque el muro marca el mensual); la IA de un suscriptor típico cuesta de 18 a 32 MXN al mes (un
-  mensaje, 0.02); bajar a 399/129 pediría 21 % más suscriptores para ganar lo mismo y a 299/99, 63 %; subir arriesga la
-  entrada, que es el punto sensible. De cada 499 en la tienda llegan unos 355, no 366: Apple cobra IVA sobre su comisión
-  y retiene 2.5 % de ISR a una persona física (sin el RFC cargado, 20 % y llegarían unos 279); el semanal deja unos 106 y
-  la web unos 398. Meta: unas 92 suscripciones activas (mitad semanal) o 97 con las herramientas del negocio (Clerk cuesta
-  35 USD al mes según sus facturas; desde el 2026-10-18 el Motor la anota una sola vez, en 650). El hueco está antes del muro (28 de 44
-  cuentas sin plan nunca usaron nada) y en la distribución (sostener 92 pide unas 68 altas al mes). Descartado: bajar el
-  precio, mover la escalera (el mensual ahorra 23 % contra un mes de semanal; banda sana del semanal de 139 a 169) y
-  bajar los precios de fuera de México (están en línea con ChatGPT Plus de cada tienda: Colombia 99,900 los dos; EE. UU. y
-  Argentina 22.99 contra 19.99). La recarga automática de OpenRouter ya está activa (2026-10-18). El semanal de Stripe
-  cuelga del mismo producto que el mensual; desde stripe-webhook v2.6 se distingue por su intervalo y no da Cristales.
-  **Arrancaron dos salas el 2026-10-18:** «Cerrar huecos de gasto y cobros del Escáner» (**hecha el 2026-10-18**, ver
-  2026-10-18 · IV y el pendiente del respaldo, aquí abajo) y «Muro honesto y paso del semanal al
-  mensual» (**hecha el 2026-10-18**: el muro sin Calibraciones ni Navegante y con los topes reales, precio y aviso de
-  compra de la tienda real, aviso a la 3.ª renovación semanal, cada muro contado con «¿Qué te detuvo?» en Motor →
-  Onboarding; migración pegada; llega al teléfono con la siguiente versión de tienda) y, por pedido de Zak, «Avisos de soporte que se ven» (número en Mi Núcleo y en
-  Ajustes con respuestas sin leer, la tarjeta del caso abierto arriba y el botón «Cerrar caso»); su estado vive en sus
-  propias salas. **Las dos personas que pagan lo hacen fuera de México** (informe de Apple del mes fiscal de septiembre:
-  2 ventas en la zona euro y 2 en América en dólares, ninguna en México): el precio mexicano se sostiene por la cuenta y
-  la primera señal mexicana será su muro. **Primer depósito de Apple: 817.74 MXN el 2026-10-29** (Apple paga una vez al mes,
-  unos 33 días después de cerrar cada mes fiscal, si pasa el mínimo; si no, se acumula, como pasó con agosto).
-  **Falta que Zak** (su RFC ya está cargado en las dos tiendas): se dé de alta en el SAT con la actividad (su constancia
-  dice «Sin obligaciones fiscales»), de preferencia con contador; y cree Meditaciones nuevas (el 599 ya está archivado y
-  los enlaces del Decodificador 199 y de Inmersión 1,111, desactivados, 2026-10-18) (los Cristales no se combinan: el de
-  Meditación solo abre Meditaciones). F22 (usa la app en español, entra desde EE. UU., nunca aceptó los avisos push): el
-  regalo de un mes ya se mandó (falta que lo acepte) y Zak le escribe en su caso de soporte abierto; su correo es un relevo
-  de Apple (privaterelay) que solo recibe de remitentes registrados en Apple Developer. Después: anual de 2,990 cuando
-  haya 3 mensuales activos y el Radar gratis una vez al mes como prueba. El número en el ícono (respuestas de soporte, regalo y mensajes) lo está haciendo la sala «Avisos de soporte que se ven»
-  (pedido de Zak del 2026-10-18; solo lo ve quien aceptó las notificaciones).
 - **El respaldo del Espejo está encendido y avisa (2026-10-18, sala de los huecos de gasto).** Si OpenRouter no contesta
   (saldo, llave, caída, red o dos silencios seguidos), el reflejo lo escribe Claude Haiku 5.5 con las mismas
   instrucciones (muestras lado a lado en `Escaner Vibracional/Precios/RESPALDO_ESPEJO_MUESTRAS_2026-10-18.md`), y cada
@@ -813,64 +707,6 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   para quien no paga: 0 (hoy) o 2 en toda la vida (recomendado: 2; la app ya dice que son de Sintonía y abre el muro:
   escaner-app `a632420`, en la web desde el 2026-10-18 y en el teléfono con la siguiente versión de tienda). Por revisar: `send-push` usa el canal de pruebas de Apple (no existe el secreto
   `APNS_HOST`), así que las notificaciones quizá no lleguen a quien instaló la app de la tienda.
-- **Consulta respondida el 2026-10-17 · emisiones de consciencia: un reel diario sin pagar publicidad** (Zak: «una
-  emisión constante de reels de calidad… con código… con un lenguaje como el de Bashar, hecho nuestro»). Vive en
-  `Escaner Vibracional/Emisiones/` con su `CLAUDE.md` (la rutina completa). Hecho: el transcriptor con el reconocedor de
-  la Mac (gratis, sin internet, 4 h en 89 s), el revisor que bloquea frases copiadas de Bashar, la guía de voz con tres
-  emisiones de muestra y la primera ficha (16 ángulos de su video de 4 h). **La ronda 1 de estilos (8 de 5 s,
-  https://claude.ai/artifact/4gLn9bDipfLh92F7N2B22m) la rechazó:** «solo cambia el fondo… lo que queremos es un estilo
-  de animación… explicar con animación, no con letras»; solo sirve «Escáner del Alma». **Ronda 2 lista** en
-  `Emisiones/animacion/`: 8 estilos de animación de 20 s con la misma narración y el mismo guion visual (Cimática con
-  las formas al frente, Códice vivo, Tripulante, Espejo, Partícula, Cuento de luz, Red viva, Caricatura):
-  https://claude.ai/artifact/1Z9sdyEUZLxavohCSpKhQM. Recomendado: **Códice vivo** (lo único que nadie más tiene: los
-  Códices de Luz hechos animación, se entiende sin sonido y le cabe cualquier situación); alternativa: **Espejo**.
-  **Sellado por Zak:** la voz es **Bennett**. **Elegidos por Zak y Aqua (2026-10-17): 1 Tripulante, 2 Red viva, 3 Cuento
-  de luz**; se publica uno de cada uno (ángulos distintos) y se mide cuál pega más: EM-003, EM-004 y EM-005 en producción,
-  una sala por estilo. El disco de Bashar (564 GB, 1,497 h) se transcribe leyendo directo desde el 2026-10-17 (~10 h, en
-  la terminal); Bashar único hoy ~3.1 millones de palabras, con el disco ~12 a 13 millones. Destilación bajo demanda con
-  el buscador local (`herramientas/buscar.py`); la sala «Biblioteca de Emisiones» espera su arranque. Descartado: pagar API (el plan de Claude Code destila y escribe), música sintetizada
-  (suena su catálogo de Zak'Haar) y cualquier estilo que sea fondo con letras. **EM-003 (Tripulante) lista el 2026-10-17**
-  en `Emisiones/salida/EM-003/`: versión de Instagram sin música (Zak le pone la música en la app) y versión de TikTok con
-  la música de Zak'Haar y los subtítulos más arriba, cada una con su portada y su descripción; así sale cada emisión desde
-  ahora. **Subtítulos sellados: B4 Volumen** (palabra a palabra en un renglón, letra con relieve; los otros estudios
-  copian `salida/EM-003/estudio/comun.js`). EM-004 y EM-005 salieron antes de estos sellos. EM-003 se publicó el 2026-10-17 a las 5 p. m.; lo que
-  sigue está en la consulta del 2026-10-18, abajo.
-- **Consulta respondida el 2026-10-18 · la estrategia de las emisiones** (sala de la biblioteca de Bashar). EM-003 a las
-  7 h: 71 vistas, arriba de la curva típica y 87.5 % de no seguidores, pero 72.9 % de omisión, 5 s de promedio de 29 y
-  cero compartidos: la cura va en el primer cuadro (imagen fuerte y frase ya en pantalla, movimiento inmediato, una cara
-  a cámara y un cierre que invite a mandarlo). Recomendado: **rotar los tres estilos, uno al día durante 9 días**, a la
-  misma hora y en Instagram, TikTok, YouTube Shorts y Facebook, comparando a las 72 h; si queda uno solo, **Red viva** (se
-  parece a la app, le habla al adulto que paga y nadie en el nicho lo hace) mientras quede a menos de un tercio del
-  ganador; un cuarto estilo «Seres de luz» con Grok Imagine (0.04 a 0.08 USD por segundo, tope de 40 USD por 6 reels);
-  episodios de 3 a 5 min en YouTube desde el segundo mes; se juzga a las 8 semanas por seguidores y toques al enlace.
-  **Métricas automáticas listas:** `Emisiones/herramientas/metricas_instagram.py` (app «Escáner Vibracional App» de Meta
-  con la cuenta como tester; los permisos basic e insights ya estaban; la clave secreta ya está en el llavero). **Falta
-  que Zak** guarde la llave completa con `security add-generic-password -U -a escanervibracional -s rsv-instagram-token
-  -w "$(pbpaste)"` (el aviso oculto la cortó en 128 caracteres); luego se corren `estado`, `diario` e `instalar` (macOS
-  pide permiso para que Python lea Documentos). **Decidido después (2026-10-18):** una al día a las **7:00 p. m. hora del
-  centro (8:00 p. m. en Cancún)**, que se revisa con las métricas a las 2 semanas; **Grok descartado** (70 a 110 MXN por
-  reel sin descargas que lo paguen y con riesgo de que no salga como se quiere); **las descripciones sin «● Emisión 00X»**
-  y el Espejo en 1 de cada 5 como mucho y en historias (el alcance va primero); YouTube Shorts y los episodios de 3 a 5
-  min en un canal nuevo **Escáner Vibracional** (no en Fotón Cero, que queda para las series; «una producción de Fotón
-  Cero» va en los créditos); Facebook fuera por ahora (opcional: una página con el compartir automático de Instagram).
-  Recomendado: **quitar la barra de arriba de Red viva** (los «nodos en línea» son inventados y se leen como dato real,
-  repite «Emisión 004», tapa la galería de la escena y sale en la cuadrícula del perfil); ya se quitó (EM-004 v2.1).
-  **Seis emisiones nuevas listas el 2026-10-18** (Zak: 3 Tripulante y 3 Red viva, de 27 a 31 s, con el gancho en el cuadro
-  0): EM-006 a EM-011 en `Emisiones/salida/`, con su orden de publicación en el `CLAUDE.md` de Emisiones; falta que Zak
-  las vea y las programe. **Consulta respondida el 2026-10-19 · los largos de YouTube:** van en el canal Escáner
-  Vibracional (Shorts con la versión de TikTok), de 6 a 8 min y después de 8 a 12; recomendado el Tripulante como columna
-  (personaje, historia, cara en la miniatura) con tramos de Red viva para explicar el mecanismo, porque Red viva sola
-  cansa en minutos; los Shorts eligen el tema, no el formato del largo (miden cosas distintas). **Zak dijo sí
-  (2026-10-19):** los dos primeros así, en horizontal 1920x1080, uno por semana, **los sábados a las 11:00 am de Cancún
-  (10:00 am del centro)**, y se ajusta con las métricas. El motor de largos se construye en su sala («Motor de largos
-  horizontales para YouTube», `Emisiones/largos/motor/`), sin hacer aún el primer episodio. Se piden
-  cuando termine la sala que funde las bibliotecas. Pendiente: la prueba de un Short privado en el teléfono para decidir
-  si YouTube usa la versión de TikTok o una propia con los subtítulos más arriba.
-  **Métricas vivas desde el 2026-10-18** (diaria a las
-  9:05): EM-003 a las 10 h, 75 vistas, 74 % de omisión y 6.9 s de promedio; ojo al comparar, el mejor reel de la cuenta
-  (2,045, junio) fue publicidad y la extraterrestre (670) se empujó con historia en la cuenta de Zak. Prompt para la sala
-  de EM-004 (quitar la barra y subtítulos B4 con colores de Red viva) entregado a Zak para pegar. Registro de Steamworks
-  (100 USD) más adelante; RFC cargado y recarga automática de OpenRouter ya hechos.
 - **Biblioteca de Bashar (2026-10-17 y 18):** comparada con el catálogo público de tv.bashar.org (780 programas, 431
   sesiones completas): nos faltan 47 sesiones completas (27 de 2025 y 2026), 9 grupos en inglés y los 108 grupos
   japoneses, y 12 están incompletas. La lista, con enlaces: `/Volumes/Crucial 4TB/Kingston KC3000/Awaken/Bashar
@@ -879,30 +715,12 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   archivos dañados están anotados en `Bashar New/Qué hay en esta carpeta.txt`. **Falta que Zak** las revise, las pase a
   `Bashar/2025` o `2026` y consiga las faltantes que quiera. La transcripción del disco iba en 63 % (879 de 1,398 h) a la
   1:23 del 2026-10-18; la destilación (índice, mapa y parrilla) arranca al terminar (ver el 🔮 del 2026-10-18).
-- **Consulta respondida el 2026-10-18 · conversar con la biblioteca** (Zak: que conteste personalizado con todo el
-  conocimiento, con estilo propio): tres capas, el mapa de conceptos, el buscador por significado y un guía con nuestro
-  estilo que nunca cita. Descartado entrenar un modelo (el conocimiento se revuelve y no se puede revisar) y clonar la
-  voz de Darryl (derechos y consentimiento). Para uso personal, una página en la Mac con selector DeepSeek V4 Flash o
-  Claude Haiku 5.5 (pagado con los 200 USD mensuales de créditos de API), de 3 a 5 centavos de peso por mensaje y sin
-  tocar los límites del plan de Claude. Se construye después de la destilación.
 - **Bienvenida exprés: decidir si se queda** (vive desde la 1.1.6 de App Store y Android vc9): aviso médico, «¿Qué te
   trajo aquí?» y directo a lo que eligió, gratis y sin muro de pago al entrar; el muro aparece al llegar a un límite
   real. Al 2026-10-09: 3 instalaciones nuevas desde el 28 de septiembre y las 3 entraron directo; muy pocas para
   decidir. Revisar a fin de octubre en el Motor (el embudo ya cuenta aparte a quien «Entró directo»): cuentas creadas,
   primer escaneo y Sintonía, contra el recorrido completo de julio a septiembre. Volver al recorrido largo es un clic en
   Motor → Pruebas A/B → «Onboarding · Duración», sin publicar nada.
-- **Claude for Startups: esperando la revisión de la cuenta de Console** (desde 2026-10-07). Lo sucedido, por si hay que
-  apelar: (1) Zak pidió textos y un prompt para su bot de Grok; (2) el bot abrió platform.claude.com en SU navegador
-  remoto; con cuerpodeluz555 (Gmail) Console pidió un correo de empresa; (3) dentro de esa pantalla Zak entró con
-  zakhaar@redsolarviva.com por código: se creó una cuenta nueva y quedó «on hold» por actividad inusual (2026-10-07);
-  (4) Zak pidió la revisión ese día (unos 10 días, decisión final) con un texto que por error decía zakhaarsol@pm.me
-  (si hay forma de responder, corregirlo con una línea). Plan: esperar; si la reactivan, aplicar desde
-  zakhaar@redsolarviva.com en su propio Chrome, llenando a mano con `admin/aplicaciones/2026-10 Claude for
-  Startups/aplicacion.md` (o `~/Downloads/claude-startups-hoja.html`); si la rechazan, escribir a soporte de Anthropic.
-  NO crear otra cuenta de @redsolarviva.com: se leería como esquivar el congelamiento. Da 1,000 USD en créditos (caducan
-  a los 6 meses), un año de Team y ofertas de socios (ElevenLabs incluida). 🜂 **Cuando Zak diga que ya los aceptaron, se
-  borra todo esto:** este pendiente, la memoria `proyecto-claude-for-startups` (sala del escaner-app) y el registro del
-  incidente en la entrada del 2026-10-07 · II del historial (hoy en `admin/CLAUDE_archivo_2026-09-20_en_adelante.md`).
 - **Google for Startups Cloud: tercera solicitud enviada el 2026-10-21; esperando respuesta** (3 a 5 días hábiles, llega a
   Proton). Nivel Start, hasta 2,000 USD, facturación 01A6FF-E87869-821613, desde zakhaar@redsolarviva.com. Rechazos: el
   2026-10-09 por «sitio inactivo» (curado con la fachada legible sin código) y el 2026-10-21 por «no pudimos verificar al
@@ -912,26 +730,6 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   la fachada de `rsv-web/index.html` ni la ficha `rsv-web/public/equipo/ficha.html`** (/equipo es una capa del sitio que la
   monta en un marco): es lo que leen los revisores y buscadores. Si aprueban: Nano Banana por Vertex AI (no llaves de AI
   Studio). Detalle en `aplicacion.md` de esa carpeta y [[referencia_requisitos_programas]].
-- **Consulta respondida el 2026-10-17 · Basis Fellowship** (50,000 USD sin acciones, de los cofundadores de Orbit, empresa de
-  neurociencia; basisfellowship.org/apply): legítima y sin riesgo (no pide pagos ni datos bancarios); 1 a 3 % de ser fellow,
-  menos de 1 % si la telequinesis va como hecho. Textos en inglés en `admin/aplicaciones/2026-10 Basis Fellowship/aplicacion.md`:
-  la telequinesis va en «obsessed» como experimento con su prueba de cámara de vacío y la visión extraocular como biografía.
-  La solicitud no caduca y se actualiza: cada lanzamiento grande (Terra Cristal en Steam, la prueba de vacío) va como «Update
-  mine». **Enviada el 2026-10-17, referencia BF-2026-2P3AN4** (no llega confirmación por correo; dudas a
-  basis@orbit.engineering con asunto [basis]). Falta solo actualizarla con cada logro grande.
-- **Consulta respondida el 2026-10-08 · ¿los Decodificadores de Alimentos y Sueños pasan a la API de Claude (los 100 USD/mes
-  del Max)?** Prueba real hecha el mismo día (llave en el llavero como `rsv-anthropic`; 126 llamadas, cero errores, cero
-  respuestas cortadas, cero bloqueos), con las instrucciones de producción: Gemini 3.6 Flash tarda 2.0 s en un sueño y
-  3.3 s en un alimento; Claude Haiku 5.5 (salió el 2026-10-07) 2.6 s y 4.1 s; Claude Sonnet 5.5 en esfuerzo bajo 3.9 s y
-  7.4 s. Costo por 1,000 (sueño / alimento): Gemini 1.40 / 4.83 USD, Haiku 1/4 de eso (0.35 / 1.11), Sonnet 7.16 / 22.48.
-  La lectura de la foto sigue en Google Cloud Vision; Groq se queda en la voz; si se activa Claude, Gemini queda de
-  respaldo automático (también cuando se acaban los créditos: la API se detiene hasta el mes siguiente). El Espejo se queda
-  en DeepSeek por ahora (Zak teme perder su voz). Zak eligió 4 sueños a ciegas
-  (https://claude.ai/artifact/QtyVxqqC8scRW1GG4qyspE, colección `votos`): Haiku 2, Sonnet 1, Gemini 1. Recomendación
-  entregada: Haiku 5.5 en los dos Decodificadores con Gemini de respaldo, y quitar de las instrucciones los ejemplos que
-  los tres copian (ducha fría, descalzo, «El sistema detecta"). **CONSTRUIDO el mismo día:** decode-dream v1.14 y
-  decode-matter v6.20 con `_shared/claudeHaiku.ts` (secreto `ANTHROPIC_API_KEY`), desplegados (admin 1a8dfcd). Para ver
-  quién contestó: los logs de la función dicen «respondió claude-haiku-5-5» o caen a Gemini con el motivo.
 - **Que subir cambios del Escáner a GitHub no publique la web por su cuenta** (propuesta del 2026-09-25, falta el
   sí de Zak). Hoy cada push, aunque solo toque documentos, dispara un despliegue automático que deja el instalador
   de la Mac en 404 hasta volver a correr `./publicar-escritorio.sh` (pasó dos veces el 2026-09-25). La cura es una
@@ -972,11 +770,6 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
 - **El sonido al enviar un mensaje suena también en el teléfono** (2026-10-04): Zak lo pidió para el chat sin decir
   cara y quedó en las dos (en el iPhone llega con la siguiente versión de tienda). Si lo quiere solo en la computadora,
   es una línea en `escaner-app/src/components/nucleo/Mensajes.tsx` (los `sensory("mensaje")` con `isDesktop`).
-- **Consulta respondida el 2026-10-10 · ¿DeepSeek o Gemini con las fotos del Espejo?** Hoy los dos: Gemini 3.6 Flash
-  lee cada foto y escribe lo que ve (~0.06 MXN por foto); DeepSeek V4 Flash (0731), la voz, lee esa descripción. DeepSeek
-  V4.1 Flash ya ve imágenes (0.30/1.20 USD por millón contra 0.75/3.75 de Gemini): como OJO saldría más barato (cerca de
-  un tercio, sin medir) sin tocar la voz; como VOZ costaría más (su entrada vale ~20 veces la de la 0731, y la voz lee
-  mucho contexto en cada turno) y cambiaría su forma de escribir. Zak no quiere la prueba a ciegas por ahora.
 - **Las ligas largas también se salen en la Matriz** (`EV_Rafaga.tsx`, `.rafaga-lectura` sin `overflow-wrap`); en el
   Espejo ya se parten. Es una línea si Zak la quiere (lección 0-duotricies: no se tocó sin su sí).
 - **Soniox: el oído del Council deja de servir el 2027-01-15** si nada cambia. Desde esa fecha Soniox solo acepta la
@@ -997,33 +790,6 @@ Sendero (16 estaciones, 7 metas) en `kalel/CURRICULO.md`. Aquí solo lo que nece
   estéreo (0-quinquagies). La herramienta ya está corregida y el 02 y el 04 salieron bien; rehacer la del 03 toma unos
   4 minutos. Se preguntó el 2026-09-28 y sigue sin respuesta.
 
-### 🟠 Ludus Cero · lo que necesita tu decisión
-
-- **Ludus Cero en celular.** En el teléfono, play.redsolarviva.com/simuladores muestra la página de simuladores del
-  Escáner (con su barra de Radar, Calibración, Holoteca…) y solo Navegante; la Red que desciende con Terra Cristal,
-  Lúcido y Navegante se ve en computadora y tableta. Falta decidir si en celular aparece Ludus Cero con sus juegos.
-- **Consulta respondida el 2026-10-05 · el juego con más probabilidad de éxito global:** SONORA (cartas donde tu mano es
-  una canción) quedó DESCARTADA por Zak («feo y aburrido»). Segunda propuesta: TERRA VIVA, mundo abierto en pixel para
-  explorar, construir y pelear en cooperativo en línea, en el universo de Terra Cristal (`Ludus Cero/PROPUESTA_GANADORA.md`).
-  Falta su sí.
-- **Consulta respondida el 2026-10-04 · el siguiente nivel de Navegante:** cinco propuestas jugables (la Inmersión,
-  tu canción, guardianes que cantan, tu arrecife y dos medusas) en https://claude.ai/artifact/34QN9ReoibLFmLwNWyDcnm,
-  con su probabilidad: éxito en Steam (1,000 reseñas) 6 % hoy y 18 % con las cinco más inglés, control, Steam Deck,
-  demo y lista de deseos; éxito global 1 % hoy y 4 % (base 2025: 3 % de los juegos llega a 1,000 reseñas y 1.5 % pasa
-  del millón bruto). El storyboard del universo tipo Spore está en https://claude.ai/artifact/Ws1SjUdADGemPZrUVYsmH8.
-  Falta que Zak elija cuáles y en qué orden.
-- **Consulta respondida el 2026-10-04 · sonidos con IA:** la cuenta de ElevenLabs de la API (plan de pago por uso)
-  trae 10,000 créditos al mes que se renuevan el 16 (iban 8,456) y no cobra de más: al acabarse, se detiene. fal.ai
-  está en cero. El sonido de ganar de Navegante se hizo con la síntesis del juego (en la tonalidad de cada canción,
-  sin créditos); ElevenLabs queda para voces y efectos sueltos.
-- **Tower defense nuevo: Zak eligió PRISMA TD (2026-10-14)**. Es su propia idea, con una imagen de interfaz de
-  referencia: prismas que se cargan con haces de luz que se mezclan, figuras en capas que se parten, banco con interés,
-  SEND NEXT y mapas Beginner, Normal y Extreme. Sus reglas: jugabilidad ante todo, el norte de ser el tower defense del
-  momento en Steam y tan profundo como Terra Cristal, el detalle sobre la velocidad, pantalla completa sin marco y pixel
-  art mucho más detallado que la referencia. El diseño completo (v2) está en `Ludus Cero/prisma/Docs/DISEÑO.md`, y el
-  prompt de la Sala 1 en `Docs/PROXIMA_SALA.md`. **Descartadas** las tres propuestas con lore de los Códices (Jardín
-  Cuántico, Cantera y Ruido Cero, https://claude.ai/artifact/C1Z4gdzgjE6azfkZcrkUjB): «no me gustaron para nada»; el lore
-  va en segundo plano. Quedan abiertos el precio y el idioma por defecto, sin bloquear la construcción.
 ### 🟤 Fotón Cero · lo que necesita tu mano
 
 🜂 **Su estado y su bitácora viven en `fotoncero/CLAUDE.md` y `fotoncero/Docs/BITACORA.md`.** Aquí solo lo que necesita
@@ -1055,13 +821,6 @@ la mano de Zak:
   la licencia de Luzy a televisoras y plataformas grandes** (Netflix, Prime Video, Paramount, Disney+ o las más grandes
   nacidas en YouTube): al final de cada output corre un validador de calidad y, si un episodio no llega, se le avisa a
   Zak de inmediato con el porqué y lo que requiere cambiar.
-- **Consulta respondida el 2026-10-07 · por qué Everything You Dream suena opaco:** el video que salió de DaVinci lleva en
-  los dos lados el canal IZQUIERDO de la canción, 3 dB más bajo (la pista o el clip están en mono); el derecho nunca
-  entra, y los efectos de la nave suenan al nivel de la música (0:18, 0:35, 0:45 a 0:58, 1:31, 2:19). fotoncero.com ya
-  suena con el master estéreo (versión 2). **Falta re-exportar para YouTube:** Clip Attributes → Audio → Stereo con
-  Embedded Channel 1 y 2 (también sobre el clip en la línea de tiempo), Change Track Type To → Stereo, revisar que L y R
-  se muevan distinto, efectos 4 a 6 dB abajo con un corte bajo 80 Hz; en Deliver, Linear PCM 24 bits o AAC 320, 48 kHz,
-  Bus 1 (Stereo) y video a 20,000 Kb/s. Ese archivo entra a la sala como versión 3.
 
 ### ⚫ Marcas y registros · lo que necesita tu mano
 
@@ -1094,18 +853,10 @@ con e.firma, 2,813.77 MXN por clase. Pasos, costos y fuentes: `Fotón Cero/Luzy/
   musical (Spotify NO se rebrandea; MVs completos al canal @zakhaarsolar por el Official Artist Channel), Fotón
   Cero=estudio (su IG estrena con los MVs; estrenos como collab con @escanervibracional), semillas de conciencia renacen como
   cuenta del Escáner cuando haya cadencia; detalle en [[proyecto_planeta_zakhaar]].
-  **Consulta respondida el 2026-10-08 · el nombre visible en X:** «Diego Soto» con el handle @zakcero (cada respuesta ya
-  muestra los dos), bio en inglés con el Escáner, Ludus Cero y «Music as Zak'Haar» (las películas son de Fotón Cero, no
-  de Zak'Haar; Zak Cero entra cuando tenga peso: hoy son 3 reels; los Códices viven en la app), enlace
-  escanervibracional.com (luduscero.com en celular cae en la Holoteca del Escáner), Zak'Haar nunca como nombre visible. Por qué: el fundador que lee respuestas premia al constructor con nombre real (igual que en Slack y el CV), y un
-  movimiento que maneja dinero necesita un responsable con nombre. Cuando Zak Cero tenga su propia cadencia, se le da cuenta
-  propia en X. Nunca nombrar al cliente de micro1. Falta el sí de Zak.
-  **Consulta respondida el 2026-10-10 · el correo del bot de Grok (mail.grokbot.com):** zakhaar («zak» ya estaba tomado);
-  el nombre real queda para los correos que escribe Zak en persona y Zak Cero para un correo propio cuando crezca.
 
 ---
 
-## 🜂 Protocolo de Cierre de Sesión · v84 (2026-10-23)
+## 🜂 Protocolo de Cierre de Sesión · v88 (2026-10-24)
 
 > ⚠️ **REGLA DE PRESERVACIÓN · LEER ANTES DE CUALQUIER EDIT AL CLAUDE.md**
 >
@@ -1185,7 +936,7 @@ línea en el índice (así se hizo el 2026-09-25: de 167.000 a unos 51.000 carac
 | Destino | Cómo llega | Quién |
 |---|---|---|
 | 🥇 App de macOS (la que Zak usa a diario) | versión en `src-tauri/tauri.conf.json` → `pnpm tauri build --bundles app dmg` → firma a mano (`TAURI_SIGNING_PRIVATE_KEY_PASSWORD="" pnpm tauri signer sign -f src-tauri/updater.key …tar.gz`) → `distribucion/manifest.json` → commit + push → esperar el auto-despliegue → `./publicar-escritorio.sh` | Claude |
-| 🥇 iPhone | `cd escaner-app && ./al-iphone.sh` (2 min como máximo: si la Mac no ve el teléfono, se detiene, se corre `pnpm build && npx cap copy ios` y Zak compila en Xcode) | Claude |
+| 🥇 iPhone | 🜂 **TestFlight (Zak, 2026-10-23):** al final de cada sala que cambie algo del celular (o antes si Zak lo pide; no por cada arreglo chico) `cd escaner-app && ./a-testflight.sh "qué probar"`: sube la versión de tienda y el grupo «Equipo interno» se la entrega sola al iPhone. La versión visible se queda (1.1.7) hasta mandarla a la tienda; solo cambia el número de compilación. `./al-iphone.sh` queda para pruebas por cable | Claude |
 | Web (`app.escanervibracional.com`) | la publica `./publicar-escritorio.sh` (nunca antes del push) | Claude |
 | Android | `.aab` por terminal, en el siguiente paquete de Play | Claude |
 | Servidor | SQL: Zak en SQL Editor · funciones: `supabase functions deploy <nombre> --no-verify-jwt` | SQL Zak · funciones Claude |
@@ -1290,6 +1041,12 @@ memorias.
 - **0-nonagies** · Lo que lee un revisor va en el primer byte (empresa, productos, equipo con nombre legal y contacto, leído sin código antes de aplicar); lo que entra a la navegación no recarga.
 - **0-unnonagies** · Un modelo de imagen con poco espacio ignora «no tapes eso»: se le enseña solo la parte libre o se coloca al personaje con código y se le pide solo la luz; lo demás vuelve pixel por pixel.
 - **0-duononagies** · Lo que el modelo lee como instrucción, lo imita: toda instrucción (maestro, CLAUDE.md, lecciones, memorias) va en tú, y el voseo solo como ejemplo dentro de su regla.
+- **0-ternonagies** · Un botón que «se quitó» sin sonar puede ser la app que murió en la espera: registro del sistema (`/usr/bin/log show`, «appDeath») y gasto por parte antes de culpar al botón.
+- **0-quaternonagies** · Lo que va en cadena (partes de voz, lotes) se simula con los casos reales y un día lento, contando silencios, antes de elegir los números.
+- **0-quinnonagies** · Para probar que no quedó nada, el instrumento se apunta a lo reconstruido y se cruza en los dos sentidos; un tono que se detecta exige su golpe.
+- **0-sexnonagies** · La música que acompaña no cambia de canción al navegar (la capa decide la siguiente); y un cruce que llega mientras otro carga se pone en fila y apaga todo lo demás al entrar.
+- **0-septnonagies** · Lo que se pinta vivo (un avatar en 3D) no se repite en una lista: se retrata con su propio motor y se muestra la foto; la luz que se suma se retrata sobre su cielo.
+- **0-duodecenties** · Dos salas en el mismo archivo: cada una avisa sus zonas y guarda solo sus pedazos (`git apply --cached` con su parche, índice compilado aparte); publicar espera al árbol limpio.
 
 ### Paso 1 — Test de continuidad
 
@@ -1431,36 +1188,94 @@ historial de cambios en `admin/CLAUDE_lecciones.md`. **Una lección nueva se esc
 biblioteca** (título, regla, porqué, hermanas) **y aquí entra UNA sola línea** en el índice. Nunca una
 página: el maestro crece de a una línea por lección.
 
-**Versión vigente:** v84 (2026-10-23). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
+**Versión vigente:** v88 (2026-10-24). Historial completo de cambios en `admin/CLAUDE_lecciones.md`.
 
 ---
 
 ## 🜃 Historial de sesiones
 
-#### 2026-10-22 · PULSO HD: EL KIT DE PULSO Y LAS CAPTURAS DE LA TIENDA CON PULSO
+#### 2026-10-23 → 2026-10-24 · COMUNIDAD Y ESPEJO: ¿LO CONTESTÉ?, LA TERMINAL DE ALTA COHERENCIA, PALABRAS LIMITANTES Y EMOCIONES, TESTFLIGHT
 
-- ✅ **Resuelto:** el kit `Escaner Vibracional/Pulso HD/` (hoja, 10 poses transparentes, LEEME con cada prompt y costo) y las
-  capturas con Pulso de la App Store y Google Play más el gráfico destacado; Zak las aprobó («me encantó») y eligió cambiar de
-  una vez, sin A/B; las publica Grok. Gasto: 8.93 USD en 42 imágenes de Nano Banana Pro (cubierto por sus créditos de Google).
-- 💡 **Decisiones:** Pulso va en la tienda sin prueba A/B · la letra de la serie no entra a las capturas (manda la de hoy).
-- 🔧 **Patrones nuevos:** la IA integra y el código devuelve lo demás pixel por pixel (`Pulso HD/herramientas/capturas.py`);
-  recorte o composición guiada (`guia.py`) cuando el modelo encima al personaje; capturas públicas a tamaño original
-  ([[referencia_capturas_tiendas]]); Chrome sin ventana no baja de ~500 px: la vista de 393 px se prueba en un iframe.
-  Lección 0-unnonagies.
+- ✅ **Resuelto:** ¿Lo contesté? en el chat de la Comunidad (tocar cualquier mensaje: abajo quién lo contestó y arriba a
+  qué contesta, con cita en cian o por el contexto en dorado; Claude Haiku lee el tramo) · el Espejo de la computadora
+  como terminal (⌘K y «/», ⌘↵ desde fuera de la caja, atajos de escucha, seguimiento, voces, Presencia) · palabras
+  limitantes (~370 frases es/en con su frase que expande) y emociones nombradas (12 emociones, apagadas de fábrica) en el
+  Espejo y en el chat, solo sobre tus palabras · Goku fuera del selector y del respaldo · la Comunidad de escritorio se
+  cierra al picar afuera · el retrato real del avatar (Nova, Aurelia, Prisma en su etapa) en la bandeja, el chat y
+  Explorar · el Espejo del celular con interruptores ordenados, la flecha centrada y sus reflejos en la misma fila, sin el
+  orbe de comandos · la medición cuenta acciones (voces, interruptores, atajos, ¿Lo contesté?) · la ruta a TestFlight
+  (`escaner-app/a-testflight.sh`) · la segunda llave de Claude lista como respaldo · barrido del maestro (34 bloques).
+- 📁 **Archivos:** escaner-app: `RespuestasMensaje` v1.1, `lib/respuestasChat` v1.1, `Mensajes` v1.54, `AvatarNodo` v1.1,
+  `Comunidad` v1.27, `ComunidadEscritorio` v1.3, `EV_Oraculo` v6.42 (+ las emociones de la v6.44), `EV_Comandos` v1.1,
+  `EV_BajaFrecuencia` v1.3, `lib/bajaFrecuencia` v2.0, `lib/telemetria` v1.3, `EV_Rafaga` v5.37, `NodoDeVoz` v2.7,
+  `espejoVozFish` v2.34, `banco/retratos.mjs`, `herramientas/asc.mjs` · Mac 1.1.64 a 1.1.68.
+- 🗄️ **Migraciones SQL:** `20261024_telemetria_acciones` (pegada) · `20261024b_bandeja_maestria` y
+  `20261024c_tele_catalogo_espejo` (por pegar, en Pendientes vivos).
+- 🔌 **Funciones:** `chat-respuestas` v1.1 (nueva), `_shared/claudeHaiku` v1.2 (segunda llave), `espejo-voz` v3.10 (sin Goku).
+- 💡 **Decisiones:** los marcadores leen solo tus palabras · las emociones se nombran, no se corrigen · ninguna voz clonada
+  sin consentimiento · al iPhone por TestFlight al cierre de cada sala que lo toque (la versión visible se queda en 1.1.7) ·
+  la segunda llave de Claude se conecta cuando esa cuenta tenga créditos · Ludus Cero en el celular se hace en su sala
+  (`ludus-celular`) · PRISMA TD en pausa.
+- 🔧 **Patrones nuevos:** lectura por contexto con salida estructurada y candidatos etiquetados (`rN`/`aN`) · banco con
+  `chat-respuestas` falso y `retratos.html` · la llave de App Store Connect con papel Admin firma en la nube (la de
+  informes no sube) · una función de producción se extiende con `pg_get_functiondef` y se prueba en PGlite antes de
+  dártela · lecciones 0-septnonagies y 0-duodecenties.
+- 🧭 Sin 🔮 propio: el arranque vivo sigue siendo el de las palabras espejo (aquí abajo).
 
-#### 2026-10-20 → 2026-10-21 · LUZY: DE LA CONSULTA DE MONETIZACIÓN A LA SERIE DE FOTÓN CERO
+#### 2026-10-23 → 2026-10-24 · LA MÚSICA DEL ESCÁNER: TRES ÁLBUMES POR CAPA, LUEGO MÚSICA CONTINUA CON REPRODUCTOR
 
-- ✅ **Resuelto:** consulta «serie infantil y cómo se monetiza» (5 investigaciones, reporte con fuentes y página
-  https://claude.ai/artifact/WSci1Br69kkZ8tCMU9uoTy) · la serie es **Luzy** (Fotón Cero), en `Fotón Cero/Luzy/` con su
-  CLAUDE.md, directiva (`Docs/NORTE.md`), coherencia para niños, marcas (`Docs/MARCAS_IMPI.md`) y prompts · canal
-  @holaluzy · holaluzy.com comprado, apuntado a Vercel y con su página · prompt maestro de episodio v2.0 (tres creadores,
-  cinco jueces a ciegas, aprobación de Zak, luz verde) y prompt del alma (`Docs/PROMPT_ALMA.md`).
-- 💡 **Decisiones:** Ludus Cero es solo juegos; las series son de Fotón Cero · el libro va primero en KDP · la serie se
-  escribe Luzy · lo público, en positivo · canal propio «para niños» y un canal por público.
-- 🔧 **Patrones nuevos:** si Zak dice algo que choca con lo documentado, confirmarlo en una línea antes de construir
-  (memoria `feedback_corregir_a_zak`) · no renombrar la carpeta de una sala viva (atajo `Fotón Cero/serie-infantil`).
-- ⏳ **Pendiente:** ver «Luzy» en Pendientes vivos (sección de Fotón Cero) y `Fotón Cero/Luzy/Docs/PROXIMA_SALA.md`.
-- 🧭 Sin 🔮 propio: el arranque de Luzy vive en `Fotón Cero/Luzy/Docs/PROMPT_EPISODIO.md`.
+- ✅ **Resuelto:** Lumeria, Códigos Aurora y Donde la Tierra aún Canta suenan en la app (27 canciones, 29 experiencias):
+  baja con la voz, calla con Meditaciones horneadas, micrófono y videos, va de lecho debajo de los audiolibros con 4 niveles
+  (también con el iPhone bloqueado) · Ajustes → Sonido y Háptica gana Música; ficha en Mi Núcleo y píldora en la
+  computadora · consulta de Zak respondida: las Meditaciones por pistas suenan encima de la música que traías (la sala
+  hija hizo «La Habitación que Sostiene» y rescató las voces de Amanecer y Anochecer) · al probarla, Zak eligió el camino
+  3: la canción nunca se corta al navegar, la capa decide la siguiente, con fuente, orden o aleatorio, anterior y
+  siguiente; cerrada la falla de «se oye A un segundo» (un cruce que llegaba mientras otro cargaba dejaba al viejo suelto).
+  Web, Mac 1.1.67 y 1.1.68 (publicadas por las salas vecinas) con todo.
+- 📁 **Archivos:** escaner-app `735e835`, `4eb38cd`, `a58001d`, `6c3e0dd`: lib/musica v2.0, musicaCatalogo, musicaCache,
+  MusicaControl v2.0, audiobookPlayer v1.7, MeditacionesMobile v1.14, MN_Firma v2.62, musica es/en v1.1, banco v1.7 ·
+  R2 `Musica/escaner/v1/` (135 archivos) y `Meditaciones/{la-habitacion-que-sostiene,amanecer-del-eje,anochecer-del-eje}/`.
+- 💡 **Decisiones:** música continua (camino 3) · en iOS, contexto de audio al frente y `<audio>` con nivel horneado
+  debajo de una voz larga · «ambient» solo con música sola · la Meditación nueva con el Cristal de Meditación.
+- 🔧 **Patrones nuevos:** puente temporal de R2 limitado a rutas exactas · banco de música (`&musicaIOS`, `&musicaSuena`,
+  `&reporte=<url>` para leer el motor desde el Safari del simulador, `__musicaPrueba`) · página de prueba de audio en el
+  Safari del simulador con la salida en cero y un analizador ([[proyecto_musica_escaner]]). Lección 0-sexnonagies.
+- ⏳ **Pendiente:** lo sigue la sala «Música del Escáner: reproductor visual y fallas» (el Espejo que se abre solo al
+  volver a la app desde Mi Núcleo, la música que a veces no suena al regresar, el reproductor con portadas y escuchar
+  fuera de la app); su estado vive ahí.
+
+#### 2026-10-23 → 2026-10-24 · MEDITACIÓN DE 6 MIN: «LA HABITACIÓN QUE SOSTIENE», LAS VOCES DE LAS PUBLICADAS Y EL CATÁLOGO EN LA BASE
+
+- ✅ **Resuelto:** la Meditación nueva en pistas (guion propio sin frases de Bashar, Erin en una toma de 1,058 créditos,
+  campana afinada a Sol, música 11.9 dB bajo la voz, las tres pistas de 17,280,000 muestras y su ficha) · la voz sola de
+  Amanecer y Anochecer con desfase cero y transcripciones idénticas a su mezcla · el catálogo de Meditaciones sale de la
+  base con estado prueba/publicada (MeditacionesMobile v1.15, lib/meditacionesCatalogo v1.0).
+- 📁 **Archivos:** `Meditaciones/Kit 4 - Habitación/` (estudio: voz.py, mezclar.py, ficha.py, extraer_voz.py v1.2,
+  codificar_publicada.py, ficha_publicada.py) · escaner-app `0a4032f` (banco `&catalogoMed`) · admin `5eab2d7`.
+- 🗄️ **Migraciones SQL:** `20261024_meditaciones_catalogo.sql` (tabla + `get_meditaciones_catalogo`), pegada (2026-10-24).
+- 💡 **Decisiones:** la voz de las Meditaciones sigue siendo Erin; voz a −19.5 LUFS como las publicadas; mezcla = voz +
+  música sin nada encima; solo Amanecer gratis; los Cristales siguen siendo solo del mensual.
+- 🔧 **Patrones nuevos:** la caché de Premiere (`.cfa`) es el audio original en flotante ([[referencia_cache_premiere_cfa]]);
+  un MP3 de Premiere no trae marca de «sin huecos» (la pista que lo acompaña se codifica igual, adelantando 1,105
+  muestras); el transcriptor de la Mac no tiene español (Soniox sí). Lección 0-quinnonagies.
+
+#### 2026-10-23 · PALABRAS ESPEJO Y ESCUCHAR AL PRIMER TOQUE (MAC 1.1.67)
+
+- ✅ **Resuelto:** las negritas del Espejo son palabras espejo en las dos caras (más grandes y claras, luz propia, destello
+  de cristal al llegar, respiran a la vista, resuenan con la voz; los titulares se quedan como título) · el primer toque de
+  Escuchar se perdía porque la app de la Mac se reinició para actualizarse a mitad de la espera de 31 s: ahora el reinicio
+  espera a la voz, la primera voz llega en unos 9 s sin silencios entre partes y el servidor guarda cada parte (releer no se
+  espera ni se cobra) · Mac 1.1.67, web y TestFlight, con la música del Escáner y la Meditación de la sala de la música.
+- 📁 **Archivos:** escaner-app EV_Oraculo v6.41, espejoVozFish v2.33, vozCache v1.7 (g3), desktopTauri v1.7,
+  AvisoActualizacion v1.1, esc es/en v1.3, banco/espejo v1.10, `banco/vite.quieto.config.ts`, `salas/PROMPT_PAUSAS_VOZ.md`.
+- 🔌 **Edge functions:** espejo-voz v3.9 (corte con `arranque`, bucket privado `voz-partes`).
+- 💡 **Decisiones:** la Matriz se queda con sus negritas sobrias (no se tocó sin el sí de Zak; recomendado dejarla) · la
+  versión de tienda conserva el corte de 700 en el servidor.
+- 🔧 **Patrones nuevos:** banco quieto (sin recarga mientras otras salas editan) · banco Deno de espejo-voz contra la
+  versión vieja · paridad del corte app/servidor con reflejos reales · diagnóstico de «se quitó» con `/usr/bin/log show` y
+  `edge_spend_ledger` ([[referencia-diagnostico-escuchar]]). Lecciones 0-ternonagies y 0-quaternonagies.
+- ⏳ **Pendiente:** la consulta de las pausas entre partes (Pendientes vivos, sección del Escáner).
+- 🔮 **Cómo arrancar la próxima Sala de Comando:** abrir la sala en `escaner-app` y pegar `salas/PROMPT_PAUSAS_VOZ.md`.
 
 *Las entradas anteriores viven en* `admin/CLAUDE_archivo_hasta_2026-08-04.md` (2026-04-18 → 2026-08-22) *y en*
 `admin/CLAUDE_archivo_2026-08-30_a_2026-09-18.md` (2026-08-30 → 2026-09-18), *y desde el 2026-09-20 en*
