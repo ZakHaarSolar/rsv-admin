@@ -1,3 +1,4 @@
+// Red Solar Viva · espejo-voz v3.13 — 🜂 LA PUERTA EN UN SOLO VIAJE (2026-10-24, sala de los recortes). Medido desde la función con una sonda en cada región: cada viaje a la base cuesta de 0.27 a 0.36 s aunque la consulta tarde 15 ms adentro, y la v3.12 todavía hacía tres en fila antes de sintetizar (perfil, suscripciones del miembro y reserva) más la consulta al almacén y los interruptores. Ahora `reservar_espejo_voz` (migración 20261024d) resuelve en UN viaje quién es (la misma señal de _shared/membresia.ts), los dos interruptores, si la parte ya está guardada y la reserva con los mismos candados y ventanas, y devuelve el id de cada fila apartada: el reembolso borra exactamente esas (el de antes borraba por ventana de tiempo y podía llevarse la fila de otra parte de la misma persona). Una parte guardada no aparta nada. Si la base no contesta o la función no existe, el camino de la v3.12 sigue igual. Y la llave pública de Clerk ya viene guardada (_shared/clerkAuth.ts v1.1): la instancia nueva ya no la pide antes de verificar. Mismo corte, mismas respuestas y mismo cobro.
 // Red Solar Viva · espejo-voz v3.12 — 🜂 LO QUE NO DEPENDE ENTRE SÍ SE PIDE A LA VEZ (2026-10-24). Medido con los registros de Supabase (92 partes reales del 15 al 24 de octubre, cada consulta con su hora): antes de empezar a sintetizar, cada parte hacía en fila los interruptores del Motor (0.39 s la mediana, hasta 1.9 s), el perfil (0.28), las suscripciones del miembro (0.36), la parte guardada (0.37, hasta 1.1 s) y la reserva (0.30, dos para el miembro): 2.1 s la mediana y 3.9 s el p90, porque la función corre en Virginia y la base vive en Oregón (cada consulta paga el cruce). Ahora la membresía y la parte guardada se piden juntas, las dos ventanas del miembro (mes y día) también, y los interruptores, que con Soniox solo pintan dos cabeceras, viajan mientras la voz se sintetiza. Mismo corte, mismas respuestas y mismo cobro: solo cambia el orden.
 // Red Solar Viva · espejo-voz v3.11 — 🜂 LA ESCALERA POR COLCHÓN (Zak 2026-10-24): con `escalera: true` (la app desde espejoVozFish v2.35) cada parte de la lectura crece según la voz que ya tiene asegurada delante (la segunda hasta 1.8 veces la primera, la tercera hasta 0.7 de las dos anteriores, de ahí hasta 0.6 de las tres anteriores, 700 como mucho; ninguna de menos de 120 letras; lo que sobra de un párrafo partido queda abierto). Medido el 2026-10-24: la voz real lee ~18 letras/s y el arranque de la v3.9 todavía dejaba silencios antes de la primera parte grande (Aqua, 2026-10-22: 20 s con el corte de 700 de la tienda). Con solo `arranque` sigue el corte de la v3.9 (las apps instaladas antes) y sin nada el de 700 (tienda): lo que reciben las versiones de tienda no cambia. Las partes guardadas en `voz-partes` se identifican por su texto, así que lo ya hecho se sirve con cualquier corte.
 // Red Solar Viva · espejo-voz v3.10 — 🜂 SIN LA VOZ DE GOKU, NI DE RESPALDO (Zak 2026-10-24: «sí, quita a Goku como respaldo»; era un clon de la voz de Mario Castañeda subido por la comunidad de Fish Audio, sin su consentimiento). Goku sale del catálogo: quien la pida (una app vieja que la tenía elegida, o un reference_id de Fish de una build antigua) oye a Bennett. Y si Soniox no responde tras su espera (60 s por cupo, 10 s por tropiezo) o falta su llave, la parte ya NO cruza a Fish: se devuelve el cupo y la respuesta dice «fish_unreachable», el código que todas las versiones de la app ya traducen a «No se pudo alcanzar la voz». Una lectura que no suena es mejor que la voz de alguien sin su permiso. El código de Fish queda dormido.
@@ -1154,6 +1155,132 @@ async function refundSpend(userKey: string, desdeIso: string): Promise<void> {
     }
 }
 
+/* 🜂 v3.13 — LA PUERTA EN UN SOLO VIAJE. `reservar_espejo_voz` (migración
+   20261024d) hace en la base, en una sola llamada, lo que antes eran hasta
+   seis: quién es (la señal de _shared/membresia.ts), los dos interruptores
+   del Motor, si la parte ya está guardada en voz-partes y la reserva con los
+   mismos candados y ventanas de reserve_edge_spend (las del miembro juntas;
+   si una rechaza no se aparta ninguna). Los topes viajan desde aquí: la
+   fuente de verdad sigue siendo este archivo. Devuelve null si la base no
+   contestó o la función no existe todavía: entonces se toma el camino de
+   antes, que conserva la falla cerrada de la membresía. */
+type Pase = {
+    carril: Carril
+    /* null = la base no pudo mirar el almacén: se busca como antes. */
+    guardada: boolean | null
+    reserva: Reserva
+    ids: string[]
+    swap: boolean
+    plana: boolean
+}
+const TIEMPO_PASE_MS = 8000
+async function pedirPase(
+    userKey: string,
+    ip: string,
+    costo: number,
+    ruta: string
+): Promise<Pase | null> {
+    const supaUrl = Deno.env.get("SUPABASE_URL")
+    const supaKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")
+    if (!supaUrl || !supaKey) return null
+    try {
+        const res = await fetch(`${supaUrl}/rest/v1/rpc/reservar_espejo_voz`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                apikey: supaKey,
+                Authorization: `Bearer ${supaKey}`,
+            },
+            body: JSON.stringify({
+                p_user_key: userKey,
+                p_ip: ip,
+                p_cost: costo,
+                p_ruta: ruta,
+                p_flag_swap: FLAG_SWAP,
+                p_flag_plana: FLAG_PLANA,
+                p_limite_admin: ADMIN_LIMIT_DAY,
+                p_limite_dia: MEMBER_LIMIT_DAY,
+                p_limite_mes: MEMBER_LIMIT_MONTH,
+                p_limite_libre: FREE_UNITS_LIFETIME,
+                p_limite_global: GLOBAL_LIMIT_DAY,
+                p_ventana_dia: DAY_SECONDS,
+                p_ventana_mes: MONTH_SECONDS,
+                p_ventana_libre: FREE_WINDOW_SECONDS,
+            }),
+            signal: AbortSignal.timeout(TIEMPO_PASE_MS),
+        })
+        if (!res.ok) {
+            console.warn(
+                "[espejo-voz] la puerta en un viaje no contestó; va el camino de antes:",
+                res.status,
+                (await res.text().catch(() => "")).slice(0, 160)
+            )
+            return null
+        }
+        const j = await res.json().catch(() => null)
+        const carril = j?.carril
+        if (carril !== "admin" && carril !== "miembro" && carril !== "free") return null
+        const horas = Math.round(Number(j.ventana) / 3600)
+        return {
+            carril,
+            guardada: j.guardada === true ? true : j.guardada === false ? false : null,
+            reserva:
+                j.ok === true
+                    ? { ok: true }
+                    : {
+                          ok: false,
+                          reason: String(j.reason || "limit"),
+                          spent: typeof j.spent === "number" ? j.spent : undefined,
+                          limit: typeof j.limit === "number" ? j.limit : undefined,
+                          windowHours: Number.isFinite(horas) ? horas : undefined,
+                      },
+            ids: Array.isArray(j.ids) ? j.ids.map((x: unknown) => String(x)) : [],
+            swap: j.swap === true,
+            plana: j.plana === true,
+        }
+    } catch (e) {
+        console.warn(
+            "[espejo-voz] la puerta en un viaje falló; va el camino de antes:",
+            String(e).slice(0, 160)
+        )
+        return null
+    }
+}
+
+/* 🜂 v3.13 — DEVOLVER EXACTO: se borran las filas que apartó este pedido, por
+   su id. El reembolso por ventana de tiempo (refundSpend) también se llevaba
+   la fila de otra parte de la misma persona apartada en ese lapso, y con la
+   espera del cupo de Soniox el lapso podía durar un minuto. */
+async function devolverReserva(userKey: string, ids: string[]): Promise<void> {
+    const supaUrl = Deno.env.get("SUPABASE_URL")
+    const supaKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")
+    if (!supaUrl || !supaKey || !userKey || !ids.length) return
+    try {
+        const r = await fetch(
+            `${supaUrl}/rest/v1/edge_spend_ledger` +
+                `?id=in.(${ids.map((x) => encodeURIComponent(x)).join(",")})` +
+                `&user_key=eq.${encodeURIComponent(userKey)}`,
+            {
+                method: "DELETE",
+                headers: {
+                    apikey: supaKey,
+                    Authorization: `Bearer ${supaKey}`,
+                    Prefer: "return=minimal",
+                },
+            }
+        )
+        if (!r.ok) {
+            console.error(
+                "[espejo-voz] reembolso NO aplicado:",
+                r.status,
+                (await r.text().catch(() => "")).slice(0, 200)
+            )
+        }
+    } catch (e) {
+        console.error("[espejo-voz] reembolso falló:", String(e).slice(0, 200))
+    }
+}
+
 /* Membresía server-side — señal CANÓNICA del Espejo (misma de oraculo-chat):
    cualquier subscripción activa que NO sea un tier de decodificador (199
    'decoder' / 399 'dream') es membresía plena.
@@ -1920,8 +2047,9 @@ Deno.serve(async (req: Request) => {
        culpa de la persona).
        🜂 v3.12 — la membresía y la parte guardada no dependen una de la otra:
        se piden a la vez (medido el 2026-10-24: en fila sumaban de 0.5 a 1.4 s
-       antes de sintetizar). */
-    const carrilPedido = resolverCarril(clerkUserId)
+       antes de sintetizar).
+       🜂 v3.13 — y ahora van, con la reserva y los interruptores, en un solo
+       viaje (pedirPase). */
 
     /* 🜂 v3.9 — ¿esta parte ya se sintetizó? Se sirve guardada, al instante
        y sin cobrar (solo las voces de Soniox: lo de Fish es el respaldo y no
@@ -1938,60 +2066,120 @@ Deno.serve(async (req: Request) => {
               }
           )}`
         : ""
-    const guardadaPedida = rutaParte ? leerParteGuardada(rutaParte) : null
-    const carril = await carrilPedido
-    /* 🜂 v3.6 — sin saber quién es, la lectura no se cobra ni como miembro ni
-       como invitado. La frase va en `error` porque la app publicada muestra
-       ese campo tal cual cuando no lo reconoce. */
-    if (carril === "desconocido")
-        return jsonResponse(503, {
-            error: avisoMembresiaNoVerificada(lang),
-            codigo: "membresia_no_verificada",
+    const costo = unidades(textoParte.length)
+    const respuestaGuardada = (
+        guardada: { audio: Uint8Array<ArrayBuffer>; marcas: string },
+        plana: boolean
+    ): Response => {
+        const conMarcas = body?.marcas_v2 === true && !!guardada.marcas
+        return new Response(guardada.audio, {
+            status: 200,
+            headers: {
+                ...CORS_HEADERS,
+                ...(conMarcas
+                    ? {
+                          "Access-Control-Expose-Headers": `${CORS_HEADERS["Access-Control-Expose-Headers"]}, X-RSV-Marcas, X-RSV-Marca-Cada`,
+                      }
+                    : {}),
+                "Content-Type": "audio/mpeg",
+                "Cache-Control": "no-store",
+                "X-RSV-Voz": "principal",
+                "X-RSV-Proveedor": "soniox",
+                "X-RSV-Voz-Nombre": cat.voz,
+                "X-RSV-Voz-Swap": "0",
+                "X-RSV-Matiz": plana ? "plana" : "actuacion",
+                "X-RSV-Partes": String(partes.length),
+                "X-RSV-Parte": String(usaPartes ? pedida : 0),
+                "X-RSV-Esperas": "0/0",
+                "X-RSV-Guardada": "1",
+                ...(conMarcas
+                    ? {
+                          "X-RSV-Marcas": guardada.marcas,
+                          "X-RSV-Marca-Cada": String(MARCA_CADA),
+                      }
+                    : {}),
+            },
         })
-    if (guardadaPedida) {
-        const guardada = await guardadaPedida
-        if (guardada) {
-            const conMarcas = body?.marcas_v2 === true && !!guardada.marcas
-            const { plana } = await leerFlags()
-            return new Response(guardada.audio, {
-                status: 200,
-                headers: {
-                    ...CORS_HEADERS,
-                    ...(conMarcas
-                        ? {
-                              "Access-Control-Expose-Headers": `${CORS_HEADERS["Access-Control-Expose-Headers"]}, X-RSV-Marcas, X-RSV-Marca-Cada`,
-                          }
-                        : {}),
-                    "Content-Type": "audio/mpeg",
-                    "Cache-Control": "no-store",
-                    "X-RSV-Voz": "principal",
-                    "X-RSV-Proveedor": "soniox",
-                    "X-RSV-Voz-Nombre": cat.voz,
-                    "X-RSV-Voz-Swap": "0",
-                    "X-RSV-Matiz": plana ? "plana" : "actuacion",
-                    "X-RSV-Partes": String(partes.length),
-                    "X-RSV-Parte": String(usaPartes ? pedida : 0),
-                    "X-RSV-Esperas": "0/0",
-                    "X-RSV-Guardada": "1",
-                    ...(conMarcas
-                        ? {
-                              "X-RSV-Marcas": guardada.marcas,
-                              "X-RSV-Marca-Cada": String(MARCA_CADA),
-                          }
-                        : {}),
-                },
+    }
+    /* Lo que sale de la puerta: quién es, la reserva, cómo devolverla si la
+       voz no suena y los interruptores (que solo se leen si se va a sintetizar). */
+    type Puerta = {
+        carril: Carril
+        gasto: Reserva
+        devolver: () => Promise<void>
+        flags: () => Promise<{ swap: boolean; plana: boolean }>
+    }
+    const abrirPuerta = async (): Promise<Puerta | Response> => {
+        const pase = await pedirPase(clerkUserId, ip, costo, rutaParte)
+        if (pase) {
+            const flags = () => Promise.resolve({ swap: pase.swap, plana: pase.plana })
+            if (rutaParte && pase.guardada !== false) {
+                const guardada = await leerParteGuardada(rutaParte)
+                if (guardada) {
+                    /* Solo hay algo apartado si la base no pudo mirar el almacén. */
+                    if (pase.ids.length)
+                        enSegundoPlano(devolverReserva(clerkUserId, pase.ids))
+                    return respuestaGuardada(guardada, pase.plana)
+                }
+                if (pase.guardada === true) {
+                    /* El almacén la tenía anotada y no llegó: se sintetiza y se
+                       aparta ahora (sin volver a buscarla). */
+                    const otro = await pedirPase(clerkUserId, ip, costo, "")
+                    if (otro)
+                        return {
+                            carril: otro.carril,
+                            gasto: otro.reserva,
+                            devolver: () => devolverReserva(clerkUserId, otro.ids),
+                            flags,
+                        }
+                    const marca = new Date(Date.now() - 1000).toISOString()
+                    return {
+                        carril: pase.carril,
+                        gasto: await reserveSpend(clerkUserId, ip, pase.carril, costo),
+                        devolver: () => refundSpend(clerkUserId, marca),
+                        flags,
+                    }
+                }
+            }
+            return {
+                carril: pase.carril,
+                gasto: pase.reserva,
+                devolver: () => devolverReserva(clerkUserId, pase.ids),
+                flags,
+            }
+        }
+        /* El camino de antes (v3.12), cuando la base no contestó la puerta. */
+        const carrilPedido = resolverCarril(clerkUserId)
+        const guardadaPedida = rutaParte ? leerParteGuardada(rutaParte) : null
+        const carril = await carrilPedido
+        /* 🜂 v3.6 — sin saber quién es, la lectura no se cobra ni como miembro ni
+           como invitado. La frase va en `error` porque la app publicada muestra
+           ese campo tal cual cuando no lo reconoce. */
+        if (carril === "desconocido")
+            return jsonResponse(503, {
+                error: avisoMembresiaNoVerificada(lang),
+                codigo: "membresia_no_verificada",
             })
+        if (guardadaPedida) {
+            const guardada = await guardadaPedida
+            if (guardada) {
+                const { plana } = await leerFlags()
+                return respuestaGuardada(guardada, plana)
+            }
+        }
+        /* Sello del instante ANTES de reservar: acota el reembolso a la fila
+           propia si la síntesis no llega a producir audio (v1.4). */
+        const marcaReserva = new Date(Date.now() - 1000).toISOString()
+        return {
+            carril,
+            gasto: await reserveSpend(clerkUserId, ip, carril, costo),
+            devolver: () => refundSpend(clerkUserId, marcaReserva),
+            flags: leerFlags,
         }
     }
-    /* Sello del instante ANTES de reservar: acota el reembolso a la fila
-       propia si la síntesis no llega a producir audio (v1.4). */
-    const marcaReserva = new Date(Date.now() - 1000).toISOString()
-    const gasto = await reserveSpend(
-        clerkUserId,
-        ip,
-        carril,
-        unidades(textoParte.length)
-    )
+    const puerta = await abrirPuerta()
+    if (puerta instanceof Response) return puerta
+    const { carril, gasto } = puerta
     if (!gasto.ok) {
         if (carril === "free" && gasto.reason === "user_limit") {
             return jsonResponse(403, { error: "membership_required" })
@@ -2008,8 +2196,9 @@ Deno.serve(async (req: Request) => {
             window_hours: gasto.windowHours ?? 24,
         })
     }
-    /* 🜂 v3.12 — los interruptores viajan mientras Soniox sintetiza. */
-    const flagsPedidos = leerFlags()
+    /* 🜂 v3.12 — los interruptores viajan mientras Soniox sintetiza.
+       🜂 v3.13 — con la puerta en un viaje ya llegaron con ella. */
+    const flagsPedidos = puerta.flags()
 
     /* Cadencia opcional (0.5–2.0). Sin el secreto no se manda `prosody` y
        Fish usa su ritmo natural: una perilla que existe solo si se necesita. */
@@ -2277,7 +2466,7 @@ Deno.serve(async (req: Request) => {
        espera, o falta su llave, no suena otra voz: se devuelve el cupo y se dice con el código que la app ya
        traduce («No se pudo alcanzar la voz»). */
     if (!usaSoniox || !sonio?.ok) {
-        await refundSpend(clerkUserId, marcaReserva)
+        await puerta.devolver()
         console.warn(
             "[espejo-voz] Soniox no respondió y ya no hay respaldo",
             JSON.stringify({ voz: cat.voz, parte: usaPartes ? pedida : 0, motivo: cruce || (SONIOX_KEY ? "sin_intento" : "sin_llave"), intentos, esperadoMs })
@@ -2337,7 +2526,7 @@ Deno.serve(async (req: Request) => {
         if (!r.ok) {
             const detail = await r.text().catch(() => "")
             /* v1.4 — no sonó nada: se devuelve el cupo. */
-            await refundSpend(clerkUserId, marcaReserva)
+            await puerta.devolver()
             /* Se devuelve el motivo REAL de Fish (patrón "surface del error
                real"): un 401 de llave, un 402 de saldo y un 422 de voz
                inexistente se diagnostican de un tiro, sin adivinar. */
@@ -2358,7 +2547,7 @@ Deno.serve(async (req: Request) => {
 
         const audio = new Uint8Array(await r.arrayBuffer())
         if (audio.length === 0) {
-            await refundSpend(clerkUserId, marcaReserva)
+            await puerta.devolver()
             return jsonResponse(502, { error: "empty_audio" })
         }
 
@@ -2391,7 +2580,7 @@ Deno.serve(async (req: Request) => {
         })
     } catch (err: any) {
         /* v1.4 — la red se cayó a media síntesis: tampoco se cobra. */
-        await refundSpend(clerkUserId, marcaReserva)
+        await puerta.devolver()
         return jsonResponse(502, {
             error: "fish_unreachable",
             detail: String(err?.message ?? err).slice(0, 300),

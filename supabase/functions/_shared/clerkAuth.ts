@@ -1,4 +1,11 @@
-// Red Solar Viva · _shared/clerkAuth.ts v1.0
+// Red Solar Viva · _shared/clerkAuth.ts v1.1 — 🜂 LA LLAVE PÚBLICA DE LA INSTANCIA, GUARDADA (2026-10-24, sala de los
+// recortes de espejo-voz). Medido en 92 partes de Escuchar: el 95 % de los pedidos cae en una instancia nueva y cada
+// instancia nueva pedía el JWKS a api.clerk.com (unos 85 ms) antes de poder verificar. La llave pública de NUESTRA
+// instancia vive ahora aquí (LLAVES_GUARDADAS) y un token firmado con ella se verifica sin red. Si el token trae otra
+// llave, o esta no reconoce su firma (Clerk rotó la llave), se verifica contra el JWKS pedido, como antes: lo que antes
+// validaba sigue validando y lo que no, no. Un token de otra instancia trae otra llave y cae al JWKS de la nuestra,
+// que tampoco la tiene. Cada función toma esto al redesplegarse.
+// v1.0
 // =====================================================================
 // Verificación server-authoritative del token de sesión de Clerk +
 // gate de admin, COMPARTIDO por las edge functions.
@@ -40,15 +47,52 @@ export async function getInstanceJwks(): Promise<{ keys: unknown[] }> {
     return cachedJwks!
 }
 
+/* 🜂 v1.1 — La llave pública de la instancia de producción, la misma que dan
+   api.clerk.com/v1/jwks con CLERK_SECRET_KEY y
+   clerk.redsolarviva.com/.well-known/jwks.json (comparadas byte a byte el
+   2026-10-24). Es pública: no es un secreto. Si Clerk la rota, nada se rompe
+   (los tokens nuevos traen otro `kid` y se verifican como antes, pidiendo el
+   JWKS); solo se pierde la ventaja hasta copiar aquí la nueva. El registro
+   lo avisa con «[clerkAuth] llave nueva». */
+const LLAVES_GUARDADAS = {
+    keys: [
+        {
+            use: "sig",
+            kty: "RSA",
+            kid: "ins_3BZMK8mfdeGO8OrX1my82h0wrnF",
+            alg: "RS256",
+            n: "wTRTuF3AOCT23SQV62h8-k_WvYaBePt5k2jX_SbE2xl4kfohroqp_-YpuXrMCZfWqrbL-G1Rf5oQUF58R5BgeZ65T94-kFhTGOPRIXt8vXfb-OjSlz_KtttjJeYSfEApzZjB7fWvXCTf4mOSOaXo-wwsOX_BscMuYhdXpS4_kEGUqmsOKC0YgoDFprgvF9FE1_rUODqPmw1U-v8QVCKWYPy1jQ0gikMYAWqRJG57R2rJ9hSBMzQf0Zl5m0sN3lW2_uFD6tZqzTIzOnqOl0e5k6IstoVunxCxxiqsf_oIbvQ870eIoM0DtBuKX7g_XezEqiPwn2jCtyTIlXP6KFX_bw",
+            e: "AQAB",
+        },
+    ],
+}
+const JWKS_GUARDADO = createLocalJWKSet(LLAVES_GUARDADAS as any)
+
+/* Fallos que dicen «esta llave no es»: solo con ellos vale la pena preguntarle
+   a Clerk. Un token vencido o mal formado falla igual con cualquier llave. */
+const FALLOS_DE_LLAVE = new Set([
+    "ERR_JWKS_NO_MATCHING_KEY",
+    "ERR_JWKS_MULTIPLE_MATCHING_KEYS",
+    "ERR_JWS_SIGNATURE_VERIFICATION_FAILED",
+])
+
 /* Verifica el token y devuelve el clerk_user_id (claim `sub`).
    Lanza Error con un mensaje discriminable en cualquier fallo. */
 export async function verifyClerkToken(token: string): Promise<string> {
     if (!CLERK_SECRET) throw new Error("clerk_secret_missing")
     const t = (token || "").toString().trim()
     if (!t) throw new Error("missing_token")
-    const jwks = await getInstanceJwks()
-    const JWKS = createLocalJWKSet(jwks as any)
-    const { payload } = await jwtVerify(t, JWKS, { clockTolerance: 10 })
+    let payload: { sub?: unknown }
+    try {
+        ;({ payload } = await jwtVerify(t, JWKS_GUARDADO, { clockTolerance: 10 }))
+    } catch (e) {
+        if (!FALLOS_DE_LLAVE.has(String((e as { code?: string })?.code || ""))) throw e
+        const jwks = await getInstanceJwks()
+        const JWKS = createLocalJWKSet(jwks as any)
+        ;({ payload } = await jwtVerify(t, JWKS, { clockTolerance: 10 }))
+        /* Validó con una llave que no está guardada: Clerk la rotó. */
+        console.warn("[clerkAuth] llave nueva: copia el JWKS de Clerk en LLAVES_GUARDADAS")
+    }
     const sub = (payload.sub || "").toString().trim()
     if (!sub) throw new Error("no_sub")
     return sub
