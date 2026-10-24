@@ -1,3 +1,4 @@
+// Red Solar Viva · espejo-voz v3.12 — 🜂 LO QUE NO DEPENDE ENTRE SÍ SE PIDE A LA VEZ (2026-10-24). Medido con los registros de Supabase (92 partes reales del 15 al 24 de octubre, cada consulta con su hora): antes de empezar a sintetizar, cada parte hacía en fila los interruptores del Motor (0.39 s la mediana, hasta 1.9 s), el perfil (0.28), las suscripciones del miembro (0.36), la parte guardada (0.37, hasta 1.1 s) y la reserva (0.30, dos para el miembro): 2.1 s la mediana y 3.9 s el p90, porque la función corre en Virginia y la base vive en Oregón (cada consulta paga el cruce). Ahora la membresía y la parte guardada se piden juntas, las dos ventanas del miembro (mes y día) también, y los interruptores, que con Soniox solo pintan dos cabeceras, viajan mientras la voz se sintetiza. Mismo corte, mismas respuestas y mismo cobro: solo cambia el orden.
 // Red Solar Viva · espejo-voz v3.11 — 🜂 LA ESCALERA POR COLCHÓN (Zak 2026-10-24): con `escalera: true` (la app desde espejoVozFish v2.35) cada parte de la lectura crece según la voz que ya tiene asegurada delante (la segunda hasta 1.8 veces la primera, la tercera hasta 0.7 de las dos anteriores, de ahí hasta 0.6 de las tres anteriores, 700 como mucho; ninguna de menos de 120 letras; lo que sobra de un párrafo partido queda abierto). Medido el 2026-10-24: la voz real lee ~18 letras/s y el arranque de la v3.9 todavía dejaba silencios antes de la primera parte grande (Aqua, 2026-10-22: 20 s con el corte de 700 de la tienda). Con solo `arranque` sigue el corte de la v3.9 (las apps instaladas antes) y sin nada el de 700 (tienda): lo que reciben las versiones de tienda no cambia. Las partes guardadas en `voz-partes` se identifican por su texto, así que lo ya hecho se sirve con cualquier corte.
 // Red Solar Viva · espejo-voz v3.10 — 🜂 SIN LA VOZ DE GOKU, NI DE RESPALDO (Zak 2026-10-24: «sí, quita a Goku como respaldo»; era un clon de la voz de Mario Castañeda subido por la comunidad de Fish Audio, sin su consentimiento). Goku sale del catálogo: quien la pida (una app vieja que la tenía elegida, o un reference_id de Fish de una build antigua) oye a Bennett. Y si Soniox no responde tras su espera (60 s por cupo, 10 s por tropiezo) o falta su llave, la parte ya NO cruza a Fish: se devuelve el cupo y la respuesta dice «fish_unreachable», el código que todas las versiones de la app ya traducen a «No se pudo alcanzar la voz». Una lectura que no suena es mejor que la voz de alguien sin su permiso. El código de Fish queda dormido.
 // Red Solar Viva · espejo-voz v3.9 — 🜂 ESCUCHAR SUENA PRONTO Y LO YA HECHO NO SE REPITE (Zak 2026-10-23: «se tarda mucho y se queda sintonizando; la primera se quitó y le tuve que picar dos veces»). Medido ese día: una primera parte de 700 caracteres tardó 31 s en sintetizarse; la app de la Mac se reinició para actualizarse justo cuando la voz llegaba, y el segundo toque volvió a sintetizar las mismas dos partes (otros 29 s y el doble en el registro de gasto). (1) Con `arranque: true` (la app desde espejoVozFish v2.33) el corte da una primera parte de 120 a 200 caracteres, una segunda de hasta 2.2 veces la primera y una tercera de hasta 1.2 veces las dos, y de ahí 700: simulado con 20 reflejos reales, el primer sonido baja de 22.6 s a 8.6 s sin silencios entre partes; sin la bandera, el corte de siempre (versiones de tienda). (2) Cada parte de Soniox se guarda con sus marcas en el bucket privado `voz-partes` (se crea solo) y una parte ya hecha se sirve de ahí al instante y sin cobrar (X-RSV-Guardada: 1, expuesta). La llave es la huella del texto con el modelo, la voz, el idioma y la velocidad.
@@ -1077,21 +1078,13 @@ async function reserveSpend(
     const ventana = carril === "free" ? FREE_WINDOW_SECONDS : DAY_SECONDS
     /* 🜂 v1.6 — el MIEMBRO pasa por DOS ventanas: la del día (pico) y la del
        mes (costo). La mensual va primero; si la diaria la rechaza después, se
-       devuelve la mensual para no cobrarle una unidad que nunca sonó. */
+       devuelve la mensual para no cobrarle una unidad que nunca sonó.
+       🜂 v3.12 — las dos se piden a la vez (cada ventana tiene su propio
+       candado en la base, así que no se estorban) y la respuesta es la misma
+       que en fila: si una rechaza, se devuelve la que sí se anotó, y manda el
+       rechazo del mes. */
     const marca = new Date(Date.now() - 1500).toISOString()
-    if (carril === "miembro") {
-        const mes = await reservarVentana(
-            "espejo-voz-mes",
-            userKey,
-            ip,
-            costo,
-            MEMBER_LIMIT_MONTH,
-            MONTH_SECONDS,
-            0 // el freno global vive en la ventana diaria; acá sería doble
-        )
-        if (!mes.ok) return mes
-    }
-    const dia = await reservarVentana(
+    const diaPedido = reservarVentana(
         "espejo-voz",
         userKey,
         ip,
@@ -1100,10 +1093,22 @@ async function reserveSpend(
         ventana,
         GLOBAL_LIMIT_DAY
     )
-    if (!dia.ok && carril === "miembro") {
-        await refundSpend(userKey, marca)
-    }
-    return dia
+    if (carril !== "miembro") return await diaPedido
+    const [mes, dia] = await Promise.all([
+        reservarVentana(
+            "espejo-voz-mes",
+            userKey,
+            ip,
+            costo,
+            MEMBER_LIMIT_MONTH,
+            MONTH_SECONDS,
+            0 // el freno global vive en la ventana diaria; acá sería doble
+        ),
+        diaPedido,
+    ])
+    if (mes.ok && dia.ok) return dia
+    if (mes.ok || dia.ok) await refundSpend(userKey, marca)
+    return mes.ok ? dia : mes
 }
 
 /* 🜂 v1.4 — DEVOLVER EL CUPO cuando la lectura NO llegó a sonar.
@@ -1853,17 +1858,10 @@ Deno.serve(async (req: Request) => {
         })
     }
 
-    /* Los dos interruptores del Motor. El de VOCES decide cuál de las dos va
-       al frente; el de MATIZ decide si la lectura se actúa o sale plana. */
-    const { swap, plana } = await leerFlags()
-    /* 🜂 El intercambio solo se honra si AMBAS voces existen. Si el secreto de
-       la alterna no estuviera cargado, invertir mandaría a Fish un
-       reference_id vacío y sonaría su voz genérica — un fallo silencioso y
-       difícil de leer desde el teléfono. Sin la alterna, el interruptor
-       simplemente no hace nada. */
-    const puedeIntercambiar = swap && !!FISH_VOICE_FALLBACK && !!FISH_VOICE_ID
-    const vozPrincipal = puedeIntercambiar ? FISH_VOICE_FALLBACK : FISH_VOICE_ID
-    const vozRespaldo = puedeIntercambiar ? FISH_VOICE_ID : FISH_VOICE_FALLBACK
+    /* 🜂 v3.12 — los dos interruptores del Motor (voces y matiz) ya no se leen
+       aquí: con Soniox solo pintan dos cabeceras, así que se piden mientras la
+       voz se sintetiza (o al servir una parte guardada) y no detienen la
+       lectura. */
 
     /* 🜂 v3.0 — `voice_id` ahora es una LLAVE DEL CATÁLOGO (bennett · owen ·
        cordelia · margo · goku), no un identificador de proveedor. Lo que
@@ -1886,7 +1884,6 @@ Deno.serve(async (req: Request) => {
     /* 🜂 v3.10 — un reference_id de Fish (builds antiguas: era el clon de Goku) ya no viaja a Fish: Bennett. */
     const cat: VozCat = VOCES[vozPedida] ? VOCES[vozPedida] : VOCES[VOZ_POR_DEFECTO]
     const usaSoniox = cat.proveedor === "soniox" && !!SONIOX_KEY
-    const voiceId = cat.proveedor === "fish" && cat.voz ? cat.voz : vozPrincipal
     const model = String(body?.model ?? "").trim() || FISH_MODEL
 
     const ip =
@@ -1920,16 +1917,11 @@ Deno.serve(async (req: Request) => {
        8 u de por vida, donde 1 unidad ≈ 1.000 caracteres. Al agotar el carril
        freemium la respuesta es el MURO (403), no un 429: el cliente abre el
        selector de Sintonía. El freno global sigue siendo 429 para todos (no es
-       culpa de la persona). */
-    const carril = await resolverCarril(clerkUserId)
-    /* 🜂 v3.6 — sin saber quién es, la lectura no se cobra ni como miembro ni
-       como invitado. La frase va en `error` porque la app publicada muestra
-       ese campo tal cual cuando no lo reconoce. */
-    if (carril === "desconocido")
-        return jsonResponse(503, {
-            error: avisoMembresiaNoVerificada(lang),
-            codigo: "membresia_no_verificada",
-        })
+       culpa de la persona).
+       🜂 v3.12 — la membresía y la parte guardada no dependen una de la otra:
+       se piden a la vez (medido el 2026-10-24: en fila sumaban de 0.5 a 1.4 s
+       antes de sintetizar). */
+    const carrilPedido = resolverCarril(clerkUserId)
 
     /* 🜂 v3.9 — ¿esta parte ya se sintetizó? Se sirve guardada, al instante
        y sin cobrar (solo las voces de Soniox: lo de Fish es el respaldo y no
@@ -1946,10 +1938,21 @@ Deno.serve(async (req: Request) => {
               }
           )}`
         : ""
-    if (rutaParte) {
-        const guardada = await leerParteGuardada(rutaParte)
+    const guardadaPedida = rutaParte ? leerParteGuardada(rutaParte) : null
+    const carril = await carrilPedido
+    /* 🜂 v3.6 — sin saber quién es, la lectura no se cobra ni como miembro ni
+       como invitado. La frase va en `error` porque la app publicada muestra
+       ese campo tal cual cuando no lo reconoce. */
+    if (carril === "desconocido")
+        return jsonResponse(503, {
+            error: avisoMembresiaNoVerificada(lang),
+            codigo: "membresia_no_verificada",
+        })
+    if (guardadaPedida) {
+        const guardada = await guardadaPedida
         if (guardada) {
             const conMarcas = body?.marcas_v2 === true && !!guardada.marcas
+            const { plana } = await leerFlags()
             return new Response(guardada.audio, {
                 status: 200,
                 headers: {
@@ -2005,18 +2008,8 @@ Deno.serve(async (req: Request) => {
             window_hours: gasto.windowHours ?? 24,
         })
     }
-
-    /* ── LA ACTUACIÓN ─────────────────────────────────────────────────────
-       El texto que va a Fish lleva las direcciones de interpretación; el que
-       el Tripulante LEE en el chat nunca las tuvo (se arman aquí, al vuelo).
-       Con el interruptor en "plana" se manda la prosa tal cual, idéntico a
-       como sonaba antes de esta versión. */
-    const directiva = (
-        Deno.env.get("FISH_VOICE_DIRECTIVE") || DEFAULT_DIRECTIVE
-    ).trim()
-    const textoFinal = plana
-        ? textoParte
-        : dirigirVoz(textoParte, directiva, esUltimaParte)
+    /* 🜂 v3.12 — los interruptores viajan mientras Soniox sintetiza. */
+    const flagsPedidos = leerFlags()
 
     /* Cadencia opcional (0.5–2.0). Sin el secreto no se manda `prosody` y
        Fish usa su ritmo natural: una perilla que existe solo si se necesita. */
@@ -2192,6 +2185,31 @@ Deno.serve(async (req: Request) => {
             )
     }
     const esperas = `${intentos}/${esperadoMs}`
+
+    /* Los dos interruptores del Motor. El de VOCES decide cuál de las dos va
+       al frente; el de MATIZ decide si la lectura se actúa o sale plana. */
+    const { swap, plana } = await flagsPedidos
+    /* 🜂 El intercambio solo se honra si AMBAS voces existen. Si el secreto de
+       la alterna no estuviera cargado, invertir mandaría a Fish un
+       reference_id vacío y sonaría su voz genérica — un fallo silencioso y
+       difícil de leer desde el teléfono. Sin la alterna, el interruptor
+       simplemente no hace nada. */
+    const puedeIntercambiar = swap && !!FISH_VOICE_FALLBACK && !!FISH_VOICE_ID
+    const vozPrincipal = puedeIntercambiar ? FISH_VOICE_FALLBACK : FISH_VOICE_ID
+    const vozRespaldo = puedeIntercambiar ? FISH_VOICE_ID : FISH_VOICE_FALLBACK
+    const voiceId = cat.proveedor === "fish" && cat.voz ? cat.voz : vozPrincipal
+
+    /* ── LA ACTUACIÓN ─────────────────────────────────────────────────────
+       El texto que va a Fish lleva las direcciones de interpretación; el que
+       el Tripulante LEE en el chat nunca las tuvo (se arman aquí, al vuelo).
+       Con el interruptor en "plana" se manda la prosa tal cual, idéntico a
+       como sonaba antes de esta versión. */
+    const directiva = (
+        Deno.env.get("FISH_VOICE_DIRECTIVE") || DEFAULT_DIRECTIVE
+    ).trim()
+    const textoFinal = plana
+        ? textoParte
+        : dirigirVoz(textoParte, directiva, esUltimaParte)
 
     if (sonio?.ok) {
         /* 🜂 v3.8 — las marcas viajan solo a quien las pide en su forma nueva
