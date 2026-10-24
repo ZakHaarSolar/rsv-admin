@@ -4,6 +4,60 @@ Entradas completas que salieron del maestro al comprimirse (Paso 3). No se carga
 
 ---
 
+#### 2026-10-23 → 2026-10-24 · LA MÚSICA DEL ESCÁNER: TRES ÁLBUMES POR CAPA, LUEGO MÚSICA CONTINUA CON REPRODUCTOR
+
+- ✅ **Resuelto:** Lumeria, Códigos Aurora y Donde la Tierra aún Canta suenan en la app (27 canciones, 29 experiencias):
+  baja con la voz, calla con Meditaciones horneadas, micrófono y videos, va de lecho debajo de los audiolibros con 4 niveles
+  (también con el iPhone bloqueado) · Ajustes → Sonido y Háptica gana Música; ficha en Mi Núcleo y píldora en la
+  computadora · consulta de Zak respondida: las Meditaciones por pistas suenan encima de la música que traías (la sala
+  hija hizo «La Habitación que Sostiene» y rescató las voces de Amanecer y Anochecer) · al probarla, Zak eligió el camino
+  3: la canción nunca se corta al navegar, la capa decide la siguiente, con fuente, orden o aleatorio, anterior y
+  siguiente; cerrada la falla de «se oye A un segundo» (un cruce que llegaba mientras otro cargaba dejaba al viejo suelto).
+  Web, Mac 1.1.67 y 1.1.68 (publicadas por las salas vecinas) con todo.
+- 📁 **Archivos:** escaner-app `735e835`, `4eb38cd`, `a58001d`, `6c3e0dd`: lib/musica v2.0, musicaCatalogo, musicaCache,
+  MusicaControl v2.0, audiobookPlayer v1.7, MeditacionesMobile v1.14, MN_Firma v2.62, musica es/en v1.1, banco v1.7 ·
+  R2 `Musica/escaner/v1/` (135 archivos) y `Meditaciones/{la-habitacion-que-sostiene,amanecer-del-eje,anochecer-del-eje}/`.
+- 💡 **Decisiones:** música continua (camino 3) · en iOS, contexto de audio al frente y `<audio>` con nivel horneado
+  debajo de una voz larga · «ambient» solo con música sola · la Meditación nueva con el Cristal de Meditación.
+- 🔧 **Patrones nuevos:** puente temporal de R2 limitado a rutas exactas · banco de música (`&musicaIOS`, `&musicaSuena`,
+  `&reporte=<url>` para leer el motor desde el Safari del simulador, `__musicaPrueba`) · página de prueba de audio en el
+  Safari del simulador con la salida en cero y un analizador ([[proyecto_musica_escaner]]). Lección 0-sexnonagies.
+- ⏳ **Pendiente:** lo sigue la sala «Música del Escáner: reproductor visual y fallas» (el Espejo que se abre solo al
+  volver a la app desde Mi Núcleo, la música que a veces no suena al regresar, el reproductor con portadas y escuchar
+  fuera de la app); su estado vive ahí.
+
+#### 2026-10-23 → 2026-10-24 · MEDITACIÓN DE 6 MIN: «LA HABITACIÓN QUE SOSTIENE», LAS VOCES DE LAS PUBLICADAS Y EL CATÁLOGO EN LA BASE
+
+- ✅ **Resuelto:** la Meditación nueva en pistas (guion propio sin frases de Bashar, Erin en una toma de 1,058 créditos,
+  campana afinada a Sol, música 11.9 dB bajo la voz, las tres pistas de 17,280,000 muestras y su ficha) · la voz sola de
+  Amanecer y Anochecer con desfase cero y transcripciones idénticas a su mezcla · el catálogo de Meditaciones sale de la
+  base con estado prueba/publicada (MeditacionesMobile v1.15, lib/meditacionesCatalogo v1.0).
+- 📁 **Archivos:** `Meditaciones/Kit 4 - Habitación/` (estudio: voz.py, mezclar.py, ficha.py, extraer_voz.py v1.2,
+  codificar_publicada.py, ficha_publicada.py) · escaner-app `0a4032f` (banco `&catalogoMed`) · admin `5eab2d7`.
+- 🗄️ **Migraciones SQL:** `20261024_meditaciones_catalogo.sql` (tabla + `get_meditaciones_catalogo`), pegada (2026-10-24).
+- 💡 **Decisiones:** la voz de las Meditaciones sigue siendo Erin; voz a −19.5 LUFS como las publicadas; mezcla = voz +
+  música sin nada encima; solo Amanecer gratis; los Cristales siguen siendo solo del mensual.
+- 🔧 **Patrones nuevos:** la caché de Premiere (`.cfa`) es el audio original en flotante ([[referencia_cache_premiere_cfa]]);
+  un MP3 de Premiere no trae marca de «sin huecos» (la pista que lo acompaña se codifica igual, adelantando 1,105
+  muestras); el transcriptor de la Mac no tiene español (Soniox sí). Lección 0-quinnonagies.
+
+#### 2026-10-23 · PALABRAS ESPEJO Y ESCUCHAR AL PRIMER TOQUE (MAC 1.1.67)
+
+- ✅ **Resuelto:** las negritas del Espejo son palabras espejo en las dos caras (más grandes y claras, luz propia, destello
+  de cristal al llegar, respiran a la vista, resuenan con la voz; los titulares se quedan como título) · el primer toque de
+  Escuchar se perdía porque la app de la Mac se reinició para actualizarse a mitad de la espera de 31 s: ahora el reinicio
+  espera a la voz, la primera voz llega en unos 9 s sin silencios entre partes y el servidor guarda cada parte (releer no se
+  espera ni se cobra) · Mac 1.1.67, web y TestFlight, con la música del Escáner y la Meditación de la sala de la música.
+- 📁 **Archivos:** escaner-app EV_Oraculo v6.41, espejoVozFish v2.33, vozCache v1.7 (g3), desktopTauri v1.7,
+  AvisoActualizacion v1.1, esc es/en v1.3, banco/espejo v1.10, `banco/vite.quieto.config.ts`, `salas/PROMPT_PAUSAS_VOZ.md`.
+- 🔌 **Edge functions:** espejo-voz v3.9 (corte con `arranque`, bucket privado `voz-partes`).
+- 💡 **Decisiones:** la Matriz se queda con sus negritas sobrias (no se tocó sin el sí de Zak; recomendado dejarla) · la
+  versión de tienda conserva el corte de 700 en el servidor.
+- 🔧 **Patrones nuevos:** banco quieto (sin recarga mientras otras salas editan) · banco Deno de espejo-voz contra la
+  versión vieja · paridad del corte app/servidor con reflejos reales · diagnóstico de «se quitó» con `/usr/bin/log show` y
+  `edge_spend_ledger` ([[referencia-diagnostico-escuchar]]). Lecciones 0-ternonagies y 0-quaternonagies.
+- ⏳ **Pendiente:** la consulta de las pausas entre partes (Pendientes vivos, sección del Escáner).
+
 #### 2026-10-20 → 2026-10-21 · LUZY: DE LA CONSULTA DE MONETIZACIÓN A LA SERIE DE FOTÓN CERO
 
 - ✅ **Resuelto:** consulta «serie infantil y cómo se monetiza» (5 investigaciones, reporte con fuentes y página

@@ -2108,7 +2108,62 @@ aplicó limpio sobre lo guardado y el índice compiló solo: ninguna pisó a la 
 saber quién trabaja y un mensaje con tus zonas. El encabezado de versión (línea 1) es de quien guarda primero. Hermanas:
 0-sexquinquagies, 0-duooctogies (publicar desde lo guardado).
 
+### Paso 0-undecenties · Un simulador vale lo que sus números: cada uno sale de una medición
+
+**Regla.** Antes de concluir con una simulación, cada parámetro sale de un dato medido del mundo real (no de una
+estimación de memoria) y el simulador se valida reproduciendo un caso real ya medido, al décimo de segundo. Una
+conclusión heredada de otra sala («sin silencios en día normal») se vuelve a medir antes de construir encima.
+
+**Por qué.** El 2026-10-23 la sala de las palabras espejo simuló el corte nuevo de la voz del Espejo con una voz de 11
+letras por segundo y concluyó que en día normal ya no quedaban silencios. El 2026-10-24, con el tamaño de los audios
+guardados en el cofre de la Mac (Soniox va a 8,000 bytes por segundo), la voz real leía 18 letras por segundo: cada parte
+duraba 40 % menos y el colchón era más corto. Con la velocidad real, ese mismo corte dejaba pausas en 16 de 80 reflejos
+en día normal y en 70 de 80 en día lento. Calibrado con lo medido (Soniox 21.3 letras/s en día normal y 16.9 en lento;
+de 1.3 a 3 s de espera antes de sintetizar), el simulador reprodujo al décimo la lectura de Aqua (20 s de silencio), la
+de Zak de las 00:29 (sin pausas) y las 12 corridas del banco con la app real.
+
+**Cómo se aplica.** Al lado de cada número del modelo va la medición que lo respalda (registro de gasto, registros de la
+función, el cofre del aparato). Primero se reproduce un caso real conocido; si no sale, el modelo está mal, no el caso.
+Herramientas en `escaner-app/salas/pausas-voz/`. Hermanas: 0-quaternonagies, 0-undenonagies, 0-quadragies.
+
+### Paso 0-centies · Lo que instala nunca corre en una copia que comparte módulos con la principal
+
+**Regla.** `pnpm install`, `pnpm run`, `pnpm exec` y `vercel build` (que instala con pnpm donde corre: el proyecto no fija
+`installCommand`) jamás se ejecutan en una copia cuya carpeta `node_modules` es un enlace a la de la principal: reescriben
+los enlaces de la principal hacia la copia. Para publicar desde una copia, la copia lleva sus propios módulos
+(`CI=true pnpm install --frozen-lockfile --offline` dentro: segundos, desde la bodega local); compilar sin instalar (tsc,
+vite, tauri y cap directos) sí puede ir con el enlace.
+
+**Por qué.** El 2026-10-24 a las 2:16, la publicación de la Mac 1.1.69 corrió `publicar-escritorio.sh` en una copia con
+los módulos enlazados; su `vercel build` instaló y dejó los 44 enlaces de `escaner-app/node_modules` apuntando al `.pnpm`
+de esa copia. Al borrarse la copia, vite, tsc y el banco dejaron de arrancar para todas las salas (lo reparó la sala de
+la música a las 2:27). Las dos publicaciones siguientes (1.1.70 y 1.1.71) usaron copias con módulos propios y la
+principal no se movió.
+
+**Cómo se aplica.** Antes y después de publicar desde una copia, `readlink node_modules/vite` de la principal debe seguir
+en `.pnpm/…`. Receta en la memoria publicar-desde-copia-limpia. Hermanas: 0-duooctogies, 0-duodecenties.
+
+### Paso 0-centies-semel · Lo que debe latir junto toma su fase del reloj, no de cuando nace
+
+**Regla.** Una animación de CSS empieza cuando su elemento se monta. Si varias piezas deben latir juntas (las tarjetas
+de una lista), su fase sale del reloj (`animation-delay` negativo igual a `-(Date.now()/1000 % periodo)`): una pieza que
+nace después cae en el mismo punto que las demás. Y una luz que viaja por un contorno nunca se ve igual en tarjetas de
+distinto tamaño: si debe sentirse viva, que respire.
+
+**Por qué.** El 2026-10-24 Zak vio que la luz que recorría el contorno de cada misión del Plan de Vuelo salía de un lado
+distinto y a otro ritmo en cada tarjeta: cada una empezaba su vuelta al nacer (al agregar una misión, cambiar de día o
+reordenar). En el banco no se veía porque todas nacían juntas; la prueba tuvo que hacer nacer tres tarjetas a destiempo.
+Con la fase del reloj, la correlación de brillo entre tarjetas quedó en 1.0 también con las que nacen después.
+
+**Cómo se aplica.** La prueba de sincronía hace nacer piezas a destiempo, como en el uso real, y compara la serie de
+brillo de cada una (correlación entre pares). Hermanas: 0-unseptuagies, 0-undenonagies.
+
 ### Changelog del protocolo
+
+- **v89 (2026-10-24, sala de las pausas de la voz):** tres lecciones. **0-undecenties**: un simulador vale lo que sus
+  números (cada parámetro medido y el modelo validado con un caso real antes de concluir). **0-centies**: lo que instala
+  (pnpm, `vercel build`) nunca corre en una copia que comparte `node_modules` con la principal. **0-centies-semel**: lo
+  que debe latir junto toma su fase del reloj, no de cuando nace cada elemento.
 
 - **v88 (2026-10-24, sala del detector de respuestas):** dos lecciones. **0-septnonagies**: lo que se pinta vivo no se
   repite en una lista; se retrata con su propio motor (y la luz aditiva, sobre su cielo). **0-duodecenties**: dos salas en
