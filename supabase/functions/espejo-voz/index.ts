@@ -1,3 +1,4 @@
+// Red Solar Viva · espejo-voz v3.10 — 🜂 SIN LA VOZ DE GOKU, NI DE RESPALDO (Zak 2026-10-24: «sí, quita a Goku como respaldo»; era un clon de la voz de Mario Castañeda subido por la comunidad de Fish Audio, sin su consentimiento). Goku sale del catálogo: quien la pida (una app vieja que la tenía elegida, o un reference_id de Fish de una build antigua) oye a Bennett. Y si Soniox no responde tras su espera (60 s por cupo, 10 s por tropiezo) o falta su llave, la parte ya NO cruza a Fish: se devuelve el cupo y la respuesta dice «fish_unreachable», el código que todas las versiones de la app ya traducen a «No se pudo alcanzar la voz». Una lectura que no suena es mejor que la voz de alguien sin su permiso. El código de Fish queda dormido.
 // Red Solar Viva · espejo-voz v3.9 — 🜂 ESCUCHAR SUENA PRONTO Y LO YA HECHO NO SE REPITE (Zak 2026-10-23: «se tarda mucho y se queda sintonizando; la primera se quitó y le tuve que picar dos veces»). Medido ese día: una primera parte de 700 caracteres tardó 31 s en sintetizarse; la app de la Mac se reinició para actualizarse justo cuando la voz llegaba, y el segundo toque volvió a sintetizar las mismas dos partes (otros 29 s y el doble en el registro de gasto). (1) Con `arranque: true` (la app desde espejoVozFish v2.33) el corte da una primera parte de 120 a 200 caracteres, una segunda de hasta 2.2 veces la primera y una tercera de hasta 1.2 veces las dos, y de ahí 700: simulado con 20 reflejos reales, el primer sonido baja de 22.6 s a 8.6 s sin silencios entre partes; sin la bandera, el corte de siempre (versiones de tienda). (2) Cada parte de Soniox se guarda con sus marcas en el bucket privado `voz-partes` (se crea solo) y una parte ya hecha se sirve de ahí al instante y sin cobrar (X-RSV-Guardada: 1, expuesta). La llave es la huella del texto con el modelo, la voz, el idioma y la velocidad.
 // Red Solar Viva · espejo-voz v3.8 — 🜂 LAS MARCAS DE SONIOX LLEGAN A LA APP Y CAEN EN SU LETRA (2026-10-20). Nunca llegaron: X-RSV-Marcas y X-RSV-Marca-Cada no estaban en Access-Control-Expose-Headers, así que el navegador las escondía y la app siempre estimó (en el cofre de la Mac de Zak ninguna parte de Soniox trae marcas). Medido con Soniox real (sonda temporal, Margo y Bennett): sus marcas van sobre su texto PREPROCESADO, que vuelve espacio cada salto (dos saltos de párrafo, un solo espacio) y deja lo demás uno a uno; contadas como si fueran el texto, cada párrafo corría el resalte una letra. Tres cambios: (1) el canal guarda también los `characters` y `alinearMarcas` casa cada uno con su lugar en el texto de la parte; (2) un ancla cada 2 letras en vez de 20 (con los tiempos reales: la estimación queda a 8.2 letras de la voz en promedio y hasta 25; las anclas cada 20, a 2.2 y hasta 11; alineadas cada 2, a 0.6 y hasta 2; unos 730 bytes por parte); (3) se exponen y se mandan SOLO a quien las pide con `marcas_v2: true`: las versiones de tienda leen marcas desde agosto y nunca recibieron una, así que siguen estimando como hoy. Y la limpieza se repite hasta quedar estable: un «Título:» seguido de párrafo volvía a fundirse en la segunda pasada y corría una letra la parte (1 de 101 partes de 20 reflejos reales).
 // Red Solar Viva · espejo-voz v3.7 — 🜂 EL CUPO DE SONIOX SE ESPERA, NO SE CRUZA (Zak 2026-10-20: con la escucha automática y Margo, a media lectura, en «Y ahí sí vas a poder elegir», entró la voz de Goku y siguió así). Medido en su Mac: la escucha automática pidió CUATRO síntesis en 2.7 s (el primer tramo dos veces, el segundo y el resto), Soniox atiende TRES a la vez por cuenta (el canal y el REST comparten ese cupo) y a la cuarta le respondió 429; la v3.6 no reintentaba un 429 y caía directo a Fish, cuya voz por defecto es el clon de Goku. Ahora cada intento dice qué pasó (estado y error_type de Soniox): un cupo lleno (limit_exceeded, conexiones o canales al tope) se espera con respiro creciente hasta 60 s y un tropiezo pasajero (408, 5xx, canal caído) hasta 10 s, siempre con el MISMO proveedor; cruzar a Fish queda como último recurso, se anota en los registros de la función y la respuesta lo dice en X-RSV-Cruce (expuesta, como X-RSV-Proveedor, X-RSV-Voz-Nombre y X-RSV-Esperas) para que la app no guarde ese audio bajo la voz pedida. El canal ya no se cierra en audio_end: espera terminated, que es cuando Soniox suelta el lugar.
@@ -279,8 +280,9 @@ const VOCES: Record<string, VozCat> = {
     owen: { proveedor: "soniox", voz: "Owen", speed: 1.1 },
     cordelia: { proveedor: "soniox", voz: "Cordelia", speed: 1.3 },
     margo: { proveedor: "soniox", voz: "Margo", speed: 1.2 },
-    goku: { proveedor: "fish", voz: "" },
 }
+/* 🜂 v3.10 — Goku ya no existe: quien la pida oye a Bennett. */
+const ALIAS_VOZ: Record<string, string> = { goku: "bennett" }
 const VOZ_POR_DEFECTO = "bennett"
 /* 🜂 v3.1 — LA FRASE DE MUESTRA. Se elige una voz escuchándola, no leyendo su
    nombre, y obligar a gastar un reflejo entero para probarla es absurdo. Es
@@ -1536,7 +1538,8 @@ Deno.serve(async (req: Request) => {
     {
         const b = await req.clone().json().catch(() => ({}))
         if (String(b?.modo || "") === "muestra") {
-            const id = String(b?.voice_id || "").trim().toLowerCase()
+            const id0 = String(b?.voice_id || "").trim().toLowerCase()
+            const id = ALIAS_VOZ[id0] || id0
             const c = VOCES[id]
             const idioma = String(b?.lang || "es").slice(0, 2) === "en" ? "en" : "es"
             const frase = idioma === "en" ? MUESTRA_EN : MUESTRA_ES
@@ -1840,15 +1843,12 @@ Deno.serve(async (req: Request) => {
        deduce del texto, pero Soniox lo pide explícito y con razón, porque el
        mismo texto se pronuncia distinto en cada lengua. */
     const lang = String(body?.lang ?? "es").trim().toLowerCase().slice(0, 2)
-    const vozPedida = String(body?.voice_id ?? "")
+    const vozCruda = String(body?.voice_id ?? "")
         .trim()
         .toLowerCase()
-    const esRefFish = /^[0-9a-f]{16,}$/i.test(String(body?.voice_id ?? "").trim())
-    const cat: VozCat = VOCES[vozPedida]
-        ? VOCES[vozPedida]
-        : esRefFish
-          ? { proveedor: "fish", voz: String(body?.voice_id).trim() }
-          : VOCES[VOZ_POR_DEFECTO]
+    const vozPedida = ALIAS_VOZ[vozCruda] || vozCruda
+    /* 🜂 v3.10 — un reference_id de Fish (builds antiguas: era el clon de Goku) ya no viaja a Fish: Bennett. */
+    const cat: VozCat = VOCES[vozPedida] ? VOCES[vozPedida] : VOCES[VOZ_POR_DEFECTO]
     const usaSoniox = cat.proveedor === "soniox" && !!SONIOX_KEY
     const voiceId = cat.proveedor === "fish" && cat.voz ? cat.voz : vozPrincipal
     const model = String(body?.model ?? "").trim() || FISH_MODEL
@@ -2213,6 +2213,23 @@ Deno.serve(async (req: Request) => {
         usaSoniox && sonio && !sonio.ok
             ? `${claseFalloSoniox(sonio)}:${sonio.status}:${sonio.tipo || "-"}`.slice(0, 80)
             : ""
+    /* 🜂 v3.10 — YA NO SE CRUZA A FISH (Zak 2026-10-24). Todas las voces son de Soniox; si no respondió tras su
+       espera, o falta su llave, no suena otra voz: se devuelve el cupo y se dice con el código que la app ya
+       traduce («No se pudo alcanzar la voz»). */
+    if (!usaSoniox || !sonio?.ok) {
+        await refundSpend(clerkUserId, marcaReserva)
+        console.warn(
+            "[espejo-voz] Soniox no respondió y ya no hay respaldo",
+            JSON.stringify({ voz: cat.voz, parte: usaPartes ? pedida : 0, motivo: cruce || (SONIOX_KEY ? "sin_intento" : "sin_llave"), intentos, esperadoMs })
+        )
+        return jsonResponse(502, {
+            error: "fish_unreachable",
+            detail: "soniox",
+            proveedor: "soniox",
+            voz: cat.voz,
+            ...(cruce ? { soniox: cruce } : {}),
+        })
+    }
 
     try {
         let r = await sintetizar(voiceId)
